@@ -1,4 +1,4 @@
 Passmaster::Application.routes.draw do
-  match 'healthz' => 'healthz#index', :via => :get
-  root :to => 'homepage#index', :via => :get
+  match 'healthz' => 'application#healthz', :via => :get
+  root :to => 'application#index', :via => :get
 end
