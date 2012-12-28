@@ -1,0 +1,3 @@
+== Passmaster
+
+Stores passwords using Host Proof encryption using a master password.
