@@ -51,3 +51,8 @@ Util.displaySection = function(section) {
 Util.initSection = function(section) {
   eval(this.capitalize(section) + '.init();');
 };
+
+Util.lookupUser = function() {
+  $('#overview_field').val(localStorage.email);
+  $('#overview_form').submit();
+};

@@ -17,5 +17,8 @@
 //= require_tree .
 
 $(function() {
-  Util.chooseSection();
+  if (localStorage.email)
+    Util.lookupUser();
+  else
+    Util.chooseSection();
 });

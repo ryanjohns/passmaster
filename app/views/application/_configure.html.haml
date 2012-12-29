@@ -6,6 +6,7 @@
     %p You need to create a master password in order to begin adding accounts.
     .pushed-down
       %p Enter a strong master password below.
+      %p.bold It is extremely important that you remember this password as it CANNOT be recovered!
       = form_tag('#', :id => 'configure_form') do
         %p= password_field_tag(:passwd, '', :placeholder => 'Master Password', :class => 'input-xlarge', :id => 'configure_field')
         %p= password_field_tag(:passwd2, '', :placeholder => 'Confirm Master Password', :class => 'input-xlarge', :id => 'configure_field2')

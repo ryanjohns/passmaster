@@ -7,6 +7,8 @@ function UserData(data) {
   this.encryptedData = data['encrypted_data'];
   this.accounts = {};
 
+  localStorage.email = this.email;
+
   this.setMasterPassword = function(passwd) {
     this.masterPassword = Crypto.sha256(passwd);
     this.apiKey = Crypto.sha256(this.masterPassword + ':' + this.userId);
