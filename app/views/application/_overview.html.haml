@@ -5,5 +5,5 @@
     .pushed-down
       %p Just enter your email address to access your account. If you do not have an account, one will be created for you.
       = form_tag('#', :id => 'overview_form') do
-        %p= text_field_tag(:email_address, '', :placeholder => 'Email Address', :class => 'input-xlarge')
+        %p= text_field_tag(:email, '', :placeholder => 'Email Address', :class => 'input-xlarge')
         %p= submit_tag('Access Account', :class => 'btn btn-primary btn-large')

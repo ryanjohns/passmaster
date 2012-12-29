@@ -12,4 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require sjcl
+//= require base64
 //= require_tree .
