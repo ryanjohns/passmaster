@@ -17,6 +17,11 @@
 //= require_tree .
 
 $(function() {
+  $('a.logout').click(function() {
+    Util.resetApp();
+    return false;
+  });
+
   if (localStorage.email)
     Util.lookupUser();
   else

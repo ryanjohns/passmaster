@@ -56,3 +56,9 @@ Util.lookupUser = function() {
   $('#overview_field').val(localStorage.email);
   $('#overview_form').submit();
 };
+
+Util.resetApp = function() {
+  userData = null;
+  localStorage.removeItem('email');
+  this.chooseSection();
+};
