@@ -1,3 +1,15 @@
 .container#configure{ :style => 'display:none;' }
   .well
-    Configure
+    %h1
+      Configure
+      %small#configure_email_placeholder
+    %p You need to create a master password in order to begin adding accounts.
+    .pushed-down
+      %p Enter a strong master password below.
+      = form_tag('#', :id => 'configure_form') do
+        %p= password_field_tag(:passwd, '', :placeholder => 'Master Password', :class => 'input-xlarge', :id => 'configure_field')
+        %p= password_field_tag(:passwd2, '', :placeholder => 'Confirm Master Password', :class => 'input-xlarge', :id => 'configure_field2')
+        %p= submit_tag('Set Master Password', :class => 'btn btn-primary btn-large', :id => 'configure_btn')
+      = form_tag(users_path, :method => :put, :remote => true, :format => :json, :id => 'configure_hidden_form', :class => 'hidden') do
+        = hidden_field_tag(:api_key, '', :id => 'configure_hidden_field')
+        = hidden_field_tag(:encrypted_data, '', :id => 'configure_hidden_field2')

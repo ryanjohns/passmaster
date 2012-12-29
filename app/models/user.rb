@@ -5,11 +5,20 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :email, :if => :email_changed?
   validates_format_of :email, :with => EMAIL_REGEX, :if => :email_changed?
   validate :verification_code_matches
+  validate :verified_for_update
+  validate :allowed_to_configure
 
   after_initialize :generate_verification_code
 
   def as_json(options = nil)
     super(options.merge({ :only => [ :id, :email, :encrypted_data ], :methods => [ :verified_at? ] }))
+  end
+
+  def configure!(key, data)
+    @conf = true
+    self.api_key = key
+    self.encrypted_data = data
+    save
   end
 
   def verify_code!(code)
@@ -28,6 +37,18 @@ class User < ActiveRecord::Base
   def verification_code_matches
     if verified_at_changed? && verified_at? && verification_code != @v_code
       errors.add(:verification_code, 'does not match')
+    end
+  end
+
+  def verified_for_update
+    if (api_key_changed? || encrypted_data_changed?) && !self.verified_at?
+      errors.add(:verified_at, 'is not set')
+    end
+  end
+
+  def allowed_to_configure
+    if @conf && (api_key_was.present? || encrypted_data_was.present?)
+      errors.add(:api_key, 'is already configured')
     end
   end
 

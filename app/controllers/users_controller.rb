@@ -10,6 +10,8 @@ class UsersController < ApplicationController
   end
 
   def configure
+    @user.configure!(params[:api_key], params[:encrypted_data])
+    respond_with(@user)
   end
 
   def update

@@ -15,7 +15,8 @@ Util.extractErrors = function(xhr) {
   for (attr in errors) {
     msg += attr + ': ';
     for (var i = 0; i < errors[attr].length; i++) {
-      if (i > 0) msg += ', ';
+      if (i > 0)
+        msg += ', ';
       msg += errors[attr][i];
     }
     msg += "\n";
@@ -25,10 +26,14 @@ Util.extractErrors = function(xhr) {
 
 Util.chooseSection = function() {
   var section = '';
-  if (userData == null) section = 'overview';
-  else if (!userData.verified) section = 'verify';
-  else if (userData.encrypted_data == null) section = 'configure';
-  else section = 'accounts';
+  if (userData == null)
+    section = 'overview';
+  else if (!userData.verified)
+    section = 'verify';
+  else if (userData.encryptedData == null)
+    section = 'configure';
+  else
+    section = 'accounts';
   this.initSection(section);
   this.displaySection(section);
 }
@@ -36,8 +41,10 @@ Util.chooseSection = function() {
 Util.displaySection = function(section) {
   var sections = ['overview', 'verify', 'configure', 'accounts'];
   for (var i = 0; i < 4; i++) {
-    if (sections[i] == section) $('#' + sections[i]).show();
-    else $('#' + sections[i]).hide();
+    if (sections[i] == section)
+      $('#' + sections[i]).show();
+    else
+      $('#' + sections[i]).hide();
   }
 };
 
