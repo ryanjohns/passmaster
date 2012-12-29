@@ -1,9 +1,9 @@
-.container#overview
+.container#overview{ :style => 'display:none;' }
   .well
     %h1 Passmaster
     %p A simple tool for storing all your account credentials securely with a single master password.
     .pushed-down
       %p Just enter your email address to access your accounts, or to get started.
-      = form_tag('#', :id => 'overview_form') do
-        %p= text_field_tag(:email, '', :placeholder => 'Email Address', :class => 'input-xlarge')
-        %p= submit_tag('Access Accounts', :class => 'btn btn-primary btn-large')
+      = form_tag(users_path, :remote => true, :format => :json, :id => 'account_access') do
+        %p= text_field_tag(:email, '', :placeholder => 'Email Address', :class => 'input-xlarge', :id => 'account_access_field')
+        %p= submit_tag('Access Accounts', :class => 'btn btn-primary btn-large', :id => 'account_access_btn')
