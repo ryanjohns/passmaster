@@ -2,11 +2,10 @@ function Overview() {};
 
 Overview.init = function() {
   $('#account_access_field').val('');
-  $('#account_access_field').focus();
 };
 
 $(function() {
-  $('#account_access').bind('ajax:success', function(evt, data, status, xhr) {
+  $('#account_access_form').bind('ajax:success', function(evt, data, status, xhr) {
     userData = new UserData(data);
     Util.chooseSection();
   })
