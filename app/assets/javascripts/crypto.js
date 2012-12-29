@@ -15,7 +15,7 @@ Crypto.encrypt = function(password, plaintext) {
     throw 'Failed to encode';
   }
 };
-Crypto.encrypt_object = function(password, object) {
+Crypto.encryptObject = function(password, object) {
   return this.encrypt(password, JSON.stringify(object));
 };
 
@@ -34,7 +34,7 @@ Crypto.decrypt = function(password, encodedtext) {
     throw 'Failed to decrypt';
   }
 };
-Crypto.decrypt_object = function(password, encodedtext) {
+Crypto.decryptObject = function(password, encodedtext) {
   return JSON.parse(this.decrypt(password, encodedtext));
 };
 

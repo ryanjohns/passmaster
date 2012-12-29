@@ -15,3 +15,7 @@
 //= require sjcl
 //= require base64
 //= require_tree .
+
+$(function() {
+  Util.chooseSection();
+});
