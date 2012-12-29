@@ -37,3 +37,8 @@ Crypto.decrypt = function(password, encodedtext) {
 Crypto.decrypt_object = function(password, encodedtext) {
   return JSON.parse(this.decrypt(password, encodedtext));
 };
+
+Crypto.sha256 = function(plaintext) {
+  var bitarray = sjcl.hash.sha256.hash(plaintext);
+  return sjcl.codec.hex.fromBits(bitarray);
+};
