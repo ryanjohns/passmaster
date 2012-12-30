@@ -27,10 +27,9 @@ Accounts.addAccountTile = function(account, data) {
   tile.find('.read .account span').html(account);
   tile.find('.read .username span').html(data['username']);
   tile.find('.read .password a').attr('data-password', data['password']);
+  tile.find('.read .notes pre').html(data['notes']);
   if (data['notes'].length == 0)
     tile.find('.read .notes').hide();
-  else
-    tile.find('.read .notes pre').html(data['notes']);
   tile.find('.write .account input').val(account);
   tile.find('.write .username input').val(data['username']);
   tile.find('.write .password input').val(data['password']);
@@ -61,10 +60,21 @@ Accounts.resetTile = function(tile) {
 };
 
 Accounts.updateTile = function(tile) {
-  tile.find('.read .account span').html(tile.find('.write .account input').val());
-  tile.find('.read .username span').html(tile.find('.write .username input').val());
-  tile.find('.read .password a').attr('data-password', tile.find('.write .password input').val());
-  tile.find('.read .notes pre').html(tile.find('.write .notes textarea').val());
+  var account = tile.find('.write .account input').val();
+  var data = {
+    'username': tile.find('.write .username input').val(),
+    'password': tile.find('.write .password input').val(),
+    'notes': tile.find('.write .notes textarea').val()
+  };
+  userData.accounts[account] = data;
+  tile.find('.read .account span').html(account);
+  tile.find('.read .username span').html(data['username']);
+  tile.find('.read .password a').attr('data-password', data['password']);
+  tile.find('.read .notes pre').html(data['notes']);
+  if (data['notes'].length == 0)
+    tile.find('.read .notes').hide();
+  else
+    tile.find('.read .notes').show();
   tile.find('.write').hide();
   tile.find('.read').show();
 };
@@ -117,19 +127,67 @@ $(function() {
     return false;
   });
 
-  $('a[data-edit]').click(function() {
+  $('a[data-account-edit]').click(function() {
     var tile = $(this).closest('.account-tile');
     tile.find('.read').hide();
     tile.find('.write').show();
     return false;
   });
 
-  $('a[data-delete]').click(function() {
-    $(this).closest('.account-tile').remove();
+  $('a[data-account-delete]').click(function() {
+    var tile = $(this).closest('.account-tile');
+    var account = tile.find('.read .account span').html();
+    var accounts = $.extend(true, {}, userData.accounts);
+    delete accounts[account];
+    userData.setEncryptedData(accounts);
+    var form = tile.find('.update form');
+    form.data('deleted-account', 'true');
+    form.find('input.api-key').val(userData.apiKey);
+    form.find('input.encrypted-data').val(userData.encryptedData);
+    form.submit();
     return false;
   });
 
-  $('#account_tiles form').submit(function() {
+  $('#account_tiles .write form').submit(function() {
+    var tile = $(this).closest('.account-tile');
+    var account = $(this).find('.account input').val();
+    var data = {
+      'username': $(this).find('.username input').val(),
+      'password': $(this).find('.password input').val(),
+      'notes': $(this).find('.notes textarea').val()
+    };
+    if (tile.find('.read .account span').html() == '' && userData.accounts[account]) {
+      alert('An account with that name already exists.');
+      return false;
+    }
+    var accounts = $.extend(true, {}, userData.accounts);
+    accounts[account] = data;
+    userData.setEncryptedData(accounts);
+    var form = tile.find('.update form');
+    form.data('deleted-account', 'false');
+    form.find('input.api-key').val(userData.apiKey);
+    form.find('input.encrypted-data').val(userData.encryptedData);
+    form.submit();
     return false;
+  });
+
+  $('#account_tiles .update form').bind('ajax:success', function(evt, data, status, xhr) {
+    var tile = $(this).closest('.account-tile');
+    if ($(this).data('deleted-account') == 'true')
+      tile.remove();
+    else
+      Accounts.updateTile(tile);
+  })
+  .bind('ajax:error', function(evt, xhr, status, error) {
+    alert(Util.extractErrors(xhr));
+  })
+  .bind('ajax:beforeSend', function(evt, xhr, settings) {
+    settings.url = settings.url + '/' + userData.userId;
+    var btns = $(this).closest('.account-tile').find('.write form .btn');
+    btns.attr('disabled', 'disabled');
+  })
+  .bind('ajax:complete', function(evt, xhr, status) {
+    var btns = $(this).closest('.account-tile').find('.write form .btn');
+    btns.removeAttr('disabled');
   });
 });

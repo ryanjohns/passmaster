@@ -33,21 +33,25 @@
                 %span
           .pull-right
             .links
-              %a.btn.btn-primary.btn-small{ :href => '#', 'data-edit' => 'true' } Edit
-              %a.btn.btn-danger.btn-small{ :href => '#', 'data-delete' => 'true' } Delete
+              %a.btn.btn-primary.btn-small{ :href => '#', 'data-account-edit' => 'true' } Edit
+              %a.btn.btn-danger.btn-small{ :href => '#', 'data-account-delete' => 'true' } Delete
           .clearfix
           .notes
             %pre
         .write
           %form
             %p.account
-              %input{ :type => :text, :name => :account, :placeholder => 'Account Name' }
+              %input{ :type => :text, :name => :account, :placeholder => 'Account Name', :required => 'true' }
             %p.username
-              %input{ :type => :text, :name => :username, :placeholder => 'Username' }
+              %input{ :type => :text, :name => :username, :placeholder => 'Username', :required => 'true' }
             %p.password
-              %input{ :type => :text, :name => :password, :placeholder => 'Password' }
+              %input{ :type => :text, :name => :password, :placeholder => 'Password', :required => 'true' }
             %p.notes
               %textarea{ :name => :notes, :placeholder => 'Notes', :rows => '3' }
             %p
               %input.btn.btn-primary.btn-small{ :type => :submit, :name => :commit, :value => 'Save' }
               %a.btn.btn-small{ :href => '#', 'data-cancel' => 'true' } Cancel
+        .update
+          = form_tag(users_path, :method => :put, :remote => true, :format => :json, :id => nil, :class => 'hidden') do
+            = hidden_field_tag(:api_key, '', :id => nil, :class => 'api-key')
+            = hidden_field_tag(:encrypted_data, '', :id => nil, :class => 'encrypted-data')

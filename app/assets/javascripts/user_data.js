@@ -13,12 +13,12 @@ function UserData(data) {
     this.masterPassword = Crypto.sha256(passwd);
     this.apiKey = Crypto.sha256(this.masterPassword + ':' + this.userId);
   };
+  this.setEncryptedData = function(unencryptedData) {
+    this.encryptedData = Crypto.encryptObject(this.masterPassword, unencryptedData);
+  };
   this.decryptAccounts = function() {
     if (this.encryptedData == null)
       return;
     this.accounts = Crypto.decryptObject(this.masterPassword, this.encryptedData);
-  };
-  this.encryptAccounts = function() {
-    this.encryptedData = Crypto.encryptObject(this.masterPassword, this.accounts);
   };
 };
