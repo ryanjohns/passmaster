@@ -15,13 +15,7 @@ preload_app true
 FileUtils.mkdir_p("#{app_dir}/tmp/pids")
 FileUtils.mkdir_p("#{app_dir}/tmp/sockets")
 
-# listen on a Unix domain socket or a TCP port
-if ENV['RAILS_ENV'] == 'production'
-  listen("#{app_dir}/tmp/sockets/nginx.socket")
-else
-  listen('8080')
-end
-
+listen('8080')
 pid "#{app_dir}/tmp/pids/unicorn_#{Process.pid}.pid"
 
 stderr_path "#{app_dir}/log/unicorn-stderr.log"
