@@ -24,7 +24,9 @@ $(function() {
   $('#configure_form').submit(function() {
     var passwd = $('#configure_field').val();
     var passwd2 = $('#configure_field2').val();
-    if (passwd != passwd2)
+    if (passwd.length == 0)
+      alert('Master Password cannot be blank.');
+    else if (passwd != passwd2)
       alert('Passwords do not match. Please try again.');
     else
       Configure.setMasterPassword(passwd);

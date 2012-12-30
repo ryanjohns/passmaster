@@ -135,6 +135,8 @@ $(function() {
   });
 
   $('a[data-account-delete]').click(function() {
+    if (!confirm('Are you sure you want to delete this account?'))
+      return false;
     var tile = $(this).closest('.account-tile');
     var account = tile.find('.read .account span').html();
     var accounts = $.extend(true, {}, userData.accounts);
@@ -156,7 +158,10 @@ $(function() {
       'password': $(this).find('.password input').val(),
       'notes': $(this).find('.notes textarea').val()
     };
-    if (tile.find('.read .account span').html() == '' && userData.accounts[account]) {
+    if (account.length == 0) {
+      alert('Account Name cannot be blank.');
+      return false;
+    } else if (tile.find('.read .account span').html() == '' && userData.accounts[account]) {
       alert('An account with that name already exists.');
       return false;
     }
