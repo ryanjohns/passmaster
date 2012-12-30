@@ -26,7 +26,7 @@ Util.extractErrors = function(xhr) {
 
 Util.chooseSection = function() {
   var section = '';
-  if (userData == null)
+  if (!userData || !userData.email)
     section = 'overview';
   else if (!userData.verified)
     section = 'verify';
@@ -53,13 +53,14 @@ Util.initSection = function(section) {
 };
 
 Util.lookupUser = function() {
-  $('#overview_email').val(localStorage.email);
-  $('#overview_form').submit();
+  userData = new UserData();
+  userData.userId = localStorage.userId;
+  $('#reload_link').click();
 };
 
 Util.resetApp = function() {
   userData = null;
-  localStorage.removeItem('email');
+  localStorage.removeItem('userId');
   Accounts.wipeAccountTiles();
   this.chooseSection();
 };

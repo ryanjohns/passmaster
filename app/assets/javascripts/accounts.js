@@ -18,6 +18,7 @@ Accounts.reload = function(data) {
     }
   }
   this.init();
+  Util.displaySection('accounts');
 };
 
 Accounts.selectView = function() {
@@ -220,6 +221,8 @@ $(function() {
     Accounts.reload(data);
   })
   .bind('ajax:error', function(evt, xhr, status, error) {
+    if (!userData.email)
+      Util.chooseSection();
     alert(Util.extractErrors(xhr));
   })
   .bind('ajax:beforeSend', function(evt, xhr, settings) {
