@@ -19,8 +19,7 @@ Accounts.reload = function(data) {
       alert('Failed to decrypt accounts.');
     }
   }
-  this.init();
-  Util.displaySection('accounts');
+  Util.chooseSection();
 };
 
 Accounts.selectView = function() {
@@ -251,7 +250,7 @@ $(function() {
   });
 
   $('#set_master_password_btn').click(function() {
-    Util.initSection('configure');
+    Configure.init();
     Util.displaySection('configure');
     return false;
   });
