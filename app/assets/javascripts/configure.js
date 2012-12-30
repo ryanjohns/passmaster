@@ -2,15 +2,19 @@ function Configure() {};
 
 Configure.init = function() {
   $('#configure_email_placeholder').html(userData.email);
-  $('#configure_field').val('');
-  $('#configure_field2').val('');
   $('#configure_hidden_field').val('');
   $('#configure_hidden_field2').val('');
 };
 
 Configure.setMasterPassword = function(passwd) {
   userData.setMasterPassword(passwd);
-  userData.encryptAccounts();
+  try {
+    userData.encryptAccounts();
+  } catch(err) {
+    console.log(err.toString());
+    alert('Failed to encrypt accounts.');
+    return;
+  }
   $('#configure_hidden_field').val(userData.apiKey);
   $('#configure_hidden_field2').val(userData.encryptedData);
   $('#configure_hidden_form').submit();

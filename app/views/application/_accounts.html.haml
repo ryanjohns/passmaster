@@ -1,4 +1,23 @@
 .container#accounts{ :style => 'display:none;' }
   = render 'logout'
   .well
-    %h1 Accounts
+    %h1
+      Accounts
+      %small#accounts_email_placeholder
+
+    #unlock_accounts{ :style => 'display:none;' }
+      %p Accounts are locked. Enter the master password to unlock.
+      = form_tag('#', :id => 'unlock_accounts_form') do
+        %p= password_field_tag(:passwd, '', :placeholder => 'Master Password', :class => 'input-xlarge', :id => 'unlock_accounts_field')
+        %p= submit_tag('Unlock', :class => 'btn btn-primary btn-large', :id => 'unlock_accounts_btn')
+
+    #accounts_list{ :style => 'display:none;' }
+      %p= text_field_tag(:search, '', :placeholder => 'Search', :class => 'input-xlarge', :id => 'accounts_list_search')
+      %table#accounts_table.table.table-hover.table-striped.table-bordered
+        %thead
+          %tr
+            %th Account
+            %th Username
+            %th Password
+            %th Notes
+        %tbody
