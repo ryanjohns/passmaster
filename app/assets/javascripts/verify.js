@@ -2,7 +2,7 @@ function Verify() {};
 
 Verify.init = function() {
   $('#verify_email_placeholder').html(userData.email);
-  $('#verify_field').val('');
+  $('#verify_verification_code').val('');
 };
 
 $(function() {

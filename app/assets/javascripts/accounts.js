@@ -107,13 +107,13 @@ Accounts.unlock = function(passwd) {
     alert('Failed to decrypt accounts.');
     return;
   }
-  $('#unlock_accounts_field').val('');
+  $('#unlock_accounts_passwd').val('');
   this.selectView();
 };
 
 $(function() {
   $('#unlock_accounts_form').submit(function() {
-    var passwd = $('#unlock_accounts_field').val();
+    var passwd = $('#unlock_accounts_passwd').val();
     if (passwd.length == 0)
       alert('Bad password.');
     else
@@ -230,5 +230,11 @@ $(function() {
   .bind('ajax:complete', function(evt, xhr, status) {
     $('#reload_spinner').hide();
     $(this).show();
+  });
+
+  $('#set_master_password_btn').click(function() {
+    Util.initSection('configure');
+    Util.displaySection('configure');
+    return false;
   });
 });
