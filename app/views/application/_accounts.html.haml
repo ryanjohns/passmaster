@@ -21,3 +21,10 @@
             %th Password
             %th Notes
         %tbody
+          %tr.template{ :style => 'display:none;' }
+            %td.account
+            %td.username
+            %td
+              = link_to('show', '#', 'data-password' => 'passwd')
+              %span.password
+            %td.notes
