@@ -99,6 +99,19 @@ Accounts.updateTile = function(tile) {
   tile.find('.read').show();
 };
 
+Accounts.searchTiles = function(term) {
+  var pattern = new RegExp(term, 'i');
+  $('#account_tiles .account-data').each(function() {
+    var txt = $(this).find('.read .account span').html() + ' ' +
+        $(this).find('.read .username span').html() + ' ' +
+        $(this).find('.read .notes pre').html();
+    if (pattern.test(txt))
+      $(this).show();
+    else
+      $(this).hide();
+  });
+};
+
 Accounts.unlock = function(passwd) {
   userData.setMasterPassword(passwd);
   try {
@@ -239,5 +252,9 @@ $(function() {
     Util.initSection('configure');
     Util.displaySection('configure');
     return false;
+  });
+
+  $('#accounts_list_search').keyup(function() {
+    Util.typewatch($(this).val(), 'Accounts.searchTiles(currentVal);', 500);
   });
 });
