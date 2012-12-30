@@ -2,6 +2,8 @@ function Configure() {};
 
 Configure.init = function() {
   $('#configure_email_placeholder').html(userData.email);
+  $('#configure_field').val('');
+  $('#configure_field2').val('');
   $('#configure_hidden_field').val('');
   $('#configure_hidden_field2').val('');
 };

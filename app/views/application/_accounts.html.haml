@@ -1,5 +1,11 @@
 .container#accounts{ :style => 'display:none;' }
-  = render 'logout'
+  .pull-right
+    = link_to('Reload', users_path, :remote => true, :format => :json, :id => 'reload_link')
+    %span{ :style => 'display:none;', :id => 'reload_spinner' } Reloading
+    |
+    %a{ :href => '#', 'data-logout' => 'true' } Logout
+  .clearfix
+
   .well
     %h1
       Accounts
