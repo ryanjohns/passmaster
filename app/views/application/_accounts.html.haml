@@ -8,7 +8,7 @@
     #unlock_accounts{ :style => 'display:none;' }
       %p Accounts are locked. Enter the master password to unlock.
       %form{ :id => 'unlock_accounts_form' }
-        %p= password_field_tag(:passwd, '', :placeholder => 'Master Password', :class => 'input-xlarge', :id => 'unlock_accounts_field')
+        %p= password_field_tag(:passwd, '', :placeholder => 'Master Password', :class => 'input-xlarge', :id => 'unlock_accounts_field', :required => 'true')
         %p= submit_tag('Unlock', :class => 'btn btn-primary btn-large', :id => 'unlock_accounts_btn')
 
   #accounts_list{ :style => 'display:none;' }
@@ -43,9 +43,9 @@
             %p.account
               %input{ :type => :text, :name => :account, :placeholder => 'Account Name', :required => 'true' }
             %p.username
-              %input{ :type => :text, :name => :username, :placeholder => 'Username', :required => 'true' }
+              %input{ :type => :text, :name => :username, :placeholder => 'Username' }
             %p.password
-              %input{ :type => :text, :name => :password, :placeholder => 'Password', :required => 'true' }
+              %input{ :type => :text, :name => :password, :placeholder => 'Password' }
             %p.notes
               %textarea{ :name => :notes, :placeholder => 'Notes', :rows => '3' }
             %p
