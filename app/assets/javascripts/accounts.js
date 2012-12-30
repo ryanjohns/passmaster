@@ -2,6 +2,8 @@ function Accounts() {};
 
 Accounts.init = function() {
   $('#accounts_email_placeholder').html(userData.email);
+  $('#accounts_list_search').val('');
+  Util.timerVal = '';
   this.selectView();
 };
 
