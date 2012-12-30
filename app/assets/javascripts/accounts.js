@@ -138,7 +138,7 @@ $(function() {
 
   $('a[data-password]').click(function() {
     var span = $(this).parent().find('span');
-    if (span.html() == '') {
+    if ($(this).html() == 'show') {
       span.html($(this).attr('data-password'));
       $(this).html('hide');
     } else {
