@@ -22,6 +22,3 @@
 # Ignore assets
 /public/assets
 /.sass-cache
-
-# Ignore sensitive files
-/config/aws.yml
