@@ -15,6 +15,8 @@ class UsersController < ApplicationController
   end
 
   def update
+    @user.update!(params[:api_key], params[:encrypted_data])
+    respond_with(@user)
   end
 
   def verify

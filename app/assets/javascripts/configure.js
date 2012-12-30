@@ -9,7 +9,7 @@ Configure.init = function() {
 Configure.setMasterPassword = function(passwd) {
   userData.setMasterPassword(passwd);
   try {
-    userData.encryptAccounts();
+    userData.setEncryptedData({});
   } catch(err) {
     console.log(err.toString());
     alert('Failed to encrypt accounts.');
@@ -36,8 +36,7 @@ $(function() {
     Util.chooseSection();
   })
   .bind('ajax:error', function(evt, xhr, status, error) {
-    var error = Util.extractErrors(xhr);
-    alert(error);
+    alert(Util.extractErrors(xhr));
   })
   .bind('ajax:beforeSend', function(evt, xhr, settings) {
     settings.url = settings.url + '/' + userData.userId + '/configure';

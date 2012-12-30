@@ -11,8 +11,7 @@ $(function() {
     Util.chooseSection();
   })
   .bind('ajax:error', function(evt, xhr, status, error) {
-    var error = Util.extractErrors(xhr);
-    alert(error);
+    alert(Util.extractErrors(xhr));
   })
   .bind('ajax:beforeSend', function(evt, xhr, settings) {
     var btn = $('#overview_btn');
