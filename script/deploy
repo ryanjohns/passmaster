@@ -1,0 +1,106 @@
+#!/usr/bin/env ruby
+
+require 'optparse'
+
+class Deploy
+
+  def initialize(args)
+    @options = {
+      :environment => 'staging',
+      :version     => nil,
+    }
+
+    option_parser = OptionParser.new do |opts|
+      opts.on('-e', '--environment [ENVIRONMENT]') do |environment|
+        if environment == 'production'
+          @options[:environment] = 'production'
+        elsif environment != 'staging'
+          print_usage_and_exit
+        end
+      end
+
+      opts.on('-v', '--version [VERSION]') do |version|
+        @options[:version] = version
+      end
+
+      opts.on_tail('-h', '--help') do
+        print_usage_and_exit
+      end
+    end
+
+    unless option_parser.parse!(args).empty?
+      puts "Unknown options given."
+      print_usage_and_exit
+    end
+
+    if !@options[:version].nil? && @options[:version] !~ /^[0-9]{14}$/
+      puts "Invalid version, must be a timestamp in the format yyyymmddhhmmss"
+      print_usage_and_exit
+    end
+    @options[:version] = 'master' if @options[:version].nil? && @options[:environment] == 'staging'
+  end
+
+  def deploy
+    puts "#{@options[:environment].upcase} deploy"
+    update_working_copy
+    create_deploy_tag if @options[:version].nil?
+    push_version_upstream
+    puts "Done deploying: #{Time.now}"
+  end
+
+  private
+
+  def check_syntax
+    puts "Checking syntax."
+    unless system("bundle exec rake syntax:check")
+      puts "Syntax check failed!"
+      exit 1
+    end
+  end
+
+  def create_deploy_tag
+    @options[:version] = Time.now.utc.strftime("%Y%m%d%H%M%S")
+    prompt_and_exit_if_not_yes
+    check_syntax
+    puts "Creating new deploy tag."
+    system("git tag -a -m 'Creating deploy tag #{@options[:version]}' #{@options[:version]}")
+    system("git push --tags upstream master")
+  end
+
+  def print_usage_and_exit
+    puts "USAGE: script/deploy [options]"
+    puts "    -e, --environment (optional): The environment to deploy to. Can be 'staging' or 'production'. Default is 'staging'."
+    puts "    -v, --version (optional): The version to deploy. Defaults to 'master' for staging deploys, creates a new tag for production deploys."
+    exit
+  end
+
+  def prompt_and_exit_if_not_yes
+    print "No deploy tag specified. Create new deploy tag #{@options[:version]}? [y/N] "
+    answer = STDIN.gets
+    if answer !~ /^(y|yes)$/i
+      exit 1
+    end
+  end
+
+  def push_version_upstream
+    puts "Force pushing #{@options[:version]} to upstream:#{@options[:environment]}."
+    system("git push --force upstream #{@options[:version]}~0:#{@options[:environment]}")
+  end
+
+  def update_working_copy
+    puts "Updating working copy."
+    git_status = `git status`
+    if git_status !~ /On branch master/
+      puts "You must be on the master branch!"
+      exit 1
+    end
+    if git_status !~ /working directory clean/
+      puts "You must have a clean working directory!"
+      exit 1
+    end
+    system("git pull --tags upstream master")
+  end
+
+end
+
+Deploy.new(ARGV).deploy
