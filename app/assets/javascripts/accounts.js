@@ -17,17 +17,21 @@ Accounts.selectView = function() {
 };
 
 Accounts.fillAccountsTable = function() {
-  $('#accounts_table tr.account-data').remove();
+  $('#account_tiles .account-data').remove();
   for (account in userData.accounts) {
-    var row = $('#accounts_table tr.template').clone(true);
-    row.find('td.account').html(account);
-    row.find('td.username').html(userData.accounts[account]['username']);
-    row.find('a[data-password]').attr('data-password', userData.accounts[account]['password']);
-    row.find('td.notes').html(userData.accounts[account]['notes']);
-    row.removeClass('template');
-    row.addClass('account-data');
-    row.appendTo('#accounts_table tbody');
-    row.removeAttr('style');
+    var tile = $('#account_tiles .template').clone(true);
+    tile.find('.account span').html(account);
+    tile.find('.username span').html(userData.accounts[account]['username']);
+    tile.find('.password a').attr('data-password', userData.accounts[account]['password']);
+    var notes = userData.accounts[account]['notes'];
+    if (notes.length == 0)
+      tile.find('.notes').hide();
+    else
+      tile.find('.notes pre').html(notes);
+    tile.removeClass('template');
+    tile.addClass('account-data');
+    tile.appendTo('#account_tiles');
+    tile.removeAttr('style');
   }
 };
 
@@ -54,7 +58,7 @@ $(function() {
   });
 
   $('a[data-password]').click(function() {
-    var span = $(this).parent().find('span.password');
+    var span = $(this).parent().find('span');
     if (span.html() == '') {
       span.html($(this).attr('data-password'));
       $(this).html('hide');

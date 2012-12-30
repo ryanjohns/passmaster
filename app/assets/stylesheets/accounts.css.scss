@@ -1,3 +1,58 @@
 #accounts {
   text-align: center;
 }
+
+#account_tiles {
+  text-align: left;
+  -moz-column-count: 3;
+  -moz-column-gap: 10px;
+  -moz-column-fill: auto;
+  -webkit-column-count: 3;
+  -webkit-column-gap: 10px;
+  -webkit-column-fill: auto;
+  column-count: 3;
+  column-gap: 10px;
+  column-fill: auto;
+  @media (min-width: 1200px) {
+    -moz-column-count: 4;
+    -webkit-column-count: 4;
+    column-count: 4;
+  }
+  @media (max-width: 767px) {
+    -moz-column-count: 2;
+    -webkit-column-count: 2;
+    column-count: 2;
+  }
+  @media (max-width: 480px) {
+    -moz-column-count: 1;
+    -webkit-column-count: 1;
+    column-count: 1;
+  }
+
+  .account-tile {
+    margin-bottom: 10px;
+    padding: 8px;
+    background-color: #f5f5f5;
+    -moz-column-break-inside: avoid;
+    -webkit-column-break-inside: avoid;
+    column-break-inside: avoid;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+  }
+
+  .account {
+    margin-bottom: 5px;
+  }
+
+  .links {
+    margin-left: 5px;
+  }
+
+  .notes pre {
+    border: none;
+    margin: 5px 0 0 0;
+    padding: 8px;
+    background-color: #fff;
+  }
+}
