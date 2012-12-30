@@ -11,20 +11,27 @@
         %p= password_field_tag(:passwd, '', :placeholder => 'Master Password', :class => 'input-xlarge', :id => 'unlock_accounts_field')
         %p= submit_tag('Unlock', :class => 'btn btn-primary btn-large', :id => 'unlock_accounts_btn')
 
-    #accounts_list{ :style => 'display:none;' }
-      %p= text_field_tag(:search, '', :placeholder => 'Search', :class => 'input-xlarge', :id => 'accounts_list_search')
-      %table#accounts_table.table.table-hover.table-striped.table-bordered
-        %thead
-          %tr
-            %th Account
-            %th Username
-            %th Password
-            %th Notes
-        %tbody
-          %tr.template{ :style => 'display:none;' }
-            %td.account
-            %td.username
-            %td
-              = link_to('show', '#', 'data-password' => 'passwd')
-              %span.password
-            %td.notes
+  #accounts_list{ :style => 'display:none;' }
+    %p= text_field_tag(:search, '', :placeholder => 'Search', :class => 'input-xlarge', :id => 'accounts_list_search')
+    #account_tiles
+      .account-tile.template{ :style => 'display:none;' }
+        .account
+          %strong
+            A:
+            %span
+        .pull-left
+          .info
+            .username
+              U:
+              %span
+            .password
+              P:
+              %a{ :href => '#', 'data-password' => 'passwd' } show
+              %span
+        .pull-right
+          .links
+            %a.btn.btn-primary.btn-small.edit{ :href => '#' } Edit
+            %a.btn.btn-danger.btn-small.delete{ :href => '#' } Delete
+        .clearfix
+        .notes
+          %pre
