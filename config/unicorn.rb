@@ -15,7 +15,7 @@ preload_app true
 FileUtils.mkdir_p("#{app_dir}/tmp/pids")
 FileUtils.mkdir_p("#{app_dir}/tmp/sockets")
 
-listen('8080')
+listen('8000')
 pid "#{app_dir}/tmp/pids/unicorn_#{Process.pid}.pid"
 
 stderr_path "#{app_dir}/log/unicorn-stderr.log"
