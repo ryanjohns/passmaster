@@ -22,7 +22,7 @@ $(function() {
     return false;
   });
 
-  if (localStorage.email)
+  if (localStorage.userId)
     Util.lookupUser();
   else
     Util.chooseSection();

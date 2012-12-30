@@ -8,7 +8,7 @@ function UserData() {
     this.verified = attrs['verified_at?'];
     this.encryptedData = attrs['encrypted_data'];
     this.accounts = {};
-    localStorage.email = this.email;
+    localStorage.userId = this.userId;
   };
   this.setMasterPassword = function(passwd) {
     this.masterPassword = Crypto.sha256(passwd);
