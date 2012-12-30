@@ -1,7 +1,7 @@
 function Overview() {};
 
 Overview.init = function() {
-  $('#overview_field').val('');
+  $('#overview_email').val('');
 };
 
 $(function() {

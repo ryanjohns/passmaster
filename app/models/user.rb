@@ -6,25 +6,18 @@ class User < ActiveRecord::Base
   validates_format_of :email, :with => EMAIL_REGEX, :if => :email_changed?
   validate :verification_code_matches
   validate :verified_for_update
-  validate :allowed_to_configure
   validate :allowed_to_update
 
   after_initialize :generate_verification_code
 
   def as_json(options = nil)
-    super(options.merge({ :only => [ :id, :email, :encrypted_data ], :methods => [ :verified_at? ] }))
+    super(options.merge({ :only => [ :id, :email, :encrypted_data ], :methods => [ :encrypted_data?, :verified_at? ] }))
   end
 
-  def configure!(key, data)
-    @conf = true
-    self.api_key = key
-    self.encrypted_data = data
-    save
-  end
-
-  def update!(api_key, encrypted_data)
-    @key = api_key
+  def update!(old_api_key, encrypted_data, new_api_key)
+    @old_api_key = old_api_key.present? ? old_api_key : nil
     self.encrypted_data = encrypted_data
+    self.api_key = new_api_key if new_api_key.present?
     save
   end
 
@@ -53,14 +46,8 @@ class User < ActiveRecord::Base
     end
   end
 
-  def allowed_to_configure
-    if @conf && (api_key_was.present? || encrypted_data_was.present?)
-      errors.add(:api_key, 'is already configured')
-    end
-  end
-
   def allowed_to_update
-    if @key && @key != api_key
+    if @old_api_key && @old_api_key != api_key_was
       errors.add(:api_key, 'is not authorized')
     end
   end

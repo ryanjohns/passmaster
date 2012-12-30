@@ -11,5 +11,5 @@
     .pushed-down
       %p Enter your verification code below.
       = form_tag(users_path, :method => :put, :remote => true, :format => :json, :id => 'verify_form') do
-        %p= text_field_tag(:verification_code, '', :placeholder => 'Verification Code', :class => 'input-xlarge', :id => 'verify_field', :required => 'true')
+        %p= text_field_tag(:verification_code, '', :placeholder => 'Verification Code', :class => 'input-xlarge', :id => 'verify_verification_code', :required => 'true')
         %p= submit_tag('Verify', :class => 'btn btn-primary btn-large', :id => 'verify_btn')

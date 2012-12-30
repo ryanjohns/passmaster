@@ -30,7 +30,7 @@ Util.chooseSection = function() {
     section = 'overview';
   else if (!userData.verified)
     section = 'verify';
-  else if (userData.encryptedData == null)
+  else if (!userData.configured)
     section = 'configure';
   else
     section = 'accounts';
@@ -53,7 +53,7 @@ Util.initSection = function(section) {
 };
 
 Util.lookupUser = function() {
-  $('#overview_field').val(localStorage.email);
+  $('#overview_email').val(localStorage.email);
   $('#overview_form').submit();
 };
 

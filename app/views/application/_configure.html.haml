@@ -12,9 +12,11 @@
       %p Enter a strong master password below.
       %p.bold It is extremely important that you remember this password as it CANNOT be recovered!
       = form_tag('#', :id => 'configure_form') do
-        %p= password_field_tag(:passwd, '', :placeholder => 'Master Password', :class => 'input-xlarge', :id => 'configure_field', :required => 'true')
-        %p= password_field_tag(:passwd2, '', :placeholder => 'Confirm Master Password', :class => 'input-xlarge', :id => 'configure_field2', :required => 'true')
+        %p= password_field_tag(:old_passwd, '', :placeholder => 'Current Master Password', :class => 'input-xlarge', :id => 'configure_old_passwd', :style => 'display:none;')
+        %p= password_field_tag(:passwd, '', :placeholder => 'New Master Password', :class => 'input-xlarge', :id => 'configure_passwd', :required => 'true')
+        %p= password_field_tag(:passwd2, '', :placeholder => 'Confirm Master Password', :class => 'input-xlarge', :id => 'configure_passwd2', :required => 'true')
         %p= submit_tag('Set Master Password', :class => 'btn btn-primary btn-large', :id => 'configure_btn')
       = form_tag(users_path, :method => :put, :remote => true, :format => :json, :id => 'configure_hidden_form', :class => 'hidden') do
-        = hidden_field_tag(:api_key, '', :id => 'configure_hidden_field')
-        = hidden_field_tag(:encrypted_data, '', :id => 'configure_hidden_field2')
+        = hidden_field_tag(:api_key, '', :id => 'configure_hidden_api_key')
+        = hidden_field_tag(:encrypted_data, '', :id => 'configure_hidden_encrypted_data')
+        = hidden_field_tag(:new_api_key, '', :id => 'configure_hidden_new_api_key')

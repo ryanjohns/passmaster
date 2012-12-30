@@ -4,6 +4,7 @@ function UserData() {
   this.updateAttributes = function(attrs) {
     this.userId = attrs['id'];
     this.email = attrs['email'];
+    this.configured = attrs['encrypted_data?'];
     this.verified = attrs['verified_at?'];
     this.encryptedData = attrs['encrypted_data'];
     this.accounts = {};
@@ -24,5 +25,8 @@ function UserData() {
     if (this.encryptedData == null)
       return;
     this.accounts = Crypto.decryptObject(this.masterPassword, this.encryptedData);
+  };
+  this.passwordMatches = function(passwd) {
+    return this.apiKey == Crypto.sha256(Crypto.sha256(passwd) + ':' + this.userId);
   };
 };

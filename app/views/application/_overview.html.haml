@@ -5,5 +5,5 @@
     .pushed-down
       %p Just enter your email address to access your accounts, or to get started.
       = form_tag(users_path, :remote => true, :format => :json, :id => 'overview_form') do
-        %p= email_field_tag(:email, '', :placeholder => 'Email Address', :class => 'input-xlarge', :id => 'overview_field', :required => 'true')
+        %p= email_field_tag(:email, '', :placeholder => 'Email Address', :class => 'input-xlarge', :id => 'overview_email', :required => 'true')
         %p= submit_tag('Access Accounts', :class => 'btn btn-primary btn-large', :id => 'overview_btn')
