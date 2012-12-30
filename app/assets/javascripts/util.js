@@ -64,3 +64,16 @@ Util.resetApp = function() {
   Accounts.wipeAccountTiles();
   this.chooseSection();
 };
+
+Util.timer;
+Util.timerVal = '';
+Util.typewatch = function(currentVal, callback, ms) {
+  if (this.timerVal != currentVal) {
+    this.timerVal = currentVal;
+    if (this.timer != undefined)
+      clearTimeout(this.timer);
+    this.timer = setTimeout(function() {
+      eval(callback);
+    }, ms);
+  }
+};
