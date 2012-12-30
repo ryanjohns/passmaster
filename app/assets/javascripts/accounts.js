@@ -5,6 +5,21 @@ Accounts.init = function() {
   this.selectView();
 };
 
+Accounts.reload = function(data) {
+  userData.updateAttributes(data);
+  if (userData.masterPassword) {
+    try {
+      userData.decryptAccounts();
+    } catch(err) {
+      this.wipeAccountTiles();
+      userData.wipeMasterPassword();
+      console.log(err.toString());
+      alert('Failed to decrypt accounts.');
+    }
+  }
+  this.init();
+};
+
 Accounts.selectView = function() {
   if (userData.masterPassword) {
     this.fillAccountTiles();
@@ -17,9 +32,13 @@ Accounts.selectView = function() {
 };
 
 Accounts.fillAccountTiles = function() {
-  $('#account_tiles .account-data').remove();
+  this.wipeAccountTiles();
   for (account in userData.accounts)
     this.addAccountTile(account, userData.accounts[account]);
+};
+
+Accounts.wipeAccountTiles = function() {
+  $('#account_tiles .account-data').remove();
 };
 
 Accounts.addAccountTile = function(account, data) {
@@ -88,6 +107,7 @@ Accounts.unlock = function(passwd) {
     alert('Failed to decrypt accounts.');
     return;
   }
+  $('#unlock_accounts_field').val('');
   this.selectView();
 };
 
@@ -143,7 +163,7 @@ $(function() {
     delete accounts[account];
     userData.setEncryptedData(accounts);
     var form = tile.find('.update form');
-    form.data('deleted-account', 'true');
+    form.data('deletedAccount', 'true');
     form.find('input.api-key').val(userData.apiKey);
     form.find('input.encrypted-data').val(userData.encryptedData);
     form.submit();
@@ -169,7 +189,7 @@ $(function() {
     accounts[account] = data;
     userData.setEncryptedData(accounts);
     var form = tile.find('.update form');
-    form.data('deleted-account', 'false');
+    form.data('deletedAccount', 'false');
     form.find('input.api-key').val(userData.apiKey);
     form.find('input.encrypted-data').val(userData.encryptedData);
     form.submit();
@@ -178,7 +198,7 @@ $(function() {
 
   $('#account_tiles .update form').bind('ajax:success', function(evt, data, status, xhr) {
     var tile = $(this).closest('.account-tile');
-    if ($(this).data('deleted-account') == 'true')
+    if ($(this).data('deletedAccount') == 'true')
       tile.remove();
     else
       Accounts.updateTile(tile);
@@ -194,5 +214,21 @@ $(function() {
   .bind('ajax:complete', function(evt, xhr, status) {
     var btns = $(this).closest('.account-tile').find('.write form .btn');
     btns.removeAttr('disabled');
+  });
+
+  $('#reload_link').bind('ajax:success', function(evt, data, status, xhr) {
+    Accounts.reload(data);
+  })
+  .bind('ajax:error', function(evt, xhr, status, error) {
+    alert(Util.extractErrors(xhr));
+  })
+  .bind('ajax:beforeSend', function(evt, xhr, settings) {
+    settings.url = settings.url + '/' + userData.userId;
+    $(this).hide();
+    $('#reload_spinner').show();
+  })
+  .bind('ajax:complete', function(evt, xhr, status) {
+    $('#reload_spinner').hide();
+    $(this).show();
   });
 });

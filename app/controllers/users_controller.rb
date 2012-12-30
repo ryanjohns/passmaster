@@ -2,7 +2,11 @@ class UsersController < ApplicationController
 
   respond_to :json
 
-  before_filter :find_user, :only => [ :configure, :update, :verify, :destroy ]
+  before_filter :find_user, :only => [ :show, :configure, :update, :verify, :destroy ]
+
+  def show
+    respond_with(@user)
+  end
 
   def create
     @user = User.find_or_create_by_email(params[:email])

@@ -60,5 +60,6 @@ Util.lookupUser = function() {
 Util.resetApp = function() {
   userData = null;
   localStorage.removeItem('email');
+  Accounts.wipeAccountTiles();
   this.chooseSection();
 };

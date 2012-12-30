@@ -6,7 +6,8 @@ Overview.init = function() {
 
 $(function() {
   $('#overview_form').bind('ajax:success', function(evt, data, status, xhr) {
-    userData = new UserData(data);
+    userData = new UserData();
+    userData.updateAttributes(data);
     Overview.init();
     Util.chooseSection();
   })

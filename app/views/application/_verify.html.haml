@@ -1,5 +1,8 @@
 .container#verify{ :style => 'display:none;' }
-  = render 'logout'
+  .pull-right
+    %a{ :href => '#', 'data-logout' => 'true' } Logout
+  .clearfix
+
   .well
     %h1
       Verify
