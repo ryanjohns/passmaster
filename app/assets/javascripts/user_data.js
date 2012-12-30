@@ -14,8 +14,9 @@ function UserData(data) {
     this.apiKey = Crypto.sha256(this.masterPassword + ':' + this.userId);
   };
   this.decryptAccounts = function() {
-    if (this.encryptedData != null)
-      this.accounts = Crypto.decryptObject(this.masterPassword, this.encryptedData);
+    if (this.encryptedData == null)
+      return;
+    this.accounts = Crypto.decryptObject(this.masterPassword, this.encryptedData);
   };
   this.encryptAccounts = function() {
     this.encryptedData = Crypto.encryptObject(this.masterPassword, this.accounts);

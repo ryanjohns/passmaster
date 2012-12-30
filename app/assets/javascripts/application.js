@@ -17,7 +17,7 @@
 //= require_tree .
 
 $(function() {
-  $('a.logout').click(function() {
+  $('a[data-logout]').click(function() {
     Util.resetApp();
     return false;
   });
