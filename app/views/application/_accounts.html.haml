@@ -23,7 +23,7 @@
       = link_to('Set Master Password', '#', :class => 'btn btn-inverse btn-small', :id => 'set_master_password_btn')
     %p= text_field_tag(:search, '', :placeholder => 'Search', :class => 'input-xlarge', :id => 'accounts_list_search')
     #account_tiles
-      .account-tile.template{ :style => 'display:none;' }
+      .account-tile.pull-left.template{ :style => 'display:none;' }
         .read
           .account
             %strong
@@ -62,3 +62,4 @@
           = form_tag(users_path, :method => :put, :remote => true, :format => :json, :id => nil, :class => 'hidden') do
             = hidden_field_tag(:api_key, '', :id => nil, :class => 'api-key')
             = hidden_field_tag(:encrypted_data, '', :id => nil, :class => 'encrypted-data')
+    .clearfix
