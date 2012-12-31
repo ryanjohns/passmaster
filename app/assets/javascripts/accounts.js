@@ -35,29 +35,30 @@ Accounts.selectView = function() {
 
 Accounts.fillAccountTiles = function() {
   this.wipeAccountTiles();
-  for (account in userData.accounts)
-    this.addAccountTile(account, userData.accounts[account]);
+  for (accountId in userData.accounts)
+    this.addAccountTile(accountId, userData.accounts[accountId]);
 };
 
 Accounts.wipeAccountTiles = function() {
   $('#account_tiles .account-data').remove();
 };
 
-Accounts.addAccountTile = function(account, data) {
+Accounts.addAccountTile = function(accountId, data) {
   var tile = $('#account_tiles .template').clone(true);
-  tile.find('.read .account span').html(account);
+  tile.find('.read .account span').html(data['account']);
   tile.find('.read .username span').html(data['username']);
   tile.find('.read .password a').attr('data-password', data['password']);
   tile.find('.read .notes pre').html(data['notes']);
   if (data['notes'].length == 0)
     tile.find('.read .notes').hide();
-  tile.find('.write .account input').val(account);
+  tile.find('.write .account input').val(data['account']);
   tile.find('.write .username input').val(data['username']);
   tile.find('.write .password input').val(data['password']);
   tile.find('.write .notes textarea').val(data['notes']);
   tile.find('.write').hide();
   tile.removeClass('template');
   tile.addClass('account-data');
+  tile.attr('data-account-id', accountId);
   tile.appendTo('#account_tiles');
   tile.removeAttr('style');
 };
@@ -72,23 +73,33 @@ Accounts.addBlankTile = function() {
 };
 
 Accounts.resetTile = function(tile) {
-  tile.find('.write .account input').val(tile.find('.read .account span').html());
-  tile.find('.write .username input').val(tile.find('.read .username span').html());
-  tile.find('.write .password input').val(tile.find('.read .password a').attr('data-password'));
-  tile.find('.write .notes textarea').val(tile.find('.read .notes pre').html());
+  var data = userData.accounts[tile.attr('data-account-id')];
+  tile.find('.read .account span').html(data['account']);
+  tile.find('.read .username span').html(data['username']);
+  tile.find('.read .password a').attr('data-password', data['password']);
+  tile.find('.read .notes pre').html(data['notes']);
+  tile.find('.write .account input').val(data['account']);
+  tile.find('.write .username input').val(data['username']);
+  tile.find('.write .password input').val(data['password']);
+  tile.find('.write .notes textarea').val(data['notes']);
   tile.find('.write').hide();
   tile.find('.read').show();
 };
 
 Accounts.updateTile = function(tile) {
-  var account = tile.find('.write .account input').val();
+  var accountId = tile.attr('data-account-id');
+  if (accountId)
+    delete userData.accounts[accountId];
   var data = {
+    'account': tile.find('.write .account input').val(),
     'username': tile.find('.write .username input').val(),
     'password': tile.find('.write .password input').val(),
     'notes': tile.find('.write .notes textarea').val()
   };
-  userData.accounts[account] = data;
-  tile.find('.read .account span').html(account);
+  accountId = Crypto.sha256(data['account']);
+  userData.accounts[accountId] = data;
+  tile.attr('data-account-id', accountId);
+  tile.find('.read .account span').html(data['account']);
   tile.find('.read .username span').html(data['username']);
   tile.find('.read .password a').attr('data-password', data['password']);
   tile.find('.read .notes pre').html(data['notes']);
@@ -101,8 +112,7 @@ Accounts.updateTile = function(tile) {
 };
 
 Accounts.removeTile = function(tile) {
-  var account = tile.find('.read .account span').html();
-  delete userData.accounts[account];
+  delete userData.accounts[tile.attr('data-account-id')];
   tile.remove();
 };
 
@@ -161,7 +171,7 @@ $(function() {
 
   $('a[data-cancel]').click(function() {
     var tile = $(this).closest('.account-tile');
-    if (tile.find('.read .account span').html() == '')
+    if (!tile.attr('data-account-id'))
       tile.remove();
     else
       Accounts.resetTile(tile);
@@ -179,9 +189,8 @@ $(function() {
     if (!confirm('Are you sure you want to delete this account?'))
       return false;
     var tile = $(this).closest('.account-tile');
-    var account = tile.find('.read .account span').html();
     var accounts = $.extend(true, {}, userData.accounts);
-    delete accounts[account];
+    delete accounts[tile.attr('data-account-id')];
     try {
       userData.setEncryptedData(accounts);
     } catch(err) {
@@ -199,21 +208,25 @@ $(function() {
 
   $('#account_tiles .write form').submit(function() {
     var tile = $(this).closest('.account-tile');
-    var account = $(this).find('.account input').val();
     var data = {
+      'account': $(this).find('.account input').val(),
       'username': $(this).find('.username input').val(),
       'password': $(this).find('.password input').val(),
       'notes': $(this).find('.notes textarea').val()
     };
-    if (account.length == 0) {
+    var oldAccountId = tile.attr('data-account-id');
+    var accountId = Crypto.sha256(data['account']);
+    if (data['account'].length == 0) {
       alert('Account Name cannot be blank.');
       return false;
-    } else if (tile.find('.read .account span').html() == '' && userData.accounts[account]) {
+    } else if (oldAccountId != accountId && userData.accounts[accountId]) {
       alert('An account with that name already exists.');
       return false;
     }
     var accounts = $.extend(true, {}, userData.accounts);
-    accounts[account] = data;
+    if (oldAccountId)
+      delete accounts[oldAccountId];
+    accounts[accountId] = data;
     try {
       userData.setEncryptedData(accounts);
     } catch(err) {
