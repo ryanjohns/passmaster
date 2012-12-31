@@ -5,17 +5,19 @@
 
   .well
     %h1
-      Configure
+      Master Password
       %small#configure_email_placeholder
-    %p You need to create a master password in order to begin adding accounts.
+    %p The Master Password is the one password you will need to remember. It is used to decrypt the rest of your individual account passwords.
     .pushed-down
       %p Enter a strong master password below.
       %p.bold It is extremely important that you remember this password as it CANNOT be recovered!
       = form_tag('#', :id => 'configure_form') do
-        %p= password_field_tag(:old_passwd, '', :placeholder => 'Current Master Password', :class => 'input-xlarge', :id => 'configure_old_passwd', :style => 'display:none;')
-        %p= password_field_tag(:passwd, '', :placeholder => 'New Master Password', :class => 'input-xlarge', :id => 'configure_passwd', :required => 'true')
-        %p= password_field_tag(:passwd2, '', :placeholder => 'Confirm Master Password', :class => 'input-xlarge', :id => 'configure_passwd2', :required => 'true')
-        %p= submit_tag('Set Master Password', :class => 'btn btn-primary btn-large', :id => 'configure_btn')
+        %p= password_field_tag(:old_passwd, '', :placeholder => 'Current Password', :class => 'input-xlarge', :id => 'configure_old_passwd', :style => 'display:none;')
+        %p= password_field_tag(:passwd, '', :placeholder => 'New Password', :class => 'input-xlarge', :id => 'configure_passwd', :required => 'true')
+        %p= password_field_tag(:passwd2, '', :placeholder => 'Confirm New Password', :class => 'input-xlarge', :id => 'configure_passwd2', :required => 'true')
+        %p
+          = submit_tag('Set Password', :class => 'btn btn-primary btn-large', :id => 'configure_btn')
+          = link_to('Cancel', '#', :class => 'btn btn-small', :id => 'configure_cancel_btn', :style => 'display:none;')
       = form_tag(users_path, :method => :put, :remote => true, :format => :json, :id => 'configure_hidden_form', :class => 'hidden') do
         = hidden_field_tag(:api_key, '', :id => 'configure_hidden_api_key')
         = hidden_field_tag(:encrypted_data, '', :id => 'configure_hidden_encrypted_data')
