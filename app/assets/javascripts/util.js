@@ -24,6 +24,19 @@ Util.extractErrors = function(xhr) {
   return msg;
 };
 
+Util.enableReadOnly = function() {
+  $('#configure_btn').attr('disabled', 'disabled');
+  $('#verify_btn').attr('disabled', 'disabled');
+  $('#add_account_btn').attr('disabled', 'disabled');
+  $('#set_master_password_btn').attr('disabled', 'disabled');
+  $('button[data-account-edit]').attr('disabled', 'disabled');
+  $('button[data-account-delete]').attr('disabled', 'disabled');
+  $('.account-tile .write input[type="submit"]').attr('disabled', 'disabled');
+  $('#reload_link').attr('href', '/');
+  $('#reload_link').removeAttr('data-remote');
+  $('#reload_link').removeAttr('format');
+};
+
 Util.chooseSection = function() {
   var section = '';
   if (!userData || !userData.email)
@@ -54,13 +67,13 @@ Util.initSection = function(section) {
 
 Util.lookupUser = function() {
   userData = new UserData();
-  userData.userId = localStorage.userId;
+  userData.updateAttributes(JSON.parse(localStorage.userAttributes));
   $('#reload_link').click();
 };
 
 Util.resetApp = function() {
   userData = null;
-  localStorage.removeItem('userId');
+  localStorage.removeItem('userAttributes');
   Accounts.wipeAccountTiles();
   this.chooseSection();
 };

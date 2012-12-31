@@ -100,6 +100,12 @@ Accounts.updateTile = function(tile) {
   tile.find('.read').show();
 };
 
+Accounts.removeTile = function(tile) {
+  var account = tile.find('.read .account span').html();
+  delete userData.accounts[account];
+  tile.remove();
+};
+
 Accounts.searchTiles = function(term) {
   var pattern = new RegExp(term, 'i');
   $('#account_tiles .account-data').each(function() {
@@ -162,21 +168,27 @@ $(function() {
     return false;
   });
 
-  $('a[data-account-edit]').click(function() {
+  $('button[data-account-edit]').click(function() {
     var tile = $(this).closest('.account-tile');
     tile.find('.read').hide();
     tile.find('.write').show();
     return false;
   });
 
-  $('a[data-account-delete]').click(function() {
+  $('button[data-account-delete]').click(function() {
     if (!confirm('Are you sure you want to delete this account?'))
       return false;
     var tile = $(this).closest('.account-tile');
     var account = tile.find('.read .account span').html();
     var accounts = $.extend(true, {}, userData.accounts);
     delete accounts[account];
-    userData.setEncryptedData(accounts);
+    try {
+      userData.setEncryptedData(accounts);
+    } catch(err) {
+      console.log(err.toString());
+      alert('Failed to encrypt accounts.');
+      return false;
+    }
     var form = tile.find('.update form');
     form.data('deletedAccount', 'true');
     form.find('input.api-key').val(userData.apiKey);
@@ -202,7 +214,13 @@ $(function() {
     }
     var accounts = $.extend(true, {}, userData.accounts);
     accounts[account] = data;
-    userData.setEncryptedData(accounts);
+    try {
+      userData.setEncryptedData(accounts);
+    } catch(err) {
+      console.log(err.toString());
+      alert('Failed to encrypt accounts.');
+      return false;
+    }
     var form = tile.find('.update form');
     form.data('deletedAccount', 'false');
     form.find('input.api-key').val(userData.apiKey);
@@ -212,9 +230,10 @@ $(function() {
   });
 
   $('#account_tiles .update form').bind('ajax:success', function(evt, data, status, xhr) {
+    userData.updateAttributes(data);
     var tile = $(this).closest('.account-tile');
     if ($(this).data('deletedAccount') == 'true')
-      tile.remove();
+      Accounts.removeTile(tile);
     else
       Accounts.updateTile(tile);
   })
@@ -235,9 +254,10 @@ $(function() {
     Accounts.reload(data);
   })
   .bind('ajax:error', function(evt, xhr, status, error) {
-    if (!userData.email)
-      Util.chooseSection();
-    alert(Util.extractErrors(xhr));
+    console.log(Util.extractErrors(xhr));
+    Util.enableReadOnly();
+    Util.chooseSection();
+    alert('Failed to sync with server. Read-only mode enabled to protect data loss.');
   })
   .bind('ajax:beforeSend', function(evt, xhr, settings) {
     settings.url = settings.url + '/' + userData.userId;

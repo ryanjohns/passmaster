@@ -1,14 +1,15 @@
 var userData = null;
 
 function UserData() {
+  this.accounts = {};
+
   this.updateAttributes = function(attrs) {
     this.userId = attrs['id'];
     this.email = attrs['email'];
     this.configured = attrs['encrypted_data?'];
     this.verified = attrs['verified_at?'];
     this.encryptedData = attrs['encrypted_data'];
-    this.accounts = {};
-    localStorage.userId = this.userId;
+    localStorage.userAttributes = JSON.stringify(attrs);
   };
   this.setMasterPassword = function(passwd) {
     this.masterPassword = Crypto.sha256(passwd);

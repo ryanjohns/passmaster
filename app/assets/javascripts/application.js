@@ -22,7 +22,7 @@ $(function() {
     return false;
   });
 
-  if (localStorage.userId)
+  if (localStorage.userAttributes)
     Util.lookupUser();
   else
     Util.chooseSection();

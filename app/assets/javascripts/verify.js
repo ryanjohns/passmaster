@@ -7,7 +7,7 @@ Verify.init = function() {
 
 $(function() {
   $('#verify_form').bind('ajax:success', function(evt, data, status, xhr) {
-    userData.verified = true;
+    userData.updateAttributes(data);
     Verify.init();
     Util.chooseSection();
   })

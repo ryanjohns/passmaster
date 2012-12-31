@@ -15,12 +15,12 @@ class UsersController < ApplicationController
 
   def update
     @user.update!(params[:api_key], params[:encrypted_data], params[:new_api_key])
-    respond_with(@user)
+    respond_with_json(@user)
   end
 
   def verify
     @user.verify_code!(params[:verification_code])
-    respond_with(@user)
+    respond_with_json(@user)
   end
 
   private

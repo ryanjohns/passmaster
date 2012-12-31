@@ -12,15 +12,15 @@
       %small#accounts_email_placeholder
 
     #unlock_accounts{ :style => 'display:none;' }
-      %p Accounts are locked. Enter the master password to unlock.
+      %p Accounts are locked. Enter the Master Password to unlock.
       %form{ :id => 'unlock_accounts_form' }
         %p= password_field_tag(:passwd, '', :placeholder => 'Master Password', :class => 'input-xlarge', :id => 'unlock_accounts_passwd', :required => 'true')
         %p= submit_tag('Unlock', :class => 'btn btn-primary btn-large', :id => 'unlock_accounts_btn')
 
   #accounts_list{ :style => 'display:none;' }
     %p
-      = link_to('Add Account', '#', :class => 'btn btn-success btn-small', :id => 'add_account_btn')
-      = link_to('Set Master Password', '#', :class => 'btn btn-inverse btn-small', :id => 'set_master_password_btn')
+      = button_tag('Add Account', :class => 'btn btn-success btn-small', :id => 'add_account_btn')
+      = button_tag('Set Master Password', :class => 'btn btn-inverse btn-small', :id => 'set_master_password_btn')
     %p= text_field_tag(:search, '', :placeholder => 'Search', :class => 'input-xlarge', :id => 'accounts_list_search')
     #account_tiles
       .account-tile.pull-left.template{ :style => 'display:none;' }
@@ -40,8 +40,8 @@
                 %span
           .pull-right
             .links
-              %a.btn.btn-primary.btn-small{ :href => '#', 'data-account-edit' => 'true' } Edit
-              %a.btn.btn-danger.btn-small{ :href => '#', 'data-account-delete' => 'true' } Delete
+              %button.btn.btn-primary.btn-small{ :type => :submit, 'data-account-edit' => 'true' } Edit
+              %button.btn.btn-danger.btn-small{ :type => :submit, 'data-account-delete' => 'true' } Delete
           .clearfix
           .notes
             %pre

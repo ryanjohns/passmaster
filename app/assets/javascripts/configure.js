@@ -11,6 +11,7 @@ Configure.init = function() {
   if (userData.configured) {
     $('#configure_old_passwd').attr('required', 'true');
     $('#configure_old_passwd').show();
+    $('#configure_cancel_btn').show();
   }
 };
 
@@ -53,7 +54,7 @@ $(function() {
   });
 
   $('#configure_hidden_form').bind('ajax:success', function(evt, data, status, xhr) {
-    userData.configured = true;
+    userData.updateAttributes(data);
     Configure.init();
     Util.chooseSection();
   })
@@ -73,5 +74,11 @@ $(function() {
     var btn = $('#configure_btn');
     btn.val(btn.data('origText'));
     btn.removeAttr('disabled');
+  });
+
+  $('#configure_cancel_btn').click(function() {
+    Configure.init();
+    Util.chooseSection();
+    return false;
   });
 });
