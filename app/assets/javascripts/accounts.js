@@ -118,15 +118,15 @@ Accounts.removeTile = function(tile) {
 
 Accounts.searchTiles = function(term) {
   var pattern = new RegExp(term, 'i');
-  $('#account_tiles .account-data').each(function() {
-    var txt = $(this).find('.read .account span').html() + ' ' +
-        $(this).find('.read .username span').html() + ' ' +
-        $(this).find('.read .notes pre').html();
+  for (accountId in userData.accounts) {
+    var txt = userData.accounts[accountId]['account'] + ' ' +
+        userData.accounts[accountId]['username'] + ' ' +
+        userData.accounts[accountId]['notes'];
     if (pattern.test(txt))
-      $(this).show();
+      $('.account-data[data-account-id="' + accountId + '"]').show();
     else
-      $(this).hide();
-  });
+      $('.account-data[data-account-id="' + accountId + '"]').hide();
+  }
 };
 
 Accounts.unlock = function(passwd) {
@@ -289,6 +289,6 @@ $(function() {
   });
 
   $('#accounts_list_search').keyup(function() {
-    Util.typewatch($(this).val(), 'Accounts.searchTiles(currentVal);', 500);
+    Util.typewatch($(this).val(), 'Accounts.searchTiles(currentVal);', 250);
   });
 });
