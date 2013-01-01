@@ -11,7 +11,7 @@
     .pushed-down
       %p Enter a strong master password below.
       %p.bold It is extremely important that you remember this password as it CANNOT be recovered!
-      = form_tag('#', :id => 'configure_form') do
+      %form#configure_form
         %p= password_field_tag(:old_passwd, '', :placeholder => 'Current Password', :class => 'input-xlarge', :id => 'configure_old_passwd', :style => 'display:none;')
         %p= password_field_tag(:passwd, '', :placeholder => 'New Password', :class => 'input-xlarge', :id => 'configure_passwd', :required => 'true')
         %p= password_field_tag(:passwd2, '', :placeholder => 'Confirm New Password', :class => 'input-xlarge', :id => 'configure_passwd2', :required => 'true')
