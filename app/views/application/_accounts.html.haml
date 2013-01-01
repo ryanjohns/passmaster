@@ -47,15 +47,15 @@
             %pre
         .write
           %form
-            %p.account
-              %input{ :type => :text, :name => :account, :placeholder => 'Account Name', :required => 'true' }
-            %p.username
-              %input{ :type => :text, :name => :username, :placeholder => 'Username' }
-            %p.password
-              %input{ :type => :text, :name => :password, :placeholder => 'Password' }
-            %p.notes
-              %textarea{ :name => :notes, :placeholder => 'Notes', :rows => '3' }
-            %p
+            .account
+              %input.input-block-level{ :type => :text, :name => :account, :placeholder => 'Account Name', :required => 'true' }
+            .username
+              %input.input-block-level{ :type => :text, :name => :username, :placeholder => 'Username' }
+            .password
+              = render 'password_generator'
+            .notes
+              %textarea.input-block-level{ :name => :notes, :placeholder => 'Notes', :rows => '3' }
+            .actions
               %input.btn.btn-primary.btn-small{ :type => :submit, :name => :commit, :value => 'Save' }
               %a.btn.btn-small{ :href => '#', 'data-cancel' => 'true' } Cancel
         .update
