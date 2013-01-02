@@ -18,7 +18,7 @@
         %p
           = submit_tag('Set Password', :class => 'btn btn-primary btn-large', :id => 'configure_btn')
           = link_to('Cancel', '#', :class => 'btn btn-small', :id => 'configure_cancel_btn', :style => 'display:none;')
-      = form_tag(users_path, :method => :put, :remote => true, :format => :json, :id => 'configure_hidden_form', :style => 'display:none;') do
+      = form_tag(users_path, :method => :put, :remote => true, :id => 'configure_hidden_form', :style => 'display:none;') do
         = hidden_field_tag(:api_key, '', :id => 'configure_hidden_api_key')
         = hidden_field_tag(:encrypted_data, '', :id => 'configure_hidden_encrypted_data')
         = hidden_field_tag(:new_api_key, '', :id => 'configure_hidden_new_api_key')

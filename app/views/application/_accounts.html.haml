@@ -1,6 +1,6 @@
 #accounts.container{ :style => 'display:none;' }
   .pull-right
-    = link_to('Reload', users_path, :remote => true, :format => :json, :id => 'reload_link')
+    = link_to('Reload', users_path, :remote => true, :id => 'reload_link')
     %span{ :id => 'reload_spinner', :style => 'display:none;' } Reloading
     |
     %a{ :href => '#', 'data-logout' => 'true' } Logout
@@ -64,7 +64,7 @@
               %button.btn.btn-danger.btn-small.pull-right{ :type => :submit, 'data-account-delete' => 'true', :style => 'display:none;' } Delete
               .clearfix
         .update{ :style => 'display:none;' }
-          = form_tag(users_path, :method => :put, :remote => true, :format => :json, :id => nil) do
+          = form_tag(users_path, :method => :put, :remote => true, :id => nil) do
             = hidden_field_tag(:api_key, '', :id => nil, :class => 'api-key')
             = hidden_field_tag(:encrypted_data, '', :id => nil, :class => 'encrypted-data')
     .clearfix

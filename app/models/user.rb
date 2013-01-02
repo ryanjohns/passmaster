@@ -14,6 +14,11 @@ class User < ActiveRecord::Base
     super(options.merge({ :only => [ :id, :email, :encrypted_data ], :methods => [ :encrypted_data?, :verified_at? ] }))
   end
 
+  def generate_verification_code!
+    generate_verification_code
+    save
+  end
+
   def update!(old_api_key, encrypted_data, new_api_key)
     @old_api_key = old_api_key.present? ? old_api_key : nil
     self.encrypted_data = encrypted_data

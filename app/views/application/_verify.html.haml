@@ -9,7 +9,8 @@
       %small#verify_email_placeholder
     %p You need to verify your email address to use Passmaster.
     .pushed-down
-      %p Enter your verification code below.
-      = form_tag(users_path, :method => :put, :remote => true, :format => :json, :id => 'verify_form') do
+      %p Enter your verification code below or request a new one.
+      = form_tag(users_path, :method => :put, :remote => true, :id => 'verify_form') do
         %p= text_field_tag(:verification_code, '', :placeholder => 'Verification Code', :class => 'input-xlarge', :id => 'verify_verification_code', :required => 'true')
         %p= submit_tag('Verify', :class => 'btn btn-primary btn-large', :id => 'verify_btn')
+      %p= link_to('Send New Code', users_path, :class => 'btn btn-large', :id => 'verify_cancel_link', :remote => true, :method => :post)
