@@ -48,13 +48,13 @@
           %form
             .account.input-prepend
               %span.add-on A:
-              %input.input-block-level{ :type => :text, :name => :account, :placeholder => 'Account Name', :required => 'true' }
+              %input{ :type => :text, :name => :account, :placeholder => 'Account Name', :required => 'true' }
             .username.input-prepend
               %span.add-on U:
-              %input.input-block-level{ :type => :text, :name => :username, :placeholder => 'Username' }
+              %input{ :type => :text, :name => :username, :placeholder => 'Username' }
             .password.input-prepend.input-append
               %span.add-on P:
-              %input.input-block-level{ :type => :text, :name => :password, :placeholder => 'Password' }
+              %input{ :type => :text, :name => :password, :placeholder => 'Password' }
               %button.btn{ :type => 'button', 'data-password-generator' => 'true' } Generate
             .notes
               %textarea.input-block-level{ :name => :notes, :placeholder => 'Notes', :rows => '3' }
