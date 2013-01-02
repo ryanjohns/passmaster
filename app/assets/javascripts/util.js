@@ -33,6 +33,7 @@ Util.enableReadOnly = function() {
   $('.account-tile .write input[type="submit"]').attr('disabled', 'disabled');
   $('#reload_link').attr('href', '/');
   $('#reload_link').removeAttr('data-remote');
+  $('.alert-read-only').show();
 };
 
 Util.chooseSection = function() {
