@@ -27,7 +27,8 @@ $(function() {
     btn.removeAttr('disabled');
   });
 
-  $('#verify_cancel_link').bind('ajax:success', function() {
+  $('#verify_send_code_link').bind('ajax:success', function(evt, data) {
+    userData.updateAttributes(data);
     alert('Verification email sent, please check your inbox.');
   })
   .bind('ajax:error', function(evt, xhr) {
@@ -35,13 +36,13 @@ $(function() {
   })
   .bind('ajax:beforeSend', function(evt, xhr, settings) {
     settings.url = settings.url + '/' + userData.userId + '/resend_verification';
-    var link = $('#verify_cancel_link');
+    var link = $('#verify_send_code_link');
     link.data('origText', link.html());
     link.attr('disabled', 'disabled');
     link.html('Sending...');
   })
   .bind('ajax:complete', function() {
-    var link = $('#verify_cancel_link');
+    var link = $('#verify_send_code_link');
     link.html(link.data('origText'));
     link.removeAttr('disabled');
   });
