@@ -77,6 +77,8 @@ Accounts.resetTile = function(tile) {
   tile.find('.read .account span').html(data['account']);
   tile.find('.read .username span').html(data['username']);
   tile.find('.read .password a').attr('data-password', data['password']);
+  tile.find('.read .password a').html('show');
+  tile.find('.read .password span').html('');
   tile.find('.read .notes pre').html(data['notes']);
   tile.find('.write .account input').val(data['account']);
   tile.find('.write .username input').val(data['username']);
@@ -102,6 +104,8 @@ Accounts.updateTile = function(tile) {
   tile.find('.read .account span').html(data['account']);
   tile.find('.read .username span').html(data['username']);
   tile.find('.read .password a').attr('data-password', data['password']);
+  tile.find('.read .password a').html('show');
+  tile.find('.read .password span').html('');
   tile.find('.read .notes pre').html(data['notes']);
   if (data['notes'].length == 0)
     tile.find('.read .notes').hide();
