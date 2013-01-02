@@ -6,12 +6,12 @@ Verify.init = function() {
 };
 
 $(function() {
-  $('#verify_form').bind('ajax:success', function(evt, data, status, xhr) {
+  $('#verify_form').bind('ajax:success', function(evt, data) {
     userData.updateAttributes(data);
     Verify.init();
     Util.chooseSection();
   })
-  .bind('ajax:error', function(evt, xhr, status, error) {
+  .bind('ajax:error', function(evt, xhr) {
     alert(Util.extractErrors(xhr));
   })
   .bind('ajax:beforeSend', function(evt, xhr, settings) {
@@ -21,16 +21,16 @@ $(function() {
     btn.attr('disabled', 'disabled');
     btn.val('Verifying...');
   })
-  .bind('ajax:complete', function(evt, xhr, status) {
+  .bind('ajax:complete', function() {
     var btn = $('#verify_btn');
     btn.val(btn.data('origText'));
     btn.removeAttr('disabled');
   });
 
-  $('#verify_cancel_link').bind('ajax:success', function(evt, data, status, xhr) {
+  $('#verify_cancel_link').bind('ajax:success', function() {
     alert('Verification email sent, please check your inbox.');
   })
-  .bind('ajax:error', function(evt, xhr, status, error) {
+  .bind('ajax:error', function(evt, xhr) {
     alert(Util.extractErrors(xhr));
   })
   .bind('ajax:beforeSend', function(evt, xhr, settings) {
@@ -40,7 +40,7 @@ $(function() {
     link.attr('disabled', 'disabled');
     link.html('Sending...');
   })
-  .bind('ajax:complete', function(evt, xhr, status) {
+  .bind('ajax:complete', function() {
     var link = $('#verify_cancel_link');
     link.html(link.data('origText'));
     link.removeAttr('disabled');

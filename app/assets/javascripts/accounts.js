@@ -243,7 +243,7 @@ $(function() {
     return false;
   });
 
-  $('#account_tiles .update form').bind('ajax:success', function(evt, data, status, xhr) {
+  $('#account_tiles .update form').bind('ajax:success', function(evt, data) {
     userData.updateAttributes(data);
     var tile = $(this).closest('.account-tile');
     if ($(this).data('deletedAccount') == 'true')
@@ -251,7 +251,7 @@ $(function() {
     else
       Accounts.updateTile(tile);
   })
-  .bind('ajax:error', function(evt, xhr, status, error) {
+  .bind('ajax:error', function(evt, xhr) {
     alert(Util.extractErrors(xhr));
   })
   .bind('ajax:before', function() {
@@ -264,15 +264,15 @@ $(function() {
     var btns = $(this).closest('.account-tile').find('.write form .btn');
     btns.attr('disabled', 'disabled');
   })
-  .bind('ajax:complete', function(evt, xhr, status) {
+  .bind('ajax:complete', function() {
     var btns = $(this).closest('.account-tile').find('.write form .btn');
     btns.removeAttr('disabled');
   });
 
-  $('#reload_link').bind('ajax:success', function(evt, data, status, xhr) {
+  $('#reload_link').bind('ajax:success', function(evt, data) {
     Accounts.reload(data);
   })
-  .bind('ajax:error', function(evt, xhr, status, error) {
+  .bind('ajax:error', function(evt, xhr) {
     console.log(Util.extractErrors(xhr));
     Util.enableReadOnly();
     Util.chooseSection();
@@ -283,7 +283,7 @@ $(function() {
     $(this).hide();
     $('#reload_spinner').show();
   })
-  .bind('ajax:complete', function(evt, xhr, status) {
+  .bind('ajax:complete', function() {
     $('#reload_spinner').hide();
     $(this).show();
   });
