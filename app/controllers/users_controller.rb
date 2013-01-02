@@ -15,7 +15,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    @user.update!(params[:api_key], params[:encrypted_data], params[:new_api_key])
+    @user.update!(params[:api_key], params[:new_api_key], params[:encrypted_data], params[:schema_version])
     respond_with_json(@user)
   end
 

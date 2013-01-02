@@ -205,8 +205,6 @@ $(function() {
     }
     var form = tile.find('.update form');
     form.data('deletedAccount', 'true');
-    form.find('input.api-key').val(userData.apiKey);
-    form.find('input.encrypted-data').val(userData.encryptedData);
     form.submit();
     return false;
   });
@@ -241,8 +239,6 @@ $(function() {
     }
     var form = tile.find('.update form');
     form.data('deletedAccount', 'false');
-    form.find('input.api-key').val(userData.apiKey);
-    form.find('input.encrypted-data').val(userData.encryptedData);
     form.submit();
     return false;
   });
@@ -257,6 +253,11 @@ $(function() {
   })
   .bind('ajax:error', function(evt, xhr, status, error) {
     alert(Util.extractErrors(xhr));
+  })
+  .bind('ajax:before', function() {
+    $(this).find('input.api-key').val(userData.apiKey);
+    $(this).find('input.encrypted-data').val(userData.encryptedData);
+    $(this).find('input.schema-version').val(Schema.currentVersion);
   })
   .bind('ajax:beforeSend', function(evt, xhr, settings) {
     settings.url = settings.url + '/' + userData.userId;

@@ -20,5 +20,6 @@
           = link_to('Cancel', '#', :class => 'btn btn-small', :id => 'configure_cancel_btn', :style => 'display:none;')
       = form_tag(users_path, :method => :put, :remote => true, :id => 'configure_hidden_form', :style => 'display:none;') do
         = hidden_field_tag(:api_key, '', :id => 'configure_hidden_api_key')
-        = hidden_field_tag(:encrypted_data, '', :id => 'configure_hidden_encrypted_data')
         = hidden_field_tag(:new_api_key, '', :id => 'configure_hidden_new_api_key')
+        = hidden_field_tag(:encrypted_data, '', :id => 'configure_hidden_encrypted_data')
+        = hidden_field_tag(:schema_version, '', :id => 'configure_hidden_schema_version')

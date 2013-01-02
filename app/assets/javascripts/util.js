@@ -60,7 +60,7 @@ Util.displaySection = function(section) {
 };
 
 Util.initSection = function(section) {
-  eval(this.capitalize(section) + '.init();');
+  eval(this.capitalize(section) + '.init()');
 };
 
 Util.lookupUser = function() {

@@ -11,17 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121228232048) do
+ActiveRecord::Schema.define(:version => 20130102081059) do
 
   create_table "users", :id => false, :force => true do |t|
-    t.string   "id",                :limit => 32,         :null => false
-    t.string   "verification_code", :limit => 32,         :null => false
-    t.string   "email",                                   :null => false
+    t.string   "id",                :limit => 32,                        :null => false
+    t.string   "verification_code", :limit => 32,                        :null => false
+    t.string   "email",                                                  :null => false
     t.text     "api_key"
     t.text     "encrypted_data",    :limit => 2147483647
     t.datetime "verified_at"
-    t.datetime "created_at",                              :null => false
-    t.datetime "updated_at",                              :null => false
+    t.datetime "created_at",                                             :null => false
+    t.datetime "updated_at",                                             :null => false
+    t.integer  "schema_version",                          :default => 0, :null => false
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
