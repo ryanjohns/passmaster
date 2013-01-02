@@ -41,17 +41,19 @@
 
   .input-prepend {
     margin-bottom: 0;
-    margin-right: 28px;
-
     .add-on {
       width: 16px;
     }
+    input {
+      width: 224px;
+    }
   }
   .input-prepend.input-append {
-    margin-right: 113px;
-
     .add-on {
       margin-left: 0;
+    }
+    input {
+      width: 138px;
     }
     .btn {
       width: 86px;
