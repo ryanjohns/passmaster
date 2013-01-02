@@ -60,7 +60,7 @@ Accounts.addAccountTile = function(accountId, data) {
   tile.addClass('account-data');
   tile.attr('data-account-id', accountId);
   tile.appendTo('#account_tiles');
-  tile.removeAttr('style');
+  tile.show();
 };
 
 Accounts.addBlankTile = function() {
@@ -69,7 +69,7 @@ Accounts.addBlankTile = function() {
   tile.removeClass('template');
   tile.addClass('account-data');
   tile.prependTo('#account_tiles');
-  tile.removeAttr('style');
+  tile.show();
 };
 
 Accounts.resetTile = function(tile) {
@@ -181,6 +181,7 @@ $(function() {
   $('button[data-account-edit]').click(function() {
     var tile = $(this).closest('.account-tile');
     tile.find('.read').hide();
+    tile.find('button[data-account-delete]').show();
     tile.find('.write').show();
     return false;
   });
@@ -290,5 +291,10 @@ $(function() {
 
   $('#accounts_list_search').keyup(function() {
     Util.typewatch($(this).val(), 'Accounts.searchTiles(currentVal);', 250);
+  });
+
+  $('button[data-password-generator]').click(function() {
+    $(this).parent().find('input').val(Passwords.generate(12, true));
+    return false;
   });
 });

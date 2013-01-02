@@ -19,10 +19,3 @@ Passwords.generate = function(length, special) {
   }
   return password;
 };
-
-$(function() {
-  $('button[data-password-generator]').click(function() {
-    $(this).parent().find('input').val(Passwords.generate(12, true));
-    return false;
-  });
-});
