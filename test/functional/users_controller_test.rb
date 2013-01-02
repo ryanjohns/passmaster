@@ -11,6 +11,9 @@ class UsersControllerTest < ActionController::TestCase
   test "update" do
   end
 
+  test "resend_verification" do
+  end
+
   test "verify" do
   end
 

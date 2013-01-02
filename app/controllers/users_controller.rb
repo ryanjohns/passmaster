@@ -2,20 +2,26 @@ class UsersController < ApplicationController
 
   respond_to :json
 
-  before_filter :find_user, :only => [ :show, :update, :verify ]
+  before_filter :find_user, :only => [ :show, :update, :resend_verification, :verify ]
 
   def show
     respond_with(@user)
   end
 
   def create
-    @user = User.find_or_create_by_email(params[:email])
-    respond_with(@user)
+    user = User.find_or_initialize_by_email(params[:email])
+    Mailer.verify_email(user).deliver if user.new_record? && user.save
+    respond_with(user)
   end
 
   def update
     @user.update!(params[:api_key], params[:encrypted_data], params[:new_api_key])
     respond_with_json(@user)
+  end
+
+  def resend_verification
+    Mailer.verify_email(@user).deliver if @user.generate_verification_code!
+    respond_with(@user)
   end
 
   def verify

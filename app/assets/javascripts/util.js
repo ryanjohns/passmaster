@@ -26,7 +26,6 @@ Util.extractErrors = function(xhr) {
 
 Util.enableReadOnly = function() {
   $('#configure_btn').attr('disabled', 'disabled');
-  $('#verify_btn').attr('disabled', 'disabled');
   $('#add_account_btn').attr('disabled', 'disabled');
   $('#set_master_password_btn').attr('disabled', 'disabled');
   $('button[data-account-edit]').attr('disabled', 'disabled');
@@ -34,7 +33,6 @@ Util.enableReadOnly = function() {
   $('.account-tile .write input[type="submit"]').attr('disabled', 'disabled');
   $('#reload_link').attr('href', '/');
   $('#reload_link').removeAttr('data-remote');
-  $('#reload_link').removeAttr('format');
 };
 
 Util.chooseSection = function() {

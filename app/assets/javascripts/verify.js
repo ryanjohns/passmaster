@@ -26,4 +26,23 @@ $(function() {
     btn.val(btn.data('origText'));
     btn.removeAttr('disabled');
   });
+
+  $('#verify_cancel_link').bind('ajax:success', function(evt, data, status, xhr) {
+    alert('Verification email sent, please check your inbox.');
+  })
+  .bind('ajax:error', function(evt, xhr, status, error) {
+    alert(Util.extractErrors(xhr));
+  })
+  .bind('ajax:beforeSend', function(evt, xhr, settings) {
+    settings.url = settings.url + '/' + userData.userId + '/resend_verification';
+    var link = $('#verify_cancel_link');
+    link.data('origText', link.html());
+    link.attr('disabled', 'disabled');
+    link.html('Sending...');
+  })
+  .bind('ajax:complete', function(evt, xhr, status) {
+    var link = $('#verify_cancel_link');
+    link.html(link.data('origText'));
+    link.removeAttr('disabled');
+  });
 });
