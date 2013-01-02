@@ -78,6 +78,11 @@ Util.resetApp = function() {
   this.chooseSection();
 };
 
+Util.getParameterByName = function(name) {
+  var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+  return match && decodeURIComponent(match[1]);
+};
+
 Util.timer;
 Util.timerVal = '';
 Util.typewatch = function(currentVal, callback, ms) {
