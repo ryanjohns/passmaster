@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   validates_presence_of :email, :verification_code
   validates_uniqueness_of :email, :if => :email_changed?
   validates_format_of :email, :with => EMAIL_REGEX, :if => :email_changed?
+  validates_numericality_of :schema_version, :only_integer => true, :greater_than_or_equal_to => 0
   validate :verification_code_matches
   validate :verified_for_update
   validate :allowed_to_update
@@ -11,7 +12,7 @@ class User < ActiveRecord::Base
   after_initialize :initialize_verification_code
 
   def as_json(options = nil)
-    super(options.merge({ :only => [ :id, :email, :encrypted_data ], :methods => [ :encrypted_data?, :verified_at? ] }))
+    super(options.merge({ :only => [ :id, :email, :encrypted_data, :schema_version ], :methods => [ :encrypted_data?, :verified_at? ] }))
   end
 
   def generate_verification_code!
@@ -19,10 +20,11 @@ class User < ActiveRecord::Base
     save
   end
 
-  def update!(old_api_key, encrypted_data, new_api_key)
+  def update!(old_api_key, new_api_key, encrypted_data, schema_version)
     @old_api_key = old_api_key.present? ? old_api_key : nil
-    self.encrypted_data = encrypted_data
     self.api_key = new_api_key if new_api_key.present?
+    self.encrypted_data = encrypted_data
+    self.schema_version = schema_version
     save
   end
 

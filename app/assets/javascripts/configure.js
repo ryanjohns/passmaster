@@ -5,9 +5,6 @@ Configure.init = function() {
   $('#configure_old_passwd').val('');
   $('#configure_passwd').val('');
   $('#configure_passwd2').val('');
-  $('#configure_hidden_api_key').val('');
-  $('#configure_hidden_encrypted_data').val('');
-  $('#configure_hidden_new_api_key').val('');
   if (userData.configured) {
     $('#configure_old_passwd').attr('required', 'true');
     $('#configure_old_passwd').show();
@@ -16,22 +13,15 @@ Configure.init = function() {
 };
 
 Configure.setMasterPassword = function(passwd) {
-  var oldMasterPassword = userData.masterPassword;
-  var oldApiKey = userData.apiKey;
   userData.setMasterPassword(passwd);
   try {
     userData.setEncryptedData(userData.accounts);
   } catch(err) {
-    userData.masterPassword = oldMasterPassword;
-    userData.apiKey = oldApiKey;
+    userData.revertMasterPassword();
     console.log(err.toString());
     alert('Failed to set Master Password. Please try again.');
     return;
   }
-  $('#configure_hidden_form').data('oldMasterPassword', oldMasterPassword);
-  $('#configure_hidden_api_key').val(oldApiKey);
-  $('#configure_hidden_encrypted_data').val(userData.encryptedData);
-  $('#configure_hidden_new_api_key').val(userData.apiKey);
   $('#configure_hidden_form').submit();
 };
 
@@ -59,9 +49,14 @@ $(function() {
     Util.chooseSection();
   })
   .bind('ajax:error', function(evt, xhr, status, error) {
-    userData.masterPassword = $(this).data('oldMasterPassword');
-    userData.apiKey = $('#configure_hidden_api_key').val();
+    userData.revertMasterPassword();
     alert(Util.extractErrors(xhr));
+  })
+  .bind('ajax:before', function() {
+    $('#configure_hidden_api_key').val(userData.oldApiKey);
+    $('#configure_hidden_new_api_key').val(userData.apiKey);
+    $('#configure_hidden_encrypted_data').val(userData.encryptedData);
+    $('#configure_hidden_schema_version').val(Schema.currentVersion);
   })
   .bind('ajax:beforeSend', function(evt, xhr, settings) {
     settings.url = settings.url + '/' + userData.userId;
