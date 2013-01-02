@@ -43,12 +43,12 @@ $(function() {
     return false;
   });
 
-  $('#configure_hidden_form').bind('ajax:success', function(evt, data, status, xhr) {
+  $('#configure_hidden_form').bind('ajax:success', function(evt, data) {
     userData.updateAttributes(data);
     Configure.init();
     Util.chooseSection();
   })
-  .bind('ajax:error', function(evt, xhr, status, error) {
+  .bind('ajax:error', function(evt, xhr) {
     userData.revertMasterPassword();
     alert(Util.extractErrors(xhr));
   })
@@ -65,7 +65,7 @@ $(function() {
     btn.attr('disabled', 'disabled');
     btn.val('Setting Password...');
   })
-  .bind('ajax:complete', function(evt, xhr, status) {
+  .bind('ajax:complete', function() {
     var btn = $('#configure_btn');
     btn.val(btn.data('origText'));
     btn.removeAttr('disabled');
