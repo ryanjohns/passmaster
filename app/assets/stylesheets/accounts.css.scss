@@ -28,7 +28,7 @@
     margin: 0 0 5px 0;
   }
 
-  .links {
+  .edit-link {
     margin-left: 5px;
   }
 
@@ -37,5 +37,24 @@
     margin: 5px 0 0 0;
     padding: 8px;
     background-color: #fff;
+  }
+
+  .input-prepend {
+    margin-bottom: 0;
+    margin-right: 28px;
+
+    .add-on {
+      width: 16px;
+    }
+  }
+  .input-prepend.input-append {
+    margin-right: 113px;
+
+    .add-on {
+      margin-left: 0;
+    }
+    .btn {
+      width: 86px;
+    }
   }
 }

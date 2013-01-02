@@ -1,7 +1,7 @@
-.container#accounts{ :style => 'display:none;' }
+#accounts.container{ :style => 'display:none;' }
   .pull-right
     = link_to('Reload', users_path, :remote => true, :format => :json, :id => 'reload_link')
-    %span{ :style => 'display:none;', :id => 'reload_spinner' } Reloading
+    %span{ :id => 'reload_spinner', :style => 'display:none;' } Reloading
     |
     %a{ :href => '#', 'data-logout' => 'true' } Logout
   .clearfix
@@ -39,27 +39,32 @@
                 %a{ :href => '#', 'data-password' => 'true' } show
                 %span
           .pull-right
-            .links
+            .edit-link
               %button.btn.btn-primary.btn-small{ :type => :submit, 'data-account-edit' => 'true' } Edit
-              %button.btn.btn-danger.btn-small{ :type => :submit, 'data-account-delete' => 'true' } Delete
           .clearfix
           .notes
             %pre
         .write
           %form
-            .account
+            .account.input-prepend
+              %span.add-on A:
               %input.input-block-level{ :type => :text, :name => :account, :placeholder => 'Account Name', :required => 'true' }
-            .username
+            .username.input-prepend
+              %span.add-on U:
               %input.input-block-level{ :type => :text, :name => :username, :placeholder => 'Username' }
-            .password
-              = render 'password_generator'
+            .password.input-prepend.input-append
+              %span.add-on P:
+              %input.input-block-level{ :type => :text, :name => :password, :placeholder => 'Password' }
+              %button.btn{ :type => 'button', 'data-password-generator' => 'true' } Generate
             .notes
               %textarea.input-block-level{ :name => :notes, :placeholder => 'Notes', :rows => '3' }
             .actions
               %input.btn.btn-primary.btn-small{ :type => :submit, :name => :commit, :value => 'Save' }
               %a.btn.btn-small{ :href => '#', 'data-cancel' => 'true' } Cancel
-        .update
-          = form_tag(users_path, :method => :put, :remote => true, :format => :json, :id => nil, :class => 'hidden') do
+              %button.btn.btn-danger.btn-small.pull-right{ :type => :submit, 'data-account-delete' => 'true', :style => 'display:none;' } Delete
+              .clearfix
+        .update{ :style => 'display:none;' }
+          = form_tag(users_path, :method => :put, :remote => true, :format => :json, :id => nil) do
             = hidden_field_tag(:api_key, '', :id => nil, :class => 'api-key')
             = hidden_field_tag(:encrypted_data, '', :id => nil, :class => 'encrypted-data')
     .clearfix
