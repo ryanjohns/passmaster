@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   validate :verified_for_update
   validate :allowed_to_update
 
-  after_initialize :generate_verification_code
+  after_initialize :initialize_verification_code
 
   def as_json(options = nil)
     super(options.merge({ :only => [ :id, :email, :encrypted_data ], :methods => [ :encrypted_data?, :verified_at? ] }))
@@ -22,20 +22,25 @@ class User < ActiveRecord::Base
   end
 
   def verify_code!(code)
-    @v_code = code
+    @code_matches = code == verification_code
     self.verified_at = Time.zone.now
+    generate_verification_code
     save
   end
 
   private
 
   def generate_verification_code
-    self.verification_code = UUIDTools::UUID.random_create.hexdigest if verification_code.blank?
+    self.verification_code = UUIDTools::UUID.random_create.hexdigest
+  end
+
+  def initialize_verification_code
+    generate_verification_code if verification_code.blank?
     true
   end
 
   def verification_code_matches
-    if verified_at_changed? && verified_at? && @v_code != verification_code
+    if verified_at_changed? && verified_at? && !@code_matches
       errors.add(:verification_code, 'does not match')
     end
   end
