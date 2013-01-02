@@ -21,7 +21,7 @@
     %p
       = button_tag('Add Account', :class => 'btn btn-success btn-small', :id => 'add_account_btn')
       = button_tag('Set Master Password', :class => 'btn btn-inverse btn-small', :id => 'set_master_password_btn')
-    %p= text_field_tag(:search, '', :placeholder => 'Search', :class => 'input-xlarge', :id => 'accounts_list_search')
+    %p= text_field_tag(:search, '', :placeholder => 'Search', :autocomplete => 'off', :class => 'input-xlarge', :id => 'accounts_list_search')
     #account_tiles
       .account-tile.pull-left.template{ :style => 'display:none;' }
         .read
@@ -51,10 +51,10 @@
               %input{ :type => :text, :name => :account, :placeholder => 'Account Name', :required => 'true' }
             .username.input-prepend
               %span.add-on U:
-              %input{ :type => :text, :name => :username, :placeholder => 'Username' }
+              %input{ :type => :text, :name => :username, :placeholder => 'Username', :autocomplete => 'off' }
             .password.input-prepend.input-append
               %span.add-on P:
-              %input{ :type => :text, :name => :password, :placeholder => 'Password' }
+              %input{ :type => :text, :name => :password, :placeholder => 'Password', :autocomplete => 'off' }
               %button.btn{ :type => 'button', 'data-password-generator' => 'true' } Generate
             .notes
               %textarea.input-block-level{ :name => :notes, :placeholder => 'Notes', :rows => '3' }
