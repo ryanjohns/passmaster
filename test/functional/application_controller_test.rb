@@ -18,10 +18,4 @@ class ApplicationControllerTest < ActionController::TestCase
     assert @response.body == 'ok'
   end
 
-  test "handle_unverified_request" do
-    assert_raise(ActionController::InvalidAuthenticityToken) do
-      @controller.send(:handle_unverified_request)
-    end
-  end
-
 end
