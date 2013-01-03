@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   def index
   end
 
-  def cookie_drop
+  def init_session
     render :json => { :token => form_authenticity_token }
   end
 

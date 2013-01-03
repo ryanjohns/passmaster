@@ -4,7 +4,7 @@ Passmaster::Application.routes.draw do
   root :to => 'application#index', :via => :get
   match "application.manifest" => APPLICATION_MANIFEST, :via => :get
 
-  match 'cookie_drop' => 'application#cookie_drop', :via => :get
+  match 'init_session' => 'application#init_session', :via => :get
 
   resources :users, :only => [ :show, :create, :update ] do
     post :resend_verification, :on => :member
