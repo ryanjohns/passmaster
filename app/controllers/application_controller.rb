@@ -4,6 +4,11 @@ class ApplicationController < ActionController::Base
   def index
   end
 
+  def cookie_drop
+    form_authenticity_token
+    render :text => ''
+  end
+
   def healthz
     render :text => 'ok'
   end
