@@ -58,5 +58,8 @@ module Passmaster
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    # Don't generate authenticity token input fields on remote forms
+    config.action_view.embed_authenticity_token_in_remote_forms = false
   end
 end
