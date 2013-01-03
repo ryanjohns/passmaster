@@ -18,7 +18,6 @@ Configure.setMasterPassword = function(passwd) {
     userData.setEncryptedData(userData.accounts);
   } catch(err) {
     userData.revertMasterPassword();
-    console.log(err.toString());
     alert('Failed to set Master Password. Please try again.');
     return;
   }
