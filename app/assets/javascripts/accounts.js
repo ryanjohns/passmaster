@@ -19,7 +19,6 @@ Accounts.reload = function(data) {
       alert('Failed to decrypt accounts.');
     }
   }
-  Util.chooseSection();
 };
 
 Accounts.selectView = function() {
@@ -272,11 +271,8 @@ $(function() {
   $('#reload_link').bind('ajax:success', function(evt, data) {
     Accounts.reload(data);
   })
-  .bind('ajax:error', function(evt, xhr) {
-    console.log(Util.extractErrors(xhr));
-    Util.enableReadOnly();
-    Util.chooseSection();
-    alert('Failed to sync with server. Read-only mode enabled to protect data loss.');
+  .bind('ajax:error', function() {
+    alert('Failed to sync with server. Please try again.');
   })
   .bind('ajax:beforeSend', function(evt, xhr, settings) {
     settings.url = settings.url + '/' + userData.userId;
@@ -286,6 +282,7 @@ $(function() {
   .bind('ajax:complete', function() {
     $('#reload_spinner').hide();
     $(this).show();
+    Util.chooseSection();
   });
 
   $('#set_master_password_btn').click(function() {
