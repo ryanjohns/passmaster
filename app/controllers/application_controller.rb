@@ -10,6 +10,12 @@ class ApplicationController < ActionController::Base
 
   protected
 
+  def form_authenticity_token
+    session[:_csrf_token] ||= SecureRandom.base64(32)
+    cookies[:_passmaster_token] = Base64::encode64(session[:_csrf_token])
+    session[:_csrf_token]
+  end
+
   def handle_unverified_request
     raise ActionController::InvalidAuthenticityToken
   end
