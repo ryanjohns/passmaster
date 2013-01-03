@@ -10,7 +10,6 @@ class ApplicationControllerTest < ActionController::TestCase
   test "cookie_drop" do
     get :cookie_drop
     assert_response :success
-    assert @response.body == ''
   end
 
   test "healthz" do

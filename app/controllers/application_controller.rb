@@ -5,8 +5,7 @@ class ApplicationController < ActionController::Base
   end
 
   def cookie_drop
-    form_authenticity_token
-    render :text => ''
+    render :json => { :token => form_authenticity_token }
   end
 
   def healthz
@@ -14,12 +13,6 @@ class ApplicationController < ActionController::Base
   end
 
   protected
-
-  def form_authenticity_token
-    session[:_csrf_token] ||= SecureRandom.base64(32)
-    cookies[:_passmaster_token] = Base64::encode64(session[:_csrf_token])
-    session[:_csrf_token]
-  end
 
   def handle_unverified_request
     raise ActionController::InvalidAuthenticityToken
