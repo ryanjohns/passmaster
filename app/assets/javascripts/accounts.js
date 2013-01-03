@@ -15,7 +15,6 @@ Accounts.reload = function(data) {
     } catch(err) {
       this.wipeAccountTiles();
       userData.wipeMasterPassword();
-      console.log(err.toString());
       alert('Failed to decrypt accounts.');
     }
   }
@@ -137,7 +136,6 @@ Accounts.unlock = function(passwd) {
   try {
     userData.decryptAccounts();
   } catch(err) {
-    console.log(err.toString());
     alert('Failed to decrypt accounts.');
     return;
   }
@@ -198,7 +196,6 @@ $(function() {
     try {
       userData.setEncryptedData(accounts);
     } catch(err) {
-      console.log(err.toString());
       alert('Failed to encrypt accounts.');
       return false;
     }
@@ -232,7 +229,6 @@ $(function() {
     try {
       userData.setEncryptedData(accounts);
     } catch(err) {
-      console.log(err.toString());
       alert('Failed to encrypt accounts.');
       return false;
     }
