@@ -7,8 +7,8 @@ class ApplicationControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "cookie_drop" do
-    get :cookie_drop
+  test "init_session" do
+    get :init_session
     assert_response :success
   end
 

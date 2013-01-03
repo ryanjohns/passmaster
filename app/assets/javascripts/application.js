@@ -22,13 +22,13 @@ $(function() {
     return false;
   });
 
-  $('#cookie_drop_link').bind('ajax:success', function(evt, data) {
+  $('#init_session_link').bind('ajax:success', function(evt, data) {
     $('meta[name="csrf-token"]').attr('content', data['token']);
   })
   .bind('ajax:error', function() {
     Util.enableReadOnly();
   });
-  $('#cookie_drop_link').click();
+  $('#init_session_link').click();
 
   if (localStorage.userAttributes)
     Util.lookupUser();
