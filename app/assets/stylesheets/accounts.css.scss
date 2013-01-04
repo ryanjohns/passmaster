@@ -63,6 +63,10 @@
   }
 
   .write {
+    .form-inline {
+      text-align: center;
+      margin: 3px 0 5px 0;
+    }
     form,input[type='text'],textarea {
       margin: 0 0 2px 0;
     }
@@ -73,17 +77,6 @@
       }
       input {
         width: 224px;
-      }
-    }
-    .input-prepend.input-append {
-      .add-on {
-        margin-left: 0;
-      }
-      input {
-        width: 138px;
-      }
-      .btn {
-        width: 86px;
       }
     }
     .actions {
