@@ -163,7 +163,9 @@ $(function() {
     if ($(this).html() == 'Show') {
       input.val(input.attr('data-password'));
       input.attr('title', input.attr('data-password'));
-      input.select();
+      input = input.get(0);
+      input.selectionStart = 0;
+      input.selectionEnd = 9999;
       $(this).html('Hide');
     } else {
       input.val('');
@@ -174,9 +176,11 @@ $(function() {
   });
 
   $('.read .click-to-select').click(function() {
-    var input = $(this).find('input');
-    if (input.val())
-      input.select();
+    var input = $(this).find('input').get(0);
+    if (input.value) {
+      input.selectionStart = 0;
+      input.selectionEnd = 9999;
+    }
     return false;
   });
 
