@@ -184,6 +184,11 @@ $(function() {
     return false;
   });
 
+  $('.read input.username, .read input.password').keydown(function(evt) {
+    if (!evt.metaKey || String.fromCharCode(evt.which).toLowerCase() != 'c')
+      return false;
+  });
+
   $('#add_account_btn').click(function() {
     Accounts.addBlankTile();
     return false;
