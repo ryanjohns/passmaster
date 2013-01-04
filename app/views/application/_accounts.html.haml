@@ -20,49 +20,49 @@
 
   #accounts_list{ :style => 'display:none;' }
     %p
-      = button_tag('Add Account', :class => 'btn btn-success btn-small', :id => 'add_account_btn')
-      = button_tag('Set Master Password', :class => 'btn btn-inverse btn-small', :id => 'set_master_password_btn')
+      = button_tag('Add Account', :class => 'btn btn-success', :id => 'add_account_btn')
+      = button_tag('Set Master Password', :class => 'btn btn-inverse', :id => 'set_master_password_btn')
     %p= text_field_tag(:search, '', :placeholder => 'Search', :autocomplete => 'off', :class => 'input-xlarge', :id => 'accounts_list_search')
     #account_tiles
       .account-tile.pull-left.template{ :style => 'display:none;' }
         .read
-          .account
-            %strong
-              A:
-              %span
-          .pull-left
-            .info
-              .username
-                U:
-                %span
-              .password
-                P:
-                %a{ :href => '#', 'data-password' => 'true' } show
-                %span
-          .pull-right
-            .edit-link
-              %button.btn.btn-primary.btn-small{ :type => :submit, 'data-account-edit' => 'true' } Edit
-          .clearfix
-          .notes
-            %pre
+          %table
+            %thead
+              %tr
+                %th.account{ :colspan => 2 }
+            %tbody
+              %tr
+                %td
+                  .input-prepend.click-to-select
+                    %span.add-on U:
+                    %input.username{ :type => :text, :name => :username, :placeholder => 'Username', :disabled => 'disabled' }
+                  .input-prepend.input-append.click-to-select
+                    %span.add-on P:
+                    %input.password{ :type => :text, :name => :password, :placeholder => 'Password', :disabled => 'disabled' }
+                    %button.btn.password{ :type => 'button', 'data-show-password' => 'true' } Show
+                %td.edit-link
+                  %button.btn.btn-primary{ :type => :submit, 'data-account-edit' => 'true' } Edit
+              %tr
+                %td{ :colspan => 2 }
+                  %pre.notes
         .write
           %form
-            .account.input-prepend
+            .input-prepend
               %span.add-on A:
-              %input{ :type => :text, :name => :account, :placeholder => 'Account Name', :required => 'true' }
-            .username.input-prepend
+              %input.account{ :type => :text, :name => :account, :placeholder => 'Account Name', :required => 'true' }
+            .input-prepend
               %span.add-on U:
-              %input{ :type => :text, :name => :username, :placeholder => 'Username', :autocomplete => 'off' }
-            .password.input-prepend.input-append
+              %input.username{ :type => :text, :name => :username, :placeholder => 'Username', :autocomplete => 'off' }
+            .input-prepend.input-append
               %span.add-on P:
-              %input{ :type => :text, :name => :password, :placeholder => 'Password', :autocomplete => 'off' }
+              %input.password{ :type => :text, :name => :password, :placeholder => 'Password', :autocomplete => 'off' }
               %button.btn{ :type => 'button', 'data-password-generator' => 'true' } Generate
-            .notes
-              %textarea.input-block-level{ :name => :notes, :placeholder => 'Notes', :rows => '3' }
+            %div
+              %textarea.notes.input-block-level{ :name => :notes, :placeholder => 'Notes', :rows => '3' }
             .actions
-              %input.btn.btn-primary.btn-small{ :type => :submit, :name => :commit, :value => 'Save' }
-              %a.btn.btn-small{ :href => '#', 'data-cancel' => 'true' } Cancel
-              %button.btn.btn-danger.btn-small.pull-right{ :type => :submit, 'data-account-delete' => 'true', :style => 'display:none;' } Delete
+              %input.btn.btn-primary{ :type => :submit, :name => :commit, :value => 'Save' }
+              %a.btn{ :href => '#', 'data-cancel' => 'true' } Cancel
+              %button.btn.btn-danger.pull-right{ :type => :submit, 'data-account-delete' => 'true', :style => 'display:none;' } Delete
               .clearfix
         .update{ :style => 'display:none;' }
           = form_tag(users_path, :method => :put, :remote => true, :id => nil) do

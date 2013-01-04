@@ -43,16 +43,16 @@ Accounts.wipeAccountTiles = function() {
 
 Accounts.addAccountTile = function(accountId, data) {
   var tile = $('#account_tiles .template').clone(true);
-  tile.find('.read .account span').html(data['account']);
-  tile.find('.read .username span').html(data['username']);
-  tile.find('.read .password a').attr('data-password', data['password']);
-  tile.find('.read .notes pre').html(data['notes']);
+  tile.find('.read th.account').html(data['account']);
+  tile.find('.read input.username').val(data['username']);
+  tile.find('.read input.password').attr('data-password', data['password']);
+  tile.find('.read pre.notes').html(data['notes']);
   if (data['notes'].length == 0)
-    tile.find('.read .notes').hide();
-  tile.find('.write .account input').val(data['account']);
-  tile.find('.write .username input').val(data['username']);
-  tile.find('.write .password input').val(data['password']);
-  tile.find('.write .notes textarea').val(data['notes']);
+    tile.find('.read pre.notes').hide();
+  tile.find('.write input.account').val(data['account']);
+  tile.find('.write input.username').val(data['username']);
+  tile.find('.write input.password').val(data['password']);
+  tile.find('.write textarea.notes').val(data['notes']);
   tile.find('.write').hide();
   tile.removeClass('template');
   tile.addClass('account-data');
@@ -72,16 +72,16 @@ Accounts.addBlankTile = function() {
 
 Accounts.resetTile = function(tile) {
   var data = userData.accounts[tile.attr('data-account-id')];
-  tile.find('.read .account span').html(data['account']);
-  tile.find('.read .username span').html(data['username']);
-  tile.find('.read .password a').attr('data-password', data['password']);
-  tile.find('.read .password a').html('show');
-  tile.find('.read .password span').html('');
-  tile.find('.read .notes pre').html(data['notes']);
-  tile.find('.write .account input').val(data['account']);
-  tile.find('.write .username input').val(data['username']);
-  tile.find('.write .password input').val(data['password']);
-  tile.find('.write .notes textarea').val(data['notes']);
+  tile.find('.read th.account').html(data['account']);
+  tile.find('.read input.username').val(data['username']);
+  tile.find('.read input.password').attr('data-password', data['password']);
+  tile.find('.read input.password').val('');
+  tile.find('.read button.password').html('Show');
+  tile.find('.read pre.notes').html(data['notes']);
+  tile.find('.write input.account').val(data['account']);
+  tile.find('.write input.username').val(data['username']);
+  tile.find('.write input.password').val(data['password']);
+  tile.find('.write textarea.notes').val(data['notes']);
   tile.find('.write').hide();
   tile.find('.read').show();
 };
@@ -91,24 +91,24 @@ Accounts.updateTile = function(tile) {
   if (accountId)
     delete userData.accounts[accountId];
   var data = {
-    'account': tile.find('.write .account input').val(),
-    'username': tile.find('.write .username input').val(),
-    'password': tile.find('.write .password input').val(),
-    'notes': tile.find('.write .notes textarea').val()
+    'account': tile.find('.write input.account').val(),
+    'username': tile.find('.write input.username').val(),
+    'password': tile.find('.write input.password').val(),
+    'notes': tile.find('.write textarea.notes').val()
   };
   accountId = Crypto.sha256(data['account']);
   userData.accounts[accountId] = data;
   tile.attr('data-account-id', accountId);
-  tile.find('.read .account span').html(data['account']);
-  tile.find('.read .username span').html(data['username']);
-  tile.find('.read .password a').attr('data-password', data['password']);
-  tile.find('.read .password a').html('show');
-  tile.find('.read .password span').html('');
-  tile.find('.read .notes pre').html(data['notes']);
+  tile.find('.read th.account').html(data['account']);
+  tile.find('.read input.username').val(data['username']);
+  tile.find('.read input.password').attr('data-password', data['password']);
+  tile.find('.read input.password').val('');
+  tile.find('.read button.password').html('Show');
+  tile.find('.read pre.notes').html(data['notes']);
   if (data['notes'].length == 0)
-    tile.find('.read .notes').hide();
+    tile.find('.read pre.notes').hide();
   else
-    tile.find('.read .notes').show();
+    tile.find('.read pre.notes').show();
   tile.find('.write').hide();
   tile.find('.read').show();
 };
@@ -153,15 +153,23 @@ $(function() {
     return false;
   });
 
-  $('a[data-password]').click(function() {
-    var span = $(this).parent().find('span');
-    if ($(this).html() == 'show') {
-      span.html($(this).attr('data-password'));
-      $(this).html('hide');
+  $('button[data-show-password]').click(function() {
+    var input = $(this).parent().find('input.password');
+    if ($(this).html() == 'Show') {
+      input.val(input.attr('data-password'));
+      input.select();
+      $(this).html('Hide');
     } else {
-      span.html('');
-      $(this).html('show');
+      input.val('');
+      $(this).html('Show');
     }
+    return false;
+  });
+
+  $('.read .click-to-select').click(function() {
+    var input = $(this).find('input');
+    if (input.val())
+      input.select();
     return false;
   });
 
@@ -208,10 +216,10 @@ $(function() {
   $('#account_tiles .write form').submit(function() {
     var tile = $(this).closest('.account-tile');
     var data = {
-      'account': $(this).find('.account input').val(),
-      'username': $(this).find('.username input').val(),
-      'password': $(this).find('.password input').val(),
-      'notes': $(this).find('.notes textarea').val()
+      'account': $(this).find('input.account').val(),
+      'username': $(this).find('input.username').val(),
+      'password': $(this).find('input.password').val(),
+      'notes': $(this).find('textarea.notes').val()
     };
     var oldAccountId = tile.attr('data-account-id');
     var accountId = Crypto.sha256(data['account']);
@@ -292,7 +300,7 @@ $(function() {
   });
 
   $('button[data-password-generator]').click(function() {
-    $(this).parent().find('input').val(Passwords.generate(12, true));
+    $(this).parent().find('input.password').val(Passwords.generate(12, true));
     return false;
   });
 });
