@@ -24,39 +24,75 @@
     border-radius: 4px;
   }
 
-  form,input[type='text'],textarea {
-    margin: 0 0 5px 0;
+  .read {
+    table {
+      width: 100%;
+    }
+    th.account {
+      padding-bottom: 3px;
+    }
+    input[type='text'] {
+      margin: 0 0 2px 0;
+    }
+    .input-prepend {
+      margin-bottom: 0;
+      .add-on {
+        width: 16px;
+      }
+      input {
+        width: 155px;
+      }
+    }
+    .input-prepend.input-append {
+      .add-on {
+        margin-left: 0;
+      }
+      input {
+        width: 96px;
+      }
+      .btn {
+        width: 60px;
+      }
+    }
+    pre.notes {
+      border: none;
+      padding: 5px;
+      margin: 5px 0 0 0;
+      background-color: #fff;
+    }
+    input.username, input.password {
+      cursor: default;
+      background-color: #fff;
+      color: #555;
+    }
   }
 
-  .edit-link {
-    margin-left: 5px;
-  }
-
-  .notes pre {
-    border: none;
-    margin: 5px 0 0 0;
-    padding: 8px;
-    background-color: #fff;
-  }
-
-  .input-prepend {
-    margin-bottom: 0;
-    .add-on {
-      width: 16px;
+  .write {
+    form,input[type='text'],textarea {
+      margin: 0 0 2px 0;
     }
-    input {
-      width: 224px;
+    .input-prepend {
+      margin-bottom: 0;
+      .add-on {
+        width: 16px;
+      }
+      input {
+        width: 224px;
+      }
     }
-  }
-  .input-prepend.input-append {
-    .add-on {
-      margin-left: 0;
+    .input-prepend.input-append {
+      .add-on {
+        margin-left: 0;
+      }
+      input {
+        width: 138px;
+      }
+      .btn {
+        width: 86px;
+      }
     }
-    input {
-      width: 138px;
-    }
-    .btn {
-      width: 86px;
+    .actions {
+      padding-top: 5px;
     }
   }
 }
