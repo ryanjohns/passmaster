@@ -311,7 +311,9 @@ $(function() {
   });
 
   $('button[data-password-generator]').click(function() {
-    $(this).parent().find('input.password').val(Passwords.generate(12, true));
+    var div = $(this).closest('.write');
+    var passwd = Passwords.generate(12, div.find('input.special-characters').get(0).checked);
+    div.find('input.password').val(passwd);
     return false;
   });
 });

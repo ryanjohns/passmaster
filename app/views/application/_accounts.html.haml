@@ -53,10 +53,14 @@
             .input-prepend
               %span.add-on U:
               %input.username{ :type => :text, :name => :username, :placeholder => 'Username', :autocomplete => 'off' }
-            .input-prepend.input-append
+            .input-prepend
               %span.add-on P:
               %input.password{ :type => :text, :name => :password, :placeholder => 'Password', :autocomplete => 'off' }
+            %div.form-inline
               %button.btn{ :type => 'button', 'data-password-generator' => 'true' } Generate
+              %label.checkbox
+                %input.special-characters{ :type => 'checkbox', :checked => 'checked' }
+                %span Special Chars
             %div
               %textarea.notes.input-block-level{ :name => :notes, :placeholder => 'Notes', :rows => '3' }
             .actions
