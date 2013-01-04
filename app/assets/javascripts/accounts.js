@@ -45,6 +45,7 @@ Accounts.addAccountTile = function(accountId, data) {
   var tile = $('#account_tiles .template').clone(true);
   tile.find('.read th.account').html(data['account']);
   tile.find('.read input.username').val(data['username']);
+  tile.find('.read input.username').attr('title', data['username']);
   tile.find('.read input.password').attr('data-password', data['password']);
   tile.find('.read pre.notes').html(data['notes']);
   if (data['notes'].length == 0)
@@ -74,8 +75,10 @@ Accounts.resetTile = function(tile) {
   var data = userData.accounts[tile.attr('data-account-id')];
   tile.find('.read th.account').html(data['account']);
   tile.find('.read input.username').val(data['username']);
+  tile.find('.read input.username').attr('title', data['username']);
   tile.find('.read input.password').attr('data-password', data['password']);
   tile.find('.read input.password').val('');
+  tile.find('.read input.password').removeAttr('title');
   tile.find('.read button.password').html('Show');
   tile.find('.read pre.notes').html(data['notes']);
   tile.find('.write input.account').val(data['account']);
@@ -101,8 +104,10 @@ Accounts.updateTile = function(tile) {
   tile.attr('data-account-id', accountId);
   tile.find('.read th.account').html(data['account']);
   tile.find('.read input.username').val(data['username']);
+  tile.find('.read input.username').attr('title', data['username']);
   tile.find('.read input.password').attr('data-password', data['password']);
   tile.find('.read input.password').val('');
+  tile.find('.read input.password').removeAttr('title');
   tile.find('.read button.password').html('Show');
   tile.find('.read pre.notes').html(data['notes']);
   if (data['notes'].length == 0)
@@ -157,10 +162,12 @@ $(function() {
     var input = $(this).parent().find('input.password');
     if ($(this).html() == 'Show') {
       input.val(input.attr('data-password'));
+      input.attr('title', input.attr('data-password'));
       input.select();
       $(this).html('Hide');
     } else {
       input.val('');
+      input.removeAttr('title');
       $(this).html('Show');
     }
     return false;
