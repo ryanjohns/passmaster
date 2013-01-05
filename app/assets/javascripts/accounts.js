@@ -336,6 +336,8 @@ $(function() {
     Accounts.refresh(data);
   }).bind('ajax:error', function() {
     alert('Failed to sync with server. Please try again.');
+  }).bind('ajax:before', function() {
+    return Util.confirmUnsavedChanges();
   }).bind('ajax:beforeSend', function(evt, xhr, settings) {
     settings.url = settings.url + '/' + userData.userId;
     $('#refresh_spinner').show();
@@ -345,8 +347,10 @@ $(function() {
   });
 
   $('#configure_btn').click(function() {
-    Configure.init();
-    Util.displaySection('configure');
+    if (Util.confirmUnsavedChanges()) {
+      Configure.init();
+      Util.displaySection('configure');
+    }
     return false;
   });
 

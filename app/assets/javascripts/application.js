@@ -21,8 +21,10 @@ $(function() {
   $('input, textarea').placeholder();
 
   $('button[data-wipe-data]').click(function() {
-    if (confirm('Are you sure? This will make your accounts unavailable while offline.'))
-      Util.wipeData();
+    if (Util.confirmUnsavedChanges()) {
+      if (confirm('Are you sure? This will make your accounts unavailable while offline.'))
+        Util.wipeData();
+    }
     return false;
   });
 
