@@ -47,8 +47,8 @@ Util.enableReadOnly = function() {
   // account
   $('button[data-account-delete]').attr('disabled', 'disabled');
   $('.account-tile .write input[type="submit"]').attr('disabled', 'disabled');
-  $('#reload_link').attr('href', '/');
-  $('#reload_link').removeAttr('data-remote');
+  $('#refresh_link').attr('href', '/');
+  $('#refresh_link').removeAttr('data-remote');
 
   // alert message
   $('.alert-read-only').show();
@@ -85,10 +85,10 @@ Util.initSection = function(section) {
 Util.lookupUser = function() {
   userData = new UserData();
   userData.updateAttributes(JSON.parse(localStorage.userAttributes));
-  $('#reload_link').click();
+  $('#refresh_link').click();
 };
 
-Util.resetApp = function() {
+Util.clearCache = function() {
   userData = null;
   localStorage.removeItem('userAttributes');
   Accounts.wipeAccountTiles();

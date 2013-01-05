@@ -1,9 +1,9 @@
 #accounts.container{ :style => 'display:none;' }
   .pull-right
-    = link_to('Reload', users_path, :remote => true, :id => 'reload_link')
-    %span{ :id => 'reload_spinner', :style => 'display:none;' } Reloading
+    = link_to('Refresh', users_path, :remote => true, :id => 'refresh_link')
+    %span{ :id => 'refresh_spinner', :style => 'display:none;' } Loading
     |
-    %a{ :href => '#', 'data-logout' => 'true' } Logout
+    %a{ :href => '#', 'data-clear-cache' => 'true' } Clear Cache
   .clearfix
 
   .well
@@ -42,7 +42,7 @@
                 %td.field-label P:
                 %td
                   .click-to-select
-                    %input.password.input-block-level{ :type => 'text', :name => 'password', :placeholder => 'Password' }
+                    %input.password.input-block-level{ :type => 'text', :name => 'password', :placeholder => 'Hidden' }
                 %td.show-password
                   %button.password.btn{ :type => 'button', 'data-show-password' => 'true' } Show
               %tr

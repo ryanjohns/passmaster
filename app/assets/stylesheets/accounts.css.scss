@@ -52,6 +52,9 @@
     input[type='text'] {
       margin: 0;
     }
+    input.password {
+      cursor: default;
+    }
     pre.notes {
       border: none;
       padding: 5px;
