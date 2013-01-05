@@ -76,6 +76,7 @@ Util.displaySection = function(section) {
     else
       $('#' + sections[i]).hide();
   }
+  eval(this.capitalize(section) + '.afterDisplay()');
 };
 
 Util.initSection = function(section) {

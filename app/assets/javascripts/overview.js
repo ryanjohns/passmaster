@@ -4,6 +4,10 @@ Overview.init = function() {
   $('#overview_email').val(Util.getParameterByName('email'));
 };
 
+Overview.afterDisplay = function() {
+  $('#overview_email').focus();
+};
+
 $(function() {
   $('#overview_form').bind('ajax:success', function(evt, data) {
     userData = new UserData();
