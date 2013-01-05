@@ -70,18 +70,18 @@ Accounts.wipeAccountTiles = function() {
 
 Accounts.addAccountTile = function(accountId, data) {
   var tile = $('#account_tiles .template').clone(true);
-  tile.find('.read th.account').html(data['account']);
-  tile.find('.read input.username').val(data['username']);
-  tile.find('.read input.username').attr('title', data['username']);
-  tile.find('.read input.password').attr('data-password', data['password']);
+  tile.find('.read th.account').html(data.account);
+  tile.find('.read input.username').val(data.username);
+  tile.find('.read input.username').attr('title', data.username);
+  tile.find('.read input.password').attr('data-password', data.password);
   tile.find('.read input.password').attr('readonly', 'readonly');
-  tile.find('.read pre.notes').html(data['notes']);
-  if (data['notes'].length == 0)
+  tile.find('.read pre.notes').html(data.notes);
+  if (data.notes.length == 0)
     tile.find('.read pre.notes').hide();
-  tile.find('.write input.account').val(data['account']);
-  tile.find('.write input.username').val(data['username']);
-  tile.find('.write input.password').val(data['password']);
-  tile.find('.write textarea.notes').val(data['notes']);
+  tile.find('.write input.account').val(data.account);
+  tile.find('.write input.username').val(data.username);
+  tile.find('.write input.password').val(data.password);
+  tile.find('.write textarea.notes').val(data.notes);
   tile.find('.write').hide();
   tile.removeClass('template');
   tile.addClass('account-data');
@@ -102,19 +102,19 @@ Accounts.addBlankTile = function() {
 
 Accounts.resetTile = function(tile) {
   var data = userData.accounts[tile.attr('data-account-id')];
-  tile.find('.read th.account').html(data['account']);
-  tile.find('.read input.username').val(data['username']);
-  tile.find('.read input.username').attr('title', data['username']);
-  tile.find('.read input.password').attr('data-password', data['password']);
+  tile.find('.read th.account').html(data.account);
+  tile.find('.read input.username').val(data.username);
+  tile.find('.read input.username').attr('title', data.username);
+  tile.find('.read input.password').attr('data-password', data.password);
   tile.find('.read input.password').val('');
   tile.find('.read input.password').removeAttr('title');
   tile.find('.read input.password').attr('readonly', 'readonly');
   tile.find('.read button.password').html('Show');
-  tile.find('.read pre.notes').html(data['notes']);
-  tile.find('.write input.account').val(data['account']);
-  tile.find('.write input.username').val(data['username']);
-  tile.find('.write input.password').val(data['password']);
-  tile.find('.write textarea.notes').val(data['notes']);
+  tile.find('.read pre.notes').html(data.notes);
+  tile.find('.write input.account').val(data.account);
+  tile.find('.write input.username').val(data.username);
+  tile.find('.write input.password').val(data.password);
+  tile.find('.write textarea.notes').val(data.notes);
   tile.find('.write').hide();
   tile.find('.read').show();
 };
@@ -134,19 +134,19 @@ Accounts.updateTile = function(tile) {
     'password': tile.find('.write input.password').val(),
     'notes': tile.find('.write textarea.notes').val()
   };
-  accountId = Crypto.sha256(data['account']);
+  accountId = Crypto.sha256(data.account);
   userData.accounts[accountId] = data;
   tile.attr('data-account-id', accountId);
-  tile.find('.read th.account').html(data['account']);
-  tile.find('.read input.username').val(data['username']);
-  tile.find('.read input.username').attr('title', data['username']);
-  tile.find('.read input.password').attr('data-password', data['password']);
+  tile.find('.read th.account').html(data.account);
+  tile.find('.read input.username').val(data.username);
+  tile.find('.read input.username').attr('title', data.username);
+  tile.find('.read input.password').attr('data-password', data.password);
   tile.find('.read input.password').val('');
   tile.find('.read input.password').removeAttr('title');
   tile.find('.read input.password').attr('readonly', 'readonly');
   tile.find('.read button.password').html('Show');
-  tile.find('.read pre.notes').html(data['notes']);
-  if (data['notes'].length == 0)
+  tile.find('.read pre.notes').html(data.notes);
+  if (data.notes.length == 0)
     tile.find('.read pre.notes').hide();
   else
     tile.find('.read pre.notes').show();
@@ -166,9 +166,9 @@ Accounts.searchTiles = function(term) {
   var count = 0;
   var pattern = new RegExp(term, 'i');
   for (accountId in userData.accounts) {
-    var txt = userData.accounts[accountId]['account'] + ' ' +
-        userData.accounts[accountId]['username'] + ' ' +
-        userData.accounts[accountId]['notes'];
+    var txt = userData.accounts[accountId].account + ' ' +
+        userData.accounts[accountId].username + ' ' +
+        userData.accounts[accountId].notes;
     if (pattern.test(txt)) {
       $('.account-data[data-account-id="' + accountId + '"]').show();
       count++;
@@ -286,8 +286,8 @@ $(function() {
       'notes': $(this).find('textarea.notes').val()
     };
     var oldAccountId = tile.attr('data-account-id');
-    var accountId = Crypto.sha256(data['account']);
-    if (data['account'].length == 0) {
+    var accountId = Crypto.sha256(data.account);
+    if (data.account.length == 0) {
       alert('Account Name cannot be blank.');
       return false;
     } else if (oldAccountId != accountId && userData.accounts[accountId]) {
