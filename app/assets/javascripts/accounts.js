@@ -7,7 +7,7 @@ Accounts.init = function() {
   this.selectView();
 };
 
-Accounts.reload = function(data) {
+Accounts.refresh = function(data) {
   userData.updateAttributes(data);
   if (userData.masterPassword) {
     try {
@@ -47,6 +47,7 @@ Accounts.addAccountTile = function(accountId, data) {
   tile.find('.read input.username').val(data['username']);
   tile.find('.read input.username').attr('title', data['username']);
   tile.find('.read input.password').attr('data-password', data['password']);
+  tile.find('.read input.password').attr('readonly', 'readonly');
   tile.find('.read pre.notes').html(data['notes']);
   if (data['notes'].length == 0)
     tile.find('.read pre.notes').hide();
@@ -79,6 +80,7 @@ Accounts.resetTile = function(tile) {
   tile.find('.read input.password').attr('data-password', data['password']);
   tile.find('.read input.password').val('');
   tile.find('.read input.password').removeAttr('title');
+  tile.find('.read input.password').attr('readonly', 'readonly');
   tile.find('.read button.password').html('Show');
   tile.find('.read pre.notes').html(data['notes']);
   tile.find('.write input.account').val(data['account']);
@@ -108,6 +110,7 @@ Accounts.updateTile = function(tile) {
   tile.find('.read input.password').attr('data-password', data['password']);
   tile.find('.read input.password').val('');
   tile.find('.read input.password').removeAttr('title');
+  tile.find('.read input.password').attr('readonly', 'readonly');
   tile.find('.read button.password').html('Show');
   tile.find('.read pre.notes').html(data['notes']);
   if (data['notes'].length == 0)
@@ -161,6 +164,7 @@ $(function() {
   $('button[data-show-password]').click(function() {
     var input = $(this).closest('.read').find('input.password');
     if ($(this).html() == 'Show') {
+      input.removeAttr('readonly');
       input.val(input.attr('data-password'));
       input.attr('title', input.attr('data-password'));
       input = input.get(0);
@@ -170,6 +174,7 @@ $(function() {
     } else {
       input.val('');
       input.removeAttr('title');
+      input.attr('readonly', 'readonly');
       $(this).html('Show');
     }
     return false;
@@ -286,16 +291,16 @@ $(function() {
     btns.removeAttr('disabled');
   });
 
-  $('#reload_link').bind('ajax:success', function(evt, data) {
-    Accounts.reload(data);
+  $('#refresh_link').bind('ajax:success', function(evt, data) {
+    Accounts.refresh(data);
   }).bind('ajax:error', function() {
     alert('Failed to sync with server. Please try again.');
   }).bind('ajax:beforeSend', function(evt, xhr, settings) {
     settings.url = settings.url + '/' + userData.userId;
     $(this).hide();
-    $('#reload_spinner').show();
+    $('#refresh_spinner').show();
   }).bind('ajax:complete', function() {
-    $('#reload_spinner').hide();
+    $('#refresh_spinner').hide();
     $(this).show();
     Util.chooseSection();
   });

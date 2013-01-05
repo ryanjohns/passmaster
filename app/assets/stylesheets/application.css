@@ -13,6 +13,10 @@
  *= require_tree .
  */
 
+body {
+  margin-top: 10px;
+}
+
 input.placeholder, textarea.placeholder {
   color: #aaa;
 }

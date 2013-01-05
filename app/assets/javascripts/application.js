@@ -20,8 +20,8 @@
 $(function() {
   $('input, textarea').placeholder();
 
-  $('a[data-logout]').click(function() {
-    Util.resetApp();
+  $('a[data-clear-cache]').click(function() {
+    Util.clearCache();
     return false;
   });
 
