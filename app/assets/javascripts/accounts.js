@@ -185,8 +185,8 @@ $(function() {
   });
 
   $('.read input.username, .read input.password').keydown(function(evt) {
-    if (!((evt.metaKey || evt.ctrlKey) && String.fromCharCode(evt.which).toLowerCase() == 'c'))
-      return false;
+    return ((evt.which >= 37 && evt.which <= 40) ||
+        ((evt.metaKey || evt.ctrlKey) && String.fromCharCode(evt.which).toLowerCase() == 'c'));
   })
   .bind('cut paste', function() {
     return false;
