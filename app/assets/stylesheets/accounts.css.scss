@@ -31,9 +31,17 @@
     th {
       padding: 0 0 5px 0;
     }
+    th.account {
+      text-align: left;
+    }
     th.edit-link {
       text-align: right;
       vertical-align: top;
+    }
+    td.field-label {
+      width: 15px;
+      text-align: right;
+      padding-right: 3px;
     }
     td.show-password {
       width: 60px;
@@ -55,6 +63,11 @@
   .write {
     table {
       width: 100%;
+    }
+    td.field-label {
+      width: 15px;
+      text-align: right;
+      padding-right: 3px;
     }
     form,input[type='text'],textarea {
       margin: 0;

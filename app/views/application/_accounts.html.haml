@@ -34,12 +34,12 @@
                   %button.btn.btn-primary{ :type => 'button', 'data-account-edit' => 'true' } Edit
             %tbody
               %tr
-                %td U:
+                %td.field-label U:
                 %td{ :colspan => '2' }
                   .click-to-select
                     %input.username.input-block-level{ :type => 'text', :name => 'username', :placeholder => 'Username' }
               %tr
-                %td P:
+                %td.field-label P:
                 %td
                   .click-to-select
                     %input.password.input-block-level{ :type => 'text', :name => 'password', :placeholder => 'Password' }
@@ -53,15 +53,15 @@
             %table
               %tbody
                 %tr
-                  %td A:
+                  %td.field-label A:
                   %td
                     %input.account.input-block-level{ :type => 'text', :name => 'account', :placeholder => 'Account Name', :required => 'true' }
                 %tr
-                  %td U:
+                  %td.field-label U:
                   %td
                     %input.username.input-block-level{ :type => 'text', :name => 'username', :placeholder => 'Username', :autocomplete => 'off', :autocorrect => 'off', :autocapitalize => 'off' }
                 %tr
-                  %td P:
+                  %td.field-label P:
                   %td
                     %input.password.input-block-level{ :type => 'text', :name => 'password', :placeholder => 'Password', :autocomplete => 'off', :autocorrect => 'off', :autocapitalize => 'off' }
                 %tr
