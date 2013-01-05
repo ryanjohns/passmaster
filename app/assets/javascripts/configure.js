@@ -2,16 +2,16 @@ function Configure() {};
 
 Configure.init = function() {
   $('#configure_email_placeholder').html(userData.email);
-  $('#configure_old_passwd').val('');
-  $('#configure_passwd').val('');
-  $('#configure_passwd2').val('');
+  $('#master_password_old_passwd').val('');
+  $('#master_password_passwd').val('');
+  $('#master_password_passwd2').val('');
   if (userData.configured) {
-    $('#configure_old_passwd').attr('required', 'true');
-    $('#configure_old_passwd').show();
+    $('#master_password_old_passwd').attr('required', 'true');
+    $('#master_password_old_passwd').show();
     $('#configure_cancel_btn').show();
   } else {
-    $('#configure_old_passwd').removeAttr('required');
-    $('#configure_old_passwd').hide();
+    $('#master_password_old_passwd').removeAttr('required');
+    $('#master_password_old_passwd').hide();
     $('#configure_cancel_btn').hide();
   }
 };
@@ -27,14 +27,14 @@ Configure.setMasterPassword = function(passwd) {
     alert('Failed to set Master Password. Please try again.');
     return;
   }
-  $('#configure_hidden_form').submit();
+  $('#master_password_hidden_form').submit();
 };
 
 $(function() {
-  $('#configure_form').submit(function() {
-    var oldPasswd = $('#configure_old_passwd').val();
-    var passwd = $('#configure_passwd').val();
-    var passwd2 = $('#configure_passwd2').val();
+  $('#master_password_form').submit(function() {
+    var oldPasswd = $('#master_password_old_passwd').val();
+    var passwd = $('#master_password_passwd').val();
+    var passwd2 = $('#master_password_passwd2').val();
     if (userData.configured && oldPasswd.length == 0)
       alert('Current Master Password cannot be blank.');
     else if (userData.configured && !userData.passwordMatches(oldPasswd))
@@ -48,7 +48,7 @@ $(function() {
     return false;
   });
 
-  $('#configure_hidden_form').bind('ajax:success', function(evt, data) {
+  $('#master_password_hidden_form').bind('ajax:success', function(evt, data) {
     userData.updateAttributes(data);
     Configure.init();
     Util.chooseSection();
@@ -56,18 +56,18 @@ $(function() {
     userData.revertMasterPassword();
     alert(Util.extractErrors(xhr));
   }).bind('ajax:before', function() {
-    $('#configure_hidden_api_key').val(userData.oldApiKey);
-    $('#configure_hidden_new_api_key').val(userData.apiKey);
-    $('#configure_hidden_encrypted_data').val(userData.encryptedData);
-    $('#configure_hidden_schema_version').val(Schema.currentVersion);
+    $('#master_password_hidden_api_key').val(userData.oldApiKey);
+    $('#master_password_hidden_new_api_key').val(userData.apiKey);
+    $('#master_password_hidden_encrypted_data').val(userData.encryptedData);
+    $('#master_password_hidden_schema_version').val(Schema.currentVersion);
   }).bind('ajax:beforeSend', function(evt, xhr, settings) {
     settings.url = settings.url + '/' + userData.userId;
-    var btn = $('#configure_btn');
+    var btn = $('#master_password_btn');
     btn.data('origText', btn.val());
     btn.attr('disabled', 'disabled');
     btn.val('Setting Password...');
   }).bind('ajax:complete', function() {
-    var btn = $('#configure_btn');
+    var btn = $('#master_password_btn');
     btn.val(btn.data('origText'));
     btn.removeAttr('disabled');
   });

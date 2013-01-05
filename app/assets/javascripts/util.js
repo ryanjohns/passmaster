@@ -42,7 +42,7 @@ Util.enableReadOnly = function() {
   });
 
   // configure
-  $('#configure_btn').attr('disabled', 'disabled');
+  $('#master_password_btn').attr('disabled', 'disabled');
 
   // account
   $('button[data-account-delete]').attr('disabled', 'disabled');
