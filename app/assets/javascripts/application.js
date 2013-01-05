@@ -20,8 +20,9 @@
 $(function() {
   $('input, textarea').placeholder();
 
-  $('a[data-clear-cache]').click(function() {
-    Util.clearCache();
+  $('button[data-wipe-data]').click(function() {
+    if (confirm('Are you sure? This will make your accounts unavailable while offline.'))
+      Util.wipeData();
     return false;
   });
 

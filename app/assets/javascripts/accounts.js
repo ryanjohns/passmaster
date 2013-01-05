@@ -297,11 +297,9 @@ $(function() {
     alert('Failed to sync with server. Please try again.');
   }).bind('ajax:beforeSend', function(evt, xhr, settings) {
     settings.url = settings.url + '/' + userData.userId;
-    $(this).hide();
     $('#refresh_spinner').show();
   }).bind('ajax:complete', function() {
     $('#refresh_spinner').hide();
-    $(this).show();
     Util.chooseSection();
   });
 
