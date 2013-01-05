@@ -58,10 +58,14 @@ Accounts.fillAccountTiles = function() {
   });
   for (i in accounts)
     this.addAccountTile(accounts[i].accountId, accounts[i]);
+  $('#num_accounts').data('count', accounts.length);
+  $('#num_accounts').html(accounts.length);
 };
 
 Accounts.wipeAccountTiles = function() {
   $('#account_tiles .account-data').remove();
+  $('#num_accounts').data('count', 0);
+  $('#num_accounts').html(0);
 };
 
 Accounts.addAccountTile = function(accountId, data) {
@@ -119,6 +123,11 @@ Accounts.updateTile = function(tile) {
   var accountId = tile.attr('data-account-id');
   if (accountId)
     delete userData.accounts[accountId];
+  else {
+    var span = $('#num_accounts');
+    span.data('count', span.data('count') + 1);
+    span.html(span.data('count'));
+  }
   var data = {
     'account': tile.find('.write input.account').val(),
     'username': tile.find('.write input.username').val(),
@@ -148,19 +157,26 @@ Accounts.updateTile = function(tile) {
 Accounts.removeTile = function(tile) {
   delete userData.accounts[tile.attr('data-account-id')];
   tile.remove();
+  var span = $('#num_accounts');
+  span.data('count', span.data('count') - 1);
+  span.html(span.data('count'));
 };
 
 Accounts.searchTiles = function(term) {
+  var count = 0;
   var pattern = new RegExp(term, 'i');
   for (accountId in userData.accounts) {
     var txt = userData.accounts[accountId]['account'] + ' ' +
         userData.accounts[accountId]['username'] + ' ' +
         userData.accounts[accountId]['notes'];
-    if (pattern.test(txt))
+    if (pattern.test(txt)) {
       $('.account-data[data-account-id="' + accountId + '"]').show();
-    else
+      count++;
+    } else
       $('.account-data[data-account-id="' + accountId + '"]').hide();
   }
+  $('#num_accounts').data('count', count);
+  $('#num_accounts').html(count);
 };
 
 Accounts.unlock = function(passwd) {
