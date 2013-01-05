@@ -22,7 +22,7 @@
     %p
       = button_tag('Add Account', :class => 'btn btn-success', :id => 'add_account_btn')
       = button_tag('Set Master Password', :class => 'btn btn-inverse', :id => 'set_master_password_btn')
-    %p= text_field_tag(:search, '', :placeholder => 'Search', :autocomplete => 'off', :class => 'input-xlarge', :id => 'accounts_list_search')
+    %p= text_field_tag(:search, '', :placeholder => 'Search', :autocomplete => 'off', :autocorrect => 'off', :autocapitalize => 'off', :class => 'input-xlarge', :id => 'accounts_list_search')
     #account_tiles
       .account-tile.pull-left.template{ :style => 'display:none;' }
         .read
@@ -52,10 +52,10 @@
               %input.account{ :type => :text, :name => :account, :placeholder => 'Account Name', :required => 'true' }
             .input-prepend
               %span.add-on U:
-              %input.username{ :type => :text, :name => :username, :placeholder => 'Username', :autocomplete => 'off' }
+              %input.username{ :type => :text, :name => :username, :placeholder => 'Username', :autocomplete => 'off', :autocorrect => 'off', :autocapitalize => 'off' }
             .input-prepend
               %span.add-on P:
-              %input.password{ :type => :text, :name => :password, :placeholder => 'Password', :autocomplete => 'off' }
+              %input.password{ :type => :text, :name => :password, :placeholder => 'Password', :autocomplete => 'off', :autocorrect => 'off', :autocapitalize => 'off' }
             %div.form-inline
               %button.btn{ :type => 'button', 'data-password-generator' => 'true' } Generate
               %label.checkbox
