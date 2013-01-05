@@ -9,15 +9,14 @@ Configure.init = function() {
     $('#configure_old_passwd').attr('required', 'true');
     $('#configure_old_passwd').show();
     $('#configure_cancel_btn').show();
+  } else {
+    $('#configure_old_passwd').removeAttr('required');
+    $('#configure_old_passwd').hide();
+    $('#configure_cancel_btn').hide();
   }
 };
 
-Configure.afterDisplay = function() {
-  if (userData.configured)
-    $('#configure_old_passwd').focus();
-  else
-    $('#configure_passwd').focus();
-};
+Configure.afterDisplay = function() {};
 
 Configure.setMasterPassword = function(passwd) {
   userData.setMasterPassword(passwd);
