@@ -12,6 +12,13 @@ Configure.init = function() {
   }
 };
 
+Configure.afterDisplay = function() {
+  if (userData.configured)
+    $('#configure_old_passwd').focus();
+  else
+    $('#configure_passwd').focus();
+};
+
 Configure.setMasterPassword = function(passwd) {
   userData.setMasterPassword(passwd);
   try {

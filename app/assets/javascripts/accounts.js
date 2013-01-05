@@ -7,6 +7,11 @@ Accounts.init = function() {
   this.selectView();
 };
 
+Accounts.afterDisplay = function() {
+  if (!userData.masterPassword)
+    $('#unlock_accounts_passwd').focus();
+};
+
 Accounts.refresh = function(data) {
   userData.updateAttributes(data);
   if (userData.masterPassword) {

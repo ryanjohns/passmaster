@@ -5,6 +5,10 @@ Verify.init = function() {
   $('#verify_verification_code').val(Util.getParameterByName('verification_code'));
 };
 
+Verify.afterDisplay = function() {
+  $('#verify_verification_code').focus();
+};
+
 $(function() {
   $('#verify_form').bind('ajax:success', function(evt, data) {
     userData.updateAttributes(data);
