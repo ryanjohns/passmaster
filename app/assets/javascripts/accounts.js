@@ -187,8 +187,7 @@ $(function() {
   $('.read input.username, .read input.password').keydown(function(evt) {
     return ((evt.which >= 37 && evt.which <= 40) ||
         ((evt.metaKey || evt.ctrlKey) && String.fromCharCode(evt.which).toLowerCase() == 'c'));
-  })
-  .bind('cut paste', function() {
+  }).bind('cut paste', function() {
     return false;
   });
 
@@ -272,37 +271,30 @@ $(function() {
       Accounts.removeTile(tile);
     else
       Accounts.updateTile(tile);
-  })
-  .bind('ajax:error', function(evt, xhr) {
+  }).bind('ajax:error', function(evt, xhr) {
     alert(Util.extractErrors(xhr));
-  })
-  .bind('ajax:before', function() {
+  }).bind('ajax:before', function() {
     $(this).find('input.api-key').val(userData.apiKey);
     $(this).find('input.encrypted-data').val(userData.encryptedData);
     $(this).find('input.schema-version').val(Schema.currentVersion);
-  })
-  .bind('ajax:beforeSend', function(evt, xhr, settings) {
+  }).bind('ajax:beforeSend', function(evt, xhr, settings) {
     settings.url = settings.url + '/' + userData.userId;
     var btns = $(this).closest('.account-tile').find('.write form .btn');
     btns.attr('disabled', 'disabled');
-  })
-  .bind('ajax:complete', function() {
+  }).bind('ajax:complete', function() {
     var btns = $(this).closest('.account-tile').find('.write form .btn');
     btns.removeAttr('disabled');
   });
 
   $('#reload_link').bind('ajax:success', function(evt, data) {
     Accounts.reload(data);
-  })
-  .bind('ajax:error', function() {
+  }).bind('ajax:error', function() {
     alert('Failed to sync with server. Please try again.');
-  })
-  .bind('ajax:beforeSend', function(evt, xhr, settings) {
+  }).bind('ajax:beforeSend', function(evt, xhr, settings) {
     settings.url = settings.url + '/' + userData.userId;
     $(this).hide();
     $('#reload_spinner').show();
-  })
-  .bind('ajax:complete', function() {
+  }).bind('ajax:complete', function() {
     $('#reload_spinner').hide();
     $(this).show();
     Util.chooseSection();

@@ -27,8 +27,7 @@ $(function() {
 
   $('#init_session_link').bind('ajax:success', function(evt, data) {
     $('meta[name="csrf-token"]').attr('content', data['token']);
-  })
-  .bind('ajax:error', function() {
+  }).bind('ajax:error', function() {
     Util.enableReadOnly();
   });
   $('#init_session_link').click();

@@ -10,17 +10,14 @@ $(function() {
     userData.updateAttributes(data);
     Overview.init();
     Util.chooseSection();
-  })
-  .bind('ajax:error', function(evt, xhr) {
+  }).bind('ajax:error', function(evt, xhr) {
     alert(Util.extractErrors(xhr));
-  })
-  .bind('ajax:beforeSend', function() {
+  }).bind('ajax:beforeSend', function() {
     var btn = $('#overview_btn');
     btn.data('origText', btn.val());
     btn.attr('disabled', 'disabled');
     btn.val('Loading...');
-  })
-  .bind('ajax:complete', function() {
+  }).bind('ajax:complete', function() {
     var btn = $('#overview_btn');
     btn.val(btn.data('origText'));
     btn.removeAttr('disabled');

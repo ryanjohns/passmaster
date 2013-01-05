@@ -46,25 +46,21 @@ $(function() {
     userData.updateAttributes(data);
     Configure.init();
     Util.chooseSection();
-  })
-  .bind('ajax:error', function(evt, xhr) {
+  }).bind('ajax:error', function(evt, xhr) {
     userData.revertMasterPassword();
     alert(Util.extractErrors(xhr));
-  })
-  .bind('ajax:before', function() {
+  }).bind('ajax:before', function() {
     $('#configure_hidden_api_key').val(userData.oldApiKey);
     $('#configure_hidden_new_api_key').val(userData.apiKey);
     $('#configure_hidden_encrypted_data').val(userData.encryptedData);
     $('#configure_hidden_schema_version').val(Schema.currentVersion);
-  })
-  .bind('ajax:beforeSend', function(evt, xhr, settings) {
+  }).bind('ajax:beforeSend', function(evt, xhr, settings) {
     settings.url = settings.url + '/' + userData.userId;
     var btn = $('#configure_btn');
     btn.data('origText', btn.val());
     btn.attr('disabled', 'disabled');
     btn.val('Setting Password...');
-  })
-  .bind('ajax:complete', function() {
+  }).bind('ajax:complete', function() {
     var btn = $('#configure_btn');
     btn.val(btn.data('origText'));
     btn.removeAttr('disabled');
