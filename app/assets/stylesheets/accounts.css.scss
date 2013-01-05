@@ -16,10 +16,16 @@
 
 #account_tiles {
   text-align: left;
+  @media (min-width: 1200px) { padding-left: 1px; }
 
   .account-tile {
-    width: 264px;
-    margin: 0 10px 10px 0;
+    width: 100%;
+    @media (min-width: 1200px) { width: 292px; }
+    @media (min-width: 980px) and (max-width: 1199px) { width: 313px; }
+    @media (min-width: 768px) and (max-width: 979px) { width: 362px; }
+  }
+  .account-tile-inner {
+    margin: 0 5px 10px 5px;
     padding: 8px;
     background-color: #f5f5f5;
     border: 1px solid #e3e3e3;
