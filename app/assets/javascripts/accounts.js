@@ -187,6 +187,9 @@ $(function() {
   $('.read input.username, .read input.password').keydown(function(evt) {
     if (!evt.metaKey || String.fromCharCode(evt.which).toLowerCase() != 'c')
       return false;
+  })
+  .bind('cut paste', function() {
+    return false;
   });
 
   $('#add_account_btn').click(function() {
