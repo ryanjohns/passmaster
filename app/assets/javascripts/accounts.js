@@ -28,11 +28,11 @@ Accounts.refresh = function(data) {
 Accounts.selectView = function() {
   if (userData.masterPassword) {
     this.fillAccountTiles();
-    $('#set_master_password_btn').show();
+    $('#configure_btn').show();
     $('#unlock_accounts').hide();
     $('#accounts_list').show();
   } else {
-    $('#set_master_password_btn').hide();
+    $('#configure_btn').hide();
     $('#accounts_list').hide();
     $('#unlock_accounts').show();
   }
@@ -344,7 +344,7 @@ $(function() {
     Util.chooseSection();
   });
 
-  $('#set_master_password_btn').click(function() {
+  $('#configure_btn').click(function() {
     Configure.init();
     Util.displaySection('configure');
     return false;

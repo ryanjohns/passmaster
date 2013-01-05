@@ -6,7 +6,7 @@
       %span{ :id => 'refresh_spinner', :style => 'display:none;' } Loading...
       = link_to(users_path, :remote => true, :id => 'refresh_link', :class => 'btn', :title => 'Refresh') do
         %i.icon-refresh
-      %button#set_master_password_btn.btn{ :type => 'button', :title => 'Configure', :style => 'display:none;' }
+      %button#configure_btn.btn{ :type => 'button', :title => 'Configure', :style => 'display:none;' }
         %i.icon-cog
     .clearfix
 
