@@ -66,6 +66,9 @@
     .form-inline {
       text-align: center;
       margin: 3px 0 5px 0;
+      button {
+        margin-right: 5px;
+      }
     }
     form,input[type='text'],textarea {
       margin: 0 0 2px 0;
