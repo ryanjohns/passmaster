@@ -77,6 +77,7 @@ Accounts.addBlankTile = function() {
   tile.addClass('account-data');
   tile.prependTo('#account_tiles');
   tile.show();
+  tile.find('.write input.account').focus();
 };
 
 Accounts.resetTile = function(tile) {
@@ -222,6 +223,7 @@ $(function() {
     tile.find('.read').hide();
     tile.find('button[data-account-delete]').show();
     tile.find('.write').show();
+    tile.find('.write input.account').focus();
     return false;
   });
 
