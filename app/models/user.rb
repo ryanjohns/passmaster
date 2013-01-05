@@ -20,8 +20,8 @@ class User < ActiveRecord::Base
     save
   end
 
-  def update!(old_api_key, new_api_key, encrypted_data, schema_version)
-    @old_api_key = old_api_key.present? ? old_api_key : nil
+  def update!(current_api_key, new_api_key, encrypted_data, schema_version)
+    @current_api_key = current_api_key.present? ? current_api_key : nil
     self.api_key = new_api_key if new_api_key.present?
     self.encrypted_data = encrypted_data
     self.schema_version = schema_version
@@ -59,7 +59,7 @@ class User < ActiveRecord::Base
   end
 
   def allowed_to_update
-    if @old_api_key && @old_api_key != api_key_was
+    if @current_api_key && @current_api_key != api_key_was
       errors.add(:api_key, 'is not authorized')
     end
   end
