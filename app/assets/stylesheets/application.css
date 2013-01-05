@@ -12,3 +12,7 @@
  *= require bootstrap-responsive
  *= require_tree .
  */
+
+input.placeholder, textarea.placeholder {
+  color: #aaa;
+}

@@ -12,11 +12,14 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery.placeholder
 //= require sjcl
 //= require base64
 //= require_tree .
 
 $(function() {
+  $('input, textarea').placeholder();
+
   $('a[data-logout]').click(function() {
     Util.resetApp();
     return false;
