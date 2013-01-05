@@ -40,8 +40,24 @@ Accounts.selectView = function() {
 
 Accounts.fillAccountTiles = function() {
   this.wipeAccountTiles();
-  for (accountId in userData.accounts)
-    this.addAccountTile(accountId, userData.accounts[accountId]);
+  var accounts = [];
+  for (accountId in userData.accounts) {
+    var data = $.extend(true, {}, userData.accounts[accountId]);
+    data.accountId = accountId;
+    accounts.push(data);
+  }
+  var accountA, accountB;
+  accounts = accounts.sort(function(a, b) {
+    accountA = a.account.toLowerCase();
+    accountB = b.account.toLowerCase();
+    if (accountA < accountB)
+      return -1;
+    if (accountA > accountB)
+      return 1;
+    return 0;
+  });
+  for (i in accounts)
+    this.addAccountTile(accounts[i].accountId, accounts[i]);
 };
 
 Accounts.wipeAccountTiles = function() {
