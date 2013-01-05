@@ -6,7 +6,7 @@
 
   .well
     = render 'read_only'
-    %h1
+    %h2
       Verify
       %small#verify_email_placeholder
     %p You need to verify your email address to use Passmaster.
@@ -14,5 +14,5 @@
       %p Enter your verification code below or request a new one.
       = form_tag(users_path, :method => :put, :remote => true, :id => 'verify_form') do
         %p= text_field_tag(:verification_code, '', :placeholder => 'Verification Code', :class => 'input-xlarge', :id => 'verify_verification_code', :required => 'true')
-        %p= submit_tag('Verify', :class => 'btn btn-primary btn-large', :id => 'verify_btn')
+        %p= submit_tag('Verify', :class => 'btn btn-primary', :id => 'verify_btn')
       %p= link_to('Send New Code', users_path, :class => 'btn', :id => 'verify_send_code_link', :remote => true, :method => :post)
