@@ -24,50 +24,63 @@
       = button_tag('Set Master Password', :class => 'btn btn-inverse', :id => 'set_master_password_btn')
     %p= text_field_tag(:search, '', :placeholder => 'Search', :autocomplete => 'off', :autocorrect => 'off', :autocapitalize => 'off', :class => 'input-xlarge', :id => 'accounts_list_search')
     #account_tiles
-      .account-tile.pull-left.template{ :style => 'display:none;' }
+      .account-tile.template.pull-left{ :style => 'display:none;' }
         .read
           %table
             %thead
               %tr
-                %th.account{ :colspan => 2 }
+                %th.account{ :colspan => '2' }
+                %th.edit-link
+                  %button.btn.btn-primary{ :type => 'button', 'data-account-edit' => 'true' } Edit
             %tbody
               %tr
-                %td
-                  .input-prepend.click-to-select
-                    %span.add-on U:
-                    %input.username{ :type => :text, :name => :username, :placeholder => 'Username' }
-                  .input-prepend.input-append.click-to-select
-                    %span.add-on P:
-                    %input.password{ :type => :text, :name => :password, :placeholder => 'Password' }
-                    %button.btn.password{ :type => 'button', 'data-show-password' => 'true' } Show
-                %td.edit-link
-                  %button.btn.btn-primary{ :type => :submit, 'data-account-edit' => 'true' } Edit
+                %td U:
+                %td{ :colspan => '2' }
+                  .click-to-select
+                    %input.username.input-block-level{ :type => 'text', :name => 'username', :placeholder => 'Username' }
               %tr
-                %td{ :colspan => 2 }
+                %td P:
+                %td
+                  .click-to-select
+                    %input.password.input-block-level{ :type => 'text', :name => 'password', :placeholder => 'Password' }
+                %td.show-password
+                  %button.password.btn{ :type => 'button', 'data-show-password' => 'true' } Show
+              %tr
+                %td{ :colspan => '3' }
                   %pre.notes
         .write
           %form
-            .input-prepend
-              %span.add-on A:
-              %input.account{ :type => :text, :name => :account, :placeholder => 'Account Name', :required => 'true' }
-            .input-prepend
-              %span.add-on U:
-              %input.username{ :type => :text, :name => :username, :placeholder => 'Username', :autocomplete => 'off', :autocorrect => 'off', :autocapitalize => 'off' }
-            .input-prepend
-              %span.add-on P:
-              %input.password{ :type => :text, :name => :password, :placeholder => 'Password', :autocomplete => 'off', :autocorrect => 'off', :autocapitalize => 'off' }
-            %div.form-inline
-              %button.btn.btn-inverse{ :type => 'button', 'data-password-generator' => 'true' } Generate
-              %label.checkbox
-                %input.special-characters{ :type => 'checkbox', :checked => 'checked' }
-                %span Special Chars
-            %div
-              %textarea.notes.input-block-level{ :name => :notes, :placeholder => 'Notes', :rows => '3' }
-            .actions
-              %input.btn.btn-primary{ :type => :submit, :name => :commit, :value => 'Save' }
-              %a.btn{ :href => '#', 'data-cancel' => 'true' } Cancel
-              %button.btn.btn-danger.pull-right{ :type => :submit, 'data-account-delete' => 'true', :style => 'display:none;' } Delete
-              .clearfix
+            %table
+              %tbody
+                %tr
+                  %td A:
+                  %td
+                    %input.account.input-block-level{ :type => 'text', :name => 'account', :placeholder => 'Account Name', :required => 'true' }
+                %tr
+                  %td U:
+                  %td
+                    %input.username.input-block-level{ :type => 'text', :name => 'username', :placeholder => 'Username', :autocomplete => 'off', :autocorrect => 'off', :autocapitalize => 'off' }
+                %tr
+                  %td P:
+                  %td
+                    %input.password.input-block-level{ :type => 'text', :name => 'password', :placeholder => 'Password', :autocomplete => 'off', :autocorrect => 'off', :autocapitalize => 'off' }
+                %tr
+                  %td{ :colspan => '2' }
+                    .form-inline
+                      %button.btn.btn-inverse{ :type => 'button', 'data-password-generator' => 'true' } Generate
+                      %label.checkbox
+                        %input.special-characters{ :type => 'checkbox', :checked => 'checked' }
+                        %span Special Chars
+                %tr
+                  %td{ :colspan => '2' }
+                    %textarea.notes.input-block-level{ :name => 'notes', :placeholder => 'Notes', :rows => '3' }
+                %tr
+                  %td{ :colspan => '2' }
+                    .actions
+                      %input.btn.btn-primary{ :type => 'submit', :name => 'commit', :value => 'Save' }
+                      %button.btn{ :type => 'button', 'data-cancel' => 'true' } Cancel
+                      %button.btn.btn-danger.pull-right{ :type => 'submit', 'data-account-delete' => 'true', :style => 'display:none;' } Delete
+                      .clearfix
         .update{ :style => 'display:none;' }
           = form_tag(users_path, :method => :put, :remote => true, :id => nil) do
             = hidden_field_tag(:api_key, '', :id => nil, :class => 'api-key')

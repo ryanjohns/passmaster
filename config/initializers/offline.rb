@@ -7,5 +7,7 @@ APPLICATION_MANIFEST = Rack::Offline.configure({ :cache => Rails.env.production?
     cache '/assets/application.css'
     cache '/assets/application.js'
   end
+  cache '/img/glyphicons-halflings.png'
+  cache '/img/glyphicons-halflings-white.png'
   network '/'
 end

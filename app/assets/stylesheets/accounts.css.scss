@@ -28,31 +28,21 @@
     table {
       width: 100%;
     }
-    th.account {
-      padding-bottom: 3px;
+    th {
+      padding: 0 0 5px 0;
     }
-    input[type='text'] {
-      margin: 0 0 2px 0;
+    th.edit-link {
+      text-align: right;
+      vertical-align: top;
     }
-    .input-prepend {
-      margin-bottom: 0;
-      .add-on {
-        width: 16px;
-      }
-      input {
-        width: 155px;
-      }
-    }
-    .input-prepend.input-append {
-      .add-on {
-        margin-left: 0;
-      }
-      input {
-        width: 96px;
-      }
-      .btn {
+    td.show-password {
+      width: 60px;
+      button {
         width: 60px;
       }
+    }
+    input[type='text'] {
+      margin: 0;
     }
     pre.notes {
       border: none;
@@ -63,27 +53,21 @@
   }
 
   .write {
+    table {
+      width: 100%;
+    }
+    form,input[type='text'],textarea {
+      margin: 0;
+    }
     .form-inline {
       text-align: center;
-      margin: 3px 0 5px 0;
+      margin: 5px 0;
       button {
         margin-right: 5px;
       }
     }
-    form,input[type='text'],textarea {
-      margin: 0 0 2px 0;
-    }
-    .input-prepend {
-      margin-bottom: 0;
-      .add-on {
-        width: 16px;
-      }
-      input {
-        width: 224px;
-      }
-    }
     .actions {
-      padding-top: 5px;
+      margin-top: 5px;
     }
   }
 }
