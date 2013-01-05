@@ -1,11 +1,13 @@
 #accounts.container{ :style => 'display:none;' }
   .top-links
     .pull-left
-      %button.btn.btn-warning{ 'data-wipe-data' => 'true' } Wipe Data
+      %button.btn.btn-warning{ :type => 'button', 'data-wipe-data' => 'true' } Wipe Data
     .pull-right
       %span{ :id => 'refresh_spinner', :style => 'display:none;' } Loading...
-      = link_to(users_path, :remote => true, :id => 'refresh_link', :class => 'btn') do
+      = link_to(users_path, :remote => true, :id => 'refresh_link', :class => 'btn', :title => 'Refresh') do
         %i.icon-refresh
+      %button#set_master_password_btn.btn{ :type => 'button', :title => 'Configure', :style => 'display:none;' }
+        %i.icon-cog
     .clearfix
 
   .well
@@ -21,9 +23,7 @@
         %p= submit_tag('Unlock', :class => 'btn btn-primary btn-large', :id => 'unlock_accounts_btn')
 
   #accounts_list{ :style => 'display:none;' }
-    %p
-      = button_tag('Add Account', :class => 'btn btn-success', :id => 'add_account_btn')
-      = button_tag('Set Master Password', :class => 'btn btn-inverse', :id => 'set_master_password_btn')
+    %p= button_tag('Add Account', :class => 'btn btn-success', :id => 'add_account_btn')
     %p= text_field_tag(:search, '', :placeholder => 'Search', :autocomplete => 'off', :autocorrect => 'off', :autocapitalize => 'off', :class => 'input-xlarge', :id => 'accounts_list_search')
     #account_tiles
       .account-tile.template.pull-left{ :style => 'display:none;' }

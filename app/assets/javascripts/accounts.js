@@ -28,9 +28,11 @@ Accounts.refresh = function(data) {
 Accounts.selectView = function() {
   if (userData.masterPassword) {
     this.fillAccountTiles();
+    $('#set_master_password_btn').show();
     $('#unlock_accounts').hide();
     $('#accounts_list').show();
   } else {
+    $('#set_master_password_btn').hide();
     $('#accounts_list').hide();
     $('#unlock_accounts').show();
   }

@@ -5,9 +5,7 @@ Verify.init = function() {
   $('#verify_verification_code').val(Util.getParameterByName('verification_code'));
 };
 
-Verify.afterDisplay = function() {
-  $('#verify_verification_code').focus();
-};
+Verify.afterDisplay = function() {};
 
 $(function() {
   $('#verify_form').bind('ajax:success', function(evt, data) {
