@@ -96,6 +96,11 @@ Util.wipeData = function() {
   this.chooseSection();
 };
 
+Util.confirmUnsavedChanges = function() {
+  return $('.account-tile .write:visible').length == 0 ||
+      confirm('Are you sure? All unsaved changes will be lost.');
+};
+
 Util.getParameterByName = function(name) {
   var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
   return match && decodeURIComponent(match[1]);
