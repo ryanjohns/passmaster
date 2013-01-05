@@ -17,6 +17,10 @@ body {
   margin-top: 10px;
 }
 
+.top-links {
+  margin-bottom: 10px;
+}
+
 input.placeholder, textarea.placeholder {
   color: #aaa;
 }

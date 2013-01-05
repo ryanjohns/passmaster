@@ -1,10 +1,12 @@
 #accounts.container{ :style => 'display:none;' }
-  .pull-right
-    = link_to('Refresh', users_path, :remote => true, :id => 'refresh_link')
-    %span{ :id => 'refresh_spinner', :style => 'display:none;' } Loading
-    |
-    %a{ :href => '#', 'data-clear-cache' => 'true' } Clear Cache
-  .clearfix
+  .top-links
+    .pull-left
+      %button.btn.btn-warning{ 'data-wipe-data' => 'true' } Wipe Data
+    .pull-right
+      %span{ :id => 'refresh_spinner', :style => 'display:none;' } Loading...
+      = link_to(users_path, :remote => true, :id => 'refresh_link', :class => 'btn') do
+        %i.icon-refresh
+    .clearfix
 
   .well
     = render 'read_only'

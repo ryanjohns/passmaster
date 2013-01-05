@@ -1,7 +1,8 @@
 #configure.container{ :style => 'display:none;' }
-  .pull-right
-    %a{ :href => '#', 'data-clear-cache' => 'true' } Clear Cache
-  .clearfix
+  .top-links
+    .pull-left
+      %button.btn.btn-warning{ 'data-wipe-data' => 'true' } Wipe Data
+    .clearfix
 
   .well
     = render 'read_only'

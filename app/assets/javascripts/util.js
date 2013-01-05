@@ -88,7 +88,7 @@ Util.lookupUser = function() {
   $('#refresh_link').click();
 };
 
-Util.clearCache = function() {
+Util.wipeData = function() {
   userData = null;
   localStorage.removeItem('userAttributes');
   Accounts.wipeAccountTiles();
