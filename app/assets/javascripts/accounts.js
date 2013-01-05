@@ -159,7 +159,7 @@ $(function() {
   });
 
   $('button[data-show-password]').click(function() {
-    var input = $(this).parent().find('input.password');
+    var input = $(this).closest('.read').find('input.password');
     if ($(this).html() == 'Show') {
       input.val(input.attr('data-password'));
       input.attr('title', input.attr('data-password'));
@@ -196,7 +196,7 @@ $(function() {
     return false;
   });
 
-  $('a[data-cancel]').click(function() {
+  $('button[data-cancel]').click(function() {
     var tile = $(this).closest('.account-tile');
     if (!tile.attr('data-account-id'))
       tile.remove();
