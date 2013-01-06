@@ -2,7 +2,7 @@ class UsersController < ApplicationController
 
   respond_to :json
 
-  before_filter :find_user, :only => [ :show, :update, :resend_verification, :verify ]
+  before_filter :find_user, :only => [ :show, :update, :backup, :resend_verification, :verify ]
 
   def show
     respond_with(@user)
@@ -17,6 +17,10 @@ class UsersController < ApplicationController
   def update
     @user.update!(params[:api_key], params[:new_api_key], params[:encrypted_data], params[:schema_version])
     respond_with_json(@user)
+  end
+
+  def backup
+    send_data(@user.encrypted_data || '', :filename => "passmaster-backup_#{Time.now.to_s(:yyyy_mm_dd)}.txt", :disposition => 'attachment', :type => :text)
   end
 
   def resend_verification

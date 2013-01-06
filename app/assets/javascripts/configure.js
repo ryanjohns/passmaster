@@ -9,7 +9,7 @@ Configure.init = function() {
     $('#master_password_old_passwd').attr('required', 'true');
     $('#master_password_old_passwd').show();
     $('#configure_cancel_btn').show();
-    $('#unlocked_options').hide();
+    $('#unlocked_options').show();
   } else {
     $('#master_password_old_passwd').removeAttr('required');
     $('#master_password_old_passwd').hide();
@@ -80,6 +80,11 @@ $(function() {
       Util.displaySection('accounts');
     else
       Util.chooseSection();
+    return false;
+  });
+
+  $('#backup_btn').click(function() {
+    window.open('/users/' + userData.userId + '/backup');
     return false;
   });
 });
