@@ -8,6 +8,9 @@ class UsersControllerTest < ActionController::TestCase
   test "create" do
   end
 
+  test "backup" do
+  end
+
   test "update" do
   end
 

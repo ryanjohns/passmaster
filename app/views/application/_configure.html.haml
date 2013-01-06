@@ -31,8 +31,10 @@
 
     #unlocked_options{ :style => 'display:none;' }
       #backup_restore.pushed-down
-        %h4 Backup/Restore Accounts
-        %p Use the button below to backup your encrypted accounts database to a file on your computer. You can then restore your accounts from that file when necessary.
+        %h4 Backup Accounts
+        %p Use the button below to backup your encrypted accounts database to a file on your computer. You'll eventually be able to restore your accounts from that file if necessary.
         .alert.alert-info
           %strong Note:
-          Backup files will be encrypted with your current Master Password and you will need the password in order to restore the backup.
+          Backups are encrypted with your current Master Password and you will need the password in order to restore the backup.
+        %p
+          %button#backup_btn.btn.btn-primary{ :type => 'button' } Backup
