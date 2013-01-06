@@ -3,7 +3,8 @@ class Mailer < ActionMailer::Base
 
   def verify_email(user)
     @code = user.verification_code
-    @url  = root_url(:email => user.email, :verification_code => @code, :protocol => 'https').html_safe
+    @website_url = root_url(:email => user.email, :protocol => 'https').html_safe
+    @verification_url = root_url(:email => user.email, :verification_code => @code, :protocol => 'https').html_safe
     mail(:to => user.email, :subject => 'Passmaster - Email Verification')
   end
 

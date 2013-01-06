@@ -15,14 +15,24 @@
     .pushed-down
       %h4 Master Password
       %p The Master Password is the only password you will need to remember. It is used to decrypt the rest of your individual account passwords. Enter a strong master password below.
-      %p.bold It is extremely important that you remember this password as it CANNOT be recovered!
+      .alert.alert-warning
+        %strong Warning!
+        It is extremely important that you remember this password as it CANNOT be recovered!
       %form#master_password_form
         %p= password_field_tag(:old_passwd, '', :placeholder => 'Current Password', :class => 'input-xlarge', :id => 'master_password_old_passwd', :style => 'display:none;')
         %p= password_field_tag(:passwd, '', :placeholder => 'New Password', :class => 'input-xlarge', :id => 'master_password_passwd', :required => 'true')
         %p= password_field_tag(:passwd2, '', :placeholder => 'Confirm New Password', :class => 'input-xlarge', :id => 'master_password_passwd2', :required => 'true')
-        %p= submit_tag('Set Password', :class => 'btn btn-primary', :id => 'master_password_btn')
+        %p= submit_tag('Set Master Password', :class => 'btn btn-primary', :id => 'master_password_btn')
       = form_tag(users_path, :method => :put, :remote => true, :id => 'master_password_hidden_form', :style => 'display:none;') do
         = hidden_field_tag(:api_key, '', :id => 'master_password_hidden_api_key')
         = hidden_field_tag(:new_api_key, '', :id => 'master_password_hidden_new_api_key')
         = hidden_field_tag(:encrypted_data, '', :id => 'master_password_hidden_encrypted_data')
         = hidden_field_tag(:schema_version, '', :id => 'master_password_hidden_schema_version')
+
+    #unlocked_options{ :style => 'display:none;' }
+      #backup_restore.pushed-down
+        %h4 Backup/Restore Accounts
+        %p Use the button below to backup your encrypted accounts database to a file on your computer. You can then restore your accounts from that file when necessary.
+        .alert.alert-info
+          %strong Note:
+          Backup files will be encrypted with your current Master Password and you will need the password in order to restore the backup.

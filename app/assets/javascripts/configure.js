@@ -9,10 +9,12 @@ Configure.init = function() {
     $('#master_password_old_passwd').attr('required', 'true');
     $('#master_password_old_passwd').show();
     $('#configure_cancel_btn').show();
+    $('#unlocked_options').hide();
   } else {
     $('#master_password_old_passwd').removeAttr('required');
     $('#master_password_old_passwd').hide();
     $('#configure_cancel_btn').hide();
+    $('#unlocked_options').hide();
   }
 };
 

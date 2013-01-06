@@ -2,12 +2,15 @@
 
 %p Thanks for creating a Passmaster account! You'll need to verify your email address to use your account.
 
-%p Just click the link below or copy/paste the verification code into the box on the website.
+%p
+  Just click the link below or enter the verification code when you
+  = succeed '.' do
+    = link_to('access your account', @website_url)
 
 %p
   Verification Code:
   %strong= @code
 
-%p= link_to(@url, @url)
+%p= link_to(@verification_url, @verification_url)
 
 %p Thanks!
