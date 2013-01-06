@@ -2,9 +2,10 @@
   .well
     = render 'read_only'
     %h2 Passmaster
-    %h5 A simple tool for storing all your account credentials securely with a single master password.
+    %h5 A simple tool for storing all your account credentials.
+    %p Everything is encrypted with a single Master Password guaranteeing that your information is only accessible to you.
     .pushed-down
-      %p Just enter your email address to access your accounts, or to get started.
+      %p Enter your email address to access your accounts or to get started.
       = form_tag(users_path, :remote => true, :id => 'overview_form') do
         %p= email_field_tag(:email, '', :placeholder => 'Email Address', :class => 'input-xlarge', :id => 'overview_email', :required => 'true')
         %p= submit_tag('Access Accounts', :class => 'btn btn-primary', :id => 'overview_btn')
