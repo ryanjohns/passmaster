@@ -76,7 +76,10 @@ $(function() {
 
   $('#configure_cancel_btn').click(function() {
     Configure.init();
-    Util.chooseSection();
+    if (userData.configured)
+      Util.displaySection('accounts');
+    else
+      Util.chooseSection();
     return false;
   });
 });
