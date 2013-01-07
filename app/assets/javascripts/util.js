@@ -53,7 +53,7 @@ Util.enableReadOnly = function() {
   $('#refresh_link').removeAttr('data-remote');
 
   // alert message
-  $('.alert-read-only').show();
+  $('#read_only').show();
 };
 
 Util.chooseSection = function() {

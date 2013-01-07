@@ -3,7 +3,7 @@
     .pull-left
       %button.btn.btn-warning{ :type => 'button', 'data-wipe-data' => 'true' } Wipe Data
     .pull-right
-      %span{ :id => 'refresh_spinner', :style => 'display:none;' } Loading...
+      %span#refresh_spinner{ :style => 'display:none;' } Loading...
       = link_to(users_path, :remote => true, :id => 'refresh_link', :class => 'btn', :title => 'Refresh') do
         %i.icon-refresh
       %button#configure_btn.btn{ :type => 'button', :title => 'Configure', :style => 'display:none;' }
@@ -11,14 +11,13 @@
     .clearfix
 
   .well
-    = render 'read_only'
     %h2
       Accounts
       %small#accounts_email_placeholder
 
     #unlock_accounts{ :style => 'display:none;' }
       %p Accounts are locked. Enter the Master Password to unlock.
-      %form{ :id => 'unlock_accounts_form' }
+      %form#unlock_accounts_form
         %p= password_field_tag(:passwd, '', :placeholder => 'Master Password', :class => 'input-xlarge', :id => 'unlock_accounts_passwd', :required => 'true')
         %p= submit_tag('Unlock', :class => 'btn btn-primary', :id => 'unlock_accounts_btn')
 
