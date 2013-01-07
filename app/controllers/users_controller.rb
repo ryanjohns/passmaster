@@ -20,7 +20,11 @@ class UsersController < ApplicationController
   end
 
   def backup
-    send_data(@user.encrypted_data || '', :filename => "passmaster-backup_#{Time.now.to_s(:yyyy_mm_dd)}.txt", :disposition => 'attachment', :type => :text)
+    data = {
+      :schema_version => @user.schema_version,
+      :encrypted_data => @user.encrypted_data || '',
+    }.to_json
+    send_data(data, :filename => "passmaster-backup_#{Time.now.to_s(:yyyy_mm_dd)}.txt", :disposition => 'attachment', :type => :text)
   end
 
   def resend_verification

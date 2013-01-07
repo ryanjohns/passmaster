@@ -19,7 +19,7 @@ $(function() {
     var btn = $('#verify_btn');
     btn.data('origText', btn.val());
     btn.attr('disabled', 'disabled');
-    btn.val('Verifying...');
+    btn.val('Please Wait...');
   }).bind('ajax:complete', function() {
     var btn = $('#verify_btn');
     btn.val(btn.data('origText'));
@@ -36,7 +36,7 @@ $(function() {
     var link = $('#verify_send_code_link');
     link.data('origText', link.html());
     link.attr('disabled', 'disabled');
-    link.html('Sending...');
+    link.html('Please Wait...');
   }).bind('ajax:complete', function() {
     var link = $('#verify_send_code_link');
     link.html(link.data('origText'));

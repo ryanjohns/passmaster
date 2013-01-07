@@ -16,7 +16,7 @@
       %h4 Master Password
       %p The Master Password is the only password you will need to remember. It is used to decrypt the rest of your individual account passwords. Enter a strong master password below.
       .alert.alert-warning
-        %strong Warning!
+        %strong Warning:
         It is extremely important that you remember this password as it CANNOT be recovered!
       %form#master_password_form
         %p= password_field_tag(:old_passwd, '', :placeholder => 'Current Password', :class => 'input-xlarge', :id => 'master_password_old_passwd', :style => 'display:none;')
@@ -30,11 +30,25 @@
         = hidden_field_tag(:schema_version, '', :id => 'master_password_hidden_schema_version')
 
     #unlocked_options{ :style => 'display:none;' }
-      #backup_restore.pushed-down
+      #backup_accounts.pushed-down
+        %hr
         %h4 Backup Accounts
         %p Use the button below to backup your encrypted accounts database to a file on your computer. You'll eventually be able to restore your accounts from that file if necessary.
         .alert.alert-info
           %strong Note:
-          Backups are encrypted with your current Master Password and you will need the password in order to restore the backup.
+          Backups are locked with your current Master Password and you will need the password in order to restore the backup.
         %p
-          %button#backup_btn.btn.btn-primary{ :type => 'button' } Backup
+          %button#backup_accounts_btn.btn.btn-primary{ :type => 'button' } Backup
+
+      #restore_accounts.pushed-down
+        %hr
+        %h4 Restore Accounts
+        %p Select your backup file and enter the Master Password that was used to create the backup.
+        .alert.alert-danger
+          %strong Danger:
+          This will replace ALL of your current accounts and reset your Master Password to whatever they were when the backup was created. You might want to make a backup of your current accounts before restoring.
+        %form#restore_accounts_form{ :multipart => true }
+          %p= file_field_tag(:backup_file, :accept => 'text/plain', :id => 'restore_accounts_backup_file')
+          %p= password_field_tag(:passwd, '', :placeholder => 'Backup Password', :class => 'input-xlarge', :id => 'restore_accounts_passwd', :required => 'true')
+          %p{ :style => 'display:none;' }= password_field_tag(:hack_field, '')
+          %p= submit_tag('Restore', :class => 'btn btn-danger', :id => 'restore_accounts_btn')
