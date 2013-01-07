@@ -75,11 +75,13 @@ $(function() {
 
   $('#master_password_hidden_form').bind('ajax:success', function(evt, data) {
     userData.updateAttributes(data);
-    Configure.init();
+    delete userData.oldApiKey;
+    delete userData.oldMasterPassword;
     if ($(this).data('submitted-by') == 'restoreBackup') {
       userData.accounts = userData.restoredAccounts;
       delete userData.restoredAccounts;
     }
+    Configure.init();
     Util.chooseSection();
   }).bind('ajax:error', function(evt, xhr) {
     userData.revertMasterPassword();

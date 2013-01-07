@@ -25,3 +25,7 @@ body {
 input.placeholder, textarea.placeholder {
   color: #aaa;
 }
+
+#read_only {
+  text-align: center;
+}

@@ -1,3 +1,8 @@
+#read_only.alert.alert-error{ :style => 'display:none;' }
+  %strong Connection failed:
+  Read-only mode enabled.
+  = link_to('Try reconnecting...', root_path)
+
 = render 'overview'
 = render 'verify'
 = render 'configure'
