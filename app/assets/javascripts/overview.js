@@ -20,7 +20,7 @@ $(function() {
     var btn = $('#overview_btn');
     btn.data('origText', btn.val());
     btn.attr('disabled', 'disabled');
-    btn.val('Loading...');
+    btn.val('Please Wait...');
   }).bind('ajax:complete', function() {
     var btn = $('#overview_btn');
     btn.val(btn.data('origText'));

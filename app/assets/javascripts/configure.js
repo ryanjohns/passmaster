@@ -5,6 +5,7 @@ Configure.init = function() {
   $('#master_password_old_passwd').val('');
   $('#master_password_passwd').val('');
   $('#master_password_passwd2').val('');
+  $('#restore_accounts_passwd').val('');
   if (userData.configured) {
     $('#master_password_old_passwd').attr('required', 'true');
     $('#master_password_old_passwd').show();
@@ -29,6 +30,28 @@ Configure.setMasterPassword = function(passwd) {
     alert('Failed to set Master Password. Please try again.');
     return;
   }
+  $('#master_password_hidden_form').data('submitted-by', 'setMasterPassword');
+  $('#master_password_hidden_form').submit();
+};
+
+Configure.restoreBackup = function(passwd, backupStr) {
+  var backup;
+  try {
+    backup = JSON.parse(backupStr);
+  } catch(err) {
+    alert('Failed to load backup file.')
+    return;
+  }
+  userData.setMasterPassword(passwd);
+  try {
+    userData.restoredAccounts = Schema.migrate(backup['schema_version'], Crypto.decryptObject(userData.masterPassword, backup['encrypted_data']));
+    userData.setEncryptedData(userData.restoredAccounts);
+  } catch(err) {
+    userData.revertMasterPassword();
+    alert('Failed to unlock backup. Please try again.');
+    return;
+  }
+  $('#master_password_hidden_form').data('submitted-by', 'restoreBackup');
   $('#master_password_hidden_form').submit();
 };
 
@@ -53,6 +76,10 @@ $(function() {
   $('#master_password_hidden_form').bind('ajax:success', function(evt, data) {
     userData.updateAttributes(data);
     Configure.init();
+    if ($(this).data('submitted-by') == 'restoreBackup') {
+      userData.accounts = userData.restoredAccounts;
+      delete userData.restoredAccounts;
+    }
     Util.chooseSection();
   }).bind('ajax:error', function(evt, xhr) {
     userData.revertMasterPassword();
@@ -64,12 +91,20 @@ $(function() {
     $('#master_password_hidden_schema_version').val(Schema.currentVersion);
   }).bind('ajax:beforeSend', function(evt, xhr, settings) {
     settings.url = settings.url + '/' + userData.userId;
-    var btn = $('#master_password_btn');
+    var btn;
+    if ($(this).data('submitted-by') == 'restoreBackup')
+      btn = $('#restore_accounts_btn');
+    else
+      btn = $('#master_password_btn');
     btn.data('origText', btn.val());
     btn.attr('disabled', 'disabled');
-    btn.val('Setting Password...');
+    btn.val('Please Wait...');
   }).bind('ajax:complete', function() {
-    var btn = $('#master_password_btn');
+    var btn;
+    if ($(this).data('submitted-by') == 'restoreBackup')
+      btn = $('#restore_accounts_btn');
+    else
+      btn = $('#master_password_btn');
     btn.val(btn.data('origText'));
     btn.removeAttr('disabled');
   });
@@ -83,8 +118,19 @@ $(function() {
     return false;
   });
 
-  $('#backup_btn').click(function() {
+  $('#backup_accounts_btn').click(function() {
     window.open('/users/' + userData.userId + '/backup');
+    return false;
+  });
+
+  $('#restore_accounts_form').submit(function() {
+    var passwd = $('#restore_accounts_passwd').val();
+    var file = $('#restore_accounts_backup_file').get(0).files[0];
+    var reader = new FileReader();
+    reader.onload = (function(evt) {
+      Configure.restoreBackup(passwd, evt.target.result);
+    });
+    reader.readAsText(file);
     return false;
   });
 });
