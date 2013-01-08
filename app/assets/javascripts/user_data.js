@@ -42,4 +42,10 @@ function UserData() {
   this.passwordMatches = function(passwd) {
     return this.apiKey == Crypto.sha256(Crypto.sha256(passwd) + ':' + this.userId);
   };
+  this.numAccounts = function() {
+    var count = 0;
+    for (a in this.accounts)
+      count++;
+    return count;
+  };
 };

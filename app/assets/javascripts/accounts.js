@@ -29,6 +29,8 @@ Accounts.selectView = function() {
     $('#configure_btn').show();
     $('#unlock_accounts').hide();
     $('#accounts_list').show();
+    $('#total_accounts').attr('data-count', userData.numAccounts());
+    $('#total_accounts').html($('#total_accounts').attr('data-count'));
     this.searchTiles($('#accounts_list_search').val());
   } else {
     $('#configure_btn').hide();
@@ -110,6 +112,9 @@ Accounts.updateTile = function(tile) {
     var span = $('#num_accounts');
     span.data('count', span.data('count') + 1);
     span.html(span.data('count'));
+    span = $('#total_accounts');
+    span.data('count', span.data('count') + 1);
+    span.html(span.data('count'));
   }
   var data = {
     'account': tile.find('.write input.account').val(),
@@ -144,6 +149,9 @@ Accounts.removeTile = function(tile) {
   var span = $('#num_accounts');
   span.data('count', span.data('count') - 1);
   span.html(span.data('count'));
+  span = $('#total_accounts');
+  span.data('count', span.data('count') - 1);
+  span.html(span.data('count'));
 };
 
 Accounts.searchTiles = function(term) {
@@ -151,19 +159,10 @@ Accounts.searchTiles = function(term) {
   if (term == '')
     $('.account-data[data-account-id]').hide();
   else {
-    var pattern = new RegExp(term, 'i');
-    var showAll = (term == '.' || term == '.*');
-    var tile, txt;
+    var tile;
     for (accountId in userData.accounts) {
-      if (!showAll) {
-        txt = userData.accounts[accountId].account + ' ' +
-            userData.accounts[accountId].url + ' ' +
-            userData.accounts[accountId].username + ' ' +
-            userData.accounts[accountId].password + ' ' +
-            userData.accounts[accountId].notes;
-      }
       tile = $('.account-data[data-account-id="' + accountId + '"]');
-      if (showAll || pattern.test($.trim(txt))) {
+      if (this.shouldShowTile(term, userData.accounts[accountId])) {
         count++;
         if (tile.length > 0)
           tile.show();
@@ -173,14 +172,28 @@ Accounts.searchTiles = function(term) {
         tile.hide();
       }
     }
-    $('.account-data[data-account-id]:visible th.account').sortElements(function(a, b) {
-      return $(a).text().toLowerCase() > $(b).text().toLowerCase() ? 1 : -1;
-    }, function() {
-      return $(this).closest('.account-tile').get(0);
-    });
+    this.sortTiles();
   }
   $('#num_accounts').data('count', count);
   $('#num_accounts').html(count);
+};
+
+Accounts.shouldShowTile = function(term, data) {
+  if (term == '.' || term == '.*')
+    return true;
+  if (term == '')
+    return false;
+  var pattern = new RegExp(term, 'i');
+  var txt = data.account + ' ' + data.url + ' ' + data.username + ' ' + data.password + ' ' + data.notes;
+  return pattern.test($.trim(txt));
+};
+
+Accounts.sortTiles = function() {
+  $('.account-data[data-account-id]:visible th.account').sortElements(function(a, b) {
+    return $(a).text().toLowerCase() > $(b).text().toLowerCase() ? 1 : -1;
+  }, function() {
+    return $(this).closest('.account-tile').get(0);
+  });
 };
 
 Accounts.unlock = function(passwd) {
