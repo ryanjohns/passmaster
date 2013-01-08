@@ -68,9 +68,15 @@ Accounts.wipeAccountTiles = function() {
   $('#num_accounts').html(0);
 };
 
+Accounts.getAccountHtml = function(account, url) {
+  if (url.length > 0)
+    return '<a href="' + url + '" target="_blank">' + account + '</a>';
+  return account;
+};
+
 Accounts.addAccountTile = function(accountId, data) {
   var tile = $('#account_tiles .template').clone(true);
-  tile.find('.read th.account').html(data.account);
+  tile.find('.read th.account').html(this.getAccountHtml(data.account, data.url));
   tile.find('.read input.username').val(data.username);
   tile.find('.read input.username').attr('title', data.username);
   tile.find('.read input.password').attr('data-password', data.password);
@@ -79,6 +85,7 @@ Accounts.addAccountTile = function(accountId, data) {
   if (data.notes.length == 0)
     tile.find('.read pre.notes').hide();
   tile.find('.write input.account').val(data.account);
+  tile.find('.write input.url').val(data.url);
   tile.find('.write input.username').val(data.username);
   tile.find('.write input.password').val(data.password);
   tile.find('.write textarea.notes').val(data.notes);
@@ -102,7 +109,7 @@ Accounts.addBlankTile = function() {
 
 Accounts.resetTile = function(tile) {
   var data = userData.accounts[tile.attr('data-account-id')];
-  tile.find('.read th.account').html(data.account);
+  tile.find('.read th.account').html(this.getAccountHtml(data.account, data.url));
   tile.find('.read input.username').val(data.username);
   tile.find('.read input.username').attr('title', data.username);
   tile.find('.read input.password').attr('data-password', data.password);
@@ -112,6 +119,7 @@ Accounts.resetTile = function(tile) {
   tile.find('.read button.password').html('Show');
   tile.find('.read pre.notes').html(data.notes);
   tile.find('.write input.account').val(data.account);
+  tile.find('.write input.url').val(data.url);
   tile.find('.write input.username').val(data.username);
   tile.find('.write input.password').val(data.password);
   tile.find('.write textarea.notes').val(data.notes);
@@ -130,6 +138,7 @@ Accounts.updateTile = function(tile) {
   }
   var data = {
     'account': tile.find('.write input.account').val(),
+    'url': tile.find('.write input.url').val(),
     'username': tile.find('.write input.username').val(),
     'password': tile.find('.write input.password').val(),
     'notes': tile.find('.write textarea.notes').val()
@@ -137,7 +146,7 @@ Accounts.updateTile = function(tile) {
   accountId = Crypto.sha256(data.account);
   userData.accounts[accountId] = data;
   tile.attr('data-account-id', accountId);
-  tile.find('.read th.account').html(data.account);
+  tile.find('.read th.account').html(this.getAccountHtml(data.account, data.url));
   tile.find('.read input.username').val(data.username);
   tile.find('.read input.username').attr('title', data.username);
   tile.find('.read input.password').attr('data-password', data.password);
@@ -167,7 +176,9 @@ Accounts.searchTiles = function(term) {
   var pattern = new RegExp(term, 'i');
   for (accountId in userData.accounts) {
     var txt = userData.accounts[accountId].account + ' ' +
+        userData.accounts[accountId].url + ' ' +
         userData.accounts[accountId].username + ' ' +
+        userData.accounts[accountId].password + ' ' +
         userData.accounts[accountId].notes;
     if (pattern.test(txt)) {
       $('.account-data[data-account-id="' + accountId + '"]').show();
@@ -255,7 +266,8 @@ $(function() {
     tile.find('.read').hide();
     tile.find('button[data-account-delete]').show();
     tile.find('.write').show();
-    tile.find('.write input.account').focus();
+    if (!tile.attr('data-account-id'))
+      tile.find('.write input.account').focus();
     return false;
   });
 
@@ -281,6 +293,7 @@ $(function() {
     var tile = $(this).closest('.account-tile');
     var data = {
       'account': $(this).find('input.account').val(),
+      'url': $(this).find('input.url').val(),
       'username': $(this).find('input.username').val(),
       'password': $(this).find('input.password').val(),
       'notes': $(this).find('textarea.notes').val()
