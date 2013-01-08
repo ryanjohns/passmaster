@@ -156,9 +156,10 @@ Accounts.removeTile = function(tile) {
 
 Accounts.searchTiles = function(term) {
   var count = 0;
-  if (term == '')
+  if (term == '') {
     $('.account-data[data-account-id]').hide();
-  else {
+    $('#show_all_tiles_btn').html('Show All');
+  } else {
     var tile;
     for (accountId in userData.accounts) {
       tile = $('.account-data[data-account-id="' + accountId + '"]');
@@ -173,6 +174,7 @@ Accounts.searchTiles = function(term) {
       }
     }
     this.sortTiles();
+    $('#show_all_tiles_btn').html('Show None');
   }
   $('#num_accounts').data('count', count);
   $('#num_accounts').html(count);
@@ -376,10 +378,6 @@ $(function() {
   });
 
   $('#accounts_list_search').keyup(function() {
-    if ($(this).val() == '')
-      $('#show_all_tiles_btn').html('Show All');
-    else
-      $('#show_all_tiles_btn').html('Show None');
     Util.typewatch($(this).val(), 'Accounts.searchTiles(currentVal);', 250);
   });
 
@@ -387,10 +385,8 @@ $(function() {
     var searchBox = $('#accounts_list_search');
     if (searchBox.val() == '') {
       searchBox.val('.');
-      $(this).html('Show None');
     } else {
       searchBox.val('');
-      $(this).html('Show All');
     }
     Accounts.searchTiles(searchBox.val());
     return false;
