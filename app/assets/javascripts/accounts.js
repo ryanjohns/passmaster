@@ -376,7 +376,24 @@ $(function() {
   });
 
   $('#accounts_list_search').keyup(function() {
+    if ($(this).val() == '')
+      $('#show_all_tiles_btn').html('Show All');
+    else
+      $('#show_all_tiles_btn').html('Show None');
     Util.typewatch($(this).val(), 'Accounts.searchTiles(currentVal);', 250);
+  });
+
+  $('#show_all_tiles_btn').click(function() {
+    var searchBox = $('#accounts_list_search');
+    if (searchBox.val() == '') {
+      searchBox.val('.');
+      $(this).html('Show None');
+    } else {
+      searchBox.val('');
+      $(this).html('Show All');
+    }
+    Accounts.searchTiles(searchBox.val());
+    return false;
   });
 
   $('button[data-password-generator]').click(function() {
