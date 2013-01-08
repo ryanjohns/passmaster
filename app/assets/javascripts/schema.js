@@ -6,9 +6,9 @@ Schema.migrate = function(version, data) {
   if (version == this.currentVersion)
     return data;
   if (version > this.currentVersion) {
-    alert('You are using an outdated version of the website and need to refresh the page to continue.');
+    alert('Your accounts database was last saved by a version of the website that is newer than the version you are currently running. The page will reload in order to update to the latest version.');
     location.reload();
-    return;
+    return {};
   }
   while (version < this.currentVersion) {
     version++;
