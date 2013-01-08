@@ -2,8 +2,6 @@ function Accounts() {};
 
 Accounts.init = function() {
   $('#accounts_email_placeholder').html(userData.email);
-  $('#accounts_list_search').val('');
-  Util.timerVal = '';
   this.selectView();
 };
 
@@ -26,40 +24,17 @@ Accounts.refresh = function(data) {
 };
 
 Accounts.selectView = function() {
+  this.wipeAccountTiles();
   if (userData.masterPassword) {
-    this.fillAccountTiles();
     $('#configure_btn').show();
     $('#unlock_accounts').hide();
     $('#accounts_list').show();
+    this.searchTiles($('#accounts_list_search').val());
   } else {
     $('#configure_btn').hide();
     $('#accounts_list').hide();
     $('#unlock_accounts').show();
   }
-};
-
-Accounts.fillAccountTiles = function() {
-  this.wipeAccountTiles();
-  var accounts = [];
-  for (accountId in userData.accounts) {
-    var data = $.extend(true, {}, userData.accounts[accountId]);
-    data.accountId = accountId;
-    accounts.push(data);
-  }
-  var accountA, accountB;
-  accounts = accounts.sort(function(a, b) {
-    accountA = a.account.toLowerCase();
-    accountB = b.account.toLowerCase();
-    if (accountA < accountB)
-      return -1;
-    if (accountA > accountB)
-      return 1;
-    return 0;
-  });
-  for (i in accounts)
-    this.addAccountTile(accounts[i].accountId, accounts[i]);
-  $('#num_accounts').data('count', accounts.length);
-  $('#num_accounts').html(accounts.length);
 };
 
 Accounts.wipeAccountTiles = function() {
@@ -173,18 +148,36 @@ Accounts.removeTile = function(tile) {
 
 Accounts.searchTiles = function(term) {
   var count = 0;
-  var pattern = new RegExp(term, 'i');
-  for (accountId in userData.accounts) {
-    var txt = userData.accounts[accountId].account + ' ' +
-        userData.accounts[accountId].url + ' ' +
-        userData.accounts[accountId].username + ' ' +
-        userData.accounts[accountId].password + ' ' +
-        userData.accounts[accountId].notes;
-    if (pattern.test(txt)) {
-      $('.account-data[data-account-id="' + accountId + '"]').show();
-      count++;
-    } else
-      $('.account-data[data-account-id="' + accountId + '"]').hide();
+  if (term == '')
+    $('.account-data[data-account-id]').hide();
+  else {
+    var pattern = new RegExp(term, 'i');
+    var showAll = (term == '.' || term == '.*');
+    var tile, txt;
+    for (accountId in userData.accounts) {
+      if (!showAll) {
+        txt = userData.accounts[accountId].account + ' ' +
+            userData.accounts[accountId].url + ' ' +
+            userData.accounts[accountId].username + ' ' +
+            userData.accounts[accountId].password + ' ' +
+            userData.accounts[accountId].notes;
+      }
+      tile = $('.account-data[data-account-id="' + accountId + '"]');
+      if (showAll || pattern.test($.trim(txt))) {
+        count++;
+        if (tile.length > 0)
+          tile.show();
+        else
+          this.addAccountTile(accountId, userData.accounts[accountId]);
+      } else {
+        tile.hide();
+      }
+    }
+    $('.account-data[data-account-id]:visible th.account').sortElements(function(a, b) {
+      return $(a).text().toLowerCase() > $(b).text().toLowerCase() ? 1 : -1;
+    }, function() {
+      return $(this).closest('.account-tile').get(0);
+    });
   }
   $('#num_accounts').data('count', count);
   $('#num_accounts').html(count);
@@ -195,6 +188,8 @@ Accounts.unlock = function(passwd) {
   try {
     userData.decryptAccounts();
   } catch(err) {
+    userData.wipeMasterPassword();
+    userData.wipeOldMasterPassword();
     alert('Failed to decrypt accounts.');
     return;
   }

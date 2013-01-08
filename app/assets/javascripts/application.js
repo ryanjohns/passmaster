@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery.placeholder
+//= require jquery.sortElements
 //= require sjcl
 //= require base64
 //= require_tree .
