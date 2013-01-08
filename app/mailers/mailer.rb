@@ -1,5 +1,5 @@
 class Mailer < ActionMailer::Base
-  default :from => 'Passmaster <no-reply@passmaster.rajohns.com>'
+  default :from => 'Passmaster <no-reply@passmaster.hoodquarters.com>'
 
   def verify_email(user)
     @code = user.verification_code
