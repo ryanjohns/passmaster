@@ -123,8 +123,6 @@ Accounts.updateTile = function(tile) {
     'password': tile.find('.write input.password').val(),
     'notes': tile.find('.write textarea.notes').val()
   };
-  if (!/^https?:\/\//i.test(data.url))
-    data.url = 'http://' + data.url;
   accountId = Crypto.sha256(data.account);
   userData.accounts[accountId] = data;
   tile.attr('data-account-id', accountId);
@@ -310,8 +308,10 @@ $(function() {
       'password': $(this).find('input.password').val(),
       'notes': $(this).find('textarea.notes').val()
     };
-    if (!/^https?:\/\//i.test(data.url))
+    if (!/^https?:\/\//i.test(data.url)) {
       data.url = 'http://' + data.url;
+      $(this).find('input.url').val(data.url);
+    }
     var oldAccountId = tile.attr('data-account-id');
     var accountId = Crypto.sha256(data.account);
     if (data.account.length == 0) {
