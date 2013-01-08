@@ -21,10 +21,15 @@ function UserData() {
   this.revertMasterPassword = function() {
     this.masterPassword = this.oldMasterPassword;
     this.apiKey = this.oldApiKey;
+    this.wipeOldMasterPassword();
   };
   this.wipeMasterPassword = function() {
     delete this.masterPassword;
     delete this.apiKey;
+  };
+  this.wipeOldMasterPassword = function() {
+    delete this.oldMasterPassword;
+    delete this.oldApiKey;
   };
   this.setEncryptedData = function(data) {
     this.encryptedData = Crypto.encryptObject(this.masterPassword, data);

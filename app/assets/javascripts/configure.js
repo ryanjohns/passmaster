@@ -75,8 +75,7 @@ $(function() {
 
   $('#master_password_hidden_form').bind('ajax:success', function(evt, data) {
     userData.updateAttributes(data);
-    delete userData.oldApiKey;
-    delete userData.oldMasterPassword;
+    userData.wipeOldMasterPassword();
     if ($(this).data('submitted-by') == 'restoreBackup') {
       userData.accounts = userData.restoredAccounts;
       delete userData.restoredAccounts;
