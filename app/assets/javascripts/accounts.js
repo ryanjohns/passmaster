@@ -206,6 +206,9 @@ Accounts.unlock = function(passwd) {
     userData.wipeMasterPassword();
     userData.wipeOldMasterPassword();
     alert('Failed to decrypt accounts.');
+    var input = $('#unlock_accounts_passwd').get(0);
+    input.selectionStart = 0;
+    input.selectionEnd = 9999;
     return;
   }
   $('#unlock_accounts_passwd').val('');
