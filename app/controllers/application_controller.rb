@@ -15,7 +15,6 @@ class ApplicationController < ActionController::Base
   protected
 
   def handle_unverified_request
-    super
     render :json => { :errors => { :token => ['is invalid', 'try reloading'] } }, :status => :unprocessable_entity
   end
 
