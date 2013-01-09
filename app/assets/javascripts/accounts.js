@@ -16,17 +16,29 @@ Accounts.refresh = function(data) {
     try {
       userData.decryptAccounts();
     } catch(err) {
-      this.wipeAccountTiles();
-      userData.wipeMasterPassword();
-      alert('Failed to decrypt accounts.');
+      this.handleBadPassword();
+      return;
     }
   }
+  $('#unlock_accounts_passwd').val('');
+  this.selectView();
 };
+
+Accounts.handleBadPassword = function() {
+  userData.wipeMasterPassword();
+  userData.wipeOldMasterPassword();
+  alert('Failed to decrypt accounts.');
+  this.selectView();
+  var input = $('#unlock_accounts_passwd').get(0);
+  input.selectionStart = 0;
+  input.selectionEnd = 9999;
+}
 
 Accounts.selectView = function() {
   this.wipeAccountTiles();
   if (userData.masterPassword) {
     $('#configure_btn').show();
+    $('#refresh_link').show();
     $('#unlock_accounts').hide();
     $('#accounts_list').show();
     $('#total_accounts').attr('data-count', userData.numAccounts());
@@ -34,6 +46,7 @@ Accounts.selectView = function() {
     this.searchTiles($('#accounts_list_search').val());
   } else {
     $('#configure_btn').hide();
+    $('#refresh_link').hide();
     $('#accounts_list').hide();
     $('#unlock_accounts').show();
   }
@@ -200,19 +213,7 @@ Accounts.sortTiles = function() {
 
 Accounts.unlock = function(passwd) {
   userData.setMasterPassword(passwd);
-  try {
-    userData.decryptAccounts();
-  } catch(err) {
-    userData.wipeMasterPassword();
-    userData.wipeOldMasterPassword();
-    alert('Failed to decrypt accounts.');
-    var input = $('#unlock_accounts_passwd').get(0);
-    input.selectionStart = 0;
-    input.selectionEnd = 9999;
-    return;
-  }
-  $('#unlock_accounts_passwd').val('');
-  this.selectView();
+  $('#refresh_link').click();
 };
 
 $(function() {
@@ -364,16 +365,23 @@ $(function() {
 
   $('#refresh_link').bind('ajax:success', function(evt, data) {
     Accounts.refresh(data);
-  }).bind('ajax:error', function() {
-    alert('Failed to sync with server. Please try again.');
+  }).bind('ajax:error', function(ext, xhr) {
+    if (xhr.status == 422)
+      Accounts.handleBadPassword();
+    else if (xhr.status == 404)
+      Util.wipeData();
+    else {
+      if (localStorage.userAttributes)
+        Accounts.refresh(JSON.parse(localStorage.userAttributes));
+      Util.enableReadOnly();
+    }
   }).bind('ajax:before', function() {
     return Util.confirmUnsavedChanges();
   }).bind('ajax:beforeSend', function(evt, xhr, settings) {
-    settings.url = settings.url + '/' + userData.userId;
+    settings.url = settings.url + '/' + userData.userId + '?api_key=' + userData.apiKey;
     $('#refresh_spinner').show();
   }).bind('ajax:complete', function() {
     $('#refresh_spinner').hide();
-    Util.chooseSection();
   });
 
   $('#configure_btn').click(function() {

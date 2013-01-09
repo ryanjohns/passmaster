@@ -11,6 +11,8 @@ class User < ActiveRecord::Base
 
   after_initialize :initialize_verification_code
 
+  attr_writer :current_api_key
+
   def as_json(options = nil)
     super(options.merge({ :only => [ :id, :email, :encrypted_data, :schema_version ], :methods => [ :encrypted_data?, :verified_at? ] }))
   end

@@ -5,12 +5,15 @@ class UsersController < ApplicationController
   before_filter :find_user, :only => [ :show, :update, :backup, :resend_verification, :verify ]
 
   def show
-    respond_with(@user)
+    @user.current_api_key = (params[:api_key] || 'not_an_api_key')
+    @user.valid?
+    respond_with_json(@user)
   end
 
   def create
     user = User.find_or_initialize_by_email(params[:email])
     Mailer.verify_email(user).deliver if user.new_record? && user.save
+    user.encrypted_data = 'not_real_data' if user.encrypted_data?
     respond_with(user)
   end
 

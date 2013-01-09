@@ -49,8 +49,6 @@ Util.enableReadOnly = function() {
   // account
   $('button[data-account-delete]').attr('disabled', 'disabled');
   $('.account-tile .write input[type="submit"]').attr('disabled', 'disabled');
-  $('#refresh_link').attr('href', '/');
-  $('#refresh_link').removeAttr('data-remote');
 
   // alert message
   $('#read_only').show();
@@ -85,10 +83,9 @@ Util.initSection = function(section) {
   eval(this.capitalize(section) + '.init()');
 };
 
-Util.lookupUser = function() {
+Util.loadUser = function() {
   userData = new UserData();
   userData.updateAttributes(JSON.parse(localStorage.userAttributes));
-  $('#refresh_link').click();
 };
 
 Util.wipeData = function() {
