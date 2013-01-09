@@ -10,7 +10,8 @@ function UserData() {
     this.verified = attrs['verified_at?'];
     this.encryptedData = attrs['encrypted_data'];
     this.schemaVersion = attrs['schema_version'];
-    localStorage.userAttributes = JSON.stringify(attrs);
+    if (this.verified && this.configured)
+      localStorage.userAttributes = JSON.stringify(attrs);
   };
   this.setMasterPassword = function(passwd) {
     this.oldMasterPassword = this.masterPassword;

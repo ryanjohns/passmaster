@@ -37,7 +37,6 @@ $(function() {
   $('#init_session_link').click();
 
   if (localStorage.userAttributes)
-    Util.lookupUser();
-  else
-    Util.chooseSection();
+    Util.loadUser();
+  Util.chooseSection();
 });
