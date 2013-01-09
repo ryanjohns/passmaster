@@ -387,12 +387,10 @@ $(function() {
 
   $('#show_all_tiles_btn').click(function() {
     var searchBox = $('#accounts_list_search');
-    if (searchBox.val() == '') {
-      searchBox.val('.');
-    } else {
-      searchBox.val('');
-    }
-    Accounts.searchTiles(searchBox.val());
+    var value = (searchBox.val() == '') ? '.' : '';
+    searchBox.val(value);
+    Util.timerVal = value;
+    Accounts.searchTiles(value);
     return false;
   });
 
