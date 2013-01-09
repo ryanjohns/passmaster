@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
   validate :allowed_to_update
 
   after_initialize :initialize_verification_code
+  after_initialize :set_schema_version
 
   attr_writer :current_api_key
 
@@ -46,6 +47,10 @@ class User < ActiveRecord::Base
   def initialize_verification_code
     generate_verification_code if verification_code.blank?
     true
+  end
+
+  def set_schema_version
+    self.schema_version = ENCRYPTED_DATA_SCHEMA_VERSION if new_record?
   end
 
   def verification_code_matches
