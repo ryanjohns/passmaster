@@ -5,7 +5,7 @@ Passwords.generate = function(length, special) {
   var password = '';
   var rand;
   while (i < length) {
-    rand = (Math.floor((Math.random() * 100)) % 94) + 33;
+    rand = (Math.abs(sjcl.random.randomWords(1)[0] % 100) % 94) + 33;
     if (!special) {
       if ((rand >= 33 && rand <= 47) ||
           (rand >= 58 && rand <= 64) ||
@@ -19,3 +19,7 @@ Passwords.generate = function(length, special) {
   }
   return password;
 };
+
+$(function() {
+  sjcl.random.startCollectors();
+});
