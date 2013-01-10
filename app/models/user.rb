@@ -66,7 +66,7 @@ class User < ActiveRecord::Base
   end
 
   def allowed_to_update
-    if @current_api_key && @current_api_key != api_key_was
+    if @current_api_key != api_key_was
       errors.add(:api_key, 'is not authorized')
     end
   end
