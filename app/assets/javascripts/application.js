@@ -21,7 +21,7 @@
 $(function() {
   $('input, textarea').placeholder();
 
-  $('button[data-wipe-data]').click(function() {
+  $('button[data-logout]').click(function() {
     if (Util.confirmUnsavedChanges()) {
       if (confirm('Are you sure? This will make your accounts unavailable while offline.'))
         Util.wipeData();
