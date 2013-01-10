@@ -6,11 +6,11 @@ function UserData() {
   this.updateAttributes = function(attrs) {
     this.userId = attrs['id'];
     this.email = attrs['email'];
-    this.configured = attrs['encrypted_data?'];
+    this.configured = attrs['api_key?'];
     this.verified = attrs['verified_at?'];
     this.encryptedData = attrs['encrypted_data'];
     this.schemaVersion = attrs['schema_version'];
-    if (this.verified && this.configured)
+    if (this.configured)
       localStorage.userAttributes = JSON.stringify(attrs);
   };
   this.setMasterPassword = function(passwd) {

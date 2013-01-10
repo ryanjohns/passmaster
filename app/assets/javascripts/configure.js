@@ -5,6 +5,7 @@ Configure.init = function() {
   $('#master_password_old_passwd').val('');
   $('#master_password_passwd').val('');
   $('#master_password_passwd2').val('');
+  $('#change_email_email').val('');
   $('#restore_accounts_passwd').val('');
   if (userData.configured) {
     $('#master_password_old_passwd').attr('required', 'true');
@@ -56,6 +57,15 @@ Configure.restoreBackup = function(passwd, backupStr) {
 };
 
 $(function() {
+  $('#configure_cancel_btn').click(function() {
+    Configure.init();
+    if (userData.configured)
+      Util.displaySection('accounts');
+    else
+      Util.chooseSection();
+    return false;
+  });
+
   $('#master_password_form').submit(function() {
     var oldPasswd = $('#master_password_old_passwd').val();
     var passwd = $('#master_password_passwd').val();
@@ -110,17 +120,28 @@ $(function() {
     btn.removeAttr('disabled');
   });
 
-  $('#configure_cancel_btn').click(function() {
+  $('#change_email_form').bind('ajax:success', function(evt, data) {
+    userData.updateAttributes(data);
     Configure.init();
-    if (userData.configured)
-      Util.displaySection('accounts');
-    else
-      Util.chooseSection();
-    return false;
+    Util.chooseSection();
+  }).bind('ajax:error', function(evt, xhr) {
+    alert(Util.extractErrors(xhr));
+  }).bind('ajax:before', function() {
+    $('#change_email_api_key').val(userData.apiKey);
+  }).bind('ajax:beforeSend', function(evt, xhr, settings) {
+    settings.url = settings.url + '/' + userData.userId;
+    var btn = $('#change_email_btn');
+    btn.data('origText', btn.val());
+    btn.attr('disabled', 'disabled');
+    btn.val('Please Wait...');
+  }).bind('ajax:complete', function() {
+    var btn = $('#change_email_btn');
+    btn.val(btn.data('origText'));
+    btn.removeAttr('disabled');
   });
 
   $('#backup_accounts_btn').click(function() {
-    window.open('/users/' + userData.userId + '/backup');
+    window.open('/users/' + userData.userId + '/backup?api_key=' + userData.apiKey);
     return false;
   });
 

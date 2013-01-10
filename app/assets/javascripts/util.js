@@ -9,9 +9,9 @@ Util.extractErrors = function(xhr) {
   try {
     errors = JSON.parse(xhr.responseText).errors;
   } catch(err) {
-    return 'An error has occurred. Please try again.';
+    return 'An unexpected error has occurred.';
   }
-  var msg = "There are errors with the following fields.\n";
+  var msg = 'The following errors were reported.\n';
   for (attr in errors) {
     msg += attr + ': ';
     for (var i = 0; i < errors[attr].length; i++) {
@@ -19,7 +19,7 @@ Util.extractErrors = function(xhr) {
         msg += ', ';
       msg += errors[attr][i];
     }
-    msg += "\n";
+    msg += '\n';
   }
   return msg;
 };
@@ -43,6 +43,7 @@ Util.enableReadOnly = function() {
 
   // configure
   $('#master_password_btn').attr('disabled', 'disabled');
+  $('#change_email_btn').attr('disabled', 'disabled');
   $('#backup_accounts_btn').attr('disabled', 'disabled');
   $('#restore_accounts_btn').attr('disabled', 'disabled');
 
@@ -58,7 +59,7 @@ Util.chooseSection = function() {
   var section = '';
   if (!userData || !userData.email)
     section = 'overview';
-  else if (!userData.verified)
+  else if (!userData.verified && !userData.configured)
     section = 'verify';
   else if (!userData.configured)
     section = 'configure';
