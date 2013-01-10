@@ -2,6 +2,10 @@ function Accounts() {};
 
 Accounts.init = function() {
   $('#accounts_email_placeholder').html(userData.email);
+  if (!userData.verified)
+    $('#verify_email_notice').show();
+  else
+    $('#verify_email_notice').hide();
   this.selectView();
 };
 
@@ -21,7 +25,7 @@ Accounts.refresh = function(data) {
     }
   }
   $('#unlock_accounts_passwd').val('');
-  this.selectView();
+  this.init();
 };
 
 Accounts.handleBadPassword = function() {
@@ -224,6 +228,12 @@ Accounts.unlock = function(passwd) {
 };
 
 $(function() {
+  $('#verify_email_notice a').click(function() {
+    Verify.init();
+    Util.displaySection('verify');
+    return false;
+  });
+
   $('#unlock_accounts_form').submit(function() {
     var passwd = $('#unlock_accounts_passwd').val();
     if (passwd.length == 0)

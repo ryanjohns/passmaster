@@ -8,6 +8,14 @@ Verify.init = function() {
 Verify.afterDisplay = function() {};
 
 $(function() {
+  $('#verify_cancel_btn').click(function() {
+    if (userData.masterPassword)
+      Util.displaySection('accounts');
+    else
+      Util.chooseSection();
+    return false;
+  });
+
   $('#verify_form').bind('ajax:success', function(evt, data) {
     userData.updateAttributes(data);
     Verify.init();

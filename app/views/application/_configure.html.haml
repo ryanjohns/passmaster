@@ -29,6 +29,19 @@
         = hidden_field_tag(:schema_version, '', :id => 'master_password_hidden_schema_version')
 
     #unlocked_options{ :style => 'display:none;' }
+      #change_email.pushed-down
+        %hr
+        %h4 Email Address
+        %p Change the email address you use to access your accounts.
+        .alert.alert-warning
+          %strong Warning:
+          You will not be able to access your accounts until you verify your new email address.
+        = form_tag(users_path, :method => :put, :remote => true, :id => 'change_email_form') do
+          = hidden_field_tag(:api_key, '', :id => 'change_email_api_key')
+          %p{ :style => 'display:none;' }= password_field_tag(:hack_field, '')
+          %p= email_field_tag(:email, '', :placeholder => 'Email Address', :class => 'input-xlarge', :id => 'change_email_email', :required => 'true')
+          %p= submit_tag('Change Email', :class => 'btn btn-primary', :id => 'change_email_btn')
+
       #backup_accounts.pushed-down
         %hr
         %h4 Backup Accounts
