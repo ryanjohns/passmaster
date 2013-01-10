@@ -1,6 +1,11 @@
 class Mailer < ActionMailer::Base
   default :from => 'Passmaster <no-reply@passmaster.hoodquarters.com>'
 
+  def backup(email, filename, data)
+    attachments[filename] = data
+    mail(:to => email, :subject => '[Passmaster] Backup File')
+  end
+
   def email_changed(email)
     mail(:to => email, :subject => '[Passmaster] Email Changed')
   end

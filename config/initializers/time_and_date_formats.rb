@@ -18,6 +18,7 @@ Time::DATE_FORMATS[:abbr_no_time]       = "%b %e, %Y"
 Time::DATE_FORMATS[:full_no_time]       = "%B %e, %Y"
 Time::DATE_FORMATS[:yyyy_mm_dd]         = "%Y-%m-%d"
 Time::DATE_FORMATS[:no_spaces]          = "%Y-%m-%d_%H:%M:%S"
+Time::DATE_FORMATS[:file_safe]          = "%Y-%m-%d %H.%M.%S UTC"
 
 Date::DATE_FORMATS[:abbr]       = "%b %e, %Y"
 Date::DATE_FORMATS[:full]       = "%B %e, %Y"

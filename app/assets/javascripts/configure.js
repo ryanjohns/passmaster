@@ -140,9 +140,16 @@ $(function() {
     btn.removeAttr('disabled');
   });
 
-  $('#backup_accounts_btn').click(function() {
-    window.open('/users/' + userData.userId + '/backup?api_key=' + userData.apiKey);
+  $('#backup_accounts_file_btn').click(function() {
+    window.open('/users/' + userData.userId + '/backup?type=file&api_key=' + userData.apiKey);
     return false;
+  });
+  $('#backup_accounts_email_btn').bind('ajax:success', function() {
+    alert('Email sent successfully.');
+  }).bind('ajax:error', function(evt, xhr) {
+    alert(Util.extractErrors(xhr));
+  }).bind('ajax:beforeSend', function(evt, xhr, settings) {
+    settings.url = settings.url + '/' + userData.userId + '/backup?type=email&api_key=' + userData.apiKey;
   });
 
   $('#restore_accounts_form').submit(function() {
