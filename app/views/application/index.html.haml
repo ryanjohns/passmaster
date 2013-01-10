@@ -1,7 +1,7 @@
 #read_only.alert.alert-error{ :style => 'display:none;' }
   %strong Connection to server failed:
   Read-only mode enabled.
-  = link_to('Try reconnecting...', root_path)
+  %a#reconnect_link{ :href => '#' } Try reconnecting...
 
 = render 'overview'
 = render 'verify'
