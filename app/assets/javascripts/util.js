@@ -58,7 +58,7 @@ Util.chooseSection = function() {
   var section = '';
   if (!userData || !userData.email)
     section = 'overview';
-  else if (!userData.verified && !userData.configured)
+  else if (!userData.verified && (!userData.configured || this.getParameterByName('verification_code')))
     section = 'verify';
   else if (!userData.configured)
     section = 'configure';
