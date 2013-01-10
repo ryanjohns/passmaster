@@ -25,10 +25,8 @@ Accounts.refresh = function(data) {
 };
 
 Accounts.handleBadPassword = function() {
-  userData.wipeMasterPassword();
-  userData.wipeOldMasterPassword();
   alert('Failed to decrypt accounts.');
-  this.selectView();
+  this.lock();
   var input = $('#unlock_accounts_passwd').get(0);
   input.selectionStart = 0;
   input.selectionEnd = 9999;
@@ -37,6 +35,7 @@ Accounts.handleBadPassword = function() {
 Accounts.selectView = function() {
   this.wipeAccountTiles();
   if (userData.masterPassword) {
+    $('#lock_btn').show();
     $('#configure_btn').show();
     $('#refresh_link').show();
     $('#unlock_accounts').hide();
@@ -45,6 +44,7 @@ Accounts.selectView = function() {
     $('#total_accounts').html($('#total_accounts').attr('data-count'));
     this.searchTiles($('#accounts_list_search').val());
   } else {
+    $('#lock_btn').hide();
     $('#configure_btn').hide();
     $('#refresh_link').hide();
     $('#accounts_list').hide();
@@ -209,6 +209,13 @@ Accounts.sortTiles = function() {
   }, function() {
     return $(this).closest('.account-tile').get(0);
   });
+};
+
+Accounts.lock = function() {
+  userData.wipeMasterPassword();
+  userData.wipeOldMasterPassword();
+  userData.accounts = {};
+  this.selectView();
 };
 
 Accounts.unlock = function(passwd) {
@@ -389,6 +396,12 @@ $(function() {
       Configure.init();
       Util.displaySection('configure');
     }
+    return false;
+  });
+
+  $('#lock_btn').click(function() {
+    if (Util.confirmUnsavedChanges())
+      Accounts.lock();
     return false;
   });
 
