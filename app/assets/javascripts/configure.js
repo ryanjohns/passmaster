@@ -6,6 +6,7 @@ Configure.init = function() {
   $('#master_password_passwd').val('');
   $('#master_password_passwd2').val('');
   $('#change_email_email').val('');
+  $('#restore_accounts_backup_file').val('');
   $('#restore_accounts_passwd').val('');
   if (userData.configured) {
     $('#master_password_old_passwd').attr('required', 'true');
