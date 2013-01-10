@@ -45,12 +45,13 @@
       #backup_accounts.pushed-down
         %hr
         %h4 Backup Accounts
-        %p Use the button below to backup your encrypted accounts database to a file on your computer. You can then restore your accounts from that file if necessary.
+        %p Use one of the buttons below to backup your encrypted accounts database to a file on your computer or to your email. You can then restore your accounts from that file if necessary.
         .alert.alert-info
           %strong Note:
           Backups are locked with your current Master Password and you will need the password in order to restore the backup.
         %p
-          %button#backup_accounts_btn.btn.btn-primary{ :type => 'button' } Backup
+          %button#backup_accounts_file_btn.btn.btn-primary{ :type => 'button' } File Backup
+          = link_to('Email Backup', '/users', :remote => true, :id => 'backup_accounts_email_btn', :class => 'btn btn-inverse')
 
       #restore_accounts.pushed-down
         %hr

@@ -26,7 +26,13 @@ class UsersController < ApplicationController
       :schema_version => @user.schema_version,
       :encrypted_data => @user.encrypted_data,
     }.to_json
-    send_data(data, :filename => "passmaster-backup_#{Time.now.to_s(:yyyy_mm_dd)}.txt", :disposition => 'attachment', :type => :text)
+    filename = "Passmaster Backup - #{Time.now.to_s(:file_safe)}.txt"
+    if params[:type] == 'file'
+      send_data(data, :filename => filename, :disposition => 'attachment', :type => :text)
+    else
+      Mailer.backup(@user.email, filename, data).deliver
+      render :json => { :success => true }
+    end
   end
 
   def resend_verification
