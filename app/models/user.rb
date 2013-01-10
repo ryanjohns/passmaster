@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
   include UuidPrimaryKey
 
   validates_presence_of :email, :verification_code
+  validates_presence_of :api_key, :if => :encrypted_data?
   validates_uniqueness_of :email, :if => :email_changed?
   validates_format_of :email, :with => EMAIL_REGEX, :if => :email_changed?
   validates_numericality_of :schema_version, :only_integer => true, :greater_than_or_equal_to => 0
