@@ -14,6 +14,8 @@ class User < ActiveRecord::Base
   before_save :generate_verification_code, :if => :should_generate_verification_code?
   before_save :set_schema_version, :if => :new_record?
   before_save :unset_verified_at, :if => :email_changed?
+  after_create :deliver_new_user
+  after_update :deliver_notifications
 
   def as_json(options = nil)
     super(options.merge({ :only => [ :id, :email, :encrypted_data, :schema_version ], :methods => [ :api_key?, :verified_at? ] }))
@@ -44,6 +46,20 @@ class User < ActiveRecord::Base
   end
 
   private
+
+  def deliver_new_user
+    Mailer.verify_email(self).deliver
+  end
+
+  def deliver_notifications
+    if email_changed?
+      Mailer.email_changed(email_was).deliver
+      Mailer.verify_email(self).deliver
+    end
+    if api_key_changed?
+      Mailer.master_password_changed(email).deliver
+    end
+  end
 
   def generate_verification_code
     self.verification_code = UUIDTools::UUID.random_create.hexdigest

@@ -5,6 +5,10 @@ class Mailer < ActionMailer::Base
     mail(:to => email, :subject => '[Passmaster] Email Changed')
   end
 
+  def master_password_changed(email)
+    mail(:to => email, :subject => '[Passmaster] Master Password Changed')
+  end
+
   def verify_email(user)
     @code = user.verification_code
     @website_url = root_url(:email => user.email, :protocol => 'https').html_safe

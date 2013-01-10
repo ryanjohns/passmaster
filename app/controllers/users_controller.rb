@@ -11,18 +11,13 @@ class UsersController < ApplicationController
 
   def create
     user = User.find_or_initialize_by_email(params[:email])
-    Mailer.verify_email(user).deliver if user.new_record? && user.save
+    user.save if user.new_record?
     user.encrypted_data = nil if user.encrypted_data?
     respond_with(user)
   end
 
   def update
-    email = @user.email
-    updated = @user.update!(params[:api_key], params[:new_api_key], params[:encrypted_data], params[:schema_version], params[:email])
-    if updated && email != @user.email
-      Mailer.email_changed(email).deliver
-      Mailer.verify_email(@user).deliver
-    end
+    @user.update!(params[:api_key], params[:new_api_key], params[:encrypted_data], params[:schema_version], params[:email])
     respond_with_json(@user)
   end
 
