@@ -21,6 +21,11 @@
 $(function() {
   $('input, textarea').placeholder();
 
+  $('#reconnect_link').click(function() {
+    location.reload();
+    return false;
+  });
+
   $('button[data-logout]').click(function() {
     if (Util.confirmUnsavedChanges()) {
       if (confirm('Are you sure? This will make your accounts unavailable while offline.'))
