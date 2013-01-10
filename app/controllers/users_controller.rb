@@ -22,11 +22,7 @@ class UsersController < ApplicationController
   end
 
   def backup
-    data = {
-      :schema_version => @user.schema_version,
-      :encrypted_data => @user.encrypted_data,
-    }.to_json
-    filename = "Passmaster Backup - #{Time.now.to_s(:file_safe)}.txt"
+    filename, data = @user.backup_data
     if params[:type] == 'file'
       send_data(data, :filename => filename, :disposition => 'attachment', :type => :text)
     else

@@ -25,6 +25,19 @@ class User < ActiveRecord::Base
     (api_key.present? ? api_key : nil) == self.api_key
   end
 
+  def backup_data(previous_version = false)
+    data = { :generated_at => Time.now.utc.to_s(:file_safe) }
+    filename = "Passmaster Backup - #{data[:generated_at]}.txt"
+    if previous_version
+      data[:schema_version] = schema_version_was
+      data[:encrypted_data] = encrypted_data_was
+    else
+      data[:schema_version] = schema_version
+      data[:encrypted_data] = encrypted_data
+    end
+    [ filename, data.to_json ]
+  end
+
   def generate_verification_code!
     generate_verification_code
     save
@@ -53,11 +66,13 @@ class User < ActiveRecord::Base
 
   def deliver_notifications
     if email_changed?
-      Mailer.email_changed(email_was).deliver
+      filename, data = backup_data(true)
+      Mailer.email_changed(email_was, filename, data).deliver
       Mailer.verify_email(self).deliver
     end
-    if api_key_changed?
-      Mailer.master_password_changed(email).deliver
+    if api_key_changed? && api_key_was.present?
+      filename, data = backup_data(true)
+      Mailer.master_password_changed(email, filename, data).deliver
     end
   end
 
