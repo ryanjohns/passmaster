@@ -420,7 +420,9 @@ $(function() {
 
   $('button[data-password-generator]').click(function() {
     var div = $(this).closest('.write');
-    var passwd = Passwords.generate(12, div.find('input.special-characters').get(0).checked);
+    var length = div.find('select.password-length').val();
+    var specials = div.find('input.special-characters').get(0).checked;
+    var passwd = Passwords.generate(length, specials);
     div.find('input.password').val(passwd);
     return false;
   });

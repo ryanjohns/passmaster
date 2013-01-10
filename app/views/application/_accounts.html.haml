@@ -87,9 +87,17 @@
                     %td{ :colspan => '2' }
                       .form-inline
                         %button.btn.btn-inverse{ :type => 'button', 'data-password-generator' => 'true' } Generate
+                        %label Length
+                        %select.input-mini.password-length
+                          - 6.upto(32).each do |i|
+                            - if i == 20
+                              %option{ :selected => 'selected' }= i
+                            - else
+                              %option= i
+                      .form-inline
                         %label.checkbox
                           %input.special-characters{ :type => 'checkbox', :checked => 'checked' }
-                          %span Special Chars
+                          %span Special Characters
                   %tr
                     %td{ :colspan => '2' }
                       %textarea.notes.input-block-level{ :name => 'notes', :placeholder => 'Notes', :rows => '3' }
