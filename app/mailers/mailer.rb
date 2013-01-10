@@ -6,11 +6,13 @@ class Mailer < ActionMailer::Base
     mail(:to => email, :subject => '[Passmaster] Backup File')
   end
 
-  def email_changed(email)
+  def email_changed(email, filename, data)
+    attachments[filename] = data
     mail(:to => email, :subject => '[Passmaster] Email Changed')
   end
 
-  def master_password_changed(email)
+  def master_password_changed(email, filename, data)
+    attachments[filename] = data
     mail(:to => email, :subject => '[Passmaster] Master Password Changed')
   end
 
