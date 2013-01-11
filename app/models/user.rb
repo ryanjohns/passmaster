@@ -21,8 +21,8 @@ class User < ActiveRecord::Base
     super(options.merge({ :only => [ :id, :email, :encrypted_data, :schema_version ], :methods => [ :api_key?, :verified_at? ] }))
   end
 
-  def authorized?(api_key)
-    (api_key.present? ? api_key : nil) == self.api_key
+  def api_key_matches?(key)
+    (key.present? ? key : nil) == api_key
   end
 
   def backup_data(previous_version = false)
@@ -43,12 +43,12 @@ class User < ActiveRecord::Base
     save
   end
 
-  def update!(api_key, new_api_key, encrypted_data, schema_version, email)
-    @api_key_matches = authorized?(api_key)
-    self.api_key = new_api_key if new_api_key.present?
-    self.encrypted_data = encrypted_data if encrypted_data.present?
-    self.schema_version = schema_version if schema_version.present?
-    self.email = email if email.present?
+  def update!(params)
+    @api_key_matches = api_key_matches?(params[:api_key])
+    self.api_key = params[:new_api_key] if params[:new_api_key].present?
+    self.encrypted_data = params[:encrypted_data] if params[:encrypted_data].present?
+    self.schema_version = params[:schema_version] if params[:schema_version].present?
+    self.email = params[:email] if params[:email].present?
     save
   end
 
