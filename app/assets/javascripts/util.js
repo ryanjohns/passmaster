@@ -92,6 +92,7 @@ Util.wipeData = function() {
   userData = null;
   localStorage.removeItem('userAttributes');
   Accounts.wipeAccountTiles();
+  IdleTimeout.stopTimer();
   this.chooseSection();
 };
 
