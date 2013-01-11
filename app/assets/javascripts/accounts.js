@@ -220,11 +220,13 @@ Accounts.lock = function() {
   userData.wipeMasterPassword();
   userData.wipeOldMasterPassword();
   userData.accounts = {};
+  IdleTimeout.stopTimer();
   this.selectView();
 };
 
 Accounts.unlock = function(passwd) {
   userData.setMasterPassword(passwd);
+  IdleTimeout.startTimer();
   $('#refresh_link').click();
 };
 

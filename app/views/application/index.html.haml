@@ -1,7 +1,12 @@
-#read_only.alert.alert-error{ :style => 'display:none;' }
-  %strong Connection to server failed:
-  Read-only mode enabled.
-  %a#reconnect_link{ :href => '#' } Try reconnecting...
+.container
+  #read_only.alert.alert-error{ :style => 'display:none;' }
+    %strong Connection to server failed:
+    Read-only mode enabled.
+    %a#reconnect_link{ :href => '#' } Try reconnecting...
+
+  #idle_timeout.alert.alert-info{ :style => 'display:none;' }
+    %strong Idle Alert!
+    Accounts will automatically lock in one minute due to inactivity.
 
 = render 'overview'
 = render 'verify'
