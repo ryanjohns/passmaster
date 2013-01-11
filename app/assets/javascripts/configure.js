@@ -2,12 +2,16 @@ function Configure() {};
 
 Configure.init = function() {
   $('#configure_email_placeholder').html(userData.email);
-  $('#master_password_old_passwd').val('');
-  $('#master_password_passwd').val('');
-  $('#master_password_passwd2').val('');
+  if ($('#master_password_old_passwd').attr('type') == 'password')
+    $('#master_password_old_passwd').val('');
+  if ($('#master_password_passwd').attr('type') == 'password')
+    $('#master_password_passwd').val('');
+  if ($('#master_password_passwd2').attr('type') == 'password')
+    $('#master_password_passwd2').val('');
   $('#change_email_email').val('');
   $('#restore_accounts_backup_file').val('');
-  $('#restore_accounts_passwd').val('');
+  if ($('#restore_accounts_passwd').attr('type') == 'password')
+    $('#restore_accounts_passwd').val('');
   if (userData.configured) {
     $('#master_password_old_passwd').attr('required', 'true');
     $('#master_password_old_passwd').show();

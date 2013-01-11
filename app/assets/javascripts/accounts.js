@@ -24,7 +24,8 @@ Accounts.refresh = function(data) {
       return;
     }
   }
-  $('#unlock_accounts_passwd').val('');
+  if ($('#unlock_accounts_passwd').attr('type') == 'password')
+    $('#unlock_accounts_passwd').val('');
   this.init();
 };
 
