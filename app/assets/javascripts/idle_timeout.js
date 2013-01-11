@@ -12,14 +12,14 @@ IdleTimeout.startTimer = function() {
   this.idleInterval = setInterval(this.incrementTimer, this.pollInterval);
   $(document).bind('mousemove', this.resetTimer);
   $(document).bind('keypress', this.resetTimer);
-  $(document).bind('touchstart', this.resetTimer);
+  $(document).bind('touchend', this.resetTimer);
 };
 
 IdleTimeout.stopTimer = function() {
   clearInterval(this.idleInterval);
   $(document).unbind('mousemove', this.resetTimer);
   $(document).unbind('keypress', this.resetTimer);
-  $(document).unbind('touchstart', this.resetTimer);
+  $(document).unbind('touchend', this.resetTimer);
 };
 
 IdleTimeout.resetTimer = function() {
