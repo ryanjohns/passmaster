@@ -21,5 +21,11 @@ Passwords.generate = function(length, special) {
 };
 
 $(function() {
-  sjcl.random.startCollectors();
+  sjcl.random.addEventListener('seeded', function() {
+    sjcl.random.stopCollectors();
+  });
+
+  if (sjcl.random.getProgress() < 1) {
+    sjcl.random.startCollectors();
+  }
 });
