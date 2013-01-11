@@ -19,9 +19,14 @@
 //= require_tree .
 
 $(function() {
+  $(window.applicationCache).bind('updateready', function() {
+    window.applicationCache.swapCache();
+    $('#cache_update_ready').show();
+  });
+
   $('input, textarea').placeholder();
 
-  $('#reconnect_link').click(function() {
+  $('.reload-link').click(function() {
     location.reload();
     return false;
   });

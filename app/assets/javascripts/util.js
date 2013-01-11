@@ -44,6 +44,7 @@ Util.enableReadOnly = function() {
   // configure
   $('#master_password_btn').attr('disabled', 'disabled');
   $('#change_email_btn').attr('disabled', 'disabled');
+  $('#preferences_btn').attr('disabled', 'disabled');
   $('#restore_accounts_btn').attr('disabled', 'disabled');
 
   // account

@@ -26,6 +26,6 @@ input.placeholder, textarea.placeholder {
   color: #aaa;
 }
 
-#read_only, #idle_timeout {
+#alert_messages {
   text-align: center;
 }
