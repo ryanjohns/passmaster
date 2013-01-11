@@ -42,6 +42,29 @@
           %p= email_field_tag(:email, '', :placeholder => 'Email Address', :class => 'input-xlarge', :id => 'change_email_email', :required => 'true')
           %p= submit_tag('Change Email', :class => 'btn btn-primary', :id => 'change_email_btn')
 
+      #preferences.pushed-down
+        %hr
+        %h4 Preferences
+        = form_tag(users_path, :method => :put, :remote => true, :id => 'preferences_form') do
+          = hidden_field_tag(:api_key, '', :id => 'preferences_api_key')
+          %p
+            = label_tag(:password_length, 'Default Password Length')
+            %select#preferences_password_length.input-medium{ :name => 'password_length' }
+              - 6.upto(32).each do |i|
+                %option{ :class => "length-#{i}", :value => i }= "#{i} Characters"
+          %p
+            = label_tag(:idle_timeout, 'Auto-lock')
+            %select#preferences_idle_timeout.input-medium{ :name => 'idle_timeout' }
+              %option{ :value => 0 } Never
+              %option{ :value => 1 } 1 Minute
+              - 2.upto(5).each do |i|
+                %option{ :value => i }= "#{i} Minutes"
+              - 2.upto(11).each do |i|
+                - val = i * 5
+                %option{ :value => val }= "#{val} Minutes"
+              %option{ :value => 60 } 1 Hour
+          %p= submit_tag('Save Preferences', :class => 'btn btn-primary', :id => 'preferences_btn')
+
       #backup_accounts.pushed-down
         %hr
         %h4 Backup Accounts

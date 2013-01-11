@@ -95,12 +95,9 @@
                       .form-inline
                         %button.btn.btn-inverse{ :type => 'button', 'data-password-generator' => 'true' } Generate
                         %label Length
-                        %select.input-mini.password-length
+                        %select.password-length.input-mini
                           - 6.upto(32).each do |i|
-                            - if i == 20
-                              %option{ :selected => 'selected' }= i
-                            - else
-                              %option= i
+                            %option{ :value => i }= i
                       .form-inline
                         %label.checkbox
                           %input.special-characters{ :type => 'checkbox', :checked => 'checked' }

@@ -10,6 +10,8 @@ function UserData() {
     this.verified = attrs['verified_at?'];
     this.encryptedData = attrs['encrypted_data'];
     this.schemaVersion = attrs['schema_version'];
+    this.idleTimeout = attrs['idle_timeout'];
+    this.passwordLength = attrs['password_length'];
     if (this.configured)
       localStorage.userAttributes = JSON.stringify(attrs);
   };
