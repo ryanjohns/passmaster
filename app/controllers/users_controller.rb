@@ -17,7 +17,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    @user.update!(params[:api_key], params[:new_api_key], params[:encrypted_data], params[:schema_version], params[:email])
+    @user.update!(params)
     respond_with_json(@user)
   end
 
@@ -48,7 +48,7 @@ class UsersController < ApplicationController
   end
 
   def verify_api_key
-    unless @user.authorized?(params[:api_key])
+    unless @user.api_key_matches?(params[:api_key])
       render :json => { :errors => { :api_key => ['is not authorized'] } }, :status => :unprocessable_entity
     end
   end
