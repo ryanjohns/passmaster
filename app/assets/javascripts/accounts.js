@@ -99,6 +99,7 @@ Accounts.addBlankTile = function() {
   tile.addClass('account-data');
   tile.prependTo('#account_tiles');
   tile.show();
+  tile.find('select.password-length').val(userData.passwordLength);
   tile.find('.write input.account').focus();
 };
 
@@ -301,6 +302,10 @@ $(function() {
     tile.find('.read').hide();
     tile.find('button[data-account-delete]').show();
     tile.find('.write').show();
+    var passwdLength = tile.find('.write input.password').val().length;
+    if (passwdLength == 0)
+      passwdLength = userData.passwordLength;
+    tile.find('select.password-length').val(passwdLength);
     if (!tile.attr('data-account-id'))
       tile.find('.write input.account').focus();
     return false;
@@ -333,7 +338,7 @@ $(function() {
       'password': $(this).find('input.password').val(),
       'notes': $(this).find('textarea.notes').val()
     };
-    if (!/^https?:\/\//i.test(data.url)) {
+    if (data.url.length > 0 && !/^https?:\/\//i.test(data.url)) {
       data.url = 'http://' + data.url;
       $(this).find('input.url').val(data.url);
     }

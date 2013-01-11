@@ -7,6 +7,8 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :email, :if => :email_changed?
   validates_format_of :email, :with => EMAIL_REGEX, :if => :email_changed?
   validates_numericality_of :schema_version, :only_integer => true, :greater_than_or_equal_to => 0
+  validates_numericality_of :idle_timeout, :only_integer => true, :greater_than_or_equal_to => 0
+  validates_numericality_of :password_length, :only_integer => true, :greater_than_or_equal_to => 6, :less_than_or_equal_to => 32
   validate :verification_code_matches, :if => :verified_at_changed?
   validate :verified_for_update, :if => :protected_attributes_changed?
   validate :authorized_for_update, :if => :protected_attributes_changed?
@@ -18,7 +20,7 @@ class User < ActiveRecord::Base
   after_update :deliver_notifications
 
   def as_json(options = nil)
-    super(options.merge({ :only => [ :id, :email, :encrypted_data, :schema_version ], :methods => [ :api_key?, :verified_at? ] }))
+    super(options.merge({ :only => [ :id, :email, :encrypted_data, :schema_version, :idle_timeout, :password_length ], :methods => [ :api_key?, :verified_at? ] }))
   end
 
   def api_key_matches?(key)
@@ -49,6 +51,8 @@ class User < ActiveRecord::Base
     self.encrypted_data = params[:encrypted_data] if params[:encrypted_data].present?
     self.schema_version = params[:schema_version] if params[:schema_version].present?
     self.email = params[:email] if params[:email].present?
+    self.idle_timeout = params[:idle_timeout] if params[:idle_timeout].present?
+    self.password_length = params[:password_length] if params[:password_length].present?
     save
   end
 

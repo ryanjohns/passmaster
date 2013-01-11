@@ -16,6 +16,8 @@ Configure.init = function() {
     $('#master_password_old_passwd').attr('required', 'true');
     $('#master_password_old_passwd').show();
     $('#configure_cancel_btn').show();
+    $('#preferences_password_length').val(userData.passwordLength);
+    $('#preferences_idle_timeout').val(userData.idleTimeout);
     $('#unlocked_options').show();
   } else {
     $('#master_password_old_passwd').removeAttr('required');
@@ -144,6 +146,31 @@ $(function() {
     btn.val('Please Wait...');
   }).bind('ajax:complete', function() {
     var btn = $('#change_email_btn');
+    btn.val(btn.data('origText'));
+    btn.removeAttr('disabled');
+  });
+
+  $('#preferences_form').bind('ajax:success', function(evt, data) {
+    userData.updateAttributes(data);
+    if (IdleTimeout.idleInterval && userData.idleTimeout == 0)
+      IdleTimeout.stopTimer();
+    if (!IdleTimeout.idleInterval && userData.idleTimeout != 0)
+      IdleTimeout.startTimer();
+    alert('Preferences saved successfully.')
+    Configure.init();
+    Util.chooseSection();
+  }).bind('ajax:error', function(evt, xhr) {
+    alert(Util.extractErrors(xhr));
+  }).bind('ajax:before', function() {
+    $('#preferences_api_key').val(userData.apiKey);
+  }).bind('ajax:beforeSend', function(evt, xhr, settings) {
+    settings.url = settings.url + '/' + userData.userId;
+    var btn = $('#preferences_btn');
+    btn.data('origText', btn.val());
+    btn.attr('disabled', 'disabled');
+    btn.val('Please Wait...');
+  }).bind('ajax:complete', function() {
+    var btn = $('#preferences_btn');
     btn.val(btn.data('origText'));
     btn.removeAttr('disabled');
   });
