@@ -94,7 +94,9 @@ $(function() {
     if ($(this).data('submitted-by') == 'restoreBackup') {
       userData.accounts = userData.restoredAccounts;
       delete userData.restoredAccounts;
-    }
+      alert('Backup restored successfully.');
+    } else
+      alert('Master Password set successfully.')
     Configure.init();
     Util.chooseSection();
   }).bind('ajax:error', function(evt, xhr) {
@@ -127,6 +129,7 @@ $(function() {
 
   $('#change_email_form').bind('ajax:success', function(evt, data) {
     userData.updateAttributes(data);
+    alert('Email address updated successfully.')
     Configure.init();
     Util.chooseSection();
   }).bind('ajax:error', function(evt, xhr) {
