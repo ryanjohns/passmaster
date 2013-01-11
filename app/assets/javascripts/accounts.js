@@ -222,6 +222,7 @@ Accounts.lock = function() {
   userData.accounts = {};
   IdleTimeout.stopTimer();
   this.selectView();
+  Util.displaySection('accounts');
 };
 
 Accounts.unlock = function(passwd) {
