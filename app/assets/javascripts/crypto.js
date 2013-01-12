@@ -20,3 +20,13 @@ Crypto.sha256 = function(plaintext) {
   var bitarray = sjcl.hash.sha256.hash(plaintext);
   return sjcl.codec.hex.fromBits(bitarray);
 };
+
+$(function() {
+  sjcl.random.addEventListener('seeded', function() {
+    sjcl.random.stopCollectors();
+  });
+
+  if (sjcl.random.getProgress() < 1) {
+    sjcl.random.startCollectors();
+  }
+});
