@@ -19,13 +19,3 @@ Passwords.generate = function(length, special) {
   }
   return password;
 };
-
-$(function() {
-  sjcl.random.addEventListener('seeded', function() {
-    sjcl.random.stopCollectors();
-  });
-
-  if (sjcl.random.getProgress() < 1) {
-    sjcl.random.startCollectors();
-  }
-});
