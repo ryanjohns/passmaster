@@ -4,6 +4,7 @@ class UsersController < ApplicationController
 
   before_filter :find_user, :only => [ :show, :update, :backup, :resend_verification, :verify ]
   before_filter :verify_api_key, :only => [ :show, :update, :backup ]
+  before_filter :verify_otp_session, :only => [ :show, :update, :backup ]
 
   def show
     respond_with_json(@user)
@@ -49,7 +50,13 @@ class UsersController < ApplicationController
 
   def verify_api_key
     unless @user.api_key_matches?(params[:api_key])
-      render :json => { :errors => { :api_key => ['is not authorized'] } }, :status => :unprocessable_entity
+      render :json => { :errors => { :api_key => ['is not authorized'] } }, :status => :unauthorized
+    end
+  end
+
+  def verify_otp_session
+    unless @user.valid_otp_session?(cookies.signed[:_client_id], params[:otp_enabled], request.remote_ip, request.user_agent)
+      render :json => { :errors => { :otp_session => ['has not been established'] } }, :status => :precondition_failed
     end
   end
 

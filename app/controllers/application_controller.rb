@@ -5,6 +5,13 @@ class ApplicationController < ActionController::Base
   end
 
   def init_session
+    if cookies.signed[:_client_id].blank?
+      cookies.permanent.signed[:_client_id] = {
+        :value    => UUIDTools::UUID.random_create.hexdigest,
+        :secure   => Rails.env.production?,
+        :httponly => true,
+      }
+    end
     render :json => { :token => form_authenticity_token }
   end
 
