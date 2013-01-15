@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
   include UuidPrimaryKey
 
+  has_many :otp_sessions
+
   validates_presence_of :email
   validates_presence_of :api_key, :if => :encrypted_data?
   validates_presence_of :encrypted_data, :if => :api_key?
@@ -13,6 +15,7 @@ class User < ActiveRecord::Base
   validate :verified_for_update, :if => :protected_attributes_changed?
   validate :authorized_for_update, :if => :protected_attributes_changed?
 
+  before_save :generate_otp_secret, :if => :should_generate_otp_secret?
   before_save :generate_verification_code, :if => :should_generate_verification_code?
   before_save :set_schema_version, :if => :new_record?
   before_save :unset_verified_at, :if => :email_changed?
@@ -25,6 +28,15 @@ class User < ActiveRecord::Base
 
   def api_key_matches?(key)
     (key.present? ? key : nil) == api_key
+  end
+
+  def valid_otp_session?(client_id, enable_otp, ip_address, user_agent)
+    return true if !otp_enabled && enable_otp != '1'
+    return false if client_id.blank?
+    session = otp_sessions.find_by_client_id(client_id)
+    return false if session.nil? || !session.active?
+    session.update_attributes({ :ip_address => ip_address, :user_agent => user_agent, :last_seen_at => Time.zone.now })
+    true
   end
 
   def backup_data(previous_version = false)
@@ -46,18 +58,19 @@ class User < ActiveRecord::Base
   end
 
   def update!(params)
-    @api_key_matches = api_key_matches?(params[:api_key])
-    self.api_key = params[:new_api_key] if params[:new_api_key].present?
-    self.encrypted_data = params[:encrypted_data] if params[:encrypted_data].present?
-    self.schema_version = params[:schema_version] if params[:schema_version].present?
-    self.email = params[:email] if params[:email].present?
-    self.idle_timeout = params[:idle_timeout] if params[:idle_timeout].present?
+    @api_key_matches     = api_key_matches?(params[:api_key])
+    self.api_key         = params[:new_api_key]     if params[:new_api_key].present?
+    self.encrypted_data  = params[:encrypted_data]  if params[:encrypted_data].present?
+    self.schema_version  = params[:schema_version]  if params[:schema_version].present?
+    self.email           = params[:email]           if params[:email].present?
+    self.idle_timeout    = params[:idle_timeout]    if params[:idle_timeout].present?
     self.password_length = params[:password_length] if params[:password_length].present?
+    self.otp_enabled     = params[:otp_enabled]     if params[:otp_enabled].present?
     save
   end
 
   def verify_code!(code)
-    @code_matches = code == verification_code
+    @code_matches    = code == verification_code
     self.verified_at = Time.zone.now
     save
   end
@@ -80,6 +93,11 @@ class User < ActiveRecord::Base
     end
   end
 
+  def generate_otp_secret
+    self.otp_secret = ROTP::Base32.random_base32
+    true
+  end
+
   def generate_verification_code
     self.verification_code = UUIDTools::UUID.random_create.hexdigest
     true
@@ -97,6 +115,10 @@ class User < ActiveRecord::Base
 
   def protected_attributes_changed?
     (!new_record? && (email_changed? || schema_version_changed?)) || api_key_changed? || encrypted_data_changed?
+  end
+
+  def should_generate_otp_secret?
+    new_record? || (!otp_enabled && otp_enabled_was)
   end
 
   def should_generate_verification_code?

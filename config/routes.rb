@@ -11,4 +11,6 @@ Passmaster::Application.routes.draw do
     post :resend_verification, :on => :member
     put :verify, :on => :member
   end
+
+  resources :otp_sessions, :only => [ :create ]
 end

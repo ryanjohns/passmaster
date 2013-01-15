@@ -119,3 +119,33 @@ Util.typewatch = function(currentVal, callback, ms) {
     }, ms);
   }
 };
+
+Util.otpPrompt = function(xhr) {
+  var otp = prompt('You must authenticate to continue. Please enter the current code from Google Authenticator.');
+  if (otp == '')
+    alert('Failed to authenticate.');
+  else if (otp != null) {
+    $.ajax({
+      type: 'POST',
+      url: '/otp_sessions',
+      data: {
+        user_id: userData.userId,
+        api_key: userData.apiKey,
+        otp: otp
+      },
+      dataType: 'json',
+      success: function() {
+        alert('Authentication successful.');
+      }
+    });
+  }
+};
+
+$(function() {
+  $(document).ajaxError(function(evt, xhr) {
+    if (xhr.status == 412)
+      Util.otpPrompt();
+    else if (xhr.status == 423)
+      alert('This device has been locked out. Try another device or a different browser.');
+  });
+});

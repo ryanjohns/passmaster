@@ -375,7 +375,8 @@ $(function() {
     else
       Accounts.updateTile(tile);
   }).bind('ajax:error', function(evt, xhr) {
-    alert(Util.extractErrors(xhr));
+    if (xhr.status != 412)
+      alert(Util.extractErrors(xhr));
   }).bind('ajax:before', function() {
     $(this).find('input.api-key').val(userData.apiKey);
     $(this).find('input.encrypted-data').val(userData.encryptedData);
@@ -392,11 +393,11 @@ $(function() {
   $('#refresh_link').bind('ajax:success', function(evt, data) {
     Accounts.refresh(data);
   }).bind('ajax:error', function(ext, xhr) {
-    if (xhr.status == 422)
+    if (xhr.status == 401)
       Accounts.handleBadPassword();
     else if (xhr.status == 404)
       Util.wipeData();
-    else {
+    else if (xhr.status != 412) {
       if (localStorage.userAttributes)
         Accounts.refresh(JSON.parse(localStorage.userAttributes));
       Util.enableReadOnly();
