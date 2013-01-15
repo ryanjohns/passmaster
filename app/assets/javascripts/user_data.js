@@ -12,6 +12,7 @@ function UserData() {
     this.schemaVersion = attrs['schema_version'];
     this.idleTimeout = attrs['idle_timeout'];
     this.passwordLength = attrs['password_length'];
+    this.otpEnabled = attrs['otp_enabled'];
     if (this.configured)
       localStorage.userAttributes = JSON.stringify(attrs);
   };

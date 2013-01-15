@@ -63,6 +63,10 @@
                 - val = i * 5
                 %option{ :value => val }= "#{val} Minutes"
               %option{ :value => 60 } 1 Hour
+          %p
+            = label_tag(:otp_enabled, 'Multi-factor Authentication')
+            = hidden_field_tag(:otp_enabled, '0', :id => 'preferences_hidden_mfa')
+            = check_box_tag(:otp_enabled, '1', false, :id => 'preferences_mfa')
           %p= submit_tag('Save Preferences', :class => 'btn btn-primary', :id => 'preferences_btn')
 
       #backup_accounts.pushed-down
