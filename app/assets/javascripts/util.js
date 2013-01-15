@@ -135,7 +135,7 @@ Util.otpPrompt = function(xhr) {
       },
       dataType: 'json',
       success: function() {
-        alert('Authentication successful.');
+        alert('Authentication successful. Please retry your request.');
       }
     });
   }
