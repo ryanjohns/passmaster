@@ -19,6 +19,7 @@ class User < ActiveRecord::Base
   before_save :generate_verification_code, :if => :should_generate_verification_code?
   before_save :set_schema_version, :if => :new_record?
   before_save :unset_verified_at, :if => :email_changed?
+  after_save :deactivate_otp_sessions, :if => :should_generate_otp_secret?
   after_create :deliver_new_user
   after_update :deliver_notifications
 
@@ -111,6 +112,10 @@ class User < ActiveRecord::Base
   def unset_verified_at
     self.verified_at = nil
     true
+  end
+
+  def deactivate_otp_sessions
+    otp_sessions.update_all(:activated_at => nil)
   end
 
   def protected_attributes_changed?
