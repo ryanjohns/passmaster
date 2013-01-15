@@ -18,6 +18,7 @@ Configure.init = function() {
     $('#configure_cancel_btn').show();
     $('#preferences_password_length').val(userData.passwordLength);
     $('#preferences_idle_timeout').val(userData.idleTimeout);
+    $('#preferences_mfa').get(0).checked = userData.otpEnabled;
     $('#unlocked_options').show();
   } else {
     $('#master_password_old_passwd').removeAttr('required');
