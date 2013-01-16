@@ -19,7 +19,7 @@ Configure.init = function() {
     $('#preferences_password_length').val(userData.passwordLength);
     $('#preferences_idle_timeout').val(userData.idleTimeout);
     $('#preferences_mfa').get(0).checked = userData.otpEnabled;
-    var span = $('#preferences span.mfa-status');
+    var span = $('#mfa-status');
     if (userData.otpEnabled) {
       span.html('Enabled');
       span.removeClass('mfa-disabled');
@@ -29,6 +29,7 @@ Configure.init = function() {
       span.removeClass('mfa-enabled');
       span.addClass('mfa-disabled');
     }
+    $('#mfa_configure').hide();
     $('#unlocked_options').show();
   } else {
     $('#master_password_old_passwd').removeAttr('required');
@@ -211,5 +212,20 @@ $(function() {
     });
     reader.readAsText(file);
     return false;
+  });
+
+  $('#preferences_mfa').change(function() {
+    if (this.checked && !userData.otpEnabled) {
+      $('#qr_code').html('');
+      $('#qr_code').qrcode({
+        width: 200,
+        height: 200,
+        text: userData.qrCodeUrl()
+      });
+      $('#otp_secret').html(userData.otpSecret);
+      $('#mfa_configure').show();
+    } else {
+      $('#mfa_configure').hide();
+    }
   });
 });

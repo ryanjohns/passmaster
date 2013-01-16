@@ -14,6 +14,7 @@ class UsersController < ApplicationController
     user = User.find_or_initialize_by_email(params[:email])
     user.save if user.new_record?
     user.encrypted_data = nil if user.encrypted_data?
+    user.otp_secret = nil
     respond_with(user)
   end
 
