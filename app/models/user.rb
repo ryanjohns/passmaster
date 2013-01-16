@@ -24,7 +24,7 @@ class User < ActiveRecord::Base
   after_update :deliver_notifications
 
   def as_json(options = nil)
-    super(options.merge({ :only => [ :id, :email, :encrypted_data, :schema_version, :idle_timeout, :password_length, :otp_enabled ], :methods => [ :api_key?, :verified_at? ] }))
+    super(options.merge({ :only => [ :id, :email, :encrypted_data, :schema_version, :idle_timeout, :password_length, :otp_enabled, :otp_secret ], :methods => [ :api_key?, :verified_at? ] }))
   end
 
   def api_key_matches?(key)

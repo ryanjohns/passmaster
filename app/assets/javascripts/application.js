@@ -14,6 +14,8 @@
 //= require jquery_ujs
 //= require jquery.placeholder
 //= require jquery.sortElements
+//= require jquery.qrcode
+//= require qrcode
 //= require sjcl
 //= require base64
 //= require_tree .

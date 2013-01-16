@@ -13,6 +13,7 @@ function UserData() {
     this.idleTimeout = attrs['idle_timeout'];
     this.passwordLength = attrs['password_length'];
     this.otpEnabled = attrs['otp_enabled'];
+    this.otpSecret = attrs['otp_secret'];
     if (this.configured)
       localStorage.userAttributes = JSON.stringify(attrs);
   };
@@ -51,5 +52,8 @@ function UserData() {
     for (a in this.accounts)
       count++;
     return count;
+  };
+  this.qrCodeUrl = function() {
+    return 'otpauth://totp/Passmaster-' + userData.email + '?secret=' + userData.otpSecret;
   };
 };
