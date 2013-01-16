@@ -67,6 +67,7 @@
             = label_tag(:otp_enabled, 'Multi-factor Authentication')
             = hidden_field_tag(:otp_enabled, '0', :id => 'preferences_hidden_mfa')
             = check_box_tag(:otp_enabled, '1', false, :id => 'preferences_mfa')
+            %span.mfa-status
           %p= submit_tag('Save Preferences', :class => 'btn btn-primary', :id => 'preferences_btn')
 
       #backup_accounts.pushed-down

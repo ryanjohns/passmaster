@@ -14,4 +14,19 @@
   hr {
     border-bottom: 1px solid #aaa;
   }
+
+  #preferences {
+    #preferences_mfa {
+      margin: 0;
+    }
+    span.mfa-status {
+      margin-left: 5px;
+    }
+    span.mfa-enabled {
+      color: green;
+    }
+    span.mfa-disabled {
+      color: red;
+    }
+  }
 }
