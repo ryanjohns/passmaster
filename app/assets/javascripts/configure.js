@@ -19,6 +19,16 @@ Configure.init = function() {
     $('#preferences_password_length').val(userData.passwordLength);
     $('#preferences_idle_timeout').val(userData.idleTimeout);
     $('#preferences_mfa').get(0).checked = userData.otpEnabled;
+    var span = $('#preferences span.mfa-status');
+    if (userData.otpEnabled) {
+      span.html('Enabled');
+      span.removeClass('mfa-disabled');
+      span.addClass('mfa-enabled');
+    } else {
+      span.html('Disabled');
+      span.removeClass('mfa-enabled');
+      span.addClass('mfa-disabled');
+    }
     $('#unlocked_options').show();
   } else {
     $('#master_password_old_passwd').removeAttr('required');
