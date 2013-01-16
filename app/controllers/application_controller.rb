@@ -8,7 +8,6 @@ class ApplicationController < ActionController::Base
     if cookies.signed[:_client_id].blank?
       cookies.permanent.signed[:_client_id] = {
         :value    => UUIDTools::UUID.random_create.hexdigest,
-        :secure   => Rails.env.production?,
         :httponly => true,
       }
     end
