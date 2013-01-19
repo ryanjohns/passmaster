@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.11'
 
 gem 'haml', '3.1.7'
-gem 'jquery-rails', '2.1.4'
+gem 'jquery-rails', '2.2.0'
 gem 'mysql2', '0.3.11'
 gem 'rack-offline', '0.6.4'
 gem 'rotp', '1.4.1'
