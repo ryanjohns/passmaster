@@ -2,6 +2,7 @@ class OtpSession < ActiveRecord::Base
   include UuidPrimaryKey
 
   MAX_FAILS = 5
+  DRIFT = 5
 
   attr_accessible :ip_address, :user_agent, :last_seen_at
 
@@ -34,7 +35,7 @@ class OtpSession < ActiveRecord::Base
   end
 
   def verify_otp(api_key, otp)
-    if user && user.api_key_matches?(api_key) && ROTP::TOTP.new(user.otp_secret).verify(otp)
+    if user && user.api_key_matches?(api_key) && ROTP::TOTP.new(user.otp_secret).verify_with_drift(otp, DRIFT)
       self.activated_at = Time.zone.now
       self.login_count  = login_count + 1
       self.failed_count = 0
