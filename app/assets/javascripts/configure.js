@@ -17,17 +17,34 @@ Configure.init = function() {
     $('#master_password_old_passwd').show();
     $('#configure_cancel_btn').show();
     $('#preferences_password_length').val(userData.passwordLength);
+    $('#preferences_special_chars').get(0).checked = userData.specialChars;
+    var span = $('#special_chars_status');
+    if (userData.specialChars)
+      span.html('Include');
+    else
+      span.html("Don't Include");
     $('#preferences_idle_timeout').val(userData.idleTimeout);
-    $('#preferences_mfa').get(0).checked = userData.otpEnabled;
-    var span = $('#mfa-status');
-    if (userData.otpEnabled) {
+    $('#preferences_auto_backup').get(0).checked = userData.autoBackup;
+    span = $('#auto_backup_status');
+    if (userData.autoBackup) {
       span.html('Enabled');
-      span.removeClass('mfa-disabled');
-      span.addClass('mfa-enabled');
+      span.removeClass('status-disabled');
+      span.addClass('status-enabled');
     } else {
       span.html('Disabled');
-      span.removeClass('mfa-enabled');
-      span.addClass('mfa-disabled');
+      span.removeClass('status-enabled');
+      span.addClass('status-disabled');
+    }
+    $('#preferences_mfa').get(0).checked = userData.otpEnabled;
+    span = $('#mfa_status');
+    if (userData.otpEnabled) {
+      span.html('Enabled');
+      span.removeClass('status-disabled');
+      span.addClass('status-enabled');
+    } else {
+      span.html('Disabled');
+      span.removeClass('status-enabled');
+      span.addClass('status-disabled');
     }
     $('#mfa_configure').hide();
     $('#unlocked_options').show();

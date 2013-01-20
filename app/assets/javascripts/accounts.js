@@ -100,6 +100,7 @@ Accounts.addBlankTile = function() {
   tile.prependTo('#account_tiles');
   tile.show();
   tile.find('select.password-length').val(userData.passwordLength);
+  tile.find('input.special-characters').get(0).checked = userData.specialChars;
   tile.find('.write input.account').focus();
 };
 
@@ -303,10 +304,14 @@ $(function() {
     tile.find('.read').hide();
     tile.find('button[data-account-delete]').show();
     tile.find('.write').show();
-    var passwdLength = tile.find('.write input.password').val().length;
-    if (passwdLength == 0)
-      passwdLength = userData.passwordLength;
-    tile.find('select.password-length').val(passwdLength);
+    var passwd = tile.find('.write input.password').val();
+    if (passwd.length == 0) {
+      tile.find('select.password-length').val(userData.passwordLength);
+      tile.find('input.special-characters').get(0).checked = userData.specialChars;
+    } else {
+      tile.find('select.password-length').val(passwd.length);
+      tile.find('input.special-characters').get(0).checked = /\W/.test(passwd);
+    }
     if (!tile.attr('data-account-id'))
       tile.find('.write input.account').focus();
   });

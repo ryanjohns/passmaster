@@ -12,6 +12,8 @@ function UserData() {
     this.schemaVersion = attrs['schema_version'];
     this.idleTimeout = attrs['idle_timeout'];
     this.passwordLength = attrs['password_length'];
+    this.specialChars = attrs['special_chars'];
+    this.autoBackup = attrs['auto_backup'];
     this.otpEnabled = attrs['otp_enabled'];
     this.otpSecret = attrs['otp_secret'];
     if (this.configured)

@@ -53,6 +53,11 @@
               - 6.upto(32).each do |i|
                 %option{ :class => "length-#{i}", :value => i }= "#{i} Characters"
           %p
+            = label_tag(:special_chars, 'Special Characters')
+            = hidden_field_tag(:special_chars, '0', :id => 'preferences_hidden_special_chars')
+            = check_box_tag(:special_chars, '1', false, :id => 'preferences_special_chars')
+            %span#special_chars_status
+          %p
             = label_tag(:idle_timeout, 'Auto-lock')
             %select#preferences_idle_timeout.input-medium{ :name => 'idle_timeout' }
               %option{ :value => 0 } Never
@@ -64,10 +69,15 @@
                 %option{ :value => val }= "#{val} Minutes"
               %option{ :value => 60 } 1 Hour
           %p
+            = label_tag(:auto_backup, 'Auto-backup on Change')
+            = hidden_field_tag(:auto_backup, '0', :id => 'preferences_hidden_auto_backup')
+            = check_box_tag(:auto_backup, '1', false, :id => 'preferences_auto_backup')
+            %span#auto_backup_status
+          %p
             = label_tag(:otp_enabled, 'Multi-factor Authentication')
             = hidden_field_tag(:otp_enabled, '0', :id => 'preferences_hidden_mfa')
             = check_box_tag(:otp_enabled, '1', false, :id => 'preferences_mfa')
-            %span#mfa-status
+            %span#mfa_status
             #mfa_configure{ :style => 'display:none;' }
               %p Use the following QR code or key to add Passmaster to Google Authenticator.
               #qr_code
