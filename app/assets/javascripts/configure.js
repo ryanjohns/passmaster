@@ -115,8 +115,14 @@ $(function() {
     Util.chooseSection();
   }).bind('ajax:error', function(evt, xhr) {
     userData.revertMasterPassword();
-    if (xhr.status != 412)
+    Util.handleOtpErrors(xhr, function() {
+      if ($('#master_password_hidden_form').data('submitted-by') == 'restoreBackup')
+        $('#restore_accounts_form').submit();
+      else
+        $('#master_password_form').submit();
+    }, function() {
       alert(Util.extractErrors(xhr));
+    });
   }).bind('ajax:before', function() {
     $('#master_password_hidden_api_key').val(userData.oldApiKey);
     $('#master_password_hidden_new_api_key').val(userData.apiKey);
@@ -148,8 +154,11 @@ $(function() {
     Configure.init();
     Util.chooseSection();
   }).bind('ajax:error', function(evt, xhr) {
-    if (xhr.status != 412)
+    Util.handleOtpErrors(xhr, function() {
+      $('#change_email_form').submit();
+    }, function() {
       alert(Util.extractErrors(xhr));
+    });
   }).bind('ajax:before', function() {
     $('#change_email_api_key').val(userData.apiKey);
   }).bind('ajax:beforeSend', function(evt, xhr, settings) {
@@ -174,8 +183,11 @@ $(function() {
     Configure.init();
     Util.chooseSection();
   }).bind('ajax:error', function(evt, xhr) {
-    if (xhr.status != 412)
+    Util.handleOtpErrors(xhr, function() {
+      $('#preferences_form').submit();
+    }, function() {
       alert(Util.extractErrors(xhr));
+    });
   }).bind('ajax:before', function() {
     $('#preferences_api_key').val(userData.apiKey);
   }).bind('ajax:beforeSend', function(evt, xhr, settings) {
@@ -197,8 +209,11 @@ $(function() {
   $('#backup_accounts_email_btn').bind('ajax:success', function() {
     alert('Email sent successfully.');
   }).bind('ajax:error', function(evt, xhr) {
-    if (xhr.status != 412)
+    Util.handleOtpErrors(xhr, function() {
+      $('#backup_accounts_email_btn').click();
+    }, function() {
       alert(Util.extractErrors(xhr));
+    });
   }).bind('ajax:beforeSend', function(evt, xhr, settings) {
     settings.url = settings.url + '/' + userData.userId + '/backup?type=email&api_key=' + userData.apiKey;
   });

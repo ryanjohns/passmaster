@@ -19,3 +19,8 @@
 = render 'accounts'
 
 = link_to('', init_session_path, :remote => true, :id => 'init_session_link', :style => 'display:none;')
+
+= form_tag(otp_sessions_path, :method => :post, :remote => true, :id => 'otp_session_form', :style => 'display:none;') do
+  = hidden_field_tag(:user_id, '', :id => 'otp_session_user_id')
+  = hidden_field_tag(:api_key, '', :id => 'otp_session_api_key')
+  = hidden_field_tag(:otp, '', :id => 'otp_session_otp')
