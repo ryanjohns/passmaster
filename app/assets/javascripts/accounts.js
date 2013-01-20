@@ -233,22 +233,23 @@ Accounts.unlock = function(passwd) {
 };
 
 $(function() {
-  $('#verify_email_notice a').click(function() {
+  $('#verify_email_notice a').click(function(evt) {
+    evt.preventDefault();
     Verify.init();
     Util.displaySection('verify');
-    return false;
   });
 
-  $('#unlock_accounts_form').submit(function() {
+  $('#unlock_accounts_form').submit(function(evt) {
+    evt.preventDefault();
     var passwd = $('#unlock_accounts_passwd').val();
     if (passwd.length == 0)
       alert('Bad password.');
     else
       Accounts.unlock(passwd);
-    return false;
   });
 
-  $('button[data-show-password]').click(function() {
+  $('button[data-show-password]').click(function(evt) {
+    evt.preventDefault();
     var input = $(this).closest('.read').find('input.password');
     if ($(this).html() == 'Show') {
       input.removeAttr('readonly');
@@ -264,40 +265,40 @@ $(function() {
       input.attr('readonly', 'readonly');
       $(this).html('Show');
     }
-    return false;
   });
 
-  $('.read .click-to-select').click(function() {
+  $('.read .click-to-select').click(function(evt) {
+    evt.preventDefault();
     var input = $(this).find('input').get(0);
     if (input.value) {
       input.selectionStart = 0;
       input.selectionEnd = 9999;
     }
-    return false;
   });
 
   $('.read input.username, .read input.password').keydown(function(evt) {
-    return ((evt.which >= 37 && evt.which <= 40) ||
-        ((evt.metaKey || evt.ctrlKey) && String.fromCharCode(evt.which).toLowerCase() == 'c'));
-  }).bind('cut paste', function() {
-    return false;
+    if (!(evt.which >= 37 && evt.which <= 40) && !((evt.metaKey || evt.ctrlKey) && String.fromCharCode(evt.which).toLowerCase() == 'c'))
+      evt.preventDefault();
+  }).bind('cut paste', function(evt) {
+    evt.preventDefault();
   });
 
-  $('#add_account_btn').click(function() {
+  $('#add_account_btn').click(function(evt) {
+    evt.preventDefault();
     Accounts.addBlankTile();
-    return false;
   });
 
-  $('button[data-cancel]').click(function() {
+  $('button[data-cancel]').click(function(evt) {
+    evt.preventDefault();
     var tile = $(this).closest('.account-tile');
     if (!tile.attr('data-account-id'))
       tile.remove();
     else
       Accounts.resetTile(tile);
-    return false;
   });
 
-  $('button[data-account-edit]').click(function() {
+  $('button[data-account-edit]').click(function(evt) {
+    evt.preventDefault();
     var tile = $(this).closest('.account-tile');
     tile.find('.read').hide();
     tile.find('button[data-account-delete]').show();
@@ -308,12 +309,12 @@ $(function() {
     tile.find('select.password-length').val(passwdLength);
     if (!tile.attr('data-account-id'))
       tile.find('.write input.account').focus();
-    return false;
   });
 
-  $('button[data-account-delete]').click(function() {
+  $('button[data-account-delete]').click(function(evt) {
+    evt.preventDefault();
     if (!confirm('Are you sure you want to delete this account?'))
-      return false;
+      return;
     var tile = $(this).closest('.account-tile');
     var accounts = $.extend(true, {}, userData.accounts);
     delete accounts[tile.attr('data-account-id')];
@@ -321,15 +322,15 @@ $(function() {
       userData.setEncryptedData(accounts);
     } catch(err) {
       alert('Failed to encrypt accounts.');
-      return false;
+      return;
     }
     var form = tile.find('.update form');
     form.data('deletedAccount', 'true');
     form.submit();
-    return false;
   });
 
-  $('#account_tiles .write form').submit(function() {
+  $('#account_tiles .write form').submit(function(evt) {
+    evt.preventDefault();
     var tile = $(this).closest('.account-tile');
     var data = {
       'account': $(this).find('input.account').val(),
@@ -346,10 +347,10 @@ $(function() {
     var accountId = Crypto.sha256(data.account);
     if (data.account.length == 0) {
       alert('Account Name cannot be blank.');
-      return false;
+      return;
     } else if (oldAccountId != accountId && userData.accounts[accountId]) {
       alert('An account with that name already exists.');
-      return false;
+      return;
     }
     var accounts = $.extend(true, {}, userData.accounts);
     if (oldAccountId)
@@ -359,12 +360,11 @@ $(function() {
       userData.setEncryptedData(accounts);
     } catch(err) {
       alert('Failed to encrypt accounts.');
-      return false;
+      return;
     }
     var form = tile.find('.update form');
     form.data('deletedAccount', 'false');
     form.submit();
-    return false;
   });
 
   $('#account_tiles .update form').bind('ajax:success', function(evt, data) {
@@ -419,39 +419,39 @@ $(function() {
     $('#refresh_spinner').hide();
   });
 
-  $('#configure_btn').click(function() {
+  $('#configure_btn').click(function(evt) {
+    evt.preventDefault();
     if (Util.confirmUnsavedChanges()) {
       Configure.init();
       Util.displaySection('configure');
     }
-    return false;
   });
 
-  $('#lock_btn').click(function() {
+  $('#lock_btn').click(function(evt) {
+    evt.preventDefault();
     if (Util.confirmUnsavedChanges())
       Accounts.lock();
-    return false;
   });
 
   $('#accounts_list_search').keyup(function() {
     Util.typewatch($(this).val(), 'Accounts.searchTiles(currentVal);', 250);
   });
 
-  $('#show_all_tiles_btn').click(function() {
+  $('#show_all_tiles_btn').click(function(evt) {
+    evt.preventDefault();
     var searchBox = $('#accounts_list_search');
     var value = (searchBox.val() == '') ? '.' : '';
     searchBox.val(value);
     Util.timerVal = value;
     Accounts.searchTiles(value);
-    return false;
   });
 
-  $('button[data-password-generator]').click(function() {
+  $('button[data-password-generator]').click(function(evt) {
+    evt.preventDefault();
     var div = $(this).closest('.write');
     var length = div.find('select.password-length').val();
     var specials = div.find('input.special-characters').get(0).checked;
     var passwd = Passwords.generate(length, specials);
     div.find('input.password').val(passwd);
-    return false;
   });
 });

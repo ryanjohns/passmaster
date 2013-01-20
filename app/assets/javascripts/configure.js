@@ -76,16 +76,17 @@ Configure.restoreBackup = function(passwd, backupStr) {
 };
 
 $(function() {
-  $('#configure_cancel_btn').click(function() {
+  $('#configure_cancel_btn').click(function(evt) {
+    evt.preventDefault();
     Configure.init();
     if (userData.configured)
       Util.displaySection('accounts');
     else
       Util.chooseSection();
-    return false;
   });
 
-  $('#master_password_form').submit(function() {
+  $('#master_password_form').submit(function(evt) {
+    evt.preventDefault();
     var oldPasswd = $('#master_password_old_passwd').val();
     var passwd = $('#master_password_passwd').val();
     var passwd2 = $('#master_password_passwd2').val();
@@ -99,7 +100,6 @@ $(function() {
       alert('Passwords do not match. Please try again.');
     else
       Configure.setMasterPassword(passwd);
-    return false;
   });
 
   $('#master_password_hidden_form').bind('ajax:success', function(evt, data) {
@@ -202,9 +202,9 @@ $(function() {
     btn.removeAttr('disabled');
   });
 
-  $('#backup_accounts_file_btn').click(function() {
+  $('#backup_accounts_file_btn').click(function(evt) {
+    evt.preventDefault();
     window.open('/users/' + userData.userId + '/backup?type=file&api_key=' + userData.apiKey);
-    return false;
   });
   $('#backup_accounts_email_btn').bind('ajax:success', function() {
     alert('Email sent successfully.');
@@ -218,7 +218,8 @@ $(function() {
     settings.url = settings.url + '/' + userData.userId + '/backup?type=email&api_key=' + userData.apiKey;
   });
 
-  $('#restore_accounts_form').submit(function() {
+  $('#restore_accounts_form').submit(function(evt) {
+    evt.preventDefault();
     var passwd = $('#restore_accounts_passwd').val();
     var file = $('#restore_accounts_backup_file').get(0).files[0];
     var reader = new FileReader();
@@ -226,7 +227,6 @@ $(function() {
       Configure.restoreBackup(passwd, evt.target.result);
     });
     reader.readAsText(file);
-    return false;
   });
 
   $('#preferences_mfa').change(function() {

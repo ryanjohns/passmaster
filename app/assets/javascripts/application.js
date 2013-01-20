@@ -28,17 +28,17 @@ $(function() {
 
   $('input, textarea').placeholder();
 
-  $('.reload-link').click(function() {
+  $('.reload-link').click(function(evt) {
+    evt.preventDefault();
     location.reload();
-    return false;
   });
 
-  $('button[data-logout]').click(function() {
+  $('button[data-logout]').click(function(evt) {
+    evt.preventDefault();
     if (Util.confirmUnsavedChanges()) {
       if (confirm('Are you sure? This will make your accounts unavailable while offline.'))
         Util.wipeData();
     }
-    return false;
   });
 
   $('#init_session_link').bind('ajax:success', function(evt, data) {
