@@ -8,12 +8,12 @@ Verify.init = function() {
 Verify.afterDisplay = function() {};
 
 $(function() {
-  $('#verify_cancel_btn').click(function() {
+  $('#verify_cancel_btn').click(function(evt) {
+    evt.preventDefault();
     if (userData.masterPassword)
       Util.displaySection('accounts');
     else
       Util.chooseSection();
-    return false;
   });
 
   $('#verify_form').bind('ajax:success', function(evt, data) {
