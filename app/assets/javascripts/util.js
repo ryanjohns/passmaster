@@ -67,7 +67,7 @@ Util.chooseSection = function() {
     section = 'accounts';
   this.initSection(section);
   this.displaySection(section);
-}
+};
 
 Util.displaySection = function(section) {
   var sections = ['overview', 'verify', 'configure', 'accounts'];

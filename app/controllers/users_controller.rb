@@ -13,7 +13,7 @@ class UsersController < ApplicationController
   def create
     user = User.find_or_initialize_by_email(params[:email])
     user.save if user.new_record?
-    user.encrypted_data = nil if user.encrypted_data?
+    user.encrypted_data = nil
     user.otp_secret = nil
     respond_with(user)
   end
@@ -35,11 +35,17 @@ class UsersController < ApplicationController
 
   def resend_verification
     Mailer.verify_email(@user).deliver if @user.generate_verification_code!
+    @user.encrypted_data = nil
+    @user.otp_secret = nil
     respond_with(@user)
   end
 
   def verify
     @user.verify_code!(params[:verification_code])
+    unless @user.api_key_matches?(params[:api_key])
+      @user.encrypted_data = nil
+      @user.otp_secret = nil
+    end
     respond_with_json(@user)
   end
 

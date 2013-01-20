@@ -33,7 +33,6 @@ class User < ActiveRecord::Base
 
   def valid_otp_session?(client_id, enable_otp, ip_address, user_agent)
     return true if !otp_enabled && enable_otp != '1'
-    return false if client_id.blank?
     session = otp_sessions.find_by_client_id(client_id)
     return false if session.nil? || !session.active?
     session.update_attributes({ :ip_address => ip_address, :user_agent => user_agent, :last_seen_at => Time.zone.now })
