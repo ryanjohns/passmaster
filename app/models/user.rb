@@ -24,7 +24,7 @@ class User < ActiveRecord::Base
   after_update :deliver_notifications
 
   def as_json(options = nil)
-    super(options.merge({ :only => [ :id, :email, :encrypted_data, :schema_version, :idle_timeout, :password_length, :otp_enabled, :otp_secret ], :methods => [ :api_key?, :verified_at? ] }))
+    super(options.merge({ :only => [ :id, :email, :encrypted_data, :schema_version, :idle_timeout, :password_length, :special_chars, :auto_backup, :otp_enabled, :otp_secret ], :methods => [ :api_key?, :verified_at? ] }))
   end
 
   def api_key_matches?(key)
@@ -65,6 +65,8 @@ class User < ActiveRecord::Base
     self.email           = params[:email]           if params[:email].present?
     self.idle_timeout    = params[:idle_timeout]    if params[:idle_timeout].present?
     self.password_length = params[:password_length] if params[:password_length].present?
+    self.special_chars   = params[:special_chars]   if params[:special_chars].present?
+    self.auto_backup     = params[:auto_backup]     if params[:auto_backup].present?
     self.otp_enabled     = params[:otp_enabled]     if params[:otp_enabled].present?
     save
   end
@@ -90,6 +92,10 @@ class User < ActiveRecord::Base
     if api_key_changed? && api_key_was.present?
       filename, data = backup_data(true)
       Mailer.master_password_changed(email, filename, data).deliver
+    end
+    if auto_backup && encrypted_data_changed?
+      filename, data = backup_data(false)
+      Mailer.auto_backup(email, filename, data).deliver
     end
   end
 

@@ -16,16 +16,16 @@
   }
 
   #preferences {
-    #preferences_mfa {
+    #preferences_special_chars, #preferences_auto_backup, #preferences_mfa {
       margin: 0;
     }
-    #mfa-status {
+    #special_chars_status, #auto_backup_status, #mfa_status {
       margin-left: 5px;
     }
-    span.mfa-enabled {
+    span.status-enabled {
       color: green;
     }
-    span.mfa-disabled {
+    span.status-disabled {
       color: red;
     }
   }
