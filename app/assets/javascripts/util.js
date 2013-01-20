@@ -120,32 +120,27 @@ Util.typewatch = function(currentVal, callback, ms) {
   }
 };
 
-Util.otpPrompt = function(xhr) {
-  var otp = prompt('You must authenticate to continue. Please enter the current code from Google Authenticator.');
-  if (otp == '')
-    alert('Failed to authenticate.');
-  else if (otp != null) {
-    $.ajax({
-      type: 'POST',
-      url: '/otp_sessions',
-      data: {
-        user_id: userData.userId,
-        api_key: userData.apiKey,
-        otp: otp
-      },
-      dataType: 'json',
-      success: function() {
-        alert('Authentication successful. Please retry your request.');
-      }
-    });
+Util.handleOtpErrors = function(xhr, successCallback, errorCallback) {
+  if (xhr.status == 412) {
+    var otp = prompt('You must authenticate to continue. Please enter the current code from Google Authenticator.');
+    if (otp) {
+      $('#otp_session_user_id').val(userData.userId);
+      $('#otp_session_api_key').val(userData.apiKey);
+      $('#otp_session_otp').val(otp);
+      $('#otp_session_form').unbind();
+      $('#otp_session_form').bind('ajax:success', function() {
+        successCallback();
+      }).bind('ajax:error', function(evt, otpXhr) {
+        Util.handleOtpErrors(otpXhr, successCallback, errorCallback);
+      });
+      $('#otp_session_form').submit();
+    } else {
+      errorCallback();
+    }
+  } else if (xhr.status == 423) {
+    alert('This device has been locked out. Try another device or a different browser.');
+    this.wipeData();
+  } else {
+    errorCallback();
   }
 };
-
-$(function() {
-  $(document).ajaxError(function(evt, xhr) {
-    if (xhr.status == 412)
-      Util.otpPrompt();
-    else if (xhr.status == 423)
-      alert('This device has been locked out. Try another device or a different browser.');
-  });
-});

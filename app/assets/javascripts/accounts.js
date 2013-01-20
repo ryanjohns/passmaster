@@ -375,8 +375,12 @@ $(function() {
     else
       Accounts.updateTile(tile);
   }).bind('ajax:error', function(evt, xhr) {
-    if (xhr.status != 412)
+    var form = $(this);
+    Util.handleOtpErrors(xhr, function() {
+      form.submit();
+    }, function() {
       alert(Util.extractErrors(xhr));
+    });
   }).bind('ajax:before', function() {
     $(this).find('input.api-key').val(userData.apiKey);
     $(this).find('input.encrypted-data').val(userData.encryptedData);
@@ -392,16 +396,20 @@ $(function() {
 
   $('#refresh_link').bind('ajax:success', function(evt, data) {
     Accounts.refresh(data);
-  }).bind('ajax:error', function(ext, xhr) {
-    if (xhr.status == 401)
-      Accounts.handleBadPassword();
-    else if (xhr.status == 404)
-      Util.wipeData();
-    else if (xhr.status != 412) {
-      if (localStorage.userAttributes)
-        Accounts.refresh(JSON.parse(localStorage.userAttributes));
-      Util.enableReadOnly();
-    }
+  }).bind('ajax:error', function(evt, xhr) {
+    Util.handleOtpErrors(xhr, function() {
+      $('#refresh_link').click();
+    }, function() {
+      if (xhr.status == 401)
+        Accounts.handleBadPassword();
+      else if (xhr.status == 404)
+        Util.wipeData();
+      else {
+        if (localStorage.userAttributes)
+          Accounts.refresh(JSON.parse(localStorage.userAttributes));
+        Util.enableReadOnly();
+      }
+    });
   }).bind('ajax:before', function() {
     return Util.confirmUnsavedChanges();
   }).bind('ajax:beforeSend', function(evt, xhr, settings) {
