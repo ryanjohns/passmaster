@@ -79,8 +79,9 @@
             = check_box_tag(:otp_enabled, '1', false, :id => 'preferences_mfa')
             %span#mfa_status
             #mfa_configure{ :style => 'display:none;' }
-              %p Use the following QR code or key to add Passmaster to Google Authenticator.
+              %p Use the following QR code or Secret Key to add Passmaster to Google Authenticator. It is a good idea to save the Secret Key in a safe location in case you lose your phone as it will be necessary to regain access to your accounts.
               #qr_code
+              %strong Secret Key:
               %strong#otp_secret
           %p= submit_tag('Save Preferences', :class => 'btn btn-primary', :id => 'preferences_btn')
 
