@@ -17,35 +17,13 @@ Configure.init = function() {
     $('#master_password_old_passwd').show();
     $('#configure_cancel_btn').show();
     $('#preferences_password_length').val(userData.passwordLength);
-    $('#preferences_special_chars').get(0).checked = userData.specialChars;
-    var span = $('#special_chars_status');
-    if (userData.specialChars)
-      span.html('Include');
-    else
-      span.html("Don't Include");
+    $('#preferences_special_chars_enabled').get(0).checked = userData.specialChars;
+    $('#preferences_special_chars_disabled').get(0).checked = !userData.specialChars;
     $('#preferences_idle_timeout').val(userData.idleTimeout);
-    $('#preferences_auto_backup').get(0).checked = userData.autoBackup;
-    span = $('#auto_backup_status');
-    if (userData.autoBackup) {
-      span.html('Enabled');
-      span.removeClass('status-disabled');
-      span.addClass('status-enabled');
-    } else {
-      span.html('Disabled');
-      span.removeClass('status-enabled');
-      span.addClass('status-disabled');
-    }
-    $('#preferences_mfa').get(0).checked = userData.otpEnabled;
-    span = $('#mfa_status');
-    if (userData.otpEnabled) {
-      span.html('Enabled');
-      span.removeClass('status-disabled');
-      span.addClass('status-enabled');
-    } else {
-      span.html('Disabled');
-      span.removeClass('status-enabled');
-      span.addClass('status-disabled');
-    }
+    $('#preferences_auto_backup_enabled').get(0).checked = userData.autoBackup;
+    $('#preferences_auto_backup_disabled').get(0).checked = !userData.autoBackup;
+    $('#preferences_mfa_enabled').get(0).checked = userData.otpEnabled;
+    $('#preferences_mfa_disabled').get(0).checked = !userData.otpEnabled;
     $('#mfa_configure').hide();
     $('#unlocked_options').show();
   } else {
@@ -246,8 +224,8 @@ $(function() {
     reader.readAsText(file);
   });
 
-  $('#preferences_mfa').change(function() {
-    if (this.checked && !userData.otpEnabled) {
+  $('#preferences_mfa_enabled').change(function() {
+    if (!userData.otpEnabled) {
       $('#qr_code').html('');
       $('#qr_code').qrcode({
         width: 200,
@@ -256,8 +234,9 @@ $(function() {
       });
       $('#otp_secret').html(userData.otpSecret);
       $('#mfa_configure').show();
-    } else {
-      $('#mfa_configure').hide();
     }
+  });
+  $('#preferences_mfa_disabled').change(function() {
+    $('#mfa_configure').hide();
   });
 });
