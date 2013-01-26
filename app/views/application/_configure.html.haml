@@ -19,8 +19,8 @@
         It is extremely important that you remember this password as it CANNOT be recovered!
       %form#master_password_form
         %p= password_field_tag(:old_passwd, '', :placeholder => 'Current Password', :class => 'input-xlarge', :id => 'master_password_old_passwd', :style => 'display:none;')
-        %p= password_field_tag(:passwd, '', :placeholder => 'New Password', :class => 'input-xlarge', :id => 'master_password_passwd', :required => 'true')
-        %p= password_field_tag(:passwd2, '', :placeholder => 'Confirm New Password', :class => 'input-xlarge', :id => 'master_password_passwd2', :required => 'true')
+        %p= password_field_tag(:passwd, '', :placeholder => 'New Password', :class => 'input-xlarge', :id => 'master_password_passwd', :required => true)
+        %p= password_field_tag(:passwd2, '', :placeholder => 'Confirm New Password', :class => 'input-xlarge', :id => 'master_password_passwd2', :required => true)
         %p= submit_tag('Set Master Password', :class => 'btn btn-primary', :id => 'master_password_btn')
       = form_tag(users_path, :method => :put, :remote => true, :id => 'master_password_hidden_form', :style => 'display:none;') do
         = hidden_field_tag(:api_key, '', :id => 'master_password_hidden_api_key')
@@ -38,8 +38,8 @@
           You will not be able to access your accounts until you verify your new email address.
         = form_tag(users_path, :method => :put, :remote => true, :id => 'change_email_form') do
           = hidden_field_tag(:api_key, '', :id => 'change_email_api_key')
-          %p{ :style => 'display:none;' }= password_field_tag(:hack_field, '')
-          %p= email_field_tag(:email, '', :placeholder => 'Email Address', :class => 'input-xlarge', :id => 'change_email_email', :required => 'true')
+          %p{ :style => 'display:none;' }= password_field_tag(:hack_field, '', :id => nil)
+          %p= email_field_tag(:email, '', :placeholder => 'Email Address', :class => 'input-xlarge', :id => 'change_email_email', :required => true)
           %p= submit_tag('Change Email', :class => 'btn btn-primary', :id => 'change_email_btn')
 
       #preferences.pushed-down
@@ -114,6 +114,6 @@
           This will replace ALL of your current accounts and reset your Master Password to whatever they were when the backup was created. You might want to make a backup of your current accounts before restoring.
         %form#restore_accounts_form{ :multipart => true }
           %p= file_field_tag(:backup_file, :accept => 'text/plain', :id => 'restore_accounts_backup_file')
-          %p= password_field_tag(:passwd, '', :placeholder => 'Backup Password', :class => 'input-xlarge', :id => 'restore_accounts_passwd', :required => 'true')
-          %p{ :style => 'display:none;' }= password_field_tag(:hack_field, '')
+          %p= password_field_tag(:passwd, '', :placeholder => 'Backup Password', :class => 'input-xlarge', :id => 'restore_accounts_passwd', :required => true)
+          %p{ :style => 'display:none;' }= password_field_tag(:hack_field, '', :id => nil)
           %p= submit_tag('Restore', :class => 'btn btn-danger', :id => 'restore_accounts_btn')

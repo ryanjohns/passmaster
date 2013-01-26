@@ -3,7 +3,7 @@
     .pull-left
       %button.btn.btn-warning{ :type => 'button', 'data-logout' => 'true' } Logout
     .pull-right
-      %img#refresh_spinner{ :src => '/img/spinner.gif', :style => 'display:none;' }
+      %img#refresh_spinner{ :src => '/img/spinner.gif', :alt => 'spinner', :style => 'display:none;' }
       = link_to(users_path, :remote => true, :id => 'refresh_link', :class => 'btn', :title => 'Refresh') do
         %i.icon-refresh
       %button#configure_btn.btn{ :type => 'button', :title => 'Configure', :style => 'display:none;' }
@@ -27,7 +27,7 @@
     #unlock_accounts.pushed-down{ :style => 'display:none;' }
       %p Accounts are locked. Enter the Master Password to unlock.
       %form#unlock_accounts_form
-        %p= password_field_tag(:passwd, '', :placeholder => 'Master Password', :class => 'input-xlarge', :id => 'unlock_accounts_passwd', :required => 'true')
+        %p= password_field_tag(:passwd, '', :placeholder => 'Master Password', :class => 'input-xlarge', :id => 'unlock_accounts_passwd', :required => true)
         %p= submit_tag('Unlock', :class => 'btn btn-primary', :id => 'unlock_accounts_btn')
 
   #accounts_list{ :style => 'display:none;' }
@@ -77,7 +77,7 @@
                   %tr
                     %td.field-label A:
                     %td
-                      %input.account.input-block-level{ :type => 'text', :name => 'account', :placeholder => 'Account Name', :required => 'true' }
+                      %input.account.input-block-level{ :type => 'text', :name => 'account', :placeholder => 'Account Name', :required => true }
                   %tr
                     %td.field-label W:
                     %td
