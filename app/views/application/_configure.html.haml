@@ -88,7 +88,7 @@
               = radio_button_tag(:otp_enabled, '0', false, :id => 'preferences_mfa_disabled')
               Disabled
             #mfa_configure{ :style => 'display:none;' }
-              %p Use the following QR code or secret key to add Passmaster to Google Authenticator. It is a good idea to save the secret key in a safe location in case you lose your phone as it will be necessary to regain access to your accounts.
+              %span Use the following QR code or secret key to add Passmaster to Google Authenticator. It is a good idea to save the secret key in a safe location in case you lose your phone as it will be necessary to regain access to your accounts.
               #qr_code
               %strong Secret Key:
               %strong#otp_secret
@@ -112,7 +112,7 @@
         .alert.alert-danger
           %strong Danger:
           This will replace ALL of your current accounts and reset your Master Password to whatever they were when the backup was created. You might want to make a backup of your current accounts before restoring.
-        %form#restore_accounts_form{ :multipart => true }
+        %form#restore_accounts_form{ :enctype => 'multipart/form-data' }
           %p= file_field_tag(:backup_file, :accept => 'text/plain', :id => 'restore_accounts_backup_file')
           %p= password_field_tag(:passwd, '', :placeholder => 'Backup Password', :class => 'input-xlarge', :id => 'restore_accounts_passwd', :required => true)
           %p{ :style => 'display:none;' }= password_field_tag(:hack_field, '', :id => nil)
