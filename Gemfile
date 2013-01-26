@@ -17,11 +17,11 @@ group :assets do
 end
 
 group :development do
-  gem 'hirb', '0.7.0'
+  gem 'hirb', '0.7.1'
   gem 'thin', '1.5.0'
 end
 
 group :test do
   gem 'cover_me', '1.2.0'
-  gem 'factory_girl_rails', '4.1.0'
+  gem 'factory_girl_rails', '4.2.0'
 end
