@@ -16,17 +16,11 @@
   }
 
   #preferences {
-    #preferences_special_chars, #preferences_auto_backup, #preferences_mfa {
-      margin: 0;
-    }
-    #special_chars_status, #auto_backup_status, #mfa_status {
-      margin-left: 5px;
-    }
-    span.status-enabled {
-      color: green;
-    }
-    span.status-disabled {
-      color: red;
+    .inline-checkboxes {
+      white-space: nowrap;
+      label {
+        padding-right: 10px;
+      }
     }
   }
 }
