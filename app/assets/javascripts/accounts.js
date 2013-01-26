@@ -412,7 +412,7 @@ $(function() {
       else {
         if (localStorage.userAttributes)
           Accounts.refresh(JSON.parse(localStorage.userAttributes));
-        Util.enableReadOnly();
+        Util.enableOfflineMode();
       }
     });
   }).bind('ajax:before', function() {

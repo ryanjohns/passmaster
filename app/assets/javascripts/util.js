@@ -24,7 +24,7 @@ Util.extractErrors = function(xhr) {
   return msg;
 };
 
-Util.enableReadOnly = function() {
+Util.enableOfflineMode = function() {
   // overview
   $('#overview_btn').attr('disabled', 'disabled');
   $('#overview_form').bind('ajax:before', function() {
@@ -45,6 +45,8 @@ Util.enableReadOnly = function() {
   $('#master_password_btn').attr('disabled', 'disabled');
   $('#change_email_btn').attr('disabled', 'disabled');
   $('#preferences_btn').attr('disabled', 'disabled');
+  $('#backup_accounts_file_btn').attr('disabled', 'disabled');
+  $('#backup_accounts_email_btn').attr('disabled', 'disabled');
   $('#restore_accounts_btn').attr('disabled', 'disabled');
 
   // account
@@ -52,7 +54,7 @@ Util.enableReadOnly = function() {
   $('.account-tile .write input[type="submit"]').attr('disabled', 'disabled');
 
   // alert message
-  $('#read_only').show();
+  $('#offline_mode').show();
 };
 
 Util.chooseSection = function() {
