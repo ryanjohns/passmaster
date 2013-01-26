@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
   validates_numericality_of :schema_version, :only_integer => true, :greater_than_or_equal_to => 0
   validates_numericality_of :idle_timeout, :only_integer => true, :greater_than_or_equal_to => 0
   validates_numericality_of :password_length, :only_integer => true, :greater_than_or_equal_to => 6, :less_than_or_equal_to => 32
+  validate :email_deliverable, :if => :email_changed?
   validate :verification_code_matches, :if => :verified_at_changed?
   validate :verified_for_update, :if => :protected_attributes_changed?
   validate :authorized_for_update, :if => :protected_attributes_changed?
@@ -133,6 +134,10 @@ class User < ActiveRecord::Base
 
   def should_generate_verification_code?
     new_record? || email_changed? || verified_at_changed?
+  end
+
+  def email_deliverable
+    errors.add(:email, 'is not deliverable') unless Resolv.valid_email?(email)
   end
 
   def verification_code_matches
