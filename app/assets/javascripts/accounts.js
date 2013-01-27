@@ -79,8 +79,8 @@ Accounts.addAccountTile = function(accountId, data) {
     passwordInput.val(passwordInput.attr('data-default-value'));
   tile.find('.read p.notes').html(data.notes.replace(/\n/g, '<br>'));
   if (data.notes.length > 0) {
-    tile.find('.read td.no-notes').hide();
-    tile.find('.read td.notes').show();
+    tile.find('.read tr.no-notes').hide();
+    tile.find('.read tr.notes').show();
   }
   tile.find('.write input.account').val(data.account);
   tile.find('.write input.url').val(data.url);
@@ -150,11 +150,11 @@ Accounts.updateTile = function(tile) {
     passwordInput.val(passwordInput.attr('data-default-value'));
   tile.find('.read p.notes').html(data.notes.replace(/\n/g, '<br>'));
   if (data.notes.length == 0) {
-    tile.find('.read td.notes').hide();
-    tile.find('.read td.no-notes').show();
+    tile.find('.read tr.notes').hide();
+    tile.find('.read tr.no-notes').show();
   } else {
-    tile.find('.read td.no-notes').hide();
-    tile.find('.read td.notes').show();
+    tile.find('.read tr.no-notes').hide();
+    tile.find('.read tr.notes').show();
   }
   tile.find('.write').hide();
   tile.find('.read').show();
