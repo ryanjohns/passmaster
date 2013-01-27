@@ -4,27 +4,4 @@
   .pushed-down {
     margin-top: 40px;
   }
-
-  #restore_accounts_backup_file {
-    width: 100%;
-    max-width: 270px;
-    line-height: 0;
-  }
-
-  hr {
-    border-bottom: 1px solid #aaa;
-  }
-
-  #preferences {
-    .inline-radios {
-      margin-bottom: 20px;
-      label {
-        white-space: nowrap;
-        padding-right: 10px;
-      }
-    }
-    #mfa_configure {
-      margin-top: 10px;
-    }
-  }
 }

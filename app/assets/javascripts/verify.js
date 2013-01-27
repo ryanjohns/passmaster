@@ -4,6 +4,10 @@ Verify.init = function() {
   $('#verify_email_placeholder').html(userData.email);
   $('#verify_verification_code').val(Util.getParameterByName('verification_code'));
   $('#verify_api_key').val('');
+  if (userData.configured)
+    $('#verify_cancel_btn').show();
+  else
+    $('#verify_cancel_btn').hide();
 };
 
 Verify.afterDisplay = function() {};
@@ -11,10 +15,7 @@ Verify.afterDisplay = function() {};
 $(function() {
   $('#verify_cancel_btn').click(function(evt) {
     evt.preventDefault();
-    if (userData.masterPassword)
-      Util.displaySection('accounts');
-    else
-      Util.chooseSection();
+    Util.displaySection('accounts');
   });
 
   $('#verify_form').bind('ajax:success', function(evt, data) {

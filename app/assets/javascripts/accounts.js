@@ -10,23 +10,24 @@ Accounts.init = function() {
 };
 
 Accounts.afterDisplay = function() {
-  if (!userData.masterPassword)
+  if (userData.masterPassword)
+    this.searchTiles($('#accounts_list_search').val());
+  else
     $('#unlock_accounts_passwd').focus();
 };
 
 Accounts.refresh = function(data) {
   userData.updateAttributes(data);
-  if (userData.masterPassword) {
-    try {
-      userData.decryptAccounts();
-    } catch(err) {
-      this.handleBadPassword();
-      return;
-    }
+  try {
+    userData.decryptAccounts();
+  } catch(err) {
+    this.handleBadPassword();
+    return;
   }
   if ($('#unlock_accounts_passwd').attr('type') == 'password')
     $('#unlock_accounts_passwd').val('');
   this.init();
+  this.searchTiles($('#accounts_list_search').val());
 };
 
 Accounts.handleBadPassword = function() {
@@ -40,17 +41,16 @@ Accounts.handleBadPassword = function() {
 Accounts.selectView = function() {
   this.wipeAccountTiles();
   if (userData.masterPassword) {
-    $('#lock_btn').show();
-    $('#configure_btn').show();
-    $('#refresh_link').show();
     $('#unlock_accounts').hide();
+    $('#lock_btn').show();
+    $('#settings_btn').show();
+    $('#refresh_link').show();
     $('#accounts_list').show();
     $('#total_accounts').attr('data-count', userData.numAccounts());
     $('#total_accounts').html($('#total_accounts').attr('data-count'));
-    this.searchTiles($('#accounts_list_search').val());
   } else {
     $('#lock_btn').hide();
-    $('#configure_btn').hide();
+    $('#settings_btn').hide();
     $('#refresh_link').hide();
     $('#accounts_list').hide();
     $('#unlock_accounts').show();
@@ -314,8 +314,6 @@ $(function() {
       tile.find('select.password-length').val(passwd.length);
       tile.find('input.special-characters').get(0).checked = /\W/.test(passwd);
     }
-    if (!tile.attr('data-account-id'))
-      tile.find('.write input.account').focus();
   });
 
   $('button[data-cancel]').click(function(evt) {
@@ -444,11 +442,11 @@ $(function() {
     $('#refresh_spinner').hide();
   });
 
-  $('#configure_btn').click(function(evt) {
+  $('#settings_btn').click(function(evt) {
     evt.preventDefault();
     if (Util.confirmUnsavedChanges()) {
-      Configure.init();
-      Util.displaySection('configure');
+      Settings.init();
+      Util.displaySection('settings');
     }
   });
 
