@@ -1,7 +1,8 @@
 #accounts.container{ :style => 'display:none;' }
   .top-links
     .pull-left
-      %button.btn.btn-warning{ :type => 'button', 'data-logout' => 'true' } Logout
+      %button.btn.btn-warning{ :type => 'button', 'data-logout' => 'true', :title => 'Logout' }
+        %i.icon-off.icon-white
     .pull-right
       %img#refresh_spinner{ :src => '/img/spinner.gif', :alt => 'spinner', :style => 'display:none;' }
       = link_to(users_path, :remote => true, :id => 'refresh_link', :class => 'btn', :title => 'Refresh') do
