@@ -56,6 +56,8 @@
     }
     th.account {
       text-align: left;
+      max-width: 0;
+      overflow: hidden;
     }
     th.edit-link {
       text-align: right;
