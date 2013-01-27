@@ -3,6 +3,12 @@
 
   #settings_btn {
     margin-left: 5px;
+    text-align: left;
+
+    ul.dropdown-menu {
+      right: -44px;
+      left: auto;
+    }
   }
 
   .pushed-down {

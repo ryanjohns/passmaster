@@ -16,6 +16,7 @@
 //= require jquery.sortElements
 //= require jquery.qrcode
 //= require qrcode
+//= require bootstrap
 //= require sjcl
 //= require base64
 //= require_tree .

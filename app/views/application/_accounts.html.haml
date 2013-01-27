@@ -7,8 +7,22 @@
       %img#refresh_spinner{ :src => '/img/spinner.gif', :alt => 'spinner', :style => 'display:none;' }
       = link_to(users_path, :remote => true, :id => 'refresh_link', :class => 'btn', :title => 'Refresh') do
         %i.icon-refresh
-      %button#settings_btn.btn{ :type => 'button', :title => 'Settings', :style => 'display:none;' }
-        %i.icon-cog
+      #settings_btn.btn-group{ :style => 'display:none;' }
+        %button.btn.dropdown-toggle{ :type => 'button', :title => 'Settings', 'data-toggle' => 'dropdown' }
+          %i.icon-cog
+          %span.caret
+        %ul.dropdown-menu
+          %li
+            %a#preferences_link{ :href => '#' } Preferences
+          %li
+            %a#change_email_link{ :href => '#' } Email Address
+          %li
+            %a#master_password_link{ :href => '#' } Master Password
+          %li.divider
+          %li
+            %a#backup_accounts_link{ :href => '#' } Backup
+          %li
+            %a#restore_accounts_link{ :href => '#' } Restore
       %button#lock_btn.btn{ :type => 'button', :title => 'Lock', :style => 'display:none;' }
         %i.icon-lock
     .clearfix
