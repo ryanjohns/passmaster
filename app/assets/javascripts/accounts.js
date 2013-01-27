@@ -74,11 +74,15 @@ Accounts.addAccountTile = function(accountId, data) {
   tile.find('.read th.account').html(this.getAccountHtml(data.account, data.url));
   tile.find('.read input.username').val(data.username);
   tile.find('.read input.username').attr('title', data.username);
-  tile.find('.read input.password').attr('data-password', data.password);
-  tile.find('.read input.password').attr('readonly', 'readonly');
-  tile.find('.read pre.notes').html(data.notes);
-  if (data.notes.length == 0)
-    tile.find('.read pre.notes').hide();
+  var passwordInput = tile.find('.read input.password');
+  passwordInput.attr('data-password', data.password);
+  if (data.password.length > 0)
+    passwordInput.val(passwordInput.attr('data-default-value'));
+  tile.find('.read p.notes').html(data.notes.replace(/\n/g, '<br>'));
+  if (data.notes.length > 0) {
+    tile.find('.read td.no-notes').hide();
+    tile.find('.read td.notes').show();
+  }
   tile.find('.write input.account').val(data.account);
   tile.find('.write input.url').val(data.url);
   tile.find('.write input.username').val(data.username);
@@ -106,15 +110,6 @@ Accounts.addBlankTile = function() {
 
 Accounts.resetTile = function(tile) {
   var data = userData.accounts[tile.attr('data-account-id')];
-  tile.find('.read th.account').html(this.getAccountHtml(data.account, data.url));
-  tile.find('.read input.username').val(data.username);
-  tile.find('.read input.username').attr('title', data.username);
-  tile.find('.read input.password').attr('data-password', data.password);
-  tile.find('.read input.password').val('');
-  tile.find('.read input.password').removeAttr('title');
-  tile.find('.read input.password').attr('readonly', 'readonly');
-  tile.find('.read button.password').html('Show');
-  tile.find('.read pre.notes').html(data.notes);
   tile.find('.write input.account').val(data.account);
   tile.find('.write input.url').val(data.url);
   tile.find('.write input.username').val(data.username);
@@ -149,16 +144,20 @@ Accounts.updateTile = function(tile) {
   tile.find('.read th.account').html(this.getAccountHtml(data.account, data.url));
   tile.find('.read input.username').val(data.username);
   tile.find('.read input.username').attr('title', data.username);
-  tile.find('.read input.password').attr('data-password', data.password);
-  tile.find('.read input.password').val('');
-  tile.find('.read input.password').removeAttr('title');
-  tile.find('.read input.password').attr('readonly', 'readonly');
-  tile.find('.read button.password').html('Show');
-  tile.find('.read pre.notes').html(data.notes);
-  if (data.notes.length == 0)
-    tile.find('.read pre.notes').hide();
+  var passwordInput = tile.find('.read input.password');
+  passwordInput.attr('data-password', data.password);
+  if (data.password.length == 0)
+    passwordInput.val('');
   else
-    tile.find('.read pre.notes').show();
+    passwordInput.val(passwordInput.attr('data-default-value'));
+  tile.find('.read p.notes').html(data.notes.replace(/\n/g, '<br>'));
+  if (data.notes.length == 0) {
+    tile.find('.read td.notes').hide();
+    tile.find('.read td.no-notes').show();
+  } else {
+    tile.find('.read td.no-notes').hide();
+    tile.find('.read td.notes').show();
+  }
   tile.find('.write').hide();
   tile.find('.read').show();
 };
@@ -249,31 +248,42 @@ $(function() {
       Accounts.unlock(passwd);
   });
 
-  $('button[data-show-password]').click(function(evt) {
+  $('#add_account_btn').click(function(evt) {
     evt.preventDefault();
-    var input = $(this).closest('.read').find('input.password');
-    if ($(this).html() == 'Show') {
-      input.removeAttr('readonly');
-      input.val(input.attr('data-password'));
-      input.attr('title', input.attr('data-password'));
-      input = input.get(0);
-      input.selectionStart = 0;
-      input.selectionEnd = 9999;
-      $(this).html('Hide');
-    } else {
-      input.val('');
-      input.removeAttr('title');
-      input.attr('readonly', 'readonly');
-      $(this).html('Show');
-    }
+    Accounts.addBlankTile();
   });
 
   $('.read .click-to-select').click(function(evt) {
     evt.preventDefault();
-    var input = $(this).find('input').get(0);
+    var input = $(this).find('input.username').get(0);
     if (input.value) {
       input.selectionStart = 0;
       input.selectionEnd = 9999;
+    }
+  });
+
+  $('.read .click-to-show').click(function(evt) {
+    evt.preventDefault();
+    var input = $(this).find('input.password');
+    if (input.attr('data-password-visible') == 'false') {
+      input.data('origText', input.val());
+      input.val(input.attr('data-password'));
+      input.attr('title', input.attr('data-password'));
+      input.attr('data-password-visible', 'true');
+    }
+    input = input.get(0);
+    if (input.value) {
+      input.selectionStart = 0;
+      input.selectionEnd = 9999;
+    }
+  });
+
+  $('.read input.password').bind('blur', function() {
+    var input = $(this);
+    if (input.attr('data-password-visible') == 'true') {
+      input.val(input.data('origText'));
+      input.removeAttr('title');
+      input.attr('data-password-visible', 'false');
     }
   });
 
@@ -283,25 +293,15 @@ $(function() {
   }).bind('cut paste', function(evt) {
     evt.preventDefault();
   });
-  $('.read input.password').bind('blur', function() {
-    $(this).val('');
-    $(this).removeAttr('title');
-    $(this).attr('readonly', 'readonly');
-    $(this).closest('.read').find('button[data-show-password]').html('Show');
-  });
 
-  $('#add_account_btn').click(function(evt) {
+  $('a[data-show-notes]').click(function(evt) {
     evt.preventDefault();
-    Accounts.addBlankTile();
-  });
-
-  $('button[data-cancel]').click(function(evt) {
-    evt.preventDefault();
-    var tile = $(this).closest('.account-tile');
-    if (!tile.attr('data-account-id'))
-      tile.remove();
+    var notes = $(this).parent().find('div.notes');
+    notes.toggle();
+    if (notes.is(':visible'))
+      $(this).html('Hide Notes');
     else
-      Accounts.resetTile(tile);
+      $(this).html('Show Notes');
   });
 
   $('button[data-account-edit]').click(function(evt) {
@@ -322,6 +322,15 @@ $(function() {
       tile.find('.write input.account').focus();
   });
 
+  $('button[data-cancel]').click(function(evt) {
+    evt.preventDefault();
+    var tile = $(this).closest('.account-tile');
+    if (!tile.attr('data-account-id'))
+      tile.remove();
+    else
+      Accounts.resetTile(tile);
+  });
+
   $('button[data-account-delete]').click(function(evt) {
     evt.preventDefault();
     if (!confirm('Are you sure you want to delete this account?'))
@@ -338,6 +347,15 @@ $(function() {
     var form = tile.find('.update form');
     form.data('deletedAccount', 'true');
     form.submit();
+  });
+
+  $('button[data-password-generator]').click(function(evt) {
+    evt.preventDefault();
+    var div = $(this).closest('.write');
+    var length = div.find('select.password-length').val();
+    var specials = div.find('input.special-characters').get(0).checked;
+    var passwd = Passwords.generate(length, specials);
+    div.find('input.password').val(passwd);
   });
 
   $('#account_tiles .write form').submit(function(evt) {
@@ -455,14 +473,5 @@ $(function() {
     searchBox.val(value);
     Util.timerVal = value;
     Accounts.searchTiles(value);
-  });
-
-  $('button[data-password-generator]').click(function(evt) {
-    evt.preventDefault();
-    var div = $(this).closest('.write');
-    var length = div.find('select.password-length').val();
-    var specials = div.find('input.special-characters').get(0).checked;
-    var passwd = Passwords.generate(length, specials);
-    div.find('input.password').val(passwd);
   });
 });

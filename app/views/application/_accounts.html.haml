@@ -59,17 +59,18 @@
                   %td.field-label U:
                   %td{ :colspan => '2' }
                     .click-to-select
-                      %input.username.input-block-level{ :type => 'text', :name => 'username', :placeholder => 'Username' }
+                      %input.username.input-block-level{ :type => 'text', :name => 'username' }
                 %tr
                   %td.field-label P:
-                  %td
-                    .click-to-select
-                      %input.password.input-block-level{ :type => 'text', :name => 'password', :placeholder => 'Hidden' }
-                  %td.show-password
-                    %button.password.btn{ :type => 'button', 'data-show-password' => 'true' } Show
+                  %td{ :colspan => '2' }
+                    .click-to-show
+                      %input.password.input-block-level{ :type => 'text', :name => 'password', 'data-password-visible' => 'false', 'data-default-value' => 'Click to show' }
                 %tr
-                  %td{ :colspan => '3' }
-                    %pre.notes
+                  %td.no-notes{ :colspan => '3' } No Notes
+                  %td.notes{ :colspan => '3', :style => 'display:none;' }
+                    %a{ :href => '#', 'data-show-notes' => 'true' } Show Notes
+                    .notes{ :style => 'display:none;' }
+                      %p.notes
           .write
             %form
               %table
