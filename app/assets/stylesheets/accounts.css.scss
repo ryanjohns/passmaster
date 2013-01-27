@@ -39,7 +39,7 @@
   }
   .account-tile-inner {
     margin: 0 5px 10px 5px;
-    padding: 8px;
+    padding: 5px;
     background-color: #f5f5f5;
     border: 1px solid #e3e3e3;
     -moz-border-radius: 4px;
@@ -66,23 +66,29 @@
       text-align: right;
       padding-right: 3px;
     }
-    td.show-password {
-      width: 60px;
-      button {
-        width: 60px;
-      }
-    }
     input[type='text'] {
       margin: 0;
     }
-    input.password {
+    input.username,input.password {
       cursor: default;
+      background-color: #eee;
     }
-    pre.notes {
+    td.no-notes {
+      color: #aaa;
+    }
+    td.notes,td.no-notes {
+      text-align: center;
+      padding-top: 5px;
+    }
+    p.notes {
+      text-align: left;
       border: none;
       padding: 5px;
       margin: 5px 0 0 0;
       background-color: #fff;
+      -moz-border-radius: 4px;
+      -webkit-border-radius: 4px;
+      border-radius: 4px;
     }
   }
 
