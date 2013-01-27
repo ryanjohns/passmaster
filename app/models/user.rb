@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   include UuidPrimaryKey
 
-  has_many :otp_sessions
+  has_many :otp_sessions, :dependent => :destroy
 
   validates_presence_of :email
   validates_presence_of :api_key, :if => :encrypted_data?
