@@ -38,7 +38,7 @@ $(function() {
   $('#configure_hidden_form').bind('ajax:success', function(evt, data) {
     userData.updateAttributes(data);
     userData.wipeOldMasterPassword();
-    alert('Master Password set successfully.')
+    alert('Master Password set successfully. You are now ready to use Passmaster.')
     Configure.init();
     Util.chooseSection();
   }).bind('ajax:error', function(evt, xhr) {
