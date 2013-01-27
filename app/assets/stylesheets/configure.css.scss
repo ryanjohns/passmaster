@@ -16,13 +16,14 @@
   }
 
   #preferences {
-    .inline-checkboxes {
-      white-space: nowrap;
+    .inline-radios {
+      margin-bottom: 20px;
       label {
+        white-space: nowrap;
         padding-right: 10px;
       }
     }
-    #qr_code {
+    #mfa_configure {
       margin-top: 10px;
     }
   }

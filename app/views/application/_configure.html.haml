@@ -53,7 +53,7 @@
               - 6.upto(32).each do |i|
                 %option{ :class => "length-#{i}", :value => i }= "#{i} Characters"
           %strong Special Characters
-          %p.inline-checkboxes
+          .inline-radios
             = label_tag(nil, :class => 'radio inline') do
               = radio_button_tag(:special_chars, '1', false, :id => 'preferences_special_chars_enabled')
               Include
@@ -72,7 +72,7 @@
                 %option{ :value => val }= "#{val} Minutes"
               %option{ :value => 60 } 1 Hour
           %strong Auto-backup on Change
-          %p.inline-checkboxes
+          .inline-radios
             = label_tag(nil, :class => 'radio inline') do
               = radio_button_tag(:auto_backup, '1', false, :id => 'preferences_auto_backup_enabled')
               Enabled
@@ -80,7 +80,7 @@
               = radio_button_tag(:auto_backup, '0', false, :id => 'preferences_auto_backup_disabled')
               Disabled
           %strong Multi-factor Authentication
-          %p.inline-checkboxes
+          .inline-radios
             = label_tag(nil, :class => 'radio inline') do
               = radio_button_tag(:otp_enabled, '1', false, :id => 'preferences_mfa_enabled')
               Enabled
@@ -88,7 +88,7 @@
               = radio_button_tag(:otp_enabled, '0', false, :id => 'preferences_mfa_disabled')
               Disabled
             #mfa_configure{ :style => 'display:none;' }
-              %span Use the following QR code or secret key to add Passmaster to Google Authenticator. It is a good idea to save the secret key in a safe location in case you lose your phone as it will be necessary to regain access to your accounts.
+              %p Use the following QR code or secret key to add Passmaster to Google Authenticator. It is a good idea to save the secret key in a safe location in case you lose your phone as it will be necessary to regain access to your accounts.
               #qr_code
               %strong Secret Key:
               %strong#otp_secret
