@@ -283,6 +283,12 @@ $(function() {
   }).bind('cut paste', function(evt) {
     evt.preventDefault();
   });
+  $('.read input.password').bind('blur', function() {
+    $(this).val('');
+    $(this).removeAttr('title');
+    $(this).attr('readonly', 'readonly');
+    $(this).closest('.read').find('button[data-show-password]').html('Show');
+  });
 
   $('#add_account_btn').click(function(evt) {
     evt.preventDefault();
