@@ -42,6 +42,9 @@ Util.enableOfflineMode = function() {
   });
 
   // configure
+  $('#configure_btn').attr('disabled', 'disabled');
+
+  // settings
   $('#master_password_btn').attr('disabled', 'disabled');
   $('#change_email_btn').attr('disabled', 'disabled');
   $('#preferences_btn').attr('disabled', 'disabled');
@@ -72,8 +75,8 @@ Util.chooseSection = function() {
 };
 
 Util.displaySection = function(section) {
-  var sections = ['overview', 'verify', 'configure', 'accounts'];
-  for (var i = 0; i < 4; i++) {
+  var sections = ['overview', 'verify', 'configure', 'settings', 'accounts'];
+  for (i in sections) {
     if (sections[i] == section)
       $('#' + sections[i]).show();
     else

@@ -1,7 +1,7 @@
 #alert_messages.container
   #offline_mode.alert.alert-error{ :style => 'display:none;' }
-    %strong Connection to server failed:
-    Offline mode enabled.
+    %strong Connection Failed!
+    Offline-mode enabled.
     %a.reload-link{ :href => '#' } Try reconnecting...
 
   #idle_timeout.alert.alert-info{ :style => 'display:none;' }
@@ -16,6 +16,7 @@
 = render 'overview'
 = render 'verify'
 = render 'configure'
+= render 'settings'
 = render 'accounts'
 
 = link_to('', init_session_path, :remote => true, :id => 'init_session_link', :style => 'display:none;')
