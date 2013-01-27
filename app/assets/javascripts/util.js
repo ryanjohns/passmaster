@@ -75,7 +75,7 @@ Util.chooseSection = function() {
 };
 
 Util.displaySection = function(section) {
-  var sections = ['overview', 'verify', 'configure', 'settings', 'accounts'];
+  var sections = ['overview', 'verify', 'configure', 'accounts'];
   for (i in sections) {
     if (sections[i] == section)
       $('#' + sections[i]).show();

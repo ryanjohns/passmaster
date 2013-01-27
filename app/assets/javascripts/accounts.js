@@ -442,11 +442,34 @@ $(function() {
     $('#refresh_spinner').hide();
   });
 
-  $('#settings_btn').click(function(evt) {
+  $('#preferences_link').click(function(evt) {
+    evt.preventDefault();
+    Settings.initPreferences();
+    $('#preferences').modal('show');
+  });
+  $('#change_email_link').click(function(evt) {
     evt.preventDefault();
     if (Util.confirmUnsavedChanges()) {
-      Settings.init();
-      Util.displaySection('settings');
+      Settings.initChangeEmail();
+      $('#change_email').modal('show');
+    }
+  });
+  $('#master_password_link').click(function(evt) {
+    evt.preventDefault();
+    if (Util.confirmUnsavedChanges()) {
+      Settings.initMasterPassword();
+      $('#master_password').modal('show');
+    }
+  });
+  $('#backup_accounts_link').click(function(evt) {
+    evt.preventDefault();
+    $('#backup_accounts').modal('show');
+  });
+  $('#restore_accounts_link').click(function(evt) {
+    evt.preventDefault();
+    if (Util.confirmUnsavedChanges()) {
+      Settings.initRestoreAccounts();
+      $('#restore_accounts').modal('show');
     }
   });
 
