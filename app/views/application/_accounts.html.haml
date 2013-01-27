@@ -65,9 +65,10 @@
                   %td{ :colspan => '2' }
                     .click-to-show
                       %input.password.input-block-level{ :type => 'text', :name => 'password', 'data-password-visible' => 'false', 'data-default-value' => 'click to show' }
-                %tr
-                  %td.no-notes{ :colspan => '3' } No Notes
-                  %td.notes{ :colspan => '3', :style => 'display:none;' }
+                %tr.no-notes
+                  %td{ :colspan => '3' } No Notes
+                %tr.notes{ :style => 'display:none;' }
+                  %td{ :colspan => '3' }
                     %a{ :href => '#', 'data-show-notes' => 'true' } Show Notes
                     .notes{ :style => 'display:none;' }
                       %p.notes
