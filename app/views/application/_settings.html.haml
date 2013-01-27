@@ -11,39 +11,7 @@
       Settings
       %small#settings_email_placeholder
 
-    .pushed-down
-      %h4 Master Password
-      %p The Master Password is the only password you will need to remember. It is used to decrypt the rest of your individual account passwords. Enter a strong master password below.
-      .alert.alert-warning
-        %strong Warning:
-        It is extremely important that you remember this password as it CANNOT be recovered!
-      %form#master_password_form
-        %p= password_field_tag(:old_passwd, '', :placeholder => 'Current Password', :class => 'input-xlarge', :id => 'master_password_old_passwd', :required => true)
-        %p= password_field_tag(:passwd, '', :placeholder => 'New Password', :class => 'input-xlarge', :id => 'master_password_passwd', :required => true)
-        %p= password_field_tag(:passwd2, '', :placeholder => 'Confirm New Password', :class => 'input-xlarge', :id => 'master_password_passwd2', :required => true)
-        %p= submit_tag('Set Master Password', :class => 'btn btn-primary', :id => 'master_password_btn')
-      = form_tag(users_path, :method => :put, :remote => true, :id => 'master_password_hidden_form', :style => 'display:none;') do
-        = hidden_field_tag(:api_key, '', :id => 'master_password_hidden_api_key')
-        = hidden_field_tag(:new_api_key, '', :id => 'master_password_hidden_new_api_key')
-        = hidden_field_tag(:encrypted_data, '', :id => 'master_password_hidden_encrypted_data')
-        = hidden_field_tag(:schema_version, '', :id => 'master_password_hidden_schema_version')
-
-    #change_email.pushed-down
-      %hr
-      %h4 Email Address
-      %p Change the email address you use to access your accounts.
-      .alert.alert-warning
-        %strong Warning:
-        You will not be able to access your accounts until you verify your new email address.
-      = form_tag(users_path, :method => :put, :remote => true, :id => 'change_email_form') do
-        = hidden_field_tag(:api_key, '', :id => 'change_email_api_key')
-        %p{ :style => 'display:none;' }= password_field_tag(:hack_field, '', :id => nil)
-        %p= email_field_tag(:email, '', :placeholder => 'Email Address', :class => 'input-xlarge', :id => 'change_email_email', :required => true)
-        %p= submit_tag('Change Email', :class => 'btn btn-primary', :id => 'change_email_btn')
-
     #preferences.pushed-down
-      %hr
-      %h4 Preferences
       = form_tag(users_path, :method => :put, :remote => true, :id => 'preferences_form') do
         = hidden_field_tag(:api_key, '', :id => 'preferences_api_key')
         %strong Default Password Length
@@ -92,6 +60,37 @@
             %strong Secret Key:
             %strong#otp_secret
         %p= submit_tag('Save Preferences', :class => 'btn btn-primary', :id => 'preferences_btn')
+
+    #change_email.pushed-down
+      %hr
+      %h4 Email Address
+      %p Change the email address you use to access your accounts.
+      .alert.alert-warning
+        %strong Warning:
+        You will not be able to access your accounts until you verify your new email address.
+      = form_tag(users_path, :method => :put, :remote => true, :id => 'change_email_form') do
+        = hidden_field_tag(:api_key, '', :id => 'change_email_api_key')
+        %p{ :style => 'display:none;' }= password_field_tag(:hack_field, '', :id => nil)
+        %p= email_field_tag(:email, '', :placeholder => 'Email Address', :class => 'input-xlarge', :id => 'change_email_email', :required => true)
+        %p= submit_tag('Change Email', :class => 'btn btn-primary', :id => 'change_email_btn')
+
+    #master_password.pushed-down
+      %hr
+      %h4 Master Password
+      %p The Master Password is the only password you will need to remember. It is used to decrypt the rest of your individual account passwords. Enter a strong master password below.
+      .alert.alert-warning
+        %strong Warning:
+        It is extremely important that you remember this password as it CANNOT be recovered!
+      %form#master_password_form
+        %p= password_field_tag(:old_passwd, '', :placeholder => 'Current Password', :class => 'input-xlarge', :id => 'master_password_old_passwd', :required => true)
+        %p= password_field_tag(:passwd, '', :placeholder => 'New Password', :class => 'input-xlarge', :id => 'master_password_passwd', :required => true)
+        %p= password_field_tag(:passwd2, '', :placeholder => 'Confirm New Password', :class => 'input-xlarge', :id => 'master_password_passwd2', :required => true)
+        %p= submit_tag('Set Master Password', :class => 'btn btn-primary', :id => 'master_password_btn')
+      = form_tag(users_path, :method => :put, :remote => true, :id => 'master_password_hidden_form', :style => 'display:none;') do
+        = hidden_field_tag(:api_key, '', :id => 'master_password_hidden_api_key')
+        = hidden_field_tag(:new_api_key, '', :id => 'master_password_hidden_new_api_key')
+        = hidden_field_tag(:encrypted_data, '', :id => 'master_password_hidden_encrypted_data')
+        = hidden_field_tag(:schema_version, '', :id => 'master_password_hidden_schema_version')
 
     #backup_accounts.pushed-down
       %hr
