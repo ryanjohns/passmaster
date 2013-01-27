@@ -73,7 +73,6 @@ Accounts.addAccountTile = function(accountId, data) {
   var tile = $('#account_tiles .template').clone(true);
   tile.find('.read th.account').html(this.getAccountHtml(data.account, data.url));
   tile.find('.read input.username').val(data.username);
-  tile.find('.read input.username').attr('title', data.username);
   var passwordInput = tile.find('.read input.password');
   passwordInput.attr('data-password', data.password);
   if (data.password.length > 0)
@@ -143,7 +142,6 @@ Accounts.updateTile = function(tile) {
   tile.attr('data-account-id', accountId);
   tile.find('.read th.account').html(this.getAccountHtml(data.account, data.url));
   tile.find('.read input.username').val(data.username);
-  tile.find('.read input.username').attr('title', data.username);
   var passwordInput = tile.find('.read input.password');
   passwordInput.attr('data-password', data.password);
   if (data.password.length == 0)
@@ -268,7 +266,6 @@ $(function() {
     if (input.attr('data-password-visible') == 'false') {
       input.data('origText', input.val());
       input.val(input.attr('data-password'));
-      input.attr('title', input.attr('data-password'));
       input.attr('data-password-visible', 'true');
     }
     input = input.get(0);
@@ -282,7 +279,6 @@ $(function() {
     var input = $(this);
     if (input.attr('data-password-visible') == 'true') {
       input.val(input.data('origText'));
-      input.removeAttr('title');
       input.attr('data-password-visible', 'false');
     }
   });
