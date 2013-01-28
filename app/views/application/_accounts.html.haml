@@ -48,9 +48,11 @@
   #accounts_list{ :style => 'display:none;' }
     %p
       %button#add_account_btn.btn.btn-success{ :type => 'button' } Add Account
-    %p
+    .input-prepend.input-append
+      %span.add-on
+        %i.icon-search
       = text_field_tag(:search, '', :placeholder => 'Type to Search', :autocomplete => 'off', :autocorrect => 'off', :autocapitalize => 'off', :class => 'input-medium', :id => 'accounts_list_search')
-      %button#show_all_tiles_btn.btn{ :type => 'button' } Show All
+      %button#show_all_tiles_btn.btn{ :type => 'button' } All
     %p
       %span.num-accounts
         Showing

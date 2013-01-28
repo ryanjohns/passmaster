@@ -175,7 +175,7 @@ Accounts.searchTiles = function(term) {
   var count = 0;
   if (term == '') {
     $('.account-data[data-account-id]').hide();
-    $('#show_all_tiles_btn').html('Show All');
+    $('#show_all_tiles_btn').html('All');
   } else {
     var tile;
     for (accountId in userData.accounts) {
@@ -191,7 +191,7 @@ Accounts.searchTiles = function(term) {
       }
     }
     this.sortTiles();
-    $('#show_all_tiles_btn').html('Show None');
+    $('#show_all_tiles_btn').html('None');
   }
   $('#num_accounts').data('count', count);
   $('#num_accounts').html(count);
