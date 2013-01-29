@@ -1,6 +1,12 @@
 class User < ActiveRecord::Base
   include UuidPrimaryKey
 
+  AS_JSON_OPTIONS = {
+    :methods => [ :api_key?, :verified_at? ],
+    :only    => [ :id, :email, :encrypted_data, :schema_version, :idle_timeout, :password_length,
+                  :special_chars, :auto_backup, :otp_enabled, :otp_secret ]
+  }
+
   has_many :otp_sessions, :dependent => :destroy
 
   validates_presence_of :email
@@ -24,8 +30,8 @@ class User < ActiveRecord::Base
   after_create :deliver_new_user
   after_update :deliver_notifications
 
-  def as_json(options = nil)
-    super(options.merge({ :only => [ :id, :email, :encrypted_data, :schema_version, :idle_timeout, :password_length, :special_chars, :auto_backup, :otp_enabled, :otp_secret ], :methods => [ :api_key?, :verified_at? ] }))
+  def as_json(options = {})
+    super(options.merge(AS_JSON_OPTIONS))
   end
 
   def api_key_matches?(key)
