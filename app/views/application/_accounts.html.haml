@@ -3,6 +3,8 @@
     .pull-left
       %button.btn.btn-warning{ :type => 'button', 'data-logout' => 'true', :title => 'Logout' }
         %i.icon-off.icon-white
+      %button#lock_btn.btn.btn-inverse{ :type => 'button', :title => 'Lock', :style => 'display:none;' }
+        %i.icon-lock.icon-white
     .pull-right
       %img#refresh_spinner{ :src => '/img/spinner.gif', :alt => 'spinner', :style => 'display:none;' }
       = link_to(users_path, :remote => true, :id => 'refresh_link', :class => 'btn', :title => 'Refresh') do
@@ -23,8 +25,6 @@
             %a#backup_accounts_link{ :href => '#' } Backup
           %li
             %a#restore_accounts_link{ :href => '#' } Restore
-      %button#lock_btn.btn{ :type => 'button', :title => 'Lock', :style => 'display:none;' }
-        %i.icon-lock
     .clearfix
 
   .well
