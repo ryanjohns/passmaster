@@ -3,6 +3,7 @@ class UsersController < ApplicationController
   respond_to :json
 
   before_filter :find_user, :only => [ :show, :update, :backup, :resend_verification, :verify ]
+  before_filter :verify_user, :only => [ :update ]
   before_filter :verify_api_key, :only => [ :show, :update, :backup ]
   before_filter :verify_otp_session, :only => [ :show, :update, :backup ]
 
@@ -53,6 +54,12 @@ class UsersController < ApplicationController
 
   def find_user
     @user = User.find(params[:id])
+  end
+
+  def verify_user
+    unless @user.verified_at?
+      render :json => { :errors => { :email => ['is not verified'] } }, :status => :unprocessable_entity
+    end
   end
 
   def verify_api_key
