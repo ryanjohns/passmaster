@@ -19,8 +19,6 @@ class User < ActiveRecord::Base
   validates_numericality_of :password_length, :only_integer => true, :greater_than_or_equal_to => 6, :less_than_or_equal_to => 32
   validate :email_deliverable, :if => :email_changed?
   validate :verification_code_matches, :if => :verified_at_changed?
-  validate :verified_for_update, :if => :protected_attributes_changed?
-  validate :authorized_for_update, :if => :protected_attributes_changed?
 
   before_save :generate_otp_secret, :if => :should_generate_otp_secret?
   before_save :generate_verification_code, :if => :should_generate_verification_code?
@@ -130,10 +128,6 @@ class User < ActiveRecord::Base
     otp_sessions.update_all(:activated_at => nil)
   end
 
-  def protected_attributes_changed?
-    (!new_record? && (email_changed? || schema_version_changed?)) || api_key_changed? || encrypted_data_changed?
-  end
-
   def should_generate_otp_secret?
     new_record? || (!otp_enabled && otp_enabled_was)
   end
@@ -148,14 +142,6 @@ class User < ActiveRecord::Base
 
   def verification_code_matches
     errors.add(:verification_code, 'does not match') unless @code_matches || !verified_at?
-  end
-
-  def verified_for_update
-    errors.add(:email, 'is not verified') unless verified_at?
-  end
-
-  def authorized_for_update
-    errors.add(:api_key, 'is not authorized') unless @api_key_matches
   end
 
 end
