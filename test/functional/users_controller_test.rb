@@ -2,22 +2,28 @@ require 'test_helper'
 
 class UsersControllerTest < ActionController::TestCase
 
-  test "show" do
+  test 'show' do
+    
   end
 
-  test "create" do
+  test 'create' do
+    
   end
 
-  test "backup" do
+  test 'update' do
+    
   end
 
-  test "update" do
+  test 'backup' do
+    
   end
 
-  test "resend_verification" do
+  test 'resend_verification' do
+    
   end
 
-  test "verify" do
+  test 'verify' do
+    
   end
 
 end
