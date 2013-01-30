@@ -63,7 +63,6 @@ class User < ActiveRecord::Base
   end
 
   def update!(params)
-    @api_key_matches     = api_key_matches?(params[:api_key])
     self.api_key         = params[:new_api_key]     if params[:new_api_key].present?
     self.encrypted_data  = params[:encrypted_data]  if params[:encrypted_data].present?
     self.schema_version  = params[:schema_version]  if params[:schema_version].present?

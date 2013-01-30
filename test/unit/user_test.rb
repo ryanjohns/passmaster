@@ -179,4 +179,83 @@ class UserTest < ActiveSupport::TestCase
     assert_equal 1, ActionMailer::Base.deliveries.last.attachments.size
   end
 
+  test 'as_json' do
+    u = FactoryGirl.build(:user)
+    attributes = []
+    User::AS_JSON_OPTIONS.values.each { |v| attributes += v }
+    data = u.as_json.symbolize_keys
+    assert_equal attributes.size, u.as_json.size
+    attributes.each do |a|
+      assert data.include?(a)
+    end
+  end
+
+  test 'api_key_matches?' do
+    u = FactoryGirl.build(:user)
+    assert_nil u.api_key
+    assert u.api_key_matches?(nil)
+    assert !u.api_key_matches?('foo')
+    u.api_key = 'foo'
+    assert !u.api_key_matches?(nil)
+    assert !u.api_key_matches?('bar')
+    assert u.api_key_matches?('foo')
+  end
+
+  test 'valid_otp_session?' do
+    u = FactoryGirl.create(:user)
+    assert !u.otp_enabled?
+    assert u.valid_otp_session?(nil, nil, nil, nil)
+    assert !u.valid_otp_session?(nil, '1', nil, nil)
+    u.otp_enabled = true
+    assert u.save
+    assert !u.valid_otp_session?(nil, nil, nil, nil)
+    s = FactoryGirl.create(:otp_session, :user => u)
+    assert_nil s.activated_at
+    assert !u.valid_otp_session?(s.client_id, nil, '1.2.3.4', 'User-Agent')
+    s.activated_at = Time.zone.now
+    assert s.save
+    assert u.valid_otp_session?(s.client_id, nil, '1.2.3.4', 'User-Agent')
+  end
+
+  test 'backup_data' do
+    u = FactoryGirl.create(:user)
+    assert_equal ENCRYPTED_DATA_SCHEMA_VERSION, u.schema_version
+    assert_nil u.encrypted_data
+    u.schema_version = -1
+    u.encrypted_data = 'foo'
+    f, d = u.backup_data(true)
+    data = JSON.parse(d)
+    assert f =~ /^Passmaster\ Backup/
+    assert data['generated_at'].present?
+    assert_equal ENCRYPTED_DATA_SCHEMA_VERSION, data['schema_version']
+    assert_equal nil, data['encrypted_data']
+    f, d = u.backup_data(false)
+    data = JSON.parse(d)
+    assert f =~ /^Passmaster\ Backup/
+    assert data['generated_at'].present?
+    assert_equal -1, data['schema_version']
+    assert_equal 'foo', data['encrypted_data']
+  end
+
+  test 'generate_verification_code!' do
+    u = FactoryGirl.create(:user)
+    c = u.verification_code
+    assert u.generate_verification_code!
+    assert_not_equal c, u.verification_code
+  end
+
+  test 'update!' do
+    u = FactoryGirl.create(:user)
+    assert_equal 5, u.idle_timeout
+    assert u.update!(:idle_timeout => '10')
+    assert_equal 10, u.idle_timeout
+  end
+
+  test 'verify_code!' do
+    u = FactoryGirl.create(:user)
+    assert_nil u.verified_at
+    assert u.verify_code!(u.verification_code)
+    assert_not_nil u.verified_at
+  end
+
 end
