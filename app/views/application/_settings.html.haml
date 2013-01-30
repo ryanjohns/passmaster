@@ -47,7 +47,7 @@
           Disabled
         #mfa_configure{ :style => 'display:none;' }
           %p
-            Multi-factor authentication adds additional security to your encrypted data by requiring you to verify each device you use to access Passmaster once every 30 days.
+            Multi-factor authentication adds additional security to your encrypted data by requiring you to verify each device you use to access Passmaster once every #{OtpSession::ACTIVE_DAYS} days.
             In order to verify a device, you will be asked to enter a 6-digit code that can be obtained from the Google Authenticator app for
             = link_to('Android', 'https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2', :target => '_blank')
             and

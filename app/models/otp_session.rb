@@ -1,8 +1,9 @@
 class OtpSession < ActiveRecord::Base
   include UuidPrimaryKey
 
-  MAX_FAILS = 5
-  DRIFT = 5
+  MAX_FAILS   = 5
+  DRIFT       = 5
+  ACTIVE_DAYS = 30
 
   attr_accessible :ip_address, :user_agent, :last_seen_at
 
@@ -14,7 +15,7 @@ class OtpSession < ActiveRecord::Base
   validates_numericality_of :failed_count, :only_integer => true, :greater_than_or_equal_to => 0, :less_than_or_equal_to => MAX_FAILS
 
   def self.expired
-    where(["activated_at < ?", Time.zone.now - 30.days])
+    where(["activated_at < ?", Time.zone.now - ACTIVE_DAYS.days])
   end
 
   def self.deactivate_expired!
@@ -22,7 +23,7 @@ class OtpSession < ActiveRecord::Base
   end
 
   def active?
-    activated_at? && activated_at >= Time.zone.now - 30.days
+    activated_at? && activated_at >= Time.zone.now - ACTIVE_DAYS.days
   end
 
   def deactivate!
