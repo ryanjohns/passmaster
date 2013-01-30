@@ -203,7 +203,7 @@ Accounts.shouldShowTile = function(term, data) {
   if (term == '')
     return false;
   var pattern = new RegExp(term, 'i');
-  var txt = data.account + ' ' + data.url + ' ' + data.username + ' ' + data.password + ' ' + data.notes;
+  var txt = data.account + ' ' + data.url + ' ' + data.username + ' ' + data.notes;
   return pattern.test($.trim(txt));
 };
 
