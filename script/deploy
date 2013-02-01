@@ -62,6 +62,7 @@ class Deploy
     @options[:version] = Time.now.utc.strftime("%Y%m%d%H%M%S")
     prompt_and_exit_if_not_yes
     check_syntax
+    upload_assets
     puts "Creating new deploy tag."
     system("git tag -a -m 'Creating deploy tag #{@options[:version]}' #{@options[:version]}")
     system("git push --tags upstream master")
@@ -99,6 +100,15 @@ class Deploy
       exit 1
     end
     system("git pull --tags upstream master")
+  end
+
+  def upload_assets
+    puts "Compiling and uploading assets to S3."
+    system("bundle exec rake assets:upload")
+    if `git status` =~ /manifest.yml/
+      system("git add config/manifest.yml")
+      system("git commit -m 'Update assets manifest.'")
+    end
   end
 
 end

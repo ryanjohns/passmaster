@@ -15,6 +15,13 @@ class ApplicationControllerTest < ActionController::TestCase
     assert b['token'].present?
   end
 
+  test 'manifest' do
+    get :manifest
+    assert_response :success
+    assert_equal 'text/cache-manifest', @response.content_type
+    assert_equal CACHE_MANIFEST, @response.body
+  end
+
   test 'healthz' do
     get :healthz
     assert_response :success

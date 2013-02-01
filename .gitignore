@@ -8,9 +8,6 @@
 /.bundle
 /vendor/bundle
 
-# Ignore the default SQLite database.
-/db/*.sqlite3
-
 # Ignore all logfiles and tempfiles.
 /log
 /tmp
@@ -22,3 +19,7 @@
 # Ignore assets
 /public/assets
 /.sass-cache
+
+# Ignore sensitive configs
+/config/aws.yml
+
