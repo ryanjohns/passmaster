@@ -2,7 +2,7 @@ Passmaster::Application.routes.draw do
   match 'healthz' => 'application#healthz', :via => [ :get, :post ]
 
   root :to => 'application#index', :via => :get
-  match "application.manifest" => APPLICATION_MANIFEST, :via => :get
+  match 'application.manifest' => 'application#manifest', :via => :get, :as => 'cache_manifest'
 
   match 'init_session' => 'application#init_session', :via => :get
 
