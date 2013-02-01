@@ -1,5 +1,5 @@
 class Mailer < ActionMailer::Base
-  default :from => 'Passmaster <no-reply@passmaster.hoodquarters.com>'
+  default :from => 'Passmaster <no-reply@passmaster.io>'
 
   def auto_backup(email, filename, data)
     attachments[filename] = data
