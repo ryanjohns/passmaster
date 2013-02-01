@@ -6,7 +6,7 @@
       %button#lock_btn.btn.btn-inverse{ :type => 'button', :title => 'Lock', :style => 'display:none;' }
         %i.icon-lock.icon-white
     .pull-right
-      %img#refresh_spinner{ :src => '/img/spinner.gif', :alt => 'spinner', :style => 'display:none;' }
+      = image_tag('spinner.gif', :alt => 'spinner', :id => 'refresh_spinner', :style => 'display:none;')
       = link_to(users_path, :remote => true, :id => 'refresh_link', :class => 'btn', :title => 'Refresh') do
         %i.icon-refresh
       #settings_btn.btn-group{ :style => 'display:none;' }
