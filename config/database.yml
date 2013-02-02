@@ -24,6 +24,6 @@ production:
   reconnect: true
   database: passmaster
   pool: 5
-  username: root
-  password:
-  host: localhost
+  username: passmaster
+  password: 89BJIjVkgpv21vqy
+  host: passmaster-production.c9ntq4v9xdk8.us-west-2.rds.amazonaws.com
