@@ -1,4 +1,4 @@
-APPLICATION_MANIFEST = Rack::Offline.configure({ :cache => Rails.env.production?, :root => Rails.public_path }) do
+CACHE_MANIFEST = Rack::Offline.configure({ :cache => Rails.env.production?, :root => Rails.public_path }) do
   manifest = "#{Rails.public_path}/assets/manifest.yml"
   if Rails.env.production? && File.exists?(manifest)
     assets = YAML.load_file(manifest)
