@@ -1,5 +1,5 @@
 ActionMailer::Base.default_url_options = {
-  :host => 'passmaster.hoodquarters.com',
+  :host => 'passmaster.io',
 }
 ActionMailer::Base.smtp_settings = {
   :address              => 'smtp.gmail.com',
