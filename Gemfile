@@ -25,3 +25,7 @@ group :test do
   gem 'cover_me', '1.2.0'
   gem 'factory_girl_rails', '4.2.0'
 end
+
+group :ops do
+  gem 'aws-sdk', '1.8.1.1'
+end
