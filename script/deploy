@@ -115,7 +115,7 @@ class Deploy
   end
 
   def execute_cloudrun
-    command = "script/cloud run '#{@options[:security_groups]}' '/home/ubuntu/passmaster/script/wrapper /home/ubuntu/passmaster/script/server_deploy #{@options['environment']}' 'ubuntu'"
+    command = "script/cloud run '#{@options[:security_groups]}' '/home/ubuntu/passmaster/script/wrapper /home/ubuntu/passmaster/script/server_deploy #{@options[:environment]}' 'ubuntu'"
     system(command)
   end
 
