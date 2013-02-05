@@ -23,6 +23,3 @@
 /public/assets
 /.sass-cache
 
-# Ignore sensitive configs
-/config/aws.yml
-
