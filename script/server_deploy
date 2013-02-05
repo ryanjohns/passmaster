@@ -18,8 +18,8 @@ class ServerDeploy
     Dir.chdir(@app_dir) do
       system "git checkout --quiet master"
       system "git pull --quiet"
-      system "git checkout --quiet #{@branch}"
-      system "git reset --quiet --hard origin/#{@branch}"
+      system "git checkout #{@branch}"
+      system "git reset --hard origin/#{@branch}"
       system "bundle install --quiet --deployment --without=development test assets"
       system "script/unicorn start #{@branch == 'production' ? 'production' : 'staging'}"
     end
