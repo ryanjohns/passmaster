@@ -1,16 +1,20 @@
-CACHE_MANIFEST = Rack::Offline.configure({ :cache => Rails.env.production?, :root => Rails.public_path }) do
-  manifest = "#{Rails.public_path}/assets/manifest.yml"
-  if Rails.env.production? && File.exists?(manifest)
-    assets = YAML.load_file(manifest)
-    cache "/assets/#{assets['application.css']}"
-    cache "/assets/#{assets['application.js']}"
-  else
-    cache '/assets/application.css'
-    cache '/assets/application.js'
-  end
-  cache '/img/glyphicons-halflings.png'
-  cache '/img/glyphicons-halflings-white.png'
-  cache '/img/spinner.gif'
+data = [
+  'CACHE MANIFEST',
+  'CACHE:',
+  '/img/glyphicons-halflings.png',
+  '/img/glyphicons-halflings-white.png',
+  '/img/spinner.gif',
+]
+assets = [
+  'application.css',
+  'application.js',
+]
 
-  network '/'
+if Rails.env.production?
+  manifest = YAML.load_file("#{Rails.configuration.assets.manifest}/manifest.yml")
+  data += assets.map { |asset| "#{Rails.configuration.assets.prefix}/#{manifest[asset]}" }
+else
+  data += assets.map { |asset| "#{Rails.configuration.assets.prefix}/#{asset}" }
 end
+
+CACHE_MANIFEST = (data + [ 'NETWORK:', '/' ]).join("\n")

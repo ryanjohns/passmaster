@@ -77,7 +77,6 @@ GEM
     rack (1.4.4)
     rack-cache (1.2)
       rack (>= 0.4)
-    rack-offline (0.6.4)
     rack-ssl (1.3.3)
       rack
     rack-test (0.6.2)
@@ -145,7 +144,6 @@ DEPENDENCIES
   hirb (= 0.7.1)
   jquery-rails (= 2.2.0)
   mysql2 (= 0.3.11)
-  rack-offline (= 0.6.4)
   rails (= 3.2.11)
   rotp (= 1.4.1)
   sass-rails (= 3.2.6)

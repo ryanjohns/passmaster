@@ -17,6 +17,12 @@ class ApplicationController < ActionController::Base
     render :json => { :token => form_authenticity_token }
   end
 
+  def cache_manifest
+    data = CACHE_MANIFEST
+    data += "\n# #{Digest::SHA2.hexdigest((Time.now.to_i - Time.now.to_i % 10).to_s)}" if Rails.env.development?
+    render :text => data, :content_type => 'text/cache-manifest'
+  end
+
   def healthz
     render :text => 'ok'
   end
