@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.11'
 
+gem 'aws-sdk', '1.8.1.1'
 gem 'haml', '3.1.7'
 gem 'jquery-rails', '2.2.0'
 gem 'mysql2', '0.3.11'
@@ -24,8 +25,4 @@ end
 group :test do
   gem 'cover_me', '1.2.0'
   gem 'factory_girl_rails', '4.2.0'
-end
-
-group :ops do
-  gem 'aws-sdk', '1.8.1.1'
 end
