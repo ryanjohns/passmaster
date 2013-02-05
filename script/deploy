@@ -6,14 +6,16 @@ class Deploy
 
   def initialize(args)
     @options = {
-      :environment => 'staging',
-      :version     => nil,
+      :environment     => 'staging',
+      :security_groups => 'staging',
+      :version         => nil,
     }
 
     option_parser = OptionParser.new do |opts|
       opts.on('-e', '--environment [ENVIRONMENT]') do |environment|
         if environment == 'production'
-          @options[:environment] = 'production'
+          @options[:environment]     = 'production'
+          @options[:security_groups] = 'production'
         elsif environment != 'staging'
           print_usage_and_exit
         end
@@ -45,6 +47,7 @@ class Deploy
     update_working_copy
     create_deploy_tag if @options[:version].nil?
     push_version_upstream
+    execute_cloudrun
     puts "Done deploying: #{Time.now}"
   end
 
@@ -109,6 +112,11 @@ class Deploy
       system("git add config/manifest.yml")
       system("git commit -m 'Update assets manifest.'")
     end
+  end
+
+  def execute_cloudrun
+    command = "script/cloud run '#{@options[:security_groups]}' '/home/ubuntu/passmaster/script/wrapper /home/ubuntu/passmaster/script/server_deploy #{@options['environment']}' 'ubuntu'"
+    system(command)
   end
 
 end

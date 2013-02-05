@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+
+# This script is called by upstart during server shutdown as root
+
+class ServerStop
+
+  def initialize
+    @app_dir = File.expand_path('../../', __FILE__)
+  end
+
+  def exec
+    `su - ubuntu -c '#{@app_dir}/script/wrapper #{@app_dir}/script/unicorn stop'`
+  end
+
+end
+
+ServerStop.new.exec

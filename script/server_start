@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+
+# This script is called by upstart during server startup as root
+
+class ServerStart
+
+  def initialize
+    @app_dir     = File.expand_path('../../', __FILE__)
+    @server_type = `#{@app_dir}/script/server_type`
+  end
+
+  def exec
+    `su - ubuntu -c '#{@app_dir}/script/wrapper #{@app_dir}/script/server_deploy #{@server_type}'`
+  end
+
+end
+
+ServerStart.new.exec
