@@ -7,7 +7,7 @@ gem 'haml', '3.1.7'
 gem 'jquery-rails', '2.2.0'
 gem 'mysql2', '0.3.11'
 gem 'rotp', '1.4.1'
-gem 'unicorn', '4.5.0'
+gem 'unicorn', '4.6.0'
 gem 'uuidtools', '2.1.3'
 
 group :assets do
