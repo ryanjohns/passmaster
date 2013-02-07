@@ -209,7 +209,7 @@ $(function() {
   });
 
   $('#backup_accounts_email_btn').bind('ajax:success', function() {
-    alert('Email sent successfully.');
+    alert('Backup emailed successfully.');
   }).bind('ajax:error', function(evt, xhr) {
     Util.handleOtpErrors(xhr, function() {
       $('#backup_accounts_email_btn').click();
