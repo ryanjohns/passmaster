@@ -11,8 +11,10 @@ class UnicornTasks
   def exec
     Dir.chdir(@app_dir) do
       case @command
-      when 'start', 'restart'
+      when 'start'
         start_or_restart
+      when 'restart'
+        restart
       when 'stop'
         stop
       when 'status'
@@ -30,6 +32,12 @@ class UnicornTasks
       system "bundle exec unicorn_rails -c config/unicorn.rb -E #{@environment} -D"
       puts "Started unicorn in #{@environment} mode."
     else
+      restart
+    end
+  end
+
+  def restart
+    unless unicorn_pid == ''
       system "kill -USR2 #{unicorn_pid}"
       puts "Restarted unicorn."
     end
