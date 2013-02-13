@@ -2,11 +2,13 @@ namespace :assets do
 
   desc 'Precompiles assets and uploads them to S3'
   task :upload do
-    unless ENV['AWS_CREDENTIAL_FILE'] && File.exists?(ENV['AWS_CREDENTIAL_FILE'])
-      puts 'Could not find AWS credentials. Make sure they are in the file specified by the AWS_CREDENTIAL_FILE environment variable.'
+    credential_file = "#{Rails.root}/.aws_credentials.sh"
+    credential_file = ENV['AWS_CREDENTIAL_FILE'] || credential_file unless File.exists?(credential_file)
+    unless File.exists?(credential_file)
+      puts "Could not find AWS credentials. Make sure they are in #{Rails.root}/.aws_credentials.sh or the file specified by the AWS_CREDENTIAL_FILE environment variable."
       return
     end
-    aws_credentials   = File.read(ENV['AWS_CREDENTIAL_FILE'])
+    aws_credentials   = File.read(credential_file)
     access_key_id     = aws_credentials.scan(/AWSAccessKeyId=.+/).first.sub('AWSAccessKeyId=', '')
     secret_access_key = aws_credentials.scan(/AWSSecretKey=.+/).first.sub('AWSSecretKey=', '')
     AWS.config(:access_key_id => access_key_id, :secret_access_key => secret_access_key)

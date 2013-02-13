@@ -4,22 +4,25 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile ~/.gitignore_global
 
-# Ignore bundler config
+# Bundler config
 /.bundle
 /vendor/bundle
 
-# Ignore the default SQLite database.
+# Default SQLite database.
 /db/*.sqlite3
 
-# Ignore all logfiles and tempfiles.
+# Logfiles and tempfiles.
 /log
 /tmp
 
-# Ignore coverage files
+# Coverage files
 /coverage
 /coverage.data
 
-# Ignore assets
+# Assets
 /public/assets
 /.sass-cache
+
+# AWS Credentials
+/.aws_credentials.sh
 
