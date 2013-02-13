@@ -6,6 +6,8 @@ Passmaster::Application.routes.draw do
 
   match 'init_session' => 'application#init_session', :via => :get
 
+  match 'verify/:id' => 'verifications#verify', :via => :get, :as => 'verify'
+
   resources :users, :only => [ :show, :create, :update ] do
     get :backup, :on => :member
     post :resend_verification, :on => :member

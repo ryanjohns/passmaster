@@ -2,7 +2,7 @@ function Verify() {};
 
 Verify.init = function() {
   $('#verify_email_placeholder').html(userData.email);
-  $('#verify_verification_code').val(Util.getParameterByName('verification_code'));
+  $('#verify_verification_code').val('');
   $('#verify_api_key').val('');
   if (userData.configured)
     $('#verify_cancel_btn').show();

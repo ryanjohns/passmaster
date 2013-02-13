@@ -44,12 +44,14 @@ $(function() {
 
   $('#init_session_link').bind('ajax:success', function(evt, data) {
     $('meta[name="csrf-token"]').attr('content', data.token);
+    if (Util.currentSection == 'overview' && $('#overview_email').val())
+      $('#overview_form').submit();
   }).bind('ajax:error', function() {
     Util.enableOfflineMode();
   });
-  $('#init_session_link').click();
 
   if (localStorage.userAttributes)
     Util.loadUser();
   Util.chooseSection();
+  $('#init_session_link').click();
 });
