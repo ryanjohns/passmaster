@@ -1,5 +1,8 @@
 function Util() {};
 
+Util.currentSection;
+Util.sections = ['overview', 'verify', 'configure', 'accounts'];
+
 Util.capitalize = function(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
@@ -64,7 +67,7 @@ Util.chooseSection = function() {
   var section = '';
   if (!userData || !userData.email)
     section = 'overview';
-  else if (!userData.verified && (!userData.configured || this.getParameterByName('verification_code')))
+  else if (!userData.verified && !userData.configured)
     section = 'verify';
   else if (!userData.configured)
     section = 'configure';
@@ -75,14 +78,14 @@ Util.chooseSection = function() {
 };
 
 Util.displaySection = function(section) {
-  var sections = ['overview', 'verify', 'configure', 'accounts'];
-  for (i in sections) {
-    if (sections[i] == section)
-      $('#' + sections[i]).show();
+  for (i in this.sections) {
+    if (this.sections[i] == section)
+      $('#' + this.sections[i]).show();
     else
-      $('#' + sections[i]).hide();
+      $('#' + this.sections[i]).hide();
   }
   eval(this.capitalize(section) + '.afterDisplay()');
+  this.currentSection = section;
 };
 
 Util.initSection = function(section) {

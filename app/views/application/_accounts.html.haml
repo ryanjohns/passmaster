@@ -32,13 +32,6 @@
       Accounts
       %small#accounts_email_placeholder
 
-    #verify_email_notice.pushed-down{ :style => 'display:none;' }
-      .alert.alert-info
-        You need to
-        %strong
-          %a{ :href => '#' } Verify Your Email Address
-        to make changes to your accounts.
-
     #unlock_accounts.pushed-down{ :style => 'display:none;' }
       %p Accounts are locked. Enter the Master Password to unlock.
       %form#unlock_accounts_form
@@ -46,6 +39,13 @@
         %p= submit_tag('Unlock', :class => 'btn btn-primary', :id => 'unlock_accounts_btn')
 
   #accounts_list{ :style => 'display:none;' }
+    #verify_email_notice{ :style => 'display:none;' }
+      .alert.alert-info
+        You need to
+        %strong
+          %a{ :href => '#' } Verify Your Email Address
+        to make changes to your accounts.
+
     %p
       %button#add_account_btn.btn.btn-success{ :type => 'button' } Add Account
     .input-prepend.input-append

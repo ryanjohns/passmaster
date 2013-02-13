@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130120073904) do
+ActiveRecord::Schema.define(:version => 20130213012348) do
 
   create_table "otp_sessions", :id => false, :force => true do |t|
     t.string   "id",           :limit => 32,                :null => false
@@ -52,5 +52,6 @@ ActiveRecord::Schema.define(:version => 20130120073904) do
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["id"], :name => "index_users_on_id", :unique => true
+  add_index "users", ["verification_code"], :name => "index_users_on_verification_code", :unique => true
 
 end
