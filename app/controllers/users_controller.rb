@@ -43,7 +43,7 @@ class UsersController < ApplicationController
 
   def verify
     @user.verify_code!(params[:verification_code])
-    unless @user.api_key_matches?(params[:api_key])
+    unless @user.api_key_matches?(params[:api_key]) && @user.valid_otp_session?(cookies.signed[:_client_id], params[:otp_enabled], request.remote_ip, request.user_agent)
       @user.encrypted_data = nil
       @user.otp_secret = nil
     end
