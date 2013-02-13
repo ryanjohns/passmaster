@@ -1,4 +1,4 @@
-#preferences.modal.hide{ :role => 'dialog', :tabindex => '-1', 'aria-labelledby' => 'preferences_label' }
+#preferences.modal.hide{ :role => 'dialog', :tabindex => '-1', 'aria-labelledby' => 'preferences_label', :style => 'display:none;' }
   .modal-header
     %button.close{ :type => 'button', 'data-dismiss' => 'modal', 'aria-hidden' => 'true' } &times;
     %h3#preferences_label Preferences
@@ -65,7 +65,7 @@
         %button.btn{ :type => 'button', 'data-dismiss' => 'modal', 'aria-hidden' => 'true' } Cancel
   .modal-footer
 
-#change_email.modal.hide{ :role => 'dialog', :tabindex => '-1', 'aria-labelledby' => 'email_label' }
+#change_email.modal.hide{ :role => 'dialog', :tabindex => '-1', 'aria-labelledby' => 'email_label', :style => 'display:none;' }
   .modal-header
     %button.close{ :type => 'button', 'data-dismiss' => 'modal', 'aria-hidden' => 'true' } &times;
     %h3#email_label Email Address
@@ -83,7 +83,7 @@
         %button.btn{ :type => 'button', 'data-dismiss' => 'modal', 'aria-hidden' => 'true' } Cancel
   .modal-footer
 
-#master_password.modal.hide{ :role => 'dialog', :tabindex => '-1', 'aria-labelledby' => 'master_password_label' }
+#master_password.modal.hide{ :role => 'dialog', :tabindex => '-1', 'aria-labelledby' => 'master_password_label', :style => 'display:none;' }
   .modal-header
     %button.close{ :type => 'button', 'data-dismiss' => 'modal', 'aria-hidden' => 'true' } &times;
     %h3#master_password_label Master Password
@@ -109,7 +109,7 @@
       = hidden_field_tag(:encrypted_data, '', :id => 'master_password_hidden_encrypted_data')
       = hidden_field_tag(:schema_version, '', :id => 'master_password_hidden_schema_version')
 
-#backup_accounts.modal.hide{ :role => 'dialog', :tabindex => '-1', 'aria-labelledby' => 'backup_accounts_label' }
+#backup_accounts.modal.hide{ :role => 'dialog', :tabindex => '-1', 'aria-labelledby' => 'backup_accounts_label', :style => 'display:none;' }
   .modal-header
     %button.close{ :type => 'button', 'data-dismiss' => 'modal', 'aria-hidden' => 'true' } &times;
     %h3#backup_accounts_label Backup Accounts
@@ -124,7 +124,7 @@
       %button.btn{ :type => 'button', 'data-dismiss' => 'modal', 'aria-hidden' => 'true' } Close
   .modal-footer
 
-#restore_accounts.modal.hide{ :role => 'dialog', :tabindex => '-1', 'aria-labelledby' => 'restore_accounts_label' }
+#restore_accounts.modal.hide{ :role => 'dialog', :tabindex => '-1', 'aria-labelledby' => 'restore_accounts_label', :style => 'display:none;' }
   .modal-header
     %button.close{ :type => 'button', 'data-dismiss' => 'modal', 'aria-hidden' => 'true' } &times;
     %h3#restore_accounts_label Restore Accounts
