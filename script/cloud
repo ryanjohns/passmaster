@@ -50,7 +50,7 @@ class Cloud
     instances.each_with_index do |instance, index|
       thread = Thread.new do
         puts "Running on #{instance[:dns_name]} (#{instance[:id]}, #{instance[:region]}) [#{instance[:sec_groups]}] (#{index + 1} / #{total})",
-             `ssh #{user}@#{instance[:dns_name]} '#{command}' 2>&1`,
+             `ssh #{include_ssh_key} #{user}@#{instance[:dns_name]} '#{command}' 2>&1`,
              "\n"
       end
       serial ? thread.join : threads.push(thread)
@@ -69,7 +69,7 @@ class Cloud
       return
     end
     puts "\nConnecting to instance #{instance[:dns_name]} (#{instance[:id]}, #{instance[:region]}) as #{user}"
-    system "ssh #{user}@#{instance[:dns_name]}"
+    system "ssh #{include_ssh_key} #{user}@#{instance[:dns_name]}"
   end
 
   def instances
@@ -141,6 +141,12 @@ class Cloud
       end
     end
     f.close
+  end
+
+  def include_ssh_key
+    return @ssh_key unless @ssh_key.nil?
+    id_rsa   = File.expand_path('../../.id_rsa', __FILE__)
+    @ssh_key = File.exists?(id_rsa) ? "-i #{id_rsa}" : ''
   end
 
   def print_instances
