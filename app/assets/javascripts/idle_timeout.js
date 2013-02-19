@@ -1,41 +1,50 @@
-function IdleTimeout() {};
+(function(IdleTimeout, $, undefined) {
 
-IdleTimeout.pollInterval = 60000;
-IdleTimeout.idleTime = 0;
-IdleTimeout.idleInterval = null;
+  var pollInterval = 60000;
+  var idleTime = 0;
+  var idleInterval = null;
 
-IdleTimeout.startTimer = function() {
-  if (userData.idleTimeout == 0)
-    return;
-  this.idleTime = 0;
-  this.idleInterval = setInterval(this.incrementTimer, this.pollInterval);
-  $(document).bind('mousemove', this.resetTimer);
-  $(document).bind('keypress', this.resetTimer);
-  $(document).bind('touchend', this.resetTimer);
-};
+  IdleTimeout.startTimer = function() {
+    if (userData.idleTimeout == 0) {
+      return;
+    }
+    idleTime = 0;
+    idleInterval = setInterval(incrementTimer, pollInterval);
+    $(document).bind('mousemove', resetTimer);
+    $(document).bind('keypress', resetTimer);
+    $(document).bind('touchend', resetTimer);
+  };
 
-IdleTimeout.stopTimer = function() {
-  clearInterval(this.idleInterval);
-  this.idleInterval = null;
-  $(document).unbind('mousemove', this.resetTimer);
-  $(document).unbind('keypress', this.resetTimer);
-  $(document).unbind('touchend', this.resetTimer);
-};
+  IdleTimeout.stopTimer = function() {
+    clearInterval(idleInterval);
+    idleInterval = null;
+    $(document).unbind('mousemove', resetTimer);
+    $(document).unbind('keypress', resetTimer);
+    $(document).unbind('touchend', resetTimer);
+  };
 
-IdleTimeout.resetTimer = function() {
-  if (IdleTimeout.idleTime > 0 && IdleTimeout.idleTime == userData.idleTimeout - 1)
-    $('#idle_timeout').hide();
-  IdleTimeout.idleTime = 0;
-  clearInterval(IdleTimeout.idleInterval);
-  IdleTimeout.idleInterval = setInterval(IdleTimeout.incrementTimer, IdleTimeout.pollInterval);
-};
+  IdleTimeout.isIntervalActive = function() {
+    return idleInterval != null;
+  };
 
-IdleTimeout.incrementTimer = function() {
-  IdleTimeout.idleTime++;
-  if (IdleTimeout.idleTime == userData.idleTimeout - 1)
-    $('#idle_timeout').show();
-  if (IdleTimeout.idleTime >= userData.idleTimeout) {
-    $('#idle_timeout').hide();
-    Accounts.lock();
-  }
-};
+  function resetTimer() {
+    if (idleTime > 0 && idleTime == userData.idleTimeout - 1) {
+      $('#idle_timeout').hide();
+    }
+    idleTime = 0;
+    clearInterval(idleInterval);
+    idleInterval = setInterval(incrementTimer, pollInterval);
+  };
+
+  function incrementTimer() {
+    idleTime++;
+    if (idleTime == userData.idleTimeout - 1) {
+      $('#idle_timeout').show();
+    }
+    if (idleTime >= userData.idleTimeout) {
+      $('#idle_timeout').hide();
+      Accounts.lock();
+    }
+  };
+
+}(window.IdleTimeout = window.IdleTimeout || {}, jQuery));

@@ -16,8 +16,9 @@ function UserData() {
     this.autoBackup = attrs['auto_backup'];
     this.otpEnabled = attrs['otp_enabled'];
     this.otpSecret = attrs['otp_secret'];
-    if (this.configured)
+    if (this.configured) {
       localStorage.userAttributes = JSON.stringify(attrs);
+    }
   };
   this.setMasterPassword = function(passwd) {
     this.oldMasterPassword = this.masterPassword;
@@ -42,8 +43,9 @@ function UserData() {
     this.encryptedData = Crypto.encryptObject(this.masterPassword, data);
   };
   this.decryptAccounts = function() {
-    if (this.encryptedData == null)
+    if (this.encryptedData == null) {
       return;
+    }
     this.accounts = Schema.migrate(this.schemaVersion, Crypto.decryptObject(this.masterPassword, this.encryptedData));
   };
   this.passwordMatches = function(passwd) {
@@ -51,8 +53,9 @@ function UserData() {
   };
   this.numAccounts = function() {
     var count = 0;
-    for (a in this.accounts)
+    for (a in this.accounts) {
       count++;
+    }
     return count;
   };
   this.qrCodeUrl = function() {
