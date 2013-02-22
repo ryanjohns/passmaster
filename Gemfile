@@ -2,12 +2,12 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.12'
 
-gem 'aws-sdk', '1.8.2'
+gem 'aws-sdk', '1.8.3'
 gem 'haml', '3.1.7'
 gem 'jquery-rails', '2.2.1'
 gem 'mysql2', '0.3.11'
 gem 'rotp', '1.4.1'
-gem 'unicorn', '4.6.0'
+gem 'unicorn', '4.6.1'
 gem 'uuidtools', '2.1.3'
 
 group :assets do
