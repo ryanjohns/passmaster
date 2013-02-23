@@ -33,7 +33,7 @@ GEM
       i18n (~> 0.6)
       multi_json (~> 1.0)
     arel (3.0.2)
-    aws-sdk (1.8.3)
+    aws-sdk (1.8.3.1)
       json (~> 1.4)
       nokogiri (>= 1.4.4)
       uuidtools (~> 2.1)
@@ -137,7 +137,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  aws-sdk (= 1.8.3)
+  aws-sdk (= 1.8.3.1)
   cover_me (= 1.2.0)
   factory_girl_rails (= 4.2.1)
   haml (= 3.1.7)
