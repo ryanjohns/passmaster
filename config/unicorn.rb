@@ -4,7 +4,6 @@ app_dir = File.expand_path("../../", __FILE__)
 
 working_directory app_dir
 
-worker_processes 2
 timeout 90
 
 # Load app into the master before forking workers for super-fast
@@ -17,8 +16,10 @@ FileUtils.mkdir_p("#{app_dir}/tmp/sockets")
 
 # listen on a Unix domain socket or a TCP port
 if ENV['RAILS_ENV'] == 'production'
+  worker_processes 6
   listen("#{app_dir}/tmp/sockets/nginx.socket")
 else
+  worker_processes 2
   listen('8000')
 end
 
