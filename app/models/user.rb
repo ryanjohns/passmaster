@@ -90,12 +90,12 @@ class User < ActiveRecord::Base
   def deliver_notifications
     if email_changed?
       filename, data = backup_data(true)
-      Mailer.email_changed(email_was, filename, data).deliver
+      Mailer.email_changed(email_was, filename, data, id).deliver
       Mailer.verify_email(self).deliver
     end
     if api_key_changed? && api_key_was.present?
       filename, data = backup_data(true)
-      Mailer.master_password_changed(email, filename, data).deliver
+      Mailer.master_password_changed(email, filename, data, id).deliver
     end
     if auto_backup && encrypted_data_changed?
       filename, data = backup_data(false)

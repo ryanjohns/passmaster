@@ -17,14 +17,14 @@ class MailerTest < ActionMailer::TestCase
   end
 
   test 'email_changed' do
-    mail = Mailer.email_changed('foo@gmail.com', 'file', 'data')
+    mail = Mailer.email_changed('foo@gmail.com', 'file', 'data', 'user_id')
     assert_equal 'foo@gmail.com', mail.to.first
     assert_equal '[Passmaster] Email Changed', mail.subject
     assert_not_nil mail.attachments['file']
   end
 
   test 'master_password_changed' do
-    mail = Mailer.master_password_changed('foo@gmail.com', 'file', 'data')
+    mail = Mailer.master_password_changed('foo@gmail.com', 'file', 'data', 'user_id')
     assert_equal 'foo@gmail.com', mail.to.first
     assert_equal '[Passmaster] Master Password Changed', mail.subject
     assert_not_nil mail.attachments['file']

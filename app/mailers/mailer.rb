@@ -11,14 +11,16 @@ class Mailer < ActionMailer::Base
     mail(:to => email, :subject => '[Passmaster] Backup')
   end
 
-  def email_changed(email, filename, data)
+  def email_changed(email, filename, data, user_id)
+    @user_id = user_id
     attachments[filename] = data
-    mail(:to => email, :subject => '[Passmaster] Email Changed')
+    mail(:from => 'Passmaster <support@passmaster.io>', :to => email, :subject => '[Passmaster] Email Changed')
   end
 
-  def master_password_changed(email, filename, data)
+  def master_password_changed(email, filename, data, user_id)
+    @user_id = user_id
     attachments[filename] = data
-    mail(:to => email, :subject => '[Passmaster] Master Password Changed')
+    mail(:from => 'Passmaster <support@passmaster.io>', :to => email, :subject => '[Passmaster] Master Password Changed')
   end
 
   def verify_email(user)
