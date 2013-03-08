@@ -21,6 +21,7 @@
     $(document).unbind('mousemove', resetTimer);
     $(document).unbind('keypress', resetTimer);
     $(document).unbind('touchend', resetTimer);
+    $('#idle_timeout').hide();
   };
 
   IdleTimeout.isIntervalActive = function() {
