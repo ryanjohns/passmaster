@@ -3,20 +3,3 @@
  *= require bootstrap-responsive
  *= require_tree .
  */
-
-body {
-  margin-top: 10px;
-  background-color: #8b99ab;
-}
-
-.top-links {
-  margin-bottom: 10px;
-}
-
-input.placeholder, textarea.placeholder {
-  color: #aaa;
-}
-
-#alert_messages {
-  text-align: center;
-}
