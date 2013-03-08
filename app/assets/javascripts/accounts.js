@@ -70,9 +70,11 @@
   };
 
   Accounts.lock = function() {
-    userData.wipeMasterPassword();
-    userData.wipeOldMasterPassword();
-    userData.accounts = {};
+    if (userData) {
+      userData.wipeMasterPassword();
+      userData.wipeOldMasterPassword();
+      userData.accounts = {};
+    }
     IdleTimeout.stopTimer();
     selectView();
     Util.displaySection('accounts');

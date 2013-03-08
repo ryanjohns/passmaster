@@ -163,16 +163,6 @@
     }
   };
 
-  // this function is required by the iOS app
-  Util.appLoaded = function() {
-    return 'YES';
-  };
-
-  // this function is required by the iOS app
-  Util.updateAppCache = function() {
-    window.applicationCache.update();
-  };
-
   function capitalize(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
   };
