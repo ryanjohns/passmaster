@@ -45,7 +45,7 @@ GEM
       hashie
     daemons (1.1.9)
     erubis (2.7.0)
-    eventmachine (1.0.1)
+    eventmachine (1.0.3)
     execjs (1.4.0)
       multi_json (~> 1.0)
     factory_girl (4.2.0)
@@ -102,7 +102,7 @@ GEM
     rdoc (3.12.2)
       json (~> 1.4)
     rotp (1.4.1)
-    sass (3.2.6)
+    sass (3.2.7)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
       sass (>= 3.1.10)
