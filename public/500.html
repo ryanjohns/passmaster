@@ -5,12 +5,19 @@
   <style type="text/css">
     body { background-color: #8b99ab; color: #fff; text-align: center; font-family: arial, sans-serif; }
   </style>
+  <script type="text/javascript">
+    // this function is used by the Passmaster Android app
+    function MobileApp() {};
+    MobileApp.updateAppCache = function() {
+      AndroidJs.loadPassmaster();
+    };
+  </script>
 </head>
 
 <body>
   <div>
-    <h1>Passmaster</h1>
-    <h2>We're sorry, but something went wrong.</h2>
+    <h2>Passmaster</h2>
+    <h4>We're sorry, but something went wrong.</h4>
   </div>
 </body>
 </html>
