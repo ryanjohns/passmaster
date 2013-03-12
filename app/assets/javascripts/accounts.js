@@ -291,7 +291,7 @@
     $('.read .click-to-select').click(function(evt) {
       evt.preventDefault();
       var input = $(this).find('input.username').get(0);
-      if (input.value) {
+      if (input.value && !Util.isAndroid()) {
         input.selectionStart = 0;
         input.selectionEnd = 9999;
       }
@@ -306,7 +306,7 @@
         input.attr('data-password-visible', 'true');
       }
       input = input.get(0);
-      if (input.value) {
+      if (input.value && !Util.isAndroid()) {
         input.selectionStart = 0;
         input.selectionEnd = 9999;
       }

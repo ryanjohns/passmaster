@@ -4,6 +4,8 @@
   var sections = ['overview', 'verify', 'configure', 'accounts'];
   var timer;
   var timerVal = '';
+  var androidRegex = new RegExp('Android');
+  var android = null;
 
   Util.init = function() {
     bindCacheReady();
@@ -19,6 +21,13 @@
 
     Util.chooseSection();
     $('#init_session_link').click();
+  };
+
+  Util.isAndroid = function() {
+    if (android == null) {
+      android = androidRegex.test(navigator.userAgent);
+    }
+    return android;
   };
 
   Util.extractErrors = function(xhr) {
