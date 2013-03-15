@@ -16,11 +16,6 @@ group :assets do
   gem 'yui-compressor', '0.9.6'
 end
 
-group :development do
-  gem 'hirb', '0.7.1'
-  gem 'thin', '1.5.0'
-end
-
 group :test do
   gem 'cover_me', '1.2.0'
   gem 'factory_girl_rails', '4.2.1'
