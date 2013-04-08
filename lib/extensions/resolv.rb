@@ -1,3 +1,5 @@
+require 'resolv'
+
 class Resolv
 
   DOMAIN_REGEX           = /^.+\@/
