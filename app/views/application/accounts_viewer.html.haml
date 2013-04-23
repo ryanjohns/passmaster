@@ -112,7 +112,7 @@
     %form#backup_form{ :enctype => 'multipart/form-data', :onsubmit => 'formSubmitted(); return false;' }
       .field
         %label{ :for => 'backup_file' } Backup File
-        %input#backup_file{ :name => 'file', :type => 'file', :accept => 'application/json' }
+        %input#backup_file{ :name => 'file', :type => 'file', :accept => 'text/plain' }
       .field
         %label{ :for => 'backup_password' } Backup Password
         %input#backup_password{ :name => 'password', :type => 'password' }

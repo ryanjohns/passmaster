@@ -46,7 +46,7 @@ class User < ActiveRecord::Base
 
   def backup_data(previous_version = false)
     data = { :generated_at => Time.now.utc.to_s(:file_safe) }
-    filename = "#{BACKUP_PREFIX} - #{data[:generated_at]}.json"
+    filename = "#{BACKUP_PREFIX} - #{data[:generated_at]}.txt"
     if previous_version
       data[:schema_version] = schema_version_was
       data[:encrypted_data] = encrypted_data_was
