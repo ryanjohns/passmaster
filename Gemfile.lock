@@ -99,7 +99,7 @@ GEM
     rdoc (3.12.2)
       json (~> 1.4)
     rotp (1.4.1)
-    sass (3.2.7)
+    sass (3.2.8)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
       sass (>= 3.1.10)
