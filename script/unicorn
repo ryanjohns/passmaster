@@ -29,7 +29,7 @@ class UnicornTasks
 
   def start_or_restart
     if unicorn_pid == ''
-      system "bundle exec unicorn_rails -c config/unicorn.rb -E #{@environment} -D"
+      system "bundle exec unicorn -c config/unicorn.rb -E #{@environment} -D"
       puts "Started unicorn in #{@environment} mode."
     else
       restart
