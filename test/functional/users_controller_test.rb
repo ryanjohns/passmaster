@@ -88,7 +88,7 @@ class UsersControllerTest < ActionController::TestCase
     assert_response :success
     assert_equal u.email, ActionMailer::Base.deliveries.last.to.first
     assert_equal '[Passmaster] Backup', ActionMailer::Base.deliveries.last.subject
-    assert_equal 1, ActionMailer::Base.deliveries.last.attachments.size
+    assert_equal 2, ActionMailer::Base.deliveries.last.attachments.size
   end
 
   test 'resend_verification' do

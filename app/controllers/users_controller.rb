@@ -27,7 +27,11 @@ class UsersController < ApplicationController
   def backup
     filename, data = @user.backup_data
     if params[:type] == 'file'
-      send_data(data, :filename => filename, :disposition => 'attachment', :type => :text)
+      zip = Zip::Archive.open_buffer(Zip::CREATE) do |archive|
+        archive.add_buffer(ACCOUNTS_VIEWER_FILENAME, ACCOUNTS_VIEWER)
+        archive.add_buffer(filename, data)
+      end
+      send_data(zip, :filename => "#{BACKUP_PREFIX}.zip", :disposition => 'attachment')
     else
       Mailer.backup(@user.email, filename, data).deliver
       render :json => { :success => true }

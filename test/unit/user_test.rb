@@ -156,27 +156,27 @@ class UserTest < ActiveSupport::TestCase
       assert u.save
     end
     assert_equal 'foo@gmail.com', ActionMailer::Base.deliveries[-2].to.first
-    assert_equal 1, ActionMailer::Base.deliveries[-2].attachments.size
+    assert_equal 2, ActionMailer::Base.deliveries[-2].attachments.size
     assert_equal 'new_foo@gmail.com', ActionMailer::Base.deliveries.last.to.first
     u.api_key = 'new_foo'
     assert_difference('ActionMailer::Base.deliveries.size') do
       assert u.save
     end
     assert_equal 'new_foo@gmail.com', ActionMailer::Base.deliveries.last.to.first
-    assert_equal 1, ActionMailer::Base.deliveries.last.attachments.size
+    assert_equal 2, ActionMailer::Base.deliveries.last.attachments.size
     u.encrypted_data = 'new_bar'
     assert_no_difference('ActionMailer::Base.deliveries.size') do
       assert u.save
     end
     assert_equal 'new_foo@gmail.com', ActionMailer::Base.deliveries.last.to.first
-    assert_equal 1, ActionMailer::Base.deliveries.last.attachments.size
+    assert_equal 2, ActionMailer::Base.deliveries.last.attachments.size
     u.auto_backup = true
     u.encrypted_data = 'new_new_bar'
     assert_difference('ActionMailer::Base.deliveries.size') do
       assert u.save
     end
     assert_equal 'new_foo@gmail.com', ActionMailer::Base.deliveries.last.to.first
-    assert_equal 1, ActionMailer::Base.deliveries.last.attachments.size
+    assert_equal 2, ActionMailer::Base.deliveries.last.attachments.size
   end
 
   test 'as_json' do
@@ -225,21 +225,13 @@ class UserTest < ActiveSupport::TestCase
     u.encrypted_data = 'foo'
     f, d = u.backup_data(true)
     assert f =~ /^Passmaster\ Backup/
-    zip = Zip::Archive.open_buffer(d)
-    assert_equal 2, zip.num_files
-    assert_equal 'accounts_viewer.html', zip.get_name(0)
-    assert_equal ACCOUNTS_VIEWER, zip.fopen(0).read
-    data = JSON.parse(zip.fopen(1).read)
+    data = JSON.parse(d)
     assert data['generated_at'].present?
     assert_equal ENCRYPTED_DATA_SCHEMA_VERSION, data['schema_version']
     assert_equal nil, data['encrypted_data']
     f, d = u.backup_data(false)
     assert f =~ /^Passmaster\ Backup/
-    zip = Zip::Archive.open_buffer(d)
-    assert_equal 2, zip.num_files
-    assert_equal 'accounts_viewer.html', zip.get_name(0)
-    assert_equal ACCOUNTS_VIEWER, zip.fopen(0).read
-    data = JSON.parse(zip.fopen(1).read)
+    data = JSON.parse(d)
     assert data['generated_at'].present?
     assert_equal -1, data['schema_version']
     assert_equal 'foo', data['encrypted_data']
