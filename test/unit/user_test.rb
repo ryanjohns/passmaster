@@ -224,14 +224,22 @@ class UserTest < ActiveSupport::TestCase
     u.schema_version = -1
     u.encrypted_data = 'foo'
     f, d = u.backup_data(true)
-    data = JSON.parse(d)
     assert f =~ /^Passmaster\ Backup/
+    zip = Zip::Archive.open_buffer(d)
+    assert_equal 2, zip.num_files
+    assert_equal 'accounts_viewer.html', zip.get_name(0)
+    assert_equal ACCOUNTS_VIEWER, zip.fopen(0).read
+    data = JSON.parse(zip.fopen(1).read)
     assert data['generated_at'].present?
     assert_equal ENCRYPTED_DATA_SCHEMA_VERSION, data['schema_version']
     assert_equal nil, data['encrypted_data']
     f, d = u.backup_data(false)
-    data = JSON.parse(d)
     assert f =~ /^Passmaster\ Backup/
+    zip = Zip::Archive.open_buffer(d)
+    assert_equal 2, zip.num_files
+    assert_equal 'accounts_viewer.html', zip.get_name(0)
+    assert_equal ACCOUNTS_VIEWER, zip.fopen(0).read
+    data = JSON.parse(zip.fopen(1).read)
     assert data['generated_at'].present?
     assert_equal -1, data['schema_version']
     assert_equal 'foo', data['encrypted_data']

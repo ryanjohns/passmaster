@@ -46,7 +46,7 @@ class User < ActiveRecord::Base
 
   def backup_data(previous_version = false)
     data = { :generated_at => Time.now.utc.to_s(:file_safe) }
-    filename = "Passmaster Backup - #{data[:generated_at]}.txt"
+    filename = "Passmaster Backup - #{data[:generated_at]}"
     if previous_version
       data[:schema_version] = schema_version_was
       data[:encrypted_data] = encrypted_data_was
@@ -54,7 +54,11 @@ class User < ActiveRecord::Base
       data[:schema_version] = schema_version
       data[:encrypted_data] = encrypted_data
     end
-    [ filename, data.to_json ]
+    zip = Zip::Archive.open_buffer(Zip::CREATE) do |archive|
+      archive.add_buffer('accounts_viewer.html', ACCOUNTS_VIEWER)
+      archive.add_buffer("#{filename}.json", data.to_json)
+    end
+    [ "#{filename}.zip", zip ]
   end
 
   def generate_verification_code!
