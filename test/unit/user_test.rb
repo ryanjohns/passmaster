@@ -215,6 +215,10 @@ class UserTest < ActiveSupport::TestCase
     s.activated_at = Time.zone.now
     assert s.save
     assert u.valid_otp_session?(s.client_id, nil, '1.2.3.4', 'User-Agent')
+    assert u.valid_otp_session?(s.client_id, '0', '1.2.3.4', 'User-Agent')
+    s.activated_at = Time.zone.now - (OtpSession::RECENT_CUTOFF + 1).minutes
+    assert s.save
+    assert !u.valid_otp_session?(s.client_id, '0', '1.2.3.4', 'User-Agent')
   end
 
   test 'backup_data' do

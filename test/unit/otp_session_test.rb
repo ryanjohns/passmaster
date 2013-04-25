@@ -84,6 +84,16 @@ class OtpSessionTest < ActiveSupport::TestCase
     assert o.locked?
   end
 
+  test 'recently_activited?' do
+    o = FactoryGirl.build(:otp_session)
+    assert_nil o.activated_at
+    assert !o.recently_activiated?
+    o.activated_at = Time.zone.now - (OtpSession::RECENT_CUTOFF + 1).minutes
+    assert !o.recently_activiated?
+    o.activated_at = Time.zone.now
+    assert o.recently_activiated?
+  end
+
   test 'verify_otp' do
     o = FactoryGirl.create(:otp_session)
     assert_nil o.activated_at
