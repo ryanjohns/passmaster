@@ -1,9 +1,10 @@
 class OtpSession < ActiveRecord::Base
   include UuidPrimaryKey
 
-  MAX_FAILS   = 5
-  DRIFT       = 5
-  ACTIVE_DAYS = 30
+  MAX_FAILS     = 5
+  DRIFT         = 5
+  ACTIVE_DAYS   = 30
+  RECENT_CUTOFF = 1
 
   attr_accessible :ip_address, :user_agent, :last_seen_at
 
@@ -33,6 +34,10 @@ class OtpSession < ActiveRecord::Base
 
   def locked?
     failed_count >= MAX_FAILS
+  end
+
+  def recently_activiated?
+    activated_at? && activated_at >= Time.zone.now - RECENT_CUTOFF.minutes
   end
 
   def verify_otp(api_key, otp)
