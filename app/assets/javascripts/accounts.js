@@ -481,6 +481,7 @@
       $(this).find('input.api-key').val(userData.apiKey);
       $(this).find('input.encrypted-data').val(userData.encryptedData);
       $(this).find('input.schema-version').val(Schema.currentVersion);
+      $(this).find('input.version-code').val(userData.versionCode);
     }).bind('ajax:beforeSend', function(evt, xhr, settings) {
       settings.url = settings.url + '/' + userData.userId;
       var btns = $(this).closest('.account-tile').find('.write form .btn');

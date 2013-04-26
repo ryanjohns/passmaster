@@ -16,6 +16,7 @@ function UserData() {
     this.autoBackup = attrs['auto_backup'];
     this.otpEnabled = attrs['otp_enabled'];
     this.otpSecret = attrs['otp_secret'];
+    this.versionCode = attrs['version_code'];
     if (this.configured) {
       localStorage.userAttributes = JSON.stringify(attrs);
     }

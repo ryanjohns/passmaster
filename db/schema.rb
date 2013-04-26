@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130213012348) do
+ActiveRecord::Schema.define(:version => 20130426083839) do
 
   create_table "otp_sessions", :id => false, :force => true do |t|
     t.string   "id",           :limit => 32,                :null => false
@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(:version => 20130213012348) do
     t.boolean  "otp_enabled",                             :default => false, :null => false
     t.boolean  "special_chars",                           :default => true,  :null => false
     t.boolean  "auto_backup",                             :default => false, :null => false
+    t.string   "version_code"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
