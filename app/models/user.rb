@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   AS_JSON_OPTIONS = {
     :methods => [ :api_key?, :verified_at? ],
     :only    => [ :id, :email, :encrypted_data, :schema_version, :idle_timeout, :password_length,
-                  :special_chars, :auto_backup, :otp_enabled, :otp_secret ]
+                  :special_chars, :auto_backup, :otp_enabled, :otp_secret, :version_code ]
   }
 
   has_many :otp_sessions, :dependent => :destroy
@@ -24,6 +24,7 @@ class User < ActiveRecord::Base
   before_save :generate_verification_code, :if => :should_generate_verification_code?
   before_save :set_schema_version, :if => :new_record?
   before_save :unset_verified_at, :if => :email_changed?
+  before_save :update_version_code
   after_save :deactivate_otp_sessions, :if => :should_generate_otp_secret?
   after_create :deliver_new_user
   after_update :deliver_notifications
@@ -121,6 +122,12 @@ class User < ActiveRecord::Base
   def unset_verified_at
     self.verified_at = nil
     true
+  end
+
+  def update_version_code
+    data = as_json.stringify_keys
+    data.delete('version_code')
+    self.version_code = Digest::SHA2.hexdigest(data.sort_by { |k, v| k }.to_s)
   end
 
   def deactivate_otp_sessions

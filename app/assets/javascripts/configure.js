@@ -59,6 +59,7 @@
       $('#configure_hidden_new_api_key').val(userData.apiKey);
       $('#configure_hidden_encrypted_data').val(userData.encryptedData);
       $('#configure_hidden_schema_version').val(Schema.currentVersion);
+      $('#configure_hidden_version_code').val(userData.versionCode);
     }).bind('ajax:beforeSend', function(evt, xhr, settings) {
       settings.url = settings.url + '/' + userData.userId;
       var btn = $('#configure_btn');

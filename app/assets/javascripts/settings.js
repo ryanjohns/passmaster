@@ -100,6 +100,7 @@
       });
     }).bind('ajax:before', function() {
       $('#preferences_api_key').val(userData.apiKey);
+      $('#preferences_version_code').val(userData.versionCode);
     }).bind('ajax:beforeSend', function(evt, xhr, settings) {
       settings.url = settings.url + '/' + userData.userId;
       var btn = $('#preferences_btn');
@@ -147,6 +148,7 @@
       });
     }).bind('ajax:before', function() {
       $('#change_email_api_key').val(userData.apiKey);
+      $('#change_email_version_code').val(userData.versionCode);
     }).bind('ajax:beforeSend', function(evt, xhr, settings) {
       settings.url = settings.url + '/' + userData.userId;
       var btn = $('#change_email_btn');
@@ -212,6 +214,7 @@
       $('#master_password_hidden_new_api_key').val(userData.apiKey);
       $('#master_password_hidden_encrypted_data').val(userData.encryptedData);
       $('#master_password_hidden_schema_version').val(Schema.currentVersion);
+      $('#master_password_hidden_version_code').val(userData.versionCode);
     }).bind('ajax:beforeSend', function(evt, xhr, settings) {
       settings.url = settings.url + '/' + userData.userId;
       var btn;
