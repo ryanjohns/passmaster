@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   before_filter :verify_user, :only => [ :update ]
   before_filter :verify_api_key, :only => [ :show, :update, :backup ]
   before_filter :verify_otp_session, :only => [ :show, :update, :backup ]
-  # before_filter :verify_version_code, :only => [ :update ]
+  before_filter :verify_version_code, :only => [ :update ]
 
   def show
     respond_with_json(@user)
