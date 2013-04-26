@@ -6,6 +6,8 @@
   var timerVal = '';
   var androidRegex = new RegExp('Android');
   var android = null;
+  var androidAppRegex = new RegExp('PassmasterAndroid');
+  var androidApp = null;
 
   Util.init = function() {
     bindCacheReady();
@@ -28,6 +30,13 @@
       android = androidRegex.test(navigator.userAgent);
     }
     return android;
+  };
+
+  Util.isAndroidApp = function() {
+    if (androidApp == null) {
+      androidApp = androidAppRegex.test(navigator.userAgent);
+    }
+    return androidApp;
   };
 
   Util.extractErrors = function(xhr) {

@@ -288,16 +288,24 @@
   };
 
   function bindClickToCopy() {
-    $('.read .click-to-select').click(function(evt) {
+    $('.read .click-to-copy-username').click(function(evt) {
       evt.preventDefault();
       var input = $(this).find('input.username').get(0);
-      if (input.value && !Util.isAndroid()) {
-        input.selectionStart = 0;
-        input.selectionEnd = 9999;
+      if (input.value) {
+        if (Util.isAndroidApp()) {
+          try {
+            AndroidJs.copyToClipboard(input.value);
+          } catch(err) {
+            // do nothing
+          }
+        } else if (!Util.isAndroid()) {
+          input.selectionStart = 0;
+          input.selectionEnd = 9999;
+        }
       }
     });
 
-    $('.read .click-to-show').click(function(evt) {
+    $('.read .click-to-copy-password').click(function(evt) {
       evt.preventDefault();
       var input = $(this).find('input.password');
       if (input.attr('data-password-visible') == 'false') {
@@ -306,9 +314,17 @@
         input.attr('data-password-visible', 'true');
       }
       input = input.get(0);
-      if (input.value && !Util.isAndroid()) {
-        input.selectionStart = 0;
-        input.selectionEnd = 9999;
+      if (input.value) {
+        if (Util.isAndroidApp()) {
+          try {
+            AndroidJs.copyToClipboard(input.value);
+          } catch(err) {
+            // do nothing
+          }
+        } else if (!Util.isAndroid()) {
+          input.selectionStart = 0;
+          input.selectionEnd = 9999;
+        }
       }
     });
 
