@@ -40,22 +40,27 @@
   };
 
   Util.extractErrors = function(xhr) {
-    var errors;
+    var errors, msg;
     try {
       errors = JSON.parse(xhr.responseText).errors;
     } catch(err) {
       return 'An unexpected error has occurred.';
     }
-    var msg = 'The following errors were reported.\n';
-    for (attr in errors) {
-      msg += attr + ': ';
-      for (var i = 0; i < errors[attr].length; i++) {
-        if (i > 0) {
-          msg += ', ';
+    if (errors['version_code']) {
+      msg = 'Remote update detected. Please refresh your accounts to prevent data-loss.';
+      $('#remote_update_notice').show();
+    } else {
+      msg = 'The following errors were reported.\n';
+      for (attr in errors) {
+        msg += attr + ': ';
+        for (var i = 0; i < errors[attr].length; i++) {
+          if (i > 0) {
+            msg += ', ';
+          }
+          msg += errors[attr][i];
         }
-        msg += errors[attr][i];
+        msg += '\n';
       }
-      msg += '\n';
     }
     return msg;
   };

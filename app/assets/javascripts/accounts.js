@@ -2,6 +2,7 @@
 
   Accounts.init = function() {
     bindVerifyEmailLink();
+    bindRemoteUpdateNoticeLink();
     bindUnlockAccountsForm();
     bindAddAccountBtn();
     bindClickToCopy();
@@ -25,6 +26,7 @@
     } else {
       $('#verify_email_notice').hide();
     }
+    $('#remote_update_notice').hide();
     selectView();
   };
 
@@ -265,6 +267,13 @@
       evt.preventDefault();
       Verify.beforeDisplay();
       Util.displaySection('verify');
+    });
+  };
+
+  function bindRemoteUpdateNoticeLink() {
+    $('#remote_update_notice a').click(function(evt) {
+      evt.preventDefault();
+      $('#refresh_link').click();
     });
   };
 

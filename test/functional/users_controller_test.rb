@@ -53,7 +53,7 @@ class UsersControllerTest < ActionController::TestCase
     u = FactoryGirl.create(:user)
     u.verify_code!(u.verification_code)
     assert_equal ENCRYPTED_DATA_SCHEMA_VERSION, u.schema_version
-    put :update, :format => :json, :id => u.id, :schema_version => '5'
+    put :update, :format => :json, :id => u.id, :schema_version => '5', :version_code => u.version_code
     assert_response :success
     data = JSON.parse(@response.body)
     assert_equal 5, data['schema_version']
@@ -72,6 +72,15 @@ class UsersControllerTest < ActionController::TestCase
     assert_response :unprocessable_entity
     data = JSON.parse(@response.body)
     assert_equal ['is not verified'], data['errors']['email']
+  end
+
+  test 'update out of date' do
+    u = FactoryGirl.create(:user)
+    u.verify_code!(u.verification_code)
+    put :update, :format => :json, :id => u.id, :version_code => 'foo'
+    assert_response :unprocessable_entity
+    data = JSON.parse(@response.body)
+    assert_equal ['does not match expected value'], data['errors']['version_code']
   end
 
   test 'backup via file' do
