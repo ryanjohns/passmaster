@@ -45,6 +45,13 @@
         %strong
           %a{ :href => '#' } Verify Your Email Address
         to make changes to your accounts.
+    #remote_update_notice{ :style => 'display:none;' }
+      .alert.alert-error
+        Your accounts have been updated from another browser and have not been synced to this device.
+        You need to
+        %strong
+          %a{ :href => '#' } Refresh Your Accounts
+        before making any updates to prevent potential data loss.
 
     %p
       %button#add_account_btn.btn.btn-success{ :type => 'button' } Add Account
