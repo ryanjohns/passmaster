@@ -8,7 +8,7 @@ gem 'jquery-rails', '2.2.1'
 gem 'mysql2', '0.3.11'
 gem 'rotp', '1.4.1'
 gem 'unicorn', '4.6.2'
-gem 'uuidtools', '2.1.3'
+gem 'uuidtools', '2.1.4'
 gem 'zipruby', '0.3.6'
 
 group :assets do
