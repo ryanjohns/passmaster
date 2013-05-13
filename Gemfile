@@ -13,7 +13,7 @@ gem 'zipruby', '0.3.6'
 
 group :assets do
   gem 'sass-rails', '3.2.6'
-  gem 'uglifier', '2.0.1'
+  gem 'uglifier', '2.1.0'
   gem 'yui-compressor', '0.9.6'
 end
 
