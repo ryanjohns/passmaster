@@ -2,9 +2,9 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.13'
 
-gem 'aws-sdk', '1.9.5'
-gem 'haml', '4.0.2'
-gem 'jquery-rails', '2.2.1'
+gem 'aws-sdk', '1.11.0'
+gem 'haml', '4.0.3'
+gem 'jquery-rails', '3.0.0'
 gem 'mysql2', '0.3.11'
 gem 'rotp', '1.4.1'
 gem 'unicorn', '4.6.2'
@@ -13,7 +13,7 @@ gem 'zipruby', '0.3.6'
 
 group :assets do
   gem 'sass-rails', '3.2.6'
-  gem 'uglifier', '2.1.0'
+  gem 'uglifier', '2.1.1'
   gem 'yui-compressor', '0.9.6'
 end
 
