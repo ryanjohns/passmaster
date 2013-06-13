@@ -2,9 +2,9 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.13'
 
-gem 'aws-sdk', '1.11.0'
+gem 'aws-sdk', '1.11.2'
 gem 'haml', '4.0.3'
-gem 'jquery-rails', '3.0.0'
+gem 'jquery-rails', '3.0.1'
 gem 'mysql2', '0.3.11'
 gem 'rotp', '1.4.1'
 gem 'unicorn', '4.6.2'
