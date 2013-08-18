@@ -2,22 +2,22 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.13'
 
-gem 'aws-sdk', '1.11.2'
-gem 'haml', '4.0.3'
-gem 'jquery-rails', '3.0.1'
-gem 'mysql2', '0.3.11'
-gem 'rotp', '1.4.1'
-gem 'unicorn', '4.6.2'
-gem 'uuidtools', '2.1.4'
-gem 'zipruby', '0.3.6'
+gem 'aws-sdk'
+gem 'haml'
+gem 'jquery-rails'
+gem 'mysql2'
+gem 'rotp'
+gem 'unicorn'
+gem 'uuidtools'
+gem 'zipruby'
 
 group :assets do
-  gem 'sass-rails', '3.2.6'
-  gem 'uglifier', '2.1.1'
-  gem 'yui-compressor', '0.9.6'
+  gem 'sass-rails'
+  gem 'uglifier'
+  gem 'yui-compressor'
 end
 
 group :test do
-  gem 'cover_me', '1.2.0'
-  gem 'factory_girl_rails', '4.2.1'
+  gem 'cover_me'
+  gem 'factory_girl_rails'
 end
