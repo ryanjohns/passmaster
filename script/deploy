@@ -53,18 +53,9 @@ class Deploy
 
   private
 
-  def check_syntax
-    puts "Checking syntax."
-    unless system("bundle exec rake syntax:check")
-      puts "Syntax check failed!"
-      exit 1
-    end
-  end
-
   def create_deploy_tag
     @options[:version] = Time.now.utc.strftime("%Y%m%d%H%M%S")
     prompt_and_exit_if_not_yes
-    check_syntax
     upload_assets
     puts "Creating new deploy tag."
     system("git tag -a -m 'Creating deploy tag #{@options[:version]}' #{@options[:version]}")
