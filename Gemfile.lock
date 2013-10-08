@@ -29,9 +29,9 @@ GEM
       i18n (= 0.6.1)
       multi_json (~> 1.0)
     arel (3.0.2)
-    aws-sdk (1.15.0)
+    aws-sdk (1.20.0)
       json (~> 1.4)
-      nokogiri (< 1.6.0)
+      nokogiri (>= 1.4.4, < 1.6.0)
       uuidtools (~> 2.1)
     builder (3.0.4)
     configatron (2.13.0)
@@ -40,7 +40,7 @@ GEM
       configatron
       hashie
     erubis (2.7.0)
-    execjs (2.0.1)
+    execjs (2.0.2)
     factory_girl (4.2.0)
       activesupport (>= 3.0.0)
     factory_girl_rails (4.2.1)
@@ -61,7 +61,7 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.25)
-    multi_json (1.8.0)
+    multi_json (1.8.1)
     mysql2 (0.3.13)
     nokogiri (1.5.10)
     polyglot (0.3.3)
@@ -92,7 +92,7 @@ GEM
     rdoc (3.12.2)
       json (~> 1.4)
     rotp (1.4.4)
-    sass (3.2.10)
+    sass (3.2.12)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
       sass (>= 3.1.10)
@@ -117,7 +117,7 @@ GEM
       raindrops (~> 0.7)
     uuidtools (2.1.4)
     yamler (0.1.0)
-    yui-compressor (0.11.0)
+    yui-compressor (0.12.0)
     zipruby (0.3.6)
 
 PLATFORMS
