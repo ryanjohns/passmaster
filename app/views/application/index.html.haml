@@ -8,10 +8,9 @@
     %strong Idle Alert!
     Accounts will automatically lock in one minute due to inactivity.
 
-  #cache_update_ready.alert.alert-info{ :style => 'display:none;' }
+  #cache_update_ready.alert.alert-warn{ :style => 'display:none;' }
     %strong New Updates Available!
-    %a.reload-link{ :href => '#' } Reload
-    the page to start using the latest version.
+    %a.reload-link{ :href => '#' } Click here for the latest version.
 
 = render 'overview'
 = render 'verify'
