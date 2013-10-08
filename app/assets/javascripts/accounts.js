@@ -33,6 +33,7 @@
   Accounts.afterDisplay = function() {
     if (userData.masterPassword) {
       Accounts.searchTiles($('#accounts_list_search').val());
+      $('#accounts_list_search').get(0).setSelectionRange(0, 9999);
     } else {
       $('#unlock_accounts_passwd').focus();
     }
@@ -101,6 +102,7 @@
     }
     Accounts.beforeDisplay();
     Accounts.searchTiles($('#accounts_list_search').val());
+    $('#accounts_list_search').get(0).setSelectionRange(0, 9999);
   };
 
   function handleBadPassword() {
