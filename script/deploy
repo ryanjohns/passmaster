@@ -48,6 +48,7 @@ class Deploy
     create_deploy_tag if @options[:version].nil?
     push_version_upstream
     execute_cloudrun
+    notify_newrelic
     puts "Done deploying: #{Time.now}"
   end
 
@@ -107,6 +108,14 @@ class Deploy
 
   def execute_cloudrun
     command = "script/cloud run '#{@options[:security_groups]}' '/home/ubuntu/passmaster/script/wrapper /home/ubuntu/passmaster/script/server_deploy #{@options[:environment]}' 'ubuntu'"
+    system(command)
+  end
+
+  def notify_newrelic
+    command  = "bundle exec newrelic deployments"
+    command << " -e #{@options[:environment]}"
+    command << " -r #{@options[:version]}"
+    command << " -u #{ENV['USER']}" if ENV['USER']
     system(command)
   end
 
