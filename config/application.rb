@@ -11,6 +11,9 @@ end
 
 module Passmaster
   class Application < Rails::Application
+    # Silence the logs for certain paths
+    config.middleware.swap Rails::Rack::Logger, Silencer::Logger, :silence => ['/healthz']
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
