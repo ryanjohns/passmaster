@@ -1,10 +1,5 @@
 # Passmaster Nginx configuration
 
-proxy_redirect off;
-proxy_set_header X-Real-IP $remote_addr;
-proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-proxy_set_header Host $http_host;
-
 upstream passmaster {
   server unix:/home/ubuntu/passmaster/tmp/sockets/nginx.socket;
 }
@@ -17,12 +12,8 @@ server {
   listen 80;
   server_name passmaster.io;
   root /home/ubuntu/passmaster/public;
-  client_max_body_size 16m;
-  keepalive_timeout 5;
 
-  location / {
-    try_files $uri @unicorn;
-  }
+  try_files $uri @unicorn;
 
   location ^~ /assets/ {
     expires max;
@@ -46,7 +37,7 @@ server {
 }
 
 server {
-  listen 80 default_server;
+  listen 8080 default_server;
 
   location / {
     access_log /var/log/nginx/spam.log;
@@ -54,6 +45,7 @@ server {
   }
 
   location = /healthz {
+    access_log none;
     proxy_pass http://passmaster;
   }
 }
