@@ -68,6 +68,7 @@ GEM
     mime-types (1.25)
     multi_json (1.8.2)
     mysql2 (0.3.14)
+    newrelic_rpm (3.6.9.171)
     nokogiri (1.5.10)
     polyglot (0.3.3)
     rack (1.4.5)
@@ -138,6 +139,7 @@ DEPENDENCIES
   jquery-rails
   letter_opener
   mysql2
+  newrelic_rpm
   rails (= 3.2.15)
   rotp
   sass-rails
