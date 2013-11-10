@@ -1,0 +1,6 @@
+files:
+  - /home/ubuntu/passmaster/log/*.log
+  - /var/log/nginx/*.log
+destination:
+  host: logs.papertrailapp.com
+  port: 53021
