@@ -5,9 +5,5 @@
   compress
   delaycompress
   notifempty
-  create 0644 ubuntu ubuntu
-  sharedscripts
-  postrotate
-    su - ubuntu -c '/home/ubuntu/passmaster/script/wrapper /home/ubuntu/passmaster/script/unicorn restart'
-  endscript
+  copytruncate
 }
