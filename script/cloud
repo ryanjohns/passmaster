@@ -2,6 +2,7 @@
 
 require 'aws-sdk'
 require 'resolv'
+require File.expand_path('../../config/initializers/aws_sdk', __FILE__)
 
 class Cloud
 
@@ -75,16 +76,6 @@ class Cloud
   def instances
     return @instances unless @instances.nil?
     @instances = []
-    credential_file = File.expand_path('../../.aws_credentials.sh', __FILE__)
-    credential_file = ENV['AWS_CREDENTIAL_FILE'] || credential_file unless File.exists?(credential_file)
-    unless File.exists?(credential_file)
-      puts "Could not find AWS credentials. Make sure they are in #{File.expand_path('../../.aws_credentials.sh', __FILE__)} or the file specified by the AWS_CREDENTIAL_FILE environment variable."
-      return
-    end
-    aws_credentials   = File.read(credential_file)
-    access_key_id     = aws_credentials.scan(/AWSAccessKeyId=.+/).first.sub('AWSAccessKeyId=', '')
-    secret_access_key = aws_credentials.scan(/AWSSecretKey=.+/).first.sub('AWSSecretKey=', '')
-    AWS.config(:access_key_id => access_key_id, :secret_access_key => secret_access_key)
     ec2 = AWS::EC2.new
     @regions.each do |r|
       region_instances = []
