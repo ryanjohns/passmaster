@@ -1,0 +1,64 @@
+#!/usr/bin/env ruby
+# copy this file to .git/hooks/pre-commit to automatically strip spaces
+# from the end of lines and add newlines to the end of files as necessary
+
+filetypes = %w(
+  builder
+  conf
+  css
+  erb
+  haml
+  html
+  json
+  rake
+  rb
+  rhtml
+  rxml
+  scss
+  js
+  txt
+  xml
+  yaml
+  yml
+  rabl
+)
+
+paths = %w(
+  api
+  app
+  config
+  db/migrate
+  lib
+  public
+  test
+  spec
+)
+
+filetype_regexp = /\.(#{filetypes.join('|')})$/
+paths_regexp = /^(#{paths.join('|')})/
+
+files = `git diff-index --name-status --cached HEAD | grep -v ^D | cut -c3-`
+files.each_line do |f|
+
+  # Only examine specified file types and paths
+  if f =~ filetype_regexp && f =~ paths_regexp
+
+    # Add a linebreak to the end of the file if it doesn't have one
+    if `tail -c1 #{f}` != "\n"
+      `echo >> #{f}`
+      `git add #{f}`
+    end
+
+    # Remove trailing whitespace if it exists
+    if `grep -q "[[:blank:]]$" #{f}`
+      # sed command works differently on Mac and Linux
+      if `uname` =~ /Darwin/
+        `sed -i "" -e $'s/[ \t]*$//g' #{f}`
+      elsif `uname` =~ /Linux/
+        `sed -i -e 's/[ \t]*$//g' #{f}`
+      end
+      `git add #{f}`
+    end
+  end
+end
+
