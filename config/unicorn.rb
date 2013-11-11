@@ -16,7 +16,7 @@ FileUtils.mkdir_p("#{app_dir}/tmp/sockets")
 
 # listen on a Unix domain socket or a TCP port
 if ENV['RACK_ENV'] == 'production'
-  worker_processes 6
+  worker_processes 4
   listen("#{app_dir}/tmp/sockets/nginx.socket")
 else
   worker_processes 2
