@@ -10,6 +10,7 @@
   var androidApp = null;
 
   Util.init = function() {
+    bindAjaxSend();
     bindCacheReady();
     bindLogoutBtn();
     bindReloadLink();
@@ -18,7 +19,8 @@
     $('input, textarea').placeholder();
 
     if (localStorage.userAttributes) {
-      loadUser();
+      userData = new UserData();
+      userData.updateAttributes(JSON.parse(localStorage.userAttributes));
     }
 
     Util.chooseSection();
@@ -190,12 +192,15 @@
     return str.charAt(0).toUpperCase() + str.slice(1);
   };
 
-  function loadUser() {
-    userData = new UserData();
-    userData.updateAttributes(JSON.parse(localStorage.userAttributes));
+  // DOM bindings
+  function bindAjaxSend() {
+    $(document).ajaxSend(function(evt, xhr, settings) {
+      if (userData) {
+        xhr.setRequestHeader('X-Api-Key', userData.apiKey);
+      }
+    });
   };
 
-  // DOM bindings
   function bindCacheReady() {
     $(window.applicationCache).bind('updateready', function() {
       window.applicationCache.swapCache();
