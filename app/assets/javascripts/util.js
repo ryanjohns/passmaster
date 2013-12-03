@@ -10,7 +10,7 @@
   var androidApp = null;
 
   Util.init = function() {
-    bindAjaxSend();
+    // bindAjaxSend();
     bindCacheReady();
     bindLogoutBtn();
     bindReloadLink();
@@ -195,7 +195,7 @@
   // DOM bindings
   function bindAjaxSend() {
     $(document).ajaxSend(function(evt, xhr, settings) {
-      if (userData) {
+      if (userData && userData.apiKey) {
         xhr.setRequestHeader('X-Api-Key', userData.apiKey);
       }
     });
