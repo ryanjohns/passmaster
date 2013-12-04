@@ -1,5 +1,5 @@
 Passmaster::Application.routes.draw do
-  match 'healthz' => 'application#healthz', :via => [ :get, :post ]
+  resource :health_check, :only => [ :show ]
 
   root :to => 'application#index', :via => :get
   match "manifest.appcache" => 'application#cache_manifest', :via => :get, :as => 'cache_manifest'
