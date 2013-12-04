@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  before_filter :force_ssl, :except => [ :healthz ]
+  before_filter :force_ssl
 
   def index
   end
@@ -21,10 +21,6 @@ class ApplicationController < ActionController::Base
     data = CACHE_MANIFEST
     data += "\n# #{Digest::SHA2.hexdigest((Time.now.to_i - Time.now.to_i % 10).to_s)}" if Rails.env.development?
     render :text => data, :content_type => 'text/cache-manifest'
-  end
-
-  def healthz
-    render :text => 'ok'
   end
 
   protected
