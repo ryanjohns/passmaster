@@ -9,9 +9,13 @@ upstream s3_assets {
 }
 
 server {
-  listen 80;
+  listen 443 ssl;
   server_name passmaster.io;
   root /home/ubuntu/passmaster/public;
+
+  if (-f $document_root/maint.html) {
+    return 503;
+  }
 
   try_files $uri @unicorn;
 
@@ -23,6 +27,10 @@ server {
 
   location @unicorn {
     proxy_pass http://passmaster;
+  }
+
+  location @error503 {
+    try_files /maint.html /500.html;
   }
 
   error_page 404 /404.html;
@@ -37,15 +45,7 @@ server {
 }
 
 server {
-  listen 8080 default_server;
-
-  location / {
-    access_log /var/log/nginx/spam.log;
-    return 410;
-  }
-
-  location = /healthz {
-    access_log none;
-    proxy_pass http://passmaster;
-  }
+  listen 443 ssl;
+  server_name www.passmaster.io;
+  rewrite ^ https://passmaster.io$request_uri? permanent;
 }

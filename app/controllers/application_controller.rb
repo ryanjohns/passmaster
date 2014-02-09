@@ -1,8 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  before_filter :force_ssl
-
   def index
   end
 
@@ -30,10 +28,6 @@ class ApplicationController < ActionController::Base
   end
 
   private
-
-  def force_ssl
-    redirect_to :protocol => 'https' if Rails.configuration.force_ssl && !request.ssl?
-  end
 
   def respond_with_json(object)
     respond_with(object) do |format|
