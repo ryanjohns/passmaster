@@ -40,7 +40,7 @@ server {
 
 server {
   listen 80;
-  server_name www.passmaster.io;
+  server_name passmaster.io www.passmaster.io;
   rewrite ^ https://passmaster.io$request_uri? permanent;
 }
 
