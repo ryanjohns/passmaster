@@ -40,7 +40,7 @@
   };
 
   Settings.initBackupAccounts = function() {
-    if (!Util.isIOS()) {
+    if (!Util.isIOS() && !Util.isAndroid()) {
       $('#backup_accounts_file_btn').show();
       $('#file_backup_copy').show();
     }
