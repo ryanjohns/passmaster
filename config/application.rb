@@ -11,9 +11,6 @@ end
 
 module Passmaster
   class Application < Rails::Application
-    # Silence the logs for certain paths
-    config.middleware.swap Rails::Rack::Logger, Silencer::Logger, :silence => [%r{^/health_check}]
-
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
@@ -68,5 +65,18 @@ module Passmaster
 
     # Don't generate authenticity token input fields on remote forms
     config.action_view.embed_authenticity_token_in_remote_forms = false
+
+    # Change the log format to single-line and silence specific routes
+    ACTIONS_TO_IGNORE = { 'health_checks' => ['show'] }
+    config.lograge.enabled = true
+    config.lograge.ignore_custom = lambda do |event|
+      (ACTIONS_TO_IGNORE[event.payload[:params]['controller']] || []).include?(event.payload[:params]['action']) && event.payload[:status] < 400
+    end
+    config.lograge.custom_options = lambda do |event|
+      params       = event.payload[:params].except('format', 'action', 'controller', '_method', 'authenticity_token', 'utf8')
+      extra_fields = { :ip => event.payload[:ip] }
+      extra_fields.merge!({ :params => params }) if params.any?
+      Rails.env.production? ? extra_fields : { :time => event.time.utc }.merge(extra_fields)
+    end
   end
 end
