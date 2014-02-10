@@ -8,6 +8,8 @@
   var android = null;
   var androidAppRegex = new RegExp('PassmasterAndroid');
   var androidApp = null;
+  var iOSAppRegex = new RegExp('iPhone');
+  var iOS = null;
 
   Util.init = function() {
     bindCacheReady();
@@ -38,6 +40,13 @@
       androidApp = androidAppRegex.test(navigator.userAgent);
     }
     return androidApp;
+  };
+
+  Util.isIOS = function() {
+    if (iOS == null) {
+      iOS = iOSAppRegex.test(navigator.userAgent);
+    }
+    return iOS;
   };
 
   Util.extractErrors = function(xhr) {
