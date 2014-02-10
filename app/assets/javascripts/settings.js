@@ -39,6 +39,13 @@
     }
   };
 
+  Settings.initBackupAccounts = function() {
+    if (!Util.isIOS()) {
+      $('#backup_accounts_file_btn').show();
+      $('#file_backup_copy').show();
+    }
+  };
+
   Settings.initRestoreAccounts = function() {
     $('#restore_accounts_backup_file').val('');
     if ($('#restore_accounts_passwd').attr('type') == 'password') {

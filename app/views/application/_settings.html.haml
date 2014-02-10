@@ -117,13 +117,15 @@
     %button.close{ :type => 'button', 'data-dismiss' => 'modal', 'aria-hidden' => 'true' } &times;
     %h3#backup_accounts_label Backup Accounts
   .modal-body
-    %p Use the File button below to save a backup of your encrypted accounts to your computer. Alternatively, you can use the Email button to have the backup attached to an email.
+    %p
+      Use the Email button to save a backup of your encrypted accounts as an attachment to your email.
+      %span#file_backup_copy{ :style => 'display: none;' } Alternatively, you can use the File button to download a backup to your computer.
     .alert.alert-info
       %strong Note:
       Backups are locked with your current Master Password and you will need the password in order to restore the backup.
     %p
-      %button#backup_accounts_file_btn.btn.btn-primary{ :type => 'button' } File
-      = link_to('Email', '/users', :remote => true, :id => 'backup_accounts_email_btn', :class => 'btn btn-inverse')
+      = link_to('Email', '/users', :remote => true, :id => 'backup_accounts_email_btn', :class => 'btn btn-primary')
+      %button#backup_accounts_file_btn.btn.btn-inverse{ :type => 'button', :style => 'display: none;' } File
       %button.btn{ :type => 'button', 'data-dismiss' => 'modal', 'aria-hidden' => 'true' } Close
   .modal-footer
 

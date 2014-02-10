@@ -577,6 +577,7 @@
     });
     $('#backup_accounts_link').click(function(evt) {
       evt.preventDefault();
+      Settings.initBackupAccounts();
       $('#backup_accounts').modal('show');
     });
     $('#restore_accounts_link').click(function(evt) {
