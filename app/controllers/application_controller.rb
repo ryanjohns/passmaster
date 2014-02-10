@@ -41,4 +41,9 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def append_info_to_payload(payload)
+    super
+    payload[:ip] = request.remote_ip
+  end
+
 end
