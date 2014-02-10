@@ -4,6 +4,7 @@ data = [
   '/img/glyphicons-halflings.png',
   '/img/glyphicons-halflings-white.png',
   '/img/spinner.gif',
+  '/img/combination-32.png',
 ]
 assets = [
   'application.css',

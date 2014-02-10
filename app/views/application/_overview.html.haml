@@ -1,6 +1,8 @@
 #overview.container{ :style => 'display:none;' }
   .well
-    %h2 Passmaster
+    %h2
+      %i.icon.icon-passmaster
+      Passmaster
     %h5 Enter your email address to access your accounts or to get started.
     = form_tag(users_path, :remote => true, :id => 'overview_form') do
       %p= email_field_tag(:email, '', :placeholder => 'Email Address', :class => 'input-xlarge', :id => 'overview_email', :required => true)
@@ -8,59 +10,76 @@
 
   .well
     %h5
-      Passmaster is a simple tool for storing all of your account details securely in the cloud.
-      With Passmaster, all of your sensitive account details are encrypted with a single master password
+      Passmaster is a simple tool for storing all of your account passwords securely in the cloud.
+      With Passmaster, all of your account details are encrypted with a single master password
       making it easy to have strong, unique passwords for each site you visit. Passmaster is built with
       HTML5 and is designed to be always accessible both online and offline on desktop browsers and mobile
       devices. Check out the features below.
 
     #features
       .feature.pull-left
+        .feature.pull-left
+          .feature-inner
+            %h5
+              %i.icon.icon-globe
+              Works Everywhere
+            %p
+              Passmaster works on any modern browser on all operating systems. No browser extensions or special software is
+              required. There are also mobile apps available free for Android in the
+              %a{ :target => 'blank', :href => 'https://play.google.com/store/apps/details?id=io.passmaster.Passmaster' } Play Store
+              and iOS in the
+              %a{ :target => 'blank', :href => 'https://itunes.apple.com/us/app/passmaster/id615271561?mt=8' } App Store
+              so you will always have access to your accounts.
         .feature-inner
-          %h5 Store Everything
+          %h5
+            %i.icon.icon-briefcase
+            Store Everything
           %p
             Passmaster is designed to store usernames and passwords for all the websites you use but can store
-            other related information as well. There's room for account numbers, security questions, website
+            other related information as well. There's space for account numbers, security questions, website
             URLs, or anything else you else you might need.
       .feature.pull-left
         .feature-inner
-          %h5 Secure Password Generator
+          %h5
+            %i.icon.icon-random
+            Secure Password Generator
           %p
             Use the built-in generator to create cryptographically secure random passwords for all your accounts.
             If any one of your passwords is compromised you can easily generate a new one while the rest of your
             accounts remain safe. The length and character set is configurable to match each site's requirements.
       .feature.pull-left
         .feature-inner
-          %h5 Host-Proof Encryption
+          %h5
+            %i.icon.icon-lock
+            Host-Proof Encryption
           %p
             Your account details are for your eyes only so everything is encrypted on your computer or mobile
             device with your master password before being saved to the cloud. Only you know the master
             password so no one, not even the server admins, can determine anything about your account details.
       .feature.pull-left
         .feature-inner
-          %h5 Offline Access
+          %h5
+            %i.icon.icon-hdd
+            Automatic Backups
+          %p
+            Enable automatic backups to receive an email with your encrypted account details each time you make a change.
+            This is a great way to ensure you always have a backup of your data and you can always use one of the backups
+            if you need to recover something in the future. You can also download a backup file to your computer at any time
+            from the Backup menu once logged in.
+      .feature.pull-left
+        .feature-inner
+          %h5
+            %i.icon.icon-plane
+            Offline Access
           %p
             Passmaster uses HTML5 application caching and local storage to make your account details accessible
             even while you are offline. Every time you use Passmaster it automatically syncs your data so it is
             available whenever you need it.
       .feature.pull-left
         .feature-inner
-          %h5 Automatic Backups
-          %p
-            Enable automatic backups to receive an email with your encrypted account details each time you make a change.
-            This is a great way to ensure you always have a backup of your data and you can always use one of the backups
-            if you need recover something in the future. You can also download a backup file to your computer at any time
-            from the Backup menu once logged in.
-      .feature.pull-left
-        .feature-inner
-          %h5 Multi-factor Authentication
-          %p
-            Increase the security of your account by enabling multi-factor authentication with Google Authenticator.
-            Each new device used to access your accounts will require a random key generated by the Google Authenticator
-            app on your mobile phone.
-      .feature.pull-left
-        .feature-inner
-          %h5 Open and Portable
+          %h5
+            %i.icon.icon-eye-open
+            Open and Portable
           %p
             Passmaster isn't going anywhere but in the event of an extended outage you will always be able to access your
             accounts details. Each Passmaster backup contains everything you need to view all of your accounts.
@@ -69,12 +88,11 @@
             if you're curious about what's going on under the hood.
       .feature.pull-left
         .feature-inner
-          %h5 Works Everywhere
+          %h5
+            %i.icon.icon-ok
+            Multi-factor Authentication
           %p
-            Passmaster works on any modern browser that supports HTML5 on all operating systems. There are also mobile apps
-            available for Android in the
-            %a{ :target => 'blank', :href => 'https://play.google.com/store/apps/details?id=io.passmaster.Passmaster' } Play Store
-            and iOS in the
-            %a{ :target => 'blank', :href => 'https://itunes.apple.com/us/app/passmaster/id615271561?mt=8' } App Store
-            so you will always have access to your accounts.
+            Increase the security of your account by enabling multi-factor authentication with Google Authenticator.
+            Each new device you use to access your accounts will require a random key generated by the Google Authenticator
+            app on your mobile phone.
     .clearfix
