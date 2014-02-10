@@ -1,5 +1,5 @@
 #overview.container{ :style => 'display:none;' }
-  .well
+  .well.centered
     %h2
       %i.icon.icon-passmaster
       Passmaster
@@ -9,12 +9,11 @@
       %p= submit_tag('Access Accounts', :class => 'btn btn-primary', :id => 'overview_btn')
 
   .well
-    %h5
-      Passmaster is a simple tool for storing all of your account passwords securely in the cloud.
-      With Passmaster, all of your account details are encrypted with a single master password
-      making it easy to have strong, unique passwords for each site you visit. Passmaster is built with
-      HTML5 and is designed to be always accessible both online and offline on desktop browsers and mobile
-      devices. Check out the features below.
+    %h4 What is Passmaster?
+    %p
+      Passmaster is a simple tool for storing usernames and passwords securely in the cloud.
+      All of your account details are encrypted with a single master password making it easy
+      to use a different passwords for each site you visit. Check out the features below.
 
     #features
       .feature.pull-left
@@ -25,11 +24,11 @@
               Works Everywhere
             %p
               Passmaster works on any modern browser on all operating systems. No browser extensions or special software is
-              required. There are also mobile apps available free for Android in the
-              %a{ :target => 'blank', :href => 'https://play.google.com/store/apps/details?id=io.passmaster.Passmaster' } Play Store
+              required. There are also free mobile apps available for Android in the
+              %a{ :target => '_blank', :href => 'https://play.google.com/store/apps/details?id=io.passmaster.Passmaster' } Play Store
               and iOS in the
-              %a{ :target => 'blank', :href => 'https://itunes.apple.com/us/app/passmaster/id615271561?mt=8' } App Store
-              so you will always have access to your accounts.
+              = succeed '.' do
+                %a{ :target => '_blank', :href => 'https://itunes.apple.com/us/app/passmaster/id615271561?mt=8' } App Store
         .feature-inner
           %h5
             %i.icon.icon-briefcase
@@ -53,9 +52,9 @@
             %i.icon.icon-lock
             Host-Proof Encryption
           %p
-            Your account details are for your eyes only so everything is encrypted on your computer or mobile
-            device with your master password before being saved to the cloud. Only you know the master
-            password so no one, not even the server admins, can determine anything about your account details.
+            Your account details are for your eyes only so everything is encrypted with javasript directly on your
+            computer or mobile device before being saved to the cloud. Only you know the master
+            password so no one, not even the server admins, can see anything about your account details.
       .feature.pull-left
         .feature-inner
           %h5
@@ -63,9 +62,8 @@
             Automatic Backups
           %p
             Enable automatic backups to receive an email with your encrypted account details each time you make a change.
-            This is a great way to ensure you always have a backup of your data and you can always use one of the backups
-            if you need to recover something in the future. You can also download a backup file to your computer at any time
-            from the Backup menu once logged in.
+            This is a great way to ensure you always have a backup of your data. You can also download a backup file
+            to your computer at any time from your account settings.
       .feature.pull-left
         .feature-inner
           %h5
@@ -73,7 +71,7 @@
             Offline Access
           %p
             Passmaster uses HTML5 application caching and local storage to make your account details accessible
-            even while you are offline. Every time you use Passmaster it automatically syncs your data so it is
+            even while you are offline. Your data is automatically synced each time you use Passmaster ensuring it is
             available whenever you need it.
       .feature.pull-left
         .feature-inner
@@ -82,10 +80,10 @@
             Open and Portable
           %p
             Passmaster isn't going anywhere but in the event of an extended outage you will always be able to access your
-            accounts details. Each Passmaster backup contains everything you need to view all of your accounts.
-            Just open the included HTML file and use it to decrypt your backup. The source code of the included account
-            viewer contains all of the javascript required to decrypt your data and is well commented, so check it out
-            if you're curious about what's going on under the hood.
+            accounts details from a backup. Each Passmaster backup contains an "Account Viewer" HTML file which contains
+            everything needed to view your account data. Just open the account viewer and use it to decrypt the backup.
+            The source code of the account viewer contains all of the javascript required to decrypt your data and is well
+            commented, so check it out if you're curious about what's going on under the hood.
       .feature.pull-left
         .feature-inner
           %h5
@@ -93,6 +91,10 @@
             Multi-factor Authentication
           %p
             Increase the security of your account by enabling multi-factor authentication with Google Authenticator.
-            Each new device you use to access your accounts will require a random key generated by the Google Authenticator
-            app on your mobile phone.
+            Accessing your accounts from a new device will require a randomly generated password that you can get from
+            the Google Authenticator app for
+            %a{ :target => '_blank', :href => 'https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2' } Android
+            or
+            = succeed '.' do
+              %a{ :target => '_blank', :href => 'https://itunes.apple.com/us/app/google-authenticator/id388497605?mt=8' } iOS
     .clearfix
