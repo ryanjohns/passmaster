@@ -27,6 +27,9 @@
       $('#verify_email_notice').hide();
     }
     $('#remote_update_notice').hide();
+    if (!Util.isIOS()) {
+      $('#restore_accounts_list_item').show();
+    }
     selectView();
   };
 
