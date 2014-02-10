@@ -309,6 +309,7 @@
         if (Util.isAndroidApp()) {
           try {
             AndroidJs.copyToClipboard(input.value);
+            input.blur();
           } catch(err) {
             // do nothing
           }
