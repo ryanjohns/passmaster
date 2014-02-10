@@ -1,7 +1,18 @@
 #overview {
   text-align: center;
+}
 
-  .pushed-down {
-    margin-top: 40px;
+#features {
+  text-align: left;
+  @media (min-width: 1200px) { padding-left: 1px; }
+
+  .feature {
+    width: 100%;
+    @media (min-width: 1200px) { width: 562px; min-height: 160px; }
+    @media (min-width: 980px) and (max-width: 1199px) { width: 448px; min-height: 180px; }
+    @media (min-width: 768px) and (max-width: 979px) { width: 682px; }
+  }
+  .feature-inner {
+    padding: 5px 10px;
   }
 }

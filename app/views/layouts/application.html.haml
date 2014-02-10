@@ -12,4 +12,12 @@
     = javascript_include_tag 'application'
 
   %body
-    = yield
+    #wrap
+      #main
+        = yield
+    #footer
+      %p
+        BTC donations: 1ETVgecCKGvggpLGZ1mMEFffEJgjorscy8
+      %p
+        %a{ :target => '_blank', :href => 'mailto:support@passmaster.io' } contact
+        | &copy; #{Date.today.year} Passmaster.io
