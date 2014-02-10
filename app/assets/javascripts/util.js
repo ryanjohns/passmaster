@@ -10,7 +10,6 @@
   var androidApp = null;
 
   Util.init = function() {
-    // bindAjaxSend();
     bindCacheReady();
     bindLogoutBtn();
     bindReloadLink();
@@ -193,14 +192,6 @@
   };
 
   // DOM bindings
-  function bindAjaxSend() {
-    $(document).ajaxSend(function(evt, xhr, settings) {
-      if (userData && userData.apiKey) {
-        xhr.setRequestHeader('X-Api-Key', userData.apiKey);
-      }
-    });
-  };
-
   function bindCacheReady() {
     $(window.applicationCache).bind('updateready', function() {
       window.applicationCache.swapCache();
