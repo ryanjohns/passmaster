@@ -1,5 +1,8 @@
+html, body {
+  height: 100%;
+}
+
 body {
-  margin-top: 10px;
   background-color: #8b99ab;
 }
 
@@ -13,4 +16,33 @@ input.placeholder, textarea.placeholder {
 
 #alert_messages {
   text-align: center;
+}
+
+#wrap {
+  min-height: 100%;
+}
+
+#main {
+  overflow: auto;
+  padding-top: 10px;
+	padding-bottom: 50px;
+}
+
+#footer {
+  position: relative;
+  margin-top: -50px;
+  height: 50px;
+  clear: both;
+  text-align: center;
+  color: #eee;
+  font-size: 12px;
+
+  a {
+    color: #eee;
+    text-decoration: underline;
+  }
+  p {
+    margin: 0;
+    padding: 0;
+  }
 }
