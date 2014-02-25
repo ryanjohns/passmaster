@@ -20,4 +20,14 @@
     Accounts.lock();
   };
 
+  MobileApp.copyToIOSClipboard = function(text) {
+    var iframe = document.createElement('IFRAME');
+    iframe.setAttribute('src', 'passmasterjs:copyToClipboard:' + encodeURIComponent(text));
+    iframe.setAttribute('width', '1px');
+    iframe.setAttribute('height', '1px');
+    document.documentElement.appendChild(iframe);
+    iframe.parentNode.removeChild(iframe);
+    iframe = null;
+  };
+
 }(window.MobileApp = window.MobileApp || {}, jQuery));

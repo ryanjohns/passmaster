@@ -309,10 +309,11 @@
         if (Util.isAndroidApp()) {
           try {
             AndroidJs.copyToClipboard(input.value);
-            input.blur();
           } catch(err) {
             // do nothing
           }
+        } else if (Util.isIOSApp()) {
+          MobileApp.copyToIOSClipboard(input.value);
         } else if (!Util.isAndroid()) {
           input.selectionStart = 0;
           input.selectionEnd = 9999;
@@ -323,23 +324,24 @@
     $('.read .click-to-copy-password').click(function(evt) {
       evt.preventDefault();
       var input = $(this).find('input.password');
-      if (input.attr('data-password-visible') == 'false') {
+      var jsInput = input.get(0);
+      if (!Util.isIOSApp() && !Util.isAndroidApp() && input.attr('data-password-visible') == 'false') {
         input.data('origText', input.val());
         input.val(input.attr('data-password'));
         input.attr('data-password-visible', 'true');
       }
-      input = input.get(0);
-      if (input.value) {
+      if (jsInput.value) {
         if (Util.isAndroidApp()) {
           try {
-            AndroidJs.copyToClipboard(input.value);
-            input.blur();
+            AndroidJs.copyToClipboard(input.attr('data-password'));
           } catch(err) {
             // do nothing
           }
+        } else if (Util.isIOSApp()) {
+          MobileApp.copyToIOSClipboard(input.attr('data-password'));
         } else if (!Util.isAndroid()) {
-          input.selectionStart = 0;
-          input.selectionEnd = 9999;
+          jsInput.selectionStart = 0;
+          jsInput.selectionEnd = 9999;
         }
       }
     });
@@ -359,6 +361,11 @@
     }).bind('cut paste', function(evt) {
       evt.preventDefault();
     });
+
+    if (Util.isIOSApp() || Util.isAndroidApp()) {
+      $('.read .click-to-copy-username').find('input.username').attr('disabled', true);
+      $('.read .click-to-copy-password').find('input.password').attr('disabled', true);
+    }
   };
 
   function bindToggleNotes() {
