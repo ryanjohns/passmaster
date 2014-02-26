@@ -20,7 +20,7 @@ class ServerDeploy
       system "git pull --quiet"
       system "git checkout #{@branch}"
       system "git reset --hard origin/#{@branch}"
-      system "bundle install --quiet --deployment --without=development test assets"
+      system "bundle install --quiet --deployment --without=development test"
       system "script/unicorn start #{@branch == 'production' ? 'production' : 'staging'}"
     end
   end

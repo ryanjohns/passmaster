@@ -3,10 +3,9 @@ require File.expand_path('../boot', __FILE__)
 require 'rails/all'
 
 if defined?(Bundler)
-  # If you precompile assets before deploying to production, use this line
-  Bundler.require(*Rails.groups(:assets => %w(development test)))
-  # If you want your assets lazily compiled in production, use this line
-  # Bundler.require(:default, :assets, Rails.env)
+  # Require the gems listed in Gemfile, including any gems
+  # you've limited to :test, :development, or :production.
+  Bundler.require(:default, Rails.env)
 end
 
 module Passmaster
@@ -77,6 +76,13 @@ module Passmaster
       extra_fields = { :ip => event.payload[:ip] }
       extra_fields.merge!({ :params => params }) if params.any?
       Rails.env.production? ? extra_fields : { :time => event.time.utc }.merge(extra_fields)
+    end
+
+    # Tweak generators
+    config.generators do |g|
+      g.orm             :active_record
+      g.template_engine :haml
+      g.test_framework  :test_unit, :fixture => false
     end
   end
 end
