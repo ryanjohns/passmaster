@@ -63,4 +63,4 @@ namespace :test do
 
 end
 
-Rake::Task['test'].enhance(['test:syntax']) { Rake::Task['test:coverage'].invoke }
+Rake::Task['test'].enhance { Rake::Task['test:coverage'].invoke }
