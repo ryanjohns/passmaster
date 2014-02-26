@@ -1,15 +1,11 @@
 !!!
 
-%html{ :manifest => cache_manifest_path }
+%html
   %head
     %meta{ 'http-equiv' => 'Content-Type', :content => 'text/html; charset=utf-8' }
     %meta{ :name => 'viewport', :content => 'initial-scale=1.0, maximum-scale=1.0, user-scalable=no' }
-    %meta{ :name => 'apple-mobile-web-app-capable', :content => 'yes' }
-    %meta{ :name => 'csrf-param', :content => request_forgery_protection_token }
-    %meta{ :name => 'csrf-token', :content => '' }
-    %title Passmaster
+    %title Updates - Passmaster
     = stylesheet_link_tag 'application'
-    = javascript_include_tag 'application'
 
   %body
     #wrap

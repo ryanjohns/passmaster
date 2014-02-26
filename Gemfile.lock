@@ -49,6 +49,11 @@ GEM
       railties (>= 3.0.0)
     haml (4.0.5)
       tilt
+    haml-rails (0.4)
+      actionpack (>= 3.1, < 4.1)
+      activesupport (>= 3.1, < 4.1)
+      haml (>= 3.1, < 4.1)
+      railties (>= 3.1, < 4.1)
     hashie (2.0.5)
     hike (1.2.3)
     i18n (0.6.9)
@@ -140,6 +145,7 @@ DEPENDENCIES
   cover_me
   factory_girl_rails
   haml
+  haml-rails
   jquery-rails
   letter_opener
   lograge

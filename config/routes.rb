@@ -15,4 +15,6 @@ Passmaster::Application.routes.draw do
   end
 
   resources :otp_sessions, :only => [ :create ]
+
+  resource :updates, :only => :show
 end
