@@ -304,19 +304,22 @@
   function bindClickToCopy() {
     $('.read .click-to-copy-username').click(function(evt) {
       evt.preventDefault();
-      var input = $(this).find('input.username').get(0);
-      if (input.value) {
+      var input = $(this).find('input.username');
+      if (input.val()) {
         if (Util.isAndroidApp()) {
           try {
-            AndroidJs.copyToClipboard(input.value);
+            AndroidJs.copyToClipboard(input.val());
+            Util.highlightElement(input, '#9cf');
             Util.notify('Username Copied');
           } catch(err) {
             // do nothing
           }
         } else if (Util.isIOSApp()) {
-          MobileApp.copyToIOSClipboard(input.value);
+          MobileApp.copyToIOSClipboard(input.val());
+          Util.highlightElement(input, '#9cf');
           Util.notify('Username Copied');
         } else if (!Util.isAndroid()) {
+          input = input.get(0);
           input.selectionStart = 0;
           input.selectionEnd = 9999;
         }
@@ -326,26 +329,28 @@
     $('.read .click-to-copy-password').click(function(evt) {
       evt.preventDefault();
       var input = $(this).find('input.password');
-      var jsInput = input.get(0);
-      if (!Util.isIOSApp() && !Util.isAndroidApp() && input.attr('data-password-visible') == 'false') {
-        input.data('origText', input.val());
-        input.val(input.attr('data-password'));
-        input.attr('data-password-visible', 'true');
-      }
-      if (jsInput.value) {
+      if (input.attr('data-password')) {
+        if (!Util.isIOSApp() && !Util.isAndroidApp() && input.attr('data-password-visible') == 'false') {
+          input.data('origText', input.val());
+          input.val(input.attr('data-password'));
+          input.attr('data-password-visible', 'true');
+        }
         if (Util.isAndroidApp()) {
           try {
             AndroidJs.copyToClipboard(input.attr('data-password'));
+            Util.highlightElement(input, '#9cf');
             Util.notify('Password Copied');
           } catch(err) {
             // do nothing
           }
         } else if (Util.isIOSApp()) {
           MobileApp.copyToIOSClipboard(input.attr('data-password'));
+          Util.highlightElement(input, '#9cf');
           Util.notify('Password Copied');
         } else if (!Util.isAndroid()) {
-          jsInput.selectionStart = 0;
-          jsInput.selectionEnd = 9999;
+          input = input.get(0);
+          input.selectionStart = 0;
+          input.selectionEnd = 9999;
         }
       }
     });
