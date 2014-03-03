@@ -53,10 +53,6 @@
     border-radius: 4px;
   }
 
-  input.password {
-    font-family: Courier !important;
-  }
-
   .read {
     table {
       width: 100%;
@@ -83,9 +79,15 @@
     input[type='text'] {
       margin: 0;
     }
+    .click-to-copy-username,.click-to-copy-password {
+      -webkit-tap-highlight-color: transparent;
+    }
     input.username,input.password {
+      font-family: Courier !important;
       cursor: default;
       background-color: #eee;
+      -webkit-text-fill-color: #333;
+      -webkit-opacity: 1;
     }
     tr.notes,tr.no-notes {
       text-align: center;

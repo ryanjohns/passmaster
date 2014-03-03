@@ -207,6 +207,16 @@
     }
   };
 
+  Util.highlightElement = function(element, backgroundColor) {
+    var origBackgroundColor = element.css('background-color');
+    element.animate({ backgroundColor: backgroundColor }, {
+      duration: 25,
+      complete: function() {
+        element.animate({ backgroundColor: origBackgroundColor }, { duration: 1000 });
+      }
+    });
+  };
+
   Util.notify = function(message, status) {
     if (notificationTimer !== undefined) {
       clearTimeout(notificationTimer);
