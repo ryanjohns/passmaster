@@ -109,7 +109,7 @@
   };
 
   function handleBadPassword() {
-    alert('Failed to decrypt accounts.');
+    Util.notify('Failed to decrypt accounts.', 'error');
     Accounts.lock();
     var input = $('#unlock_accounts_passwd').get(0);
     input.selectionStart = 0;
@@ -287,7 +287,7 @@
       evt.preventDefault();
       var passwd = $('#unlock_accounts_passwd').val();
       if (passwd.length == 0) {
-        alert('Bad password.');
+        Util.notify('Bad password.', 'error');
       } else {
         unlock(passwd);
       }
@@ -309,11 +309,13 @@
         if (Util.isAndroidApp()) {
           try {
             AndroidJs.copyToClipboard(input.value);
+            Util.notify('Username Copied');
           } catch(err) {
             // do nothing
           }
         } else if (Util.isIOSApp()) {
           MobileApp.copyToIOSClipboard(input.value);
+          Util.notify('Username Copied');
         } else if (!Util.isAndroid()) {
           input.selectionStart = 0;
           input.selectionEnd = 9999;
@@ -334,11 +336,13 @@
         if (Util.isAndroidApp()) {
           try {
             AndroidJs.copyToClipboard(input.attr('data-password'));
+            Util.notify('Password Copied');
           } catch(err) {
             // do nothing
           }
         } else if (Util.isIOSApp()) {
           MobileApp.copyToIOSClipboard(input.attr('data-password'));
+          Util.notify('Password Copied');
         } else if (!Util.isAndroid()) {
           jsInput.selectionStart = 0;
           jsInput.selectionEnd = 9999;
@@ -423,7 +427,7 @@
       try {
         userData.setEncryptedData(accounts);
       } catch(err) {
-        alert('Failed to encrypt accounts.');
+        Util.notify('Failed to encrypt accounts.', 'error');
         return;
       }
       var form = tile.find('.update form');
@@ -461,10 +465,10 @@
       var oldAccountId = tile.attr('data-account-id');
       var accountId = Crypto.sha256(data.account);
       if (data.account.length == 0) {
-        alert('Account Name cannot be blank.');
+        Util.notify('Account Name cannot be blank.', 'error');
         return;
       } else if (oldAccountId != accountId && userData.accounts[accountId]) {
-        alert('An account with that name already exists.');
+        Util.notify('An account with that name already exists.', 'error');
         return;
       }
       var accounts = $.extend(true, {}, userData.accounts);
@@ -475,7 +479,7 @@
       try {
         userData.setEncryptedData(accounts);
       } catch(err) {
-        alert('Failed to encrypt accounts.');
+        Util.notify('Failed to encrypt accounts.', 'error');
         return;
       }
       var form = tile.find('.update form');
@@ -498,7 +502,7 @@
       Util.handleOtpErrors(xhr, function() {
         form.submit();
       }, function() {
-        alert(Util.extractErrors(xhr));
+        Util.notify(Util.extractErrors(xhr), 'error');
       });
     }).bind('ajax:before', function() {
       $(this).find('input.api-key').val(userData.apiKey);

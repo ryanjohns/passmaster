@@ -18,7 +18,7 @@
       Overview.beforeDisplay();
       Util.chooseSection();
     }).bind('ajax:error', function(evt, xhr) {
-      alert(Util.extractErrors(xhr));
+      Util.notify(Util.extractErrors(xhr), 'error');
     }).bind('ajax:beforeSend', function() {
       var btn = $('#overview_btn');
       btn.data('origText', btn.val());

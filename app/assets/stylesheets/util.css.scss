@@ -18,6 +18,35 @@ input.placeholder, textarea.placeholder {
   text-align: center;
 }
 
+#notification_container {
+  text-align: center;
+  z-index: 99999;
+  position: fixed;
+  top: 0;
+
+  width: 100%;
+  margin-left: -20px;
+  @media (min-width: 1200px) {
+    left: 50%;
+    margin-left: -585px;
+    width: 1170px;
+  }
+  @media (min-width: 980px) and (max-width: 1199px) {
+    left: 50%;
+    margin-left: -470px;
+    width: 940px;
+  }
+  @media (min-width: 768px) and (max-width: 979px) {
+    left: 50%;
+    margin-left: -362px;
+    width: 724px;
+  }
+
+  #notification {
+    font-weight: bold;
+  }
+}
+
 #wrap {
   min-height: 100%;
 }
