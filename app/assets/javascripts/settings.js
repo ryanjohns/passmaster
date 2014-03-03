@@ -59,7 +59,7 @@
       userData.setEncryptedData(userData.accounts);
     } catch(err) {
       userData.revertMasterPassword();
-      alert('Failed to set Master Password. Please try again.');
+      Util.notify('Failed to set Master Password. Please try again.', 'error');
       return;
     }
     $('#master_password_hidden_form').data('submitted-by', 'changeMasterPassword');
@@ -71,7 +71,7 @@
     try {
       backup = JSON.parse(backupStr);
     } catch(err) {
-      alert('Failed to load backup file.')
+      Util.notify('Failed to load backup file.', 'error')
       return;
     }
     userData.setMasterPassword(passwd);
@@ -80,7 +80,7 @@
       userData.setEncryptedData(userData.restoredAccounts);
     } catch(err) {
       userData.revertMasterPassword();
-      alert('Failed to unlock backup. Please try again.');
+      Util.notify('Failed to unlock backup. Please try again.', 'error');
       return;
     }
     $('#master_password_hidden_form').data('submitted-by', 'restoreBackup');
@@ -97,13 +97,13 @@
       if (!IdleTimeout.isIntervalActive() && userData.idleTimeout != 0) {
         IdleTimeout.startTimer();
       }
-      alert('Preferences saved successfully.')
+      Util.notify('Preferences saved successfully.')
       $('#preferences').modal('hide');
     }).bind('ajax:error', function(evt, xhr) {
       Util.handleOtpErrors(xhr, function() {
         $('#preferences_form').submit();
       }, function() {
-        alert(Util.extractErrors(xhr));
+        Util.notify(Util.extractErrors(xhr), 'error');
       });
     }).bind('ajax:before', function() {
       $('#preferences_api_key').val(userData.apiKey);
@@ -143,7 +143,7 @@
   function bindChangeEmailForm() {
     $('#change_email_form').bind('ajax:success', function(evt, data) {
       userData.updateAttributes(data);
-      alert('Email address updated successfully.')
+      Util.notify('Email address updated successfully.')
       $('#change_email').modal('hide');
       Settings.initChangeEmail();
       Util.chooseSection();
@@ -151,7 +151,7 @@
       Util.handleOtpErrors(xhr, function() {
         $('#change_email_form').submit();
       }, function() {
-        alert(Util.extractErrors(xhr));
+        Util.notify(Util.extractErrors(xhr), 'error');
       });
     }).bind('ajax:before', function() {
       $('#change_email_api_key').val(userData.apiKey);
@@ -176,13 +176,13 @@
       var passwd = $('#master_password_passwd').val();
       var passwd2 = $('#master_password_passwd2').val();
       if (oldPasswd.length == 0) {
-        alert('Current Password cannot be blank.');
+        Util.notify('Current Password cannot be blank.', 'error');
       } else if (!userData.passwordMatches(oldPasswd)) {
-        alert('Current Password is incorrect.');
+        Util.notify('Current Password is incorrect.', 'error');
       } else if (passwd.length == 0) {
-        alert('New Password cannot be blank.');
+        Util.notify('New Password cannot be blank.', 'error');
       } else if (passwd != passwd2) {
-        alert('New Passwords do not match. Please try again.');
+        Util.notify('New Passwords do not match. Please try again.', 'error');
       } else {
         changeMasterPassword(passwd);
       }
@@ -196,11 +196,11 @@
       if ($(this).data('submitted-by') == 'restoreBackup') {
         userData.accounts = userData.restoredAccounts;
         delete userData.restoredAccounts;
-        alert('Backup restored successfully.');
+        Util.notify('Backup restored successfully.');
         Settings.initRestoreAccounts();
         $('#restore_accounts').modal('hide');
       } else {
-        alert('Master Password set successfully.')
+        Util.notify('Master Password set successfully.')
         Settings.initMasterPassword();
         $('#master_password').modal('hide');
       }
@@ -214,7 +214,7 @@
           $('#master_password_form').submit();
         }
       }, function() {
-        alert(Util.extractErrors(xhr));
+        Util.notify(Util.extractErrors(xhr), 'error');
       });
     }).bind('ajax:before', function() {
       $('#master_password_hidden_api_key').val(userData.oldApiKey);
@@ -254,12 +254,12 @@
 
   function bindBackupAccountsEmailBtn() {
     $('#backup_accounts_email_btn').bind('ajax:success', function() {
-      alert('Backup emailed successfully.');
+      Util.notify('Backup emailed successfully.');
     }).bind('ajax:error', function(evt, xhr) {
       Util.handleOtpErrors(xhr, function() {
         $('#backup_accounts_email_btn').click();
       }, function() {
-        alert(Util.extractErrors(xhr));
+        Util.notify(Util.extractErrors(xhr), 'error');
       });
     }).bind('ajax:beforeSend', function(evt, xhr, settings) {
       settings.url = settings.url + '/' + userData.userId + '/backup?type=email&api_key=' + userData.apiKey;

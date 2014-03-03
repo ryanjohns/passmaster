@@ -4,6 +4,7 @@
   var sections = ['overview', 'verify', 'configure', 'accounts'];
   var timer;
   var timerVal = '';
+  var notificationTimer;
   var androidRegex = new RegExp('Android');
   var android = null;
   var androidAppRegex = new RegExp('PassmasterAndroid');
@@ -14,6 +15,7 @@
   var iOSApp = null;
 
   Util.init = function() {
+    bindFormSubmit();
     bindCacheReady();
     bindLogoutBtn();
     bindReloadLink();
@@ -167,7 +169,7 @@
   Util.typewatch = function(currentVal, callback, ms) {
     if (timerVal != currentVal) {
       Util.setTimerVal(currentVal);
-      if (timer != undefined) {
+      if (timer !== undefined) {
         clearTimeout(timer);
       }
       timer = setTimeout(function() {
@@ -198,11 +200,37 @@
         errorCallback();
       }
     } else if (xhr.status == 423) {
-      alert('This device has been locked out. Try another device or a different browser.');
+      Util.notify('This device has been locked out. Try another device or a different browser.', 'error');
       Util.wipeData();
     } else {
       errorCallback();
     }
+  };
+
+  Util.notify = function(message, status) {
+    if (notificationTimer !== undefined) {
+      clearTimeout(notificationTimer);
+    }
+    if ($('#notification').is(':visible')) {
+      $('#notification').slideUp(200, function() {
+        showNotification(message, status);
+      });
+    } else {
+      showNotification(message, status);
+    }
+  };
+
+  function showNotification(message, status) {
+    if (status !== undefined && status == 'error') {
+      $('#notification').attr('class', 'alert alert-error');
+    } else {
+      $('#notification').attr('class', 'alert alert-info');
+    }
+    $('#notification').html(message.replace(/\n/, '<br>'));
+    $('#notification').slideDown(200);
+    notificationTimer = setTimeout(function() {
+      $('#notification').slideUp(400);
+    }, 3000);
   };
 
   function capitalize(str) {
@@ -210,6 +238,16 @@
   };
 
   // DOM bindings
+  function bindFormSubmit() {
+    if (Util.isIOS()) {
+      $('form').submit(function() {
+        if (document.activeElement.nodeName == 'INPUT') {
+          document.activeElement.blur();
+        }
+      });
+    }
+  };
+
   function bindCacheReady() {
     $(window.applicationCache).bind('updateready', function() {
       window.applicationCache.swapCache();

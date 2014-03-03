@@ -33,7 +33,7 @@
       Verify.beforeDisplay();
       Util.chooseSection();
     }).bind('ajax:error', function(evt, xhr) {
-      alert(Util.extractErrors(xhr));
+      Util.notify(Util.extractErrors(xhr), 'error');
     }).bind('ajax:before', function() {
       $('#verify_api_key').val(userData.apiKey);
     }).bind('ajax:beforeSend', function(evt, xhr, settings) {
@@ -51,9 +51,9 @@
 
   function bindResendLink() {
     $('#verify_send_code_link').bind('ajax:success', function(evt, data) {
-      alert('Verification email sent, please check your inbox.');
+      Util.notify('Verification email sent, please check your inbox.');
     }).bind('ajax:error', function(evt, xhr) {
-      alert(Util.extractErrors(xhr));
+      Util.notify(Util.extractErrors(xhr), 'error');
     }).bind('ajax:beforeSend', function(evt, xhr, settings) {
       settings.url = settings.url + '/' + userData.userId + '/resend_verification';
       var link = $('#verify_send_code_link');

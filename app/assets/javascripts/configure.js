@@ -23,7 +23,7 @@
       userData.setEncryptedData(userData.accounts);
     } catch(err) {
       userData.revertMasterPassword();
-      alert('Failed to set Master Password. Please try again.');
+      Util.notify('Failed to set Master Password. Please try again.', 'error');
       return;
     }
     $('#configure_hidden_form').submit();
@@ -36,9 +36,9 @@
       var passwd = $('#configure_passwd').val();
       var passwd2 = $('#configure_passwd2').val();
       if (passwd.length == 0) {
-        alert('Password cannot be blank.');
+        Util.notify('Password cannot be blank.', 'error');
       } else if (passwd != passwd2) {
-        alert('Passwords do not match. Please try again.');
+        Util.notify('Passwords do not match. Please try again.', 'error');
       } else {
         setMasterPassword(passwd);
       }
@@ -49,12 +49,12 @@
     $('#configure_hidden_form').bind('ajax:success', function(evt, data) {
       userData.updateAttributes(data);
       userData.wipeOldMasterPassword();
-      alert('Master Password set successfully. You are now ready to use Passmaster.')
+      Util.notify('Master Password set successfully. You are now ready to use Passmaster.')
       Configure.beforeDisplay();
       Util.chooseSection();
     }).bind('ajax:error', function(evt, xhr) {
       userData.revertMasterPassword();
-      alert(Util.extractErrors(xhr));
+      Util.notify(Util.extractErrors(xhr), 'error');
     }).bind('ajax:before', function() {
       $('#configure_hidden_new_api_key').val(userData.apiKey);
       $('#configure_hidden_encrypted_data').val(userData.encryptedData);
