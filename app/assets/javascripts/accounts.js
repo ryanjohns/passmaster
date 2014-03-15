@@ -374,6 +374,7 @@
     if (Util.isIOSApp() || Util.isAndroidApp()) {
       $('.read .click-to-copy-username').find('input.username').attr('disabled', true);
       $('.read .click-to-copy-password').find('input.password').attr('disabled', true);
+      $('.read .click-to-copy-password').find('input.password').attr('data-default-value', 'tap to copy');
     }
   };
 
