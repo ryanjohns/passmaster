@@ -122,6 +122,9 @@
     form,input[type='text'],input[type='url'],textarea {
       margin: 0;
     }
+    input.username,input.password {
+      font-family: Courier !important;
+    }
     .form-inline {
       text-align: center;
       margin: 5px 0;
