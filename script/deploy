@@ -99,9 +99,9 @@ class Deploy
 
   def upload_assets
     puts "Compiling and uploading assets to S3."
-    system("bundle exec rake assets:upload")
-    if `git status` =~ /manifest.yml/
-      system("git add config/manifest.yml")
+    system("RAILS_ENV=#{@options[:environment]} bundle exec rake assets:upload")
+    if `git status` =~ /manifest.json/
+      system("git add config/manifest.json")
       system("git commit -m 'Update assets manifest.'")
     end
   end

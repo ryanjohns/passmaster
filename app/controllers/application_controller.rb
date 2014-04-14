@@ -5,8 +5,8 @@ class ApplicationController < ActionController::Base
   end
 
   def init_session
-    if cookies.signed[:_client_id].blank?
-      cookies.permanent.signed[:_client_id] = {
+    if cookies.encrypted[:_client_id].blank?
+      cookies.permanent.encrypted[:_client_id] = {
         :value    => UUIDTools::UUID.random_create.hexdigest,
         :httponly => true,
         :secure   => Rails.configuration.force_ssl,
@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
   def cache_manifest
     data = CACHE_MANIFEST
     data += "\n# #{Digest::SHA2.hexdigest((Time.now.to_i - Time.now.to_i % 10).to_s)}" if Rails.env.development?
-    render :text => data, :content_type => 'text/cache-manifest'
+    render :body => data, :content_type => 'text/cache-manifest'
   end
 
   protected

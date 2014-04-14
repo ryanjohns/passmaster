@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.17'
+gem 'rails', '4.1.0'
 
 gem 'aws-sdk'
 gem 'haml'
@@ -10,7 +10,9 @@ gem 'lograge'
 gem 'mysql2'
 gem 'newrelic_rpm'
 gem 'rotp'
-gem 'sass-rails'
+gem 'sass'
+gem 'sprockets', :git => 'https://github.com/ryanjohns/sprockets'
+gem 'sprockets-rails', :require => 'sprockets/railtie', :git => 'https://github.com/ryanjohns/sprockets-rails'
 gem 'uglifier'
 gem 'unicorn'
 gem 'uuidtools'
@@ -22,6 +24,5 @@ group :development do
 end
 
 group :test do
-  gem 'cover_me'
   gem 'factory_girl_rails'
 end

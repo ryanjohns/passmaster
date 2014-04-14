@@ -4,37 +4,38 @@ namespace :assets do
 
   desc 'Precompiles assets and uploads them to S3'
   task :upload do
+    unless %w(production staging).include?(Rails.env)
+      puts "RAILS_ENV must be set to 'production' or 'staging'"
+      next
+    end
     Rake::Task['assets:precompile'].invoke
     bucket   = AWS::S3.new.buckets['passmaster']
     assets   = "#{Rails.root}/public/assets"
     uploaded = Set.new
-    File.open("#{Rails.root}/config/manifest.yml") do |f|
-      f.readline
-      f.each_line do |line|
-        filename = line.split.last
-        next if uploaded.include?(filename) || filename =~ /\.map$/
-        object = bucket.objects["assets/#{filename}"]
-        if object.exists?
-          puts "Exists: #{filename}"
+    manifest = JSON.parse(File.read("#{Rails.root}/config/manifest.json"))
+    manifest['files'].each do |filename, metadata|
+      next if uploaded.include?(filename)
+      object = bucket.objects["assets/#{filename}"]
+      if object.exists?
+        puts "Exists: #{filename}"
+      else
+        content_type = 'application/octet-stream'
+        content_type = 'text/css'               if filename =~ /\.css$/
+        content_type = 'image/jpeg'             if filename =~ /\.(jpg|jpeg)$/
+        content_type = 'image/png'              if filename =~ /\.png$/
+        content_type = 'image/gif'              if filename =~ /\.gif$/
+        content_type = 'application/javascript' if filename =~ /\.js$/
+        content_type = 'text/plain'             if filename =~ /\.txt$/
+        if File.exists?("#{assets}/#{filename}.gz")
+          object.write(:file => "#{assets}/#{filename}.gz", :acl => :public_read, :content_type => content_type, :content_encoding => 'gzip')
         else
-          content_type = 'application/octet-stream'
-          content_type = 'text/css'               if filename =~ /\.css$/
-          content_type = 'image/jpeg'             if filename =~ /\.(jpg|jpeg)$/
-          content_type = 'image/png'              if filename =~ /\.png$/
-          content_type = 'image/gif'              if filename =~ /\.gif$/
-          content_type = 'application/javascript' if filename =~ /\.js$/
-          content_type = 'text/plain'             if filename =~ /\.txt$/
-          if File.exists?("#{assets}/#{filename}.gz")
-            object.write(:file => "#{assets}/#{filename}.gz", :acl => :public_read, :content_type => content_type, :content_encoding => 'gzip')
-          else
-            object.write(:file => "#{assets}/#{filename}", :acl => :public_read, :content_type => content_type)
-          end
-          puts "Uploaded: #{filename}"
+          object.write(:file => "#{assets}/#{filename}", :acl => :public_read, :content_type => content_type)
         end
-        uploaded << filename
+        puts "Uploaded: #{filename}"
       end
+      uploaded << filename
     end
-    Rake::Task['assets:clean'].invoke
+    Rake::Task['assets:clobber'].invoke
   end
 
 end
