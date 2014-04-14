@@ -6,8 +6,6 @@ class OtpSession < ActiveRecord::Base
   ACTIVE_DAYS   = 30
   RECENT_CUTOFF = 1
 
-  attr_accessible :ip_address, :user_agent, :last_seen_at
-
   belongs_to :user
 
   validates_presence_of :user_id, :client_id
@@ -36,7 +34,7 @@ class OtpSession < ActiveRecord::Base
     failed_count >= MAX_FAILS
   end
 
-  def recently_activiated?
+  def recently_activated?
     activated_at? && activated_at >= Time.zone.now - RECENT_CUTOFF.minutes
   end
 

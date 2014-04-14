@@ -6,7 +6,7 @@ module UuidPrimaryKey
       after_initialize :generate_id
       validates_presence_of :id
       validates_uniqueness_of :id, :if => :id_changed?
-      validates_format_of :id, :with => /^[0-9a-f]{32}$/, :if => :id_changed?
+      validates_format_of :id, :with => /\A[0-9a-f]{32}\z/, :if => :id_changed?
     end
   end
 

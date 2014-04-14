@@ -6,6 +6,7 @@ class HealthChecksControllerTest < ActionController::TestCase
     get :show
     assert_response :success
     assert_equal 'ok', @response.body
+    assert_equal 'text/plain', @response.content_type
   end
 
   test 'show when database is down' do
@@ -13,6 +14,7 @@ class HealthChecksControllerTest < ActionController::TestCase
     get :show
     assert_response :error
     assert_equal 'error', @response.body
+    assert_equal 'text/plain', @response.content_type
   end
 
 end

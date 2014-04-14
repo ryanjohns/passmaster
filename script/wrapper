@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-if [ -f /home/ubuntu/.rvm/environments/ruby-2.0.0-p451@passmaster ]; then
-  source /home/ubuntu/.rvm/environments/ruby-2.0.0-p451@passmaster
+if [ -f /home/ubuntu/.rvm/environments/ruby-2.1.1@passmaster ]; then
+  source /home/ubuntu/.rvm/environments/ruby-2.1.1@passmaster
 fi
 
 $@

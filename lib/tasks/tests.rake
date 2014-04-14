@@ -1,11 +1,5 @@
 namespace :test do
 
-  desc 'Generates and opens code coverage report'
-  task :coverage do
-    require 'cover_me'
-    CoverMe.complete!
-  end
-
   desc 'Checks ruby, haml, and yaml files for syntax errors.'
   task :syntax do
     puts "# Checking syntax:", ''
@@ -62,5 +56,3 @@ namespace :test do
   end
 
 end
-
-Rake::Task['test'].enhance { Rake::Task['test:coverage'].invoke }
