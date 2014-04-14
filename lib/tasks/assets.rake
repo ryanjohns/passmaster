@@ -8,14 +8,13 @@ namespace :assets do
       puts "RAILS_ENV must be set to 'production'"
       next
     end
-    File.write("#{Rails.root}/config/manifest.json", '{"files":{},"assets":{}}')
     Rake::Task['assets:precompile'].invoke
     bucket   = AWS::S3.new.buckets['passmaster']
     assets   = "#{Rails.root}/public/assets"
     uploaded = Set.new
     manifest = JSON.parse(File.read("#{Rails.root}/config/manifest.json"))
     manifest['files'].each do |filename, metadata|
-      next if uploaded.include?(filename)
+      next if uploaded.include?(filename) || !File.exists?("#{assets}/#{filename}")
       object = bucket.objects["assets/#{filename}"]
       if object.exists?
         puts "Exists: #{filename}"
