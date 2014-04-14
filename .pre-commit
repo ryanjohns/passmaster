@@ -34,14 +34,19 @@ paths = %w(
   spec
 )
 
+excludes = %w(
+  manifest.json
+)
+
 filetype_regexp = /\.(#{filetypes.join('|')})$/
 paths_regexp = /^(#{paths.join('|')})/
+excludes_regexp = /(#{excludes.join('|')})/
 
 files = `git diff-index --name-status --cached HEAD | grep -v ^D | cut -c3-`
 files.each_line do |f|
 
   # Only examine specified file types and paths
-  if f =~ filetype_regexp && f =~ paths_regexp
+  if f =~ filetype_regexp && f =~ paths_regexp && f !~ excludes_regexp
 
     # Add a linebreak to the end of the file if it doesn't have one
     if `tail -c1 #{f}` != "\n"

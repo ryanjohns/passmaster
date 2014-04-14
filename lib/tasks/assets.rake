@@ -4,10 +4,11 @@ namespace :assets do
 
   desc 'Precompiles assets and uploads them to S3'
   task :upload do
-    unless %w(production staging).include?(Rails.env)
-      puts "RAILS_ENV must be set to 'production' or 'staging'"
+    unless %w(production).include?(Rails.env)
+      puts "RAILS_ENV must be set to 'production'"
       next
     end
+    File.write("#{Rails.root}/config/manifest.json", '{"files":{},"assets":{}}')
     Rake::Task['assets:precompile'].invoke
     bucket   = AWS::S3.new.buckets['passmaster']
     assets   = "#{Rails.root}/public/assets"
