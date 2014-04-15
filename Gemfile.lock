@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/ryanjohns/sprockets
-  revision: b72ea4bff25fd1169e1803caa73958adb7c78d0f
+  revision: d52c9dfcfd9dce1821c9126c975cfa90b83c1eae
   specs:
     sprockets (2.12.0)
       hike (~> 2.0)
