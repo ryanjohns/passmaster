@@ -12,7 +12,7 @@ assets = [
 ]
 
 if Rails.env.production?
-  manifest = JSON.parse(File.read("#{Rails.configuration.assets.manifest}/manifest.json"))
+  manifest = JSON.parse(File.read(Rails.configuration.assets.manifest))
   data += assets.map { |asset| "#{Rails.configuration.assets.prefix}/#{manifest['assets'][asset]}" }
 else
   data += assets.map { |asset| "#{Rails.configuration.assets.prefix}/#{asset}" }
