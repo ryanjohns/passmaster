@@ -4,7 +4,7 @@ app_dir = File.expand_path("../../", __FILE__)
 
 working_directory app_dir
 
-timeout 90
+timeout 60
 
 # Load app into the master before forking workers for super-fast
 # worker spawn times
@@ -16,7 +16,7 @@ FileUtils.mkdir_p("#{app_dir}/tmp/sockets")
 
 # listen on a Unix domain socket or a TCP port
 if ENV['RACK_ENV'] == 'production'
-  worker_processes 4
+  worker_processes 2
   listen("#{app_dir}/tmp/sockets/nginx.socket")
 else
   worker_processes 2
@@ -27,11 +27,6 @@ pid "#{app_dir}/tmp/pids/unicorn_#{Process.pid}.pid"
 
 stderr_path "#{app_dir}/log/unicorn-stderr.log"
 stdout_path "#{app_dir}/log/unicorn-stdout.log"
-
-# http://www.rubyenterpriseedition.com/faq.html#adapt_apps_for_cow
-if GC.respond_to?(:copy_on_write_friendly=)
-  GC.copy_on_write_friendly = true
-end
 
 before_fork do |server, worker|
   # the following is highly recomended for Rails + "preload_app true"
