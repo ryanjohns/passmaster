@@ -1,4 +1,4 @@
-Passmaster::Application.routes.draw do
+Rails.application.routes.draw do
   resource :health_check, :only => [ :show ]
 
   root :to => 'application#index', :via => :get
