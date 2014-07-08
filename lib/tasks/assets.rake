@@ -26,7 +26,7 @@ namespace :assets do
         content_type = 'image/gif'              if filename =~ /\.gif$/
         content_type = 'application/javascript' if filename =~ /\.js$/
         content_type = 'text/plain'             if filename =~ /\.txt$/
-        if File.exists?("#{assets}/#{filename}.gz")
+        if filename =~ /\.(css|js)$/ && File.exists?("#{assets}/#{filename}.gz")
           object.write(:file => "#{assets}/#{filename}.gz", :acl => :public_read, :content_type => content_type, :content_encoding => 'gzip')
         else
           object.write(:file => "#{assets}/#{filename}", :acl => :public_read, :content_type => content_type)
