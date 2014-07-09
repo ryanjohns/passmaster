@@ -7,7 +7,7 @@ class CreateUsers < ActiveRecord::Migration
       t.text :api_key
       t.text :encrypted_data, :limit => 4294967295
       t.datetime :verified_at
-      t.timestamps
+      t.timestamps :null => false
     end
 
     add_index :users, :id, :unique => true

@@ -10,7 +10,7 @@ class CreateOtpSessions < ActiveRecord::Migration
       t.text :user_agent
       t.datetime :activated_at
       t.datetime :last_seen_at
-      t.timestamps
+      t.timestamps :null => false
     end
 
     add_index :otp_sessions, :id, :unique => true
