@@ -3,34 +3,34 @@
 class ServerDeploy
 
   def initialize(args)
-    @app_dir = File.expand_path('../../', __FILE__)
-    @branch  = args.shift
+    @app_dir     = File.expand_path('../../', __FILE__)
+    @environment = args.shift
   end
 
   def deploy
     if ENV['USER'] != 'ubuntu'
       puts 'This script should be run on an ec2 instance as the ubuntu user.'
       return
-    elsif @branch.nil?
+    elsif @environment != 'production'
       print_usage
       return
     end
     Dir.chdir(@app_dir) do
       system "git checkout --quiet master"
       system "git pull --quiet"
-      system "git checkout #{@branch}"
-      system "git reset --hard origin/#{@branch}"
+      system "git checkout #{@environment}"
+      system "git reset --hard origin/#{@environment}"
       system "bundle install --quiet --deployment --without=development test"
-      system "script/unicorn start #{@branch == 'production' ? 'production' : 'staging'}"
+      system "script/unicorn start #{@environment}"
     end
   end
 
   private
 
   def print_usage
-    puts 'USAGE: script/server_deploy branch_name'
+    puts 'USAGE: script/server_deploy environment'
     puts ''
-    puts '    branch_name: the name of the branch to deploy'
+    puts '    environment: only production is supported on EC2'
     puts ''
   end
 
