@@ -11,7 +11,7 @@ assets = [
   'application.js',
 ]
 
-if Rails.env.production?
+if Rails.env.production? || Rails.env.staging?
   manifest = JSON.parse(File.read(Rails.configuration.assets.manifest))
   data += assets.map { |asset| "#{Rails.configuration.assets.prefix}/#{manifest['assets'][asset]}" }
 else
