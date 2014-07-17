@@ -20,7 +20,6 @@ server {
   try_files $uri @unicorn;
 
   location ^~ /assets/ {
-    expires max;
     proxy_set_header Host passmaster.s3.amazonaws.com;
     proxy_pass http://s3_assets;
   }
