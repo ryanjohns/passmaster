@@ -20,7 +20,7 @@ namespace :assets do
     manifest['files'].each do |filename, _|
       next if uploaded.include?(filename) || !File.exists?("#{assets}/#{filename}")
       object = bucket.objects["assets/#{filename}"]
-      if false && object.exists?
+      if object.exists?
         puts "Exists: #{filename}"
       else
         content_type = 'application/octet-stream'
