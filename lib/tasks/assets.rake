@@ -13,10 +13,14 @@ namespace :assets do
     assets   = "#{Rails.root}/public/assets"
     uploaded = Set.new
     manifest = JSON.parse(File.read("#{Rails.root}/config/manifest.json"))
-    manifest['files'].each do |filename, metadata|
+    options  = {
+      :acl           => :public_read,
+      :cache_control => 'public, no-transform, max-age=31557600',
+    }
+    manifest['files'].each do |filename, _|
       next if uploaded.include?(filename) || !File.exists?("#{assets}/#{filename}")
       object = bucket.objects["assets/#{filename}"]
-      if object.exists?
+      if false && object.exists?
         puts "Exists: #{filename}"
       else
         content_type = 'application/octet-stream'
@@ -27,9 +31,9 @@ namespace :assets do
         content_type = 'application/javascript' if filename =~ /\.js$/
         content_type = 'text/plain'             if filename =~ /\.txt$/
         if filename =~ /\.(css|js)$/ && File.exists?("#{assets}/#{filename}.gz")
-          object.write(:file => "#{assets}/#{filename}.gz", :acl => :public_read, :content_type => content_type, :content_encoding => 'gzip')
+          object.write(options.merge({ :file => "#{assets}/#{filename}.gz", :content_type => content_type, :content_encoding => 'gzip' }))
         else
-          object.write(:file => "#{assets}/#{filename}", :acl => :public_read, :content_type => content_type)
+          object.write(options.merge({ :file => "#{assets}/#{filename}", :content_type => content_type }))
         end
         puts "Uploaded: #{filename}"
       end
