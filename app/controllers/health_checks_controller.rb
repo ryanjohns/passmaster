@@ -1,10 +1,19 @@
 class HealthChecksController < ActionController::Base
 
   def show
-    ActiveRecord::Migrator.current_version
-    render :plain => 'ok', :status => :ok
+    if db_connected?
+      render :text => 'ok', :status => :ok
+    else
+      render :text => 'error', :status => :error
+    end
+  end
+
+  private
+
+  def db_connected?
+    ActiveRecord::Base.connection.active?
   rescue
-    render :plain => 'error', :status => :error
+    false
   end
 
 end
