@@ -1,3 +1,3 @@
 ActionMailer::Base.default_url_options = {
-  :host => 'passmaster.io',
+  :host => ENV['PASSMASTER_HOST'].to_s,
 }
