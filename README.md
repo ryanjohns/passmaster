@@ -12,9 +12,10 @@ You will also need a variant of MySQL 5.5.
 
  * Fork and clone the repository
  * Create and modify env.local.yml (`cp config/env.yml config/env.local.yml`)
- * `bundle install`
- * `bundle exec rake db:create db:migrate`
- * `bundle exec script/unicorn start`
+ * Install required gems (`bundle install`)
+ * Create and migration the database (`bundle exec rake db:create db:migrate`)
+ * Start the server (`bundle exec script/unicorn start`)
+ * Browse to <http://localhost:8000>
 
 ## Verifying javascript
 
@@ -40,8 +41,8 @@ example uses `shasum` but `md5` would also work just as well.
 The mobile apps are simple front-ends for passmaster.io that allow native
 access to the clipboard for one-tap copy functionality.
 
- * [Android](https://play.google.com/store/apps/details?id=io.passmaster.Passmaster) - <https://github.com/ryanjohns/PassmasterAndroid>
- * [iOS](https://itunes.apple.com/us/app/passmaster/id615271561?mt=8) - <https://github.com/ryanjohns/PassmasterIOS>
+ * [Google Play Store](https://play.google.com/store/apps/details?id=io.passmaster.Passmaster) - <https://github.com/ryanjohns/PassmasterAndroid>
+ * [Apple App Store](https://itunes.apple.com/us/app/passmaster/id615271561?mt=8) - <https://github.com/ryanjohns/PassmasterIOS>
 
 ## Contributing
 
