@@ -76,14 +76,12 @@
       .feature.pull-left
         .feature-inner
           %h5
-            %i.icon.icon-eye-open
-            Open and Portable
+            %i.icon.icon-briefcase
+            Portable and Durable
           %p
             Passmaster isn't going anywhere but in the event of an extended outage you will always be able to access your
             accounts details from a backup. Each Passmaster backup contains an "Account Viewer" HTML file which contains
             everything needed to view your account data. Just open the account viewer and use it to decrypt the backup.
-            The source code of the account viewer contains all of the javascript required to decrypt your data and is well
-            commented, so check it out if you're curious about what's going on under the hood.
       .feature.pull-left
         .feature-inner
           %h5
@@ -97,4 +95,18 @@
             or
             = succeed '.' do
               %a{ :target => '_blank', :href => 'https://itunes.apple.com/us/app/google-authenticator/id388497605?mt=8' } iOS
+      .feature.pull-left
+        .feature-inner
+          %h5
+            %i.icon.icon-eye-open
+            Open Source
+          %p
+            = succeed ',' do
+              %a{ :target => '_blank', :href => 'https://github.com/ryanjohns/passmaster' } Passmaster server
+            = succeed ',' do
+              %a{ :target => '_blank', :href => 'https://github.com/ryanjohns/PassmasterAndroid' } Passmaster Android
+            and
+            %a{ :target => '_blank', :href => 'https://github.com/ryanjohns/PassmasterIOS' } Passmaster iOS
+            are all open source. Because everything is public, you can be certain that there is no tainted or malicious code.
+            If you want to make an improvement, please feel free. Contributions are always welcome!
     .clearfix
