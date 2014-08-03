@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+require File.expand_path('../../config/initializers/env', __FILE__)
+
 class UnicornTasks
 
   def initialize(args)
