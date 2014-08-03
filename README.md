@@ -1,6 +1,6 @@
 ## Passmaster
 
-Host Proof password storage using client-side AES-256 encryption. You can see
+Host-Proof password storage using client-side AES-256 encryption. You can see
 it live at <https://passmaster.io>.
 
 ## Running the server
