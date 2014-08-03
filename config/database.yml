@@ -1,0 +1,33 @@
+defaults: &defaults
+  adapter: mysql2
+  encoding: utf8
+  reconnect: true
+  pool: 5
+
+development:
+  <<: *defaults
+  username: <%= ENV['DEVELOPMENT_DB_USERNAME'] %>
+  password: <%= ENV['DEVELOPMENT_DB_PASSWORD'] %>
+  database: <%= ENV['DEVELOPMENT_DB_DATABASE'] %>
+  host: <%= ENV['DEVELOPMENT_DB_HOST'] %>
+
+test:
+  <<: *defaults
+  username: <%= ENV['TEST_DB_USERNAME'] %>
+  password: <%= ENV['TEST_DB_PASSWORD'] %>
+  database: <%= ENV['TEST_DB_DATABASE'] %>
+  host: <%= ENV['TEST_DB_HOST'] %>
+
+staging:
+  <<: *defaults
+  username: <%= ENV['STAGING_DB_USERNAME'] %>
+  password: <%= ENV['STAGING_DB_PASSWORD'] %>
+  database: <%= ENV['STAGING_DB_DATABASE'] %>
+  host: <%= ENV['STAGING_DB_HOST'] %>
+
+production:
+  <<: *defaults
+  username: <%= ENV['PRODUCTION_DB_USERNAME'] %>
+  password: <%= ENV['PRODUCTION_DB_PASSWORD'] %>
+  database: <%= ENV['PRODUCTION_DB_DATABASE'] %>
+  host: <%= ENV['PRODUCTION_DB_HOST'] %>
