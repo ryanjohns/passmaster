@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require 'optparse'
+require File.expand_path('../../config/initializers/env', __FILE__)
 
 class Deploy
 
