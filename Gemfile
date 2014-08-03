@@ -19,7 +19,7 @@ gem 'uuidtools'
 gem 'yui-compressor'
 gem 'zipruby'
 
-group :development do
+group :development, :staging do
   gem 'letter_opener'
 end
 

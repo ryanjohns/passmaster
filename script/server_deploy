@@ -20,7 +20,7 @@ class ServerDeploy
       system "git pull --quiet"
       system "git checkout #{@environment}"
       system "git reset --hard origin/#{@environment}"
-      system "bundle install --quiet --deployment --without=development test"
+      system "bundle install --quiet --deployment --without=development test staging"
       system "script/unicorn start #{@environment}"
     end
   end
