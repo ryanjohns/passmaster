@@ -15,7 +15,7 @@ You will also need a variant of MySQL 5.5.
  * Install required gems (`bundle install`)
  * Create and migration the database (`bundle exec rake db:create db:migrate`)
  * Start the server (`bundle exec script/unicorn start`)
- * Browse to <http://localhost:8000>
+ * Browse to http://localhost:8000
 
 ## Verifying javascript
 
