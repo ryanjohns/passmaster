@@ -13,7 +13,7 @@ You will also need a variant of MySQL 5.5.
  * Fork and clone the repository
  * Create and modify env.local.yml (`cp config/env.yml config/env.local.yml`)
  * Install required gems (`bundle install`)
- * Create and migration the database (`bundle exec rake db:create db:migrate`)
+ * Create and migrate the database (`bundle exec rake db:create db:migrate`)
  * Start the server (`bundle exec script/unicorn start`)
  * Browse to http://localhost:8000
 
