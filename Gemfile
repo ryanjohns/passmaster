@@ -13,10 +13,8 @@ gem 'rotp'
 gem 'sass'
 gem 'sprockets', '2.12.1'
 gem 'sprockets-rails', :require => 'sprockets/railtie', :git => 'https://github.com/ryanjohns/sprockets-rails'
-gem 'uglifier'
 gem 'unicorn'
 gem 'uuidtools'
-gem 'yui-compressor'
 gem 'zipruby'
 
 group :development, :staging do
