@@ -5,7 +5,10 @@
     var password = '';
     var rand;
     while (i < length) {
-      rand = (Math.abs(sjcl.random.randomWords(1)[0] % 100) % 94) + 33;
+      rand = Math.abs(sjcl.random.randomWords(1)[0]) % 128;
+      if (rand < 33 || rand > 126) {
+        continue;
+      }
       if (!special) {
         if ((rand >= 33 && rand <= 47) ||
             (rand >= 58 && rand <= 64) ||
