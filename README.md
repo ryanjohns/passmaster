@@ -30,6 +30,7 @@ verifying the digests below. You can use whatever hashing command you prefer. Th
 example uses `shasum` but `md5` would also work just as well.
 
  * Clone the repository (`git clone git@github.com:ryanjohns/passmaster.git`)
+ * Check out the production branch (`git checkout production`)
  * Install required gems (`bundle install`)
  * Compile the assets (`RAILS_ENV=production bundle exec rake assets:precompile`)
  * Compute hash of compiled asset (`shasum public/assets/application-[digest from above].js`)
