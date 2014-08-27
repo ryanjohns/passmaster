@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'aws-sdk'
+require 'aws-sdk-v1'
 require 'resolv'
 require File.expand_path('../../config/initializers/aws_sdk', __FILE__)
 
