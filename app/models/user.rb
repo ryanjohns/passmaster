@@ -63,6 +63,19 @@ class User < ActiveRecord::Base
     save
   end
 
+  def reset!
+    self.api_key        = nil
+    self.encrypted_data = nil
+    generate_otp_secret
+    generate_verification_code
+    set_schema_version
+    if otp_enabled?
+      self.otp_enabled = false
+      otp_sessions.destroy_all
+    end
+    save!
+  end
+
   def update!(params)
     self.api_key         = params[:new_api_key]     if params[:new_api_key].present?
     self.encrypted_data  = params[:encrypted_data]  if params[:encrypted_data].present?
@@ -98,7 +111,7 @@ class User < ActiveRecord::Base
       filename, data = backup_data(true)
       Mailer.master_password_changed(email, filename, data, id).deliver
     end
-    if auto_backup && encrypted_data_changed?
+    if auto_backup && encrypted_data_changed? && encrypted_data.present?
       filename, data = backup_data(false)
       Mailer.auto_backup(email, filename, data).deliver
     end

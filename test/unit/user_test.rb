@@ -262,4 +262,22 @@ class UserTest < ActiveSupport::TestCase
     assert_not_nil u.verified_at
   end
 
+  test 'reset!' do
+    u = FactoryGirl.create(:user, :api_key => 'foo', :encrypted_data => 'bar', :auto_backup => true, :otp_enabled => true)
+    s = u.otp_secret
+    v = u.verification_code
+    assert_difference('ActionMailer::Base.deliveries.size', 1) do
+      assert u.reset!
+    end
+    assert_nil u.api_key
+    assert_nil u.encrypted_data
+    assert_not_equal s, u.otp_secret
+    assert_not_equal v, u.verification_code
+    assert_equal ENCRYPTED_DATA_SCHEMA_VERSION, u.schema_version
+    assert !u.otp_enabled
+    mail = ActionMailer::Base.deliveries.last
+    assert_equal u.email, mail.to.first
+    assert mail.subject =~ /Master\ Password\ Changed/
+  end
+
 end
