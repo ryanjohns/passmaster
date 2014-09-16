@@ -105,15 +105,13 @@
     }
     Accounts.beforeDisplay();
     Accounts.searchTiles($('#accounts_list_search').val());
-    $('#accounts_list_search').get(0).setSelectionRange(0, 9999);
+    $('#accounts_list_search').focus();
   };
 
   function handleBadPassword() {
     Util.notify('Failed to decrypt accounts.', 'error');
     Accounts.lock();
-    var input = $('#unlock_accounts_passwd').get(0);
-    input.selectionStart = 0;
-    input.selectionEnd = 9999;
+    $('#unlock_accounts_passwd').get(0).setSelectionRange(0, 9999);
   }
 
   function selectView() {
@@ -319,9 +317,7 @@
           Util.highlightElement(input, '#9cf');
           Util.notify('Username Copied');
         } else if (!Util.isAndroid()) {
-          input = input.get(0);
-          input.selectionStart = 0;
-          input.selectionEnd = 9999;
+          input.get(0).setSelectionRange(0, 9999);
         }
       }
     });
@@ -348,9 +344,7 @@
           Util.highlightElement(input, '#9cf');
           Util.notify('Password Copied');
         } else if (!Util.isAndroid()) {
-          input = input.get(0);
-          input.selectionStart = 0;
-          input.selectionEnd = 9999;
+          input.get(0).setSelectionRange(0, 9999);
         }
       }
     });
