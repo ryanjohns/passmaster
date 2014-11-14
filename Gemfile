@@ -14,7 +14,6 @@ gem 'sass'
 gem 'sprockets'
 gem 'sprockets-rails', :require => 'sprockets/railtie'
 gem 'unicorn'
-gem 'uuidtools'
 gem 'zipruby'
 
 group :development, :staging do

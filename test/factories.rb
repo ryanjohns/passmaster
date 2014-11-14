@@ -1,6 +1,6 @@
 FactoryGirl.define do
 
-  sequence(:uuid)  { |i| UUIDTools::UUID.random_create.hexdigest }
+  sequence(:uuid)  { |i| SecureRandom.hex(16) }
   sequence(:email) { |i| "no-reply+test#{i}@gmail.com" }
 
   factory :otp_session do

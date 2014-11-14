@@ -13,7 +13,7 @@ module UuidPrimaryKey
   private
 
   def generate_id
-    self.id = UUIDTools::UUID.random_create.hexdigest if id.blank?
+    self.id = SecureRandom.hex(16) if id.blank?
     true
   end
 

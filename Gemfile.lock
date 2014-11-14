@@ -29,7 +29,7 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.3.6)
     arel (5.0.1.20140414130214)
-    aws-sdk-v1 (1.57.0)
+    aws-sdk-v1 (1.58.0)
       json (~> 1.4)
       nokogiri (>= 1.4.4)
     builder (3.2.2)
@@ -65,11 +65,11 @@ GEM
       mime-types (>= 1.16, < 3)
     mime-types (2.4.3)
     mini_portile (0.6.1)
-    minitest (5.4.2)
+    minitest (5.4.3)
     multi_json (1.10.1)
-    mysql2 (0.3.16)
+    mysql2 (0.3.17)
     newrelic_rpm (3.9.6.257)
-    nokogiri (1.6.4)
+    nokogiri (1.6.4.1)
       mini_portile (~> 0.6.0)
     rack (1.5.2)
     rack-test (0.6.2)
@@ -111,7 +111,6 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
-    uuidtools (2.1.5)
     zipruby (0.3.6)
 
 PLATFORMS
@@ -133,5 +132,4 @@ DEPENDENCIES
   sprockets
   sprockets-rails
   unicorn
-  uuidtools
   zipruby

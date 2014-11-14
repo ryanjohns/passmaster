@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   def init_session
     if cookies.encrypted[:_client_id].blank?
       cookies.permanent.encrypted[:_client_id] = {
-        :value    => UUIDTools::UUID.random_create.hexdigest,
+        :value    => SecureRandom.hex(16),
         :httponly => true,
         :secure   => Rails.configuration.force_ssl,
       }
