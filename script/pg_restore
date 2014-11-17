@@ -1,0 +1,58 @@
+#!/usr/bin/env ruby
+
+require 'zlib'
+require 'json'
+require 'openssl'
+require 'aws-sdk-v1'
+
+class PgRestore
+
+  DATA_DIR        = '/var/lib/postgresql/9.3/main'
+  CONF_DIR        = '/etc/postgresql/9.3/main'
+  AWS_CONFIG_FILE = "#{CONF_DIR}/aws.json"
+  AWS_KEY_FILE    = "#{CONF_DIR}/aws.key"
+
+  def initialize(args)
+    @file_path = "#{DATA_DIR}/#{args[0]}"
+    @file_name = args[1]
+    exit 1 unless args[0].to_s.length > 0 && args[1].to_s.length > 0
+
+    config = JSON.parse(File.read(AWS_CONFIG_FILE)).symbolize_keys
+    AWS.config({
+      :access_key_id     => config[:access_key_id],
+      :secret_access_key => config[:secret_access_key],
+      :logger            => Logger.new(config[:log_file]),
+      :s3_encryption_key => OpenSSL::PKey::RSA.new(File.read(AWS_KEY_FILE)),
+    })
+
+    bucket  = AWS::S3.new.buckets[config[:bucket]]
+    @object = bucket.objects["postgresql/wal/#{@file_name}.gz"]
+    exit 1 unless @object.exists?
+  rescue => e
+    report_failure(e)
+    exit 1
+  end
+
+  def restore
+    gz = Zlib::GzipReader.new(StringIO.new(@object.read))
+    open(@file_path, 'w') { |f| f.write(gz.read) }
+    gz.close
+  rescue => e
+    report_failure(e)
+    exit 1
+  end
+
+  private
+
+  def report_failure(e)
+    AWS::SimpleEmailService.new.send_email({
+      :from      => 'Postgres <noreply@passmaster.io>',
+      :to        => 'noc@passmaster.io',
+      :subject   => 'WAL Restore Failure',
+      :body_text => "Time: #{Time.now.utc}\nHost: #{`hostname`.strip}\nWAL path: #{@file_path}\nWAL file: #{@file_name}\n#{e.class}: #{e.message}\n#{e.backtrace.join("\n")}",
+    })
+  end
+
+end
+
+PgRestore.new(ARGV).restore
