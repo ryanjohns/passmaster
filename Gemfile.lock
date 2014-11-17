@@ -67,10 +67,10 @@ GEM
     mini_portile (0.6.1)
     minitest (5.4.3)
     multi_json (1.10.1)
-    mysql2 (0.3.17)
     newrelic_rpm (3.9.6.257)
     nokogiri (1.6.4.1)
       mini_portile (~> 0.6.0)
+    pg (0.17.1)
     rack (1.5.2)
     rack-test (0.6.2)
       rack (>= 1.0)
@@ -124,8 +124,8 @@ DEPENDENCIES
   jquery-rails
   letter_opener
   lograge
-  mysql2
   newrelic_rpm
+  pg
   rails (= 4.1.7)
   rotp
   sass

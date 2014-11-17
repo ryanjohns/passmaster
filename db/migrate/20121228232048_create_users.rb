@@ -1,11 +1,11 @@
 class CreateUsers < ActiveRecord::Migration
   def change
     create_table :users, :id => false do |t|
-      t.uuid :id, :primary => true, :null => false
-      t.uuid :verification_code, :null => false
+      t.string :id, :primary => true, :null => false, :limit => 32
+      t.string :verification_code, :null => false, :limit => 32
       t.string :email, :null => false
       t.text :api_key
-      t.text :encrypted_data, :limit => 4294967295
+      t.text :encrypted_data
       t.datetime :verified_at
       t.timestamps :null => false
     end

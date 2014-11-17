@@ -8,7 +8,7 @@ it live at <https://passmaster.io>.
 This project is tested to run on ruby 2.1.4 so you should have that version
 installed before starting. Using [RVM](https://rvm.io/) is highly recommended and .ruby-version
 and .ruby-gemset files are in the project root for keeping your gems organized.
-You will also need a variant of MySQL 5.5.
+You will also need a variant of PostgreSQL 9.2+.
 
  * Fork and clone the repository
  * Create and modify env.local.yml (`cp config/env.yml config/env.local.yml`)

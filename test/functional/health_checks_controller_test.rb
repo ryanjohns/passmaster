@@ -15,6 +15,7 @@ class HealthChecksControllerTest < ActionController::TestCase
     assert_response :error
     assert_equal 'error', @response.body
     assert_equal 'text/plain', @response.content_type
+    ActiveRecord::Base.establish_connection
   end
 
 end

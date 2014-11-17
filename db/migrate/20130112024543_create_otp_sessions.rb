@@ -1,9 +1,9 @@
 class CreateOtpSessions < ActiveRecord::Migration
   def change
     create_table :otp_sessions, :id => false do |t|
-      t.uuid :id, :primary => true, :null => false
-      t.uuid :user_id, :null => false
-      t.uuid :client_id, :null => false
+      t.string :id, :primary => true, :null => false, :limit => 32
+      t.string :user_id, :null => false, :limit => 32
+      t.string :client_id, :null => false, :limit => 32
       t.integer :login_count, :null => false, :default => 0
       t.integer :failed_count, :null => false, :default => 0
       t.string :ip_address

@@ -2,9 +2,8 @@
 # in #{Rails.root}config/env.yml. See that file for more details.
 
 defaults: &defaults
-  adapter: mysql2
+  adapter: postgresql
   encoding: utf8
-  reconnect: true
   pool: 5
 
 development:
@@ -13,6 +12,7 @@ development:
   password: <%= ENV['DEVELOPMENT_DB_PASSWORD'] %>
   database: <%= ENV['DEVELOPMENT_DB_DATABASE'] %>
   host: <%= ENV['DEVELOPMENT_DB_HOST'] %>
+  port: <%= ENV['DEVELOPMENT_DB_PORT'] %>
 
 test:
   <<: *defaults
@@ -20,6 +20,7 @@ test:
   password: <%= ENV['TEST_DB_PASSWORD'] %>
   database: <%= ENV['TEST_DB_DATABASE'] %>
   host: <%= ENV['TEST_DB_HOST'] %>
+  port: <%= ENV['TEST_DB_PORT'] %>
 
 staging:
   <<: *defaults
@@ -27,6 +28,7 @@ staging:
   password: <%= ENV['STAGING_DB_PASSWORD'] %>
   database: <%= ENV['STAGING_DB_DATABASE'] %>
   host: <%= ENV['STAGING_DB_HOST'] %>
+  port: <%= ENV['STAGING_DB_PORT'] %>
 
 production:
   <<: *defaults
@@ -34,3 +36,4 @@ production:
   password: <%= ENV['PRODUCTION_DB_PASSWORD'] %>
   database: <%= ENV['PRODUCTION_DB_DATABASE'] %>
   host: <%= ENV['PRODUCTION_DB_HOST'] %>
+  port: <%= ENV['PRODUCTION_DB_PORT'] %>

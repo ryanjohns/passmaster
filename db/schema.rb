@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20130426083839) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "otp_sessions", id: false, force: true do |t|
     t.string   "id",           limit: 32,             null: false
     t.string   "user_id",      limit: 32,             null: false
@@ -33,21 +36,21 @@ ActiveRecord::Schema.define(version: 20130426083839) do
   add_index "otp_sessions", ["user_id", "client_id"], name: "index_otp_sessions_on_user_id_and_client_id", using: :btree
 
   create_table "users", id: false, force: true do |t|
-    t.string   "id",                limit: 32,                         null: false
-    t.string   "verification_code", limit: 32,                         null: false
-    t.string   "email",                                                null: false
+    t.string   "id",                limit: 32,                 null: false
+    t.string   "verification_code", limit: 32,                 null: false
+    t.string   "email",                                        null: false
     t.text     "api_key"
-    t.text     "encrypted_data",    limit: 2147483647
+    t.text     "encrypted_data"
     t.datetime "verified_at"
-    t.datetime "created_at",                                           null: false
-    t.datetime "updated_at",                                           null: false
-    t.integer  "schema_version",                       default: 0,     null: false
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
+    t.integer  "schema_version",               default: 0,     null: false
     t.string   "otp_secret",        limit: 16
-    t.integer  "password_length",                      default: 20,    null: false
-    t.integer  "idle_timeout",                         default: 5,     null: false
-    t.boolean  "otp_enabled",                          default: false, null: false
-    t.boolean  "special_chars",                        default: true,  null: false
-    t.boolean  "auto_backup",                          default: false, null: false
+    t.integer  "password_length",              default: 20,    null: false
+    t.integer  "idle_timeout",                 default: 5,     null: false
+    t.boolean  "otp_enabled",                  default: false, null: false
+    t.boolean  "special_chars",                default: true,  null: false
+    t.boolean  "auto_backup",                  default: false, null: false
     t.string   "version_code"
   end
 
