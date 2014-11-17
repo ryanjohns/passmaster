@@ -1,7 +1,7 @@
-/home/ubuntu/passmaster/log/*.log {
+/home/passmaster/passmaster/log/*.log {
   daily
   missingok
-  rotate 10
+  rotate 5
   compress
   delaycompress
   notifempty

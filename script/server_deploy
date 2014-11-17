@@ -4,17 +4,15 @@ class ServerDeploy
 
   def initialize(args)
     @app_dir     = File.expand_path('../../', __FILE__)
-    @environment = args.shift
+    @environment = 'production'
   end
 
   def deploy
-    if ENV['USER'] != 'ubuntu'
-      puts 'This script should be run on an ec2 instance as the ubuntu user.'
-      return
-    elsif @environment != 'production'
-      print_usage
+    if ENV['USER'] != 'passmaster'
+      puts 'This script should be run as the passmaster user.'
       return
     end
+
     Dir.chdir(@app_dir) do
       system "git checkout --quiet master"
       system "git pull --quiet"
@@ -23,15 +21,6 @@ class ServerDeploy
       system "bundle install --quiet --deployment --without=development test staging"
       system "script/unicorn start #{@environment}"
     end
-  end
-
-  private
-
-  def print_usage
-    puts 'USAGE: script/server_deploy environment'
-    puts ''
-    puts '    environment: only production is supported on EC2'
-    puts ''
   end
 
 end

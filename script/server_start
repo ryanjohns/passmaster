@@ -5,12 +5,11 @@
 class ServerStart
 
   def initialize
-    @app_dir     = File.expand_path('../../', __FILE__)
-    @server_type = `#{@app_dir}/script/server_type`
+    @app_dir = File.expand_path('../../', __FILE__)
   end
 
   def exec
-    `su - ubuntu -c '#{@app_dir}/script/wrapper #{@app_dir}/script/server_deploy #{@server_type}'`
+    `su - passmaster -c '#{@app_dir}/script/wrapper #{@app_dir}/script/server_deploy'`
   end
 
 end

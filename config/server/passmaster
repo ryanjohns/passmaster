@@ -1,7 +1,7 @@
 # Passmaster Nginx configuration
 
 upstream passmaster {
-  server unix:/home/ubuntu/passmaster/tmp/sockets/nginx.socket;
+  server unix:/home/passmaster/passmaster/tmp/sockets/nginx.socket;
 }
 
 upstream s3_assets {
@@ -11,7 +11,7 @@ upstream s3_assets {
 server {
   listen 443 ssl;
   server_name passmaster.io;
-  root /home/ubuntu/passmaster/public;
+  root /home/passmaster/passmaster/public;
 
   if (-f $document_root/maint.html) {
     return 503;
