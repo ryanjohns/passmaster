@@ -9,7 +9,7 @@ class ServerStart
   end
 
   def exec
-    `su - passmaster -c '#{@app_dir}/script/wrapper #{@app_dir}/script/server_deploy'`
+    `su - passmaster -c '#{@app_dir}/script/server_deploy'`
   end
 
 end

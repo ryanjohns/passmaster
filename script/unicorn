@@ -1,28 +1,27 @@
 #!/usr/bin/env ruby
 
-require File.expand_path('../../config/initializers/env', __FILE__)
-
 class UnicornTasks
 
   def initialize(args)
-    @app_dir     = File.expand_path('../../', __FILE__)
-    @command     = args.shift
-    @environment = args.shift || 'development'
+    @app_dir = File.expand_path('../../', __FILE__)
+    @command = args.shift
   end
 
   def exec
     Dir.chdir(@app_dir) do
       case @command
       when 'start'
-        start_or_restart
+        start
       when 'restart'
+        start_or_restart
+      when 'restart_if_started'
         restart
       when 'stop'
         stop
       when 'status'
         status
       else
-        print_usage
+        puts "Usage: #{File.basename($0)} start|stop|restart|restart_if_started|status"
       end
     end
   end
@@ -31,10 +30,21 @@ class UnicornTasks
 
   def start_or_restart
     if unicorn_pid == ''
-      system "bundle exec unicorn -c config/unicorn.rb -E #{@environment} -D"
-      puts "Started unicorn in #{@environment} mode."
+      start
     else
       restart
+    end
+  end
+
+  def start
+    if unicorn_pid == ''
+      environment = ENV['RAILS_ENV'] || 'development'
+      system "unicorn -c config/unicorn.rb -E #{environment} -D"
+      if $?.success?
+        puts "Started unicorn in #{environment} mode."
+      else
+        puts "Failed to start unicorn!. Try using bundle exec."
+      end
     end
   end
 
@@ -76,14 +86,6 @@ class UnicornTasks
       end
     end
     @pid
-  end
-
-  def print_usage
-    puts 'USAGE: script/unicorn command [environment]'
-    puts ''
-    puts '    command:     start, restart, stop, status'
-    puts "    environment: the environment used to start unicorn, defaults to 'development'"
-    puts ''
   end
 
 end

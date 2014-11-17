@@ -9,7 +9,7 @@ class ServerStop
   end
 
   def exec
-    `su - ubuntu -c '#{@app_dir}/script/wrapper #{@app_dir}/script/unicorn stop'`
+    `su - passmaster -c 'cd #{@app_dir} && bundle exec script/unicorn stop'`
   end
 
 end

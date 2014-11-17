@@ -6,67 +6,60 @@ require File.expand_path('../../config/initializers/env', __FILE__)
 class Deploy
 
   def initialize(args)
-    @options = {
-      :environment => 'staging',
-      :version     => nil,
-    }
+    @environment = 'staging'
+    @migrate     = false
+    @tag         = nil
 
     option_parser = OptionParser.new do |opts|
-      opts.on('-e', '--environment [ENVIRONMENT]') do |environment|
+      opts.on('-e', '--environment [ENVIRONMENT]', "The environment to deploy to. Can be 'staging' or 'production'. Default: #{@environment}") do |environment|
         if environment == 'production'
-          @options[:environment] = 'production'
+          @environment = 'production'
         elsif environment != 'staging'
-          print_usage_and_exit
+          puts opts
+          exit 1
         end
       end
-
-      opts.on('-v', '--version [VERSION]') do |version|
-        @options[:version] = version
+      opts.on('-t', '--tag [TAG]', 'The tag to deploy. When not given, uses the master branch for staging and creates a new tag for production.') do |tag|
+        if tag =~ /^[0-9]{14}$/
+          @tag = tag
+        else
+          puts "Tag must be a timestamp in the format yyyymmddhhmmss."
+          exit 1
+        end
       end
-
-      opts.on_tail('-h', '--help') do
-        print_usage_and_exit
+      opts.on('-m', '--migrate', 'Perform database migrations.') do
+        @migrate = true
+      end
+      opts.on_tail('-h', '--help', 'Show this message.') do
+        puts opts
+        exit 1
       end
     end
 
-    unless option_parser.parse!(args).empty?
-      puts "Unknown options given."
-      print_usage_and_exit
-    end
+    option_parser.parse!(args)
 
-    if !@options[:version].nil? && @options[:version] !~ /^[0-9]{14}$/
-      puts "Invalid version, must be a timestamp in the format yyyymmddhhmmss"
-      print_usage_and_exit
-    end
-    @options[:version] = 'master' if @options[:version].nil? && @options[:environment] == 'staging'
+    @tag = 'master' if @tag.nil? && @environment == 'staging'
   end
 
   def deploy
-    puts "#{@options[:environment].upcase} deploy"
+    puts "#{@environment.upcase} deploy"
     update_working_copy
-    create_deploy_tag if @options[:version].nil?
-    push_version_upstream
-    execute_server_deploy if @options[:environment] == 'production'
-    notify_newrelic
+    create_deploy_tag if @tag.nil?
+    push_tag_upstream
+    execute_server_deploy if @environment == 'production'
+    notify_newrelic if @environment == 'production'
     puts "Done deploying: #{Time.now}"
   end
 
   private
 
   def create_deploy_tag
-    @options[:version] = Time.now.utc.strftime("%Y%m%d%H%M%S")
-    exit 1 unless prompt_user("No deploy tag specified. Create new deploy tag #{@options[:version]}?")
+    @tag = Time.now.utc.strftime("%Y%m%d%H%M%S")
+    exit 1 unless prompt_user("No deploy tag specified. Create new deploy tag #{@tag}?")
     upload_assets
     puts "Creating new deploy tag."
-    system("git tag -a -m 'Creating deploy tag #{@options[:version]}' #{@options[:version]}")
+    system("git tag -a -m 'Creating deploy tag #{@tag}' #{@tag}")
     system("git push --tags upstream master")
-  end
-
-  def print_usage_and_exit
-    puts "USAGE: script/deploy [options]"
-    puts "    -e, --environment (optional): The environment to deploy to. Can be 'staging' or 'production'. Default is 'staging'."
-    puts "    -v, --version (optional): The version to deploy. Defaults to 'master' for staging deploys, creates a new tag for production deploys."
-    exit
   end
 
   def prompt_user(message)
@@ -75,9 +68,9 @@ class Deploy
     answer =~ /^(y|yes)$/i
   end
 
-  def push_version_upstream
-    puts "Force pushing #{@options[:version]} to upstream:#{@options[:environment]}."
-    system("git push --force upstream #{@options[:version]}~0:#{@options[:environment]}")
+  def push_tag_upstream
+    puts "Force pushing #{@tag} to upstream:#{@environment}."
+    system("git push --force upstream #{@tag}~0:#{@environment}")
   end
 
   def update_working_copy
@@ -96,7 +89,7 @@ class Deploy
 
   def upload_assets
     puts "Compiling and uploading assets to S3."
-    system("RAILS_ENV=#{@options[:environment]} bundle exec rake assets:upload")
+    system("RAILS_ENV=#{@environment} bundle exec rake assets:upload")
     if `git status` =~ /manifest.json/
       system("git add config/manifest.json")
       system("git commit -m 'Update assets manifest.'")
@@ -108,13 +101,15 @@ class Deploy
 
     id_rsa  = File.expand_path('../../.id_rsa', __FILE__)
     ssh_key = File.exists?(id_rsa) ? "-i #{id_rsa}" : ''
-    puts `ssh #{ssh_key} passmaster@passmaster.io '/home/passmaster/passmaster/script/wrapper /home/passmaster/passmaster/script/server_deploy' 2>&1`, "\n"
+    command = '/home/passmaster/passmaster/script/wrapper /home/passmaster/passmaster/script/server_deploy'
+    command << ' -m' if @migrate
+    puts `ssh #{ssh_key} passmaster@passmaster.io '#{command}' 2>&1`, "\n"
   end
 
   def notify_newrelic
     command  = "bundle exec newrelic deployments"
-    command << " -e #{@options[:environment]}"
-    command << " -r #{@options[:version]}"
+    command << " -e #{@environment}"
+    command << " -r #{@tag}"
     command << " -u #{ENV['USER']}" if ENV['USER']
     system(command)
   end
