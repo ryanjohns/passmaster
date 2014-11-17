@@ -17,15 +17,15 @@ class PgArchive
     @file_name = args[1]
     exit 1 unless args[0].to_s.length > 0 && args[1].to_s.length > 0
 
-    config = JSON.parse(File.read(AWS_CONFIG_FILE)).symbolize_keys
+    config = JSON.parse(File.read(AWS_CONFIG_FILE))
     AWS.config({
-      :access_key_id     => config[:access_key_id],
-      :secret_access_key => config[:secret_access_key],
-      :logger            => Logger.new(config[:log_file]),
+      :access_key_id     => config['access_key_id'],
+      :secret_access_key => config['secret_access_key'],
+      :logger            => Logger.new(config['log_file']),
       :s3_encryption_key => OpenSSL::PKey::RSA.new(File.read(AWS_KEY_FILE)),
     })
 
-    bucket  = AWS::S3.new.buckets[config[:bucket]]
+    bucket  = AWS::S3.new.buckets[config['bucket']]
     @object = bucket.objects["postgresql/wal/#{@file_name}.gz"]
   rescue => e
     report_failure(e)
