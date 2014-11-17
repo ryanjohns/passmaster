@@ -7,16 +7,14 @@ class Deploy
 
   def initialize(args)
     @options = {
-      :environment     => 'staging',
-      :security_groups => 'staging',
-      :version         => nil,
+      :environment => 'staging',
+      :version     => nil,
     }
 
     option_parser = OptionParser.new do |opts|
       opts.on('-e', '--environment [ENVIRONMENT]') do |environment|
         if environment == 'production'
-          @options[:environment]     = 'production'
-          @options[:security_groups] = 'production'
+          @options[:environment] = 'production'
         elsif environment != 'staging'
           print_usage_and_exit
         end
@@ -48,7 +46,7 @@ class Deploy
     update_working_copy
     create_deploy_tag if @options[:version].nil?
     push_version_upstream
-    execute_cloudrun
+    execute_server_deploy if @options[:environment] == 'production'
     notify_newrelic
     puts "Done deploying: #{Time.now}"
   end
@@ -57,7 +55,7 @@ class Deploy
 
   def create_deploy_tag
     @options[:version] = Time.now.utc.strftime("%Y%m%d%H%M%S")
-    prompt_and_exit_if_not_yes
+    exit 1 unless prompt_user("No deploy tag specified. Create new deploy tag #{@options[:version]}?")
     upload_assets
     puts "Creating new deploy tag."
     system("git tag -a -m 'Creating deploy tag #{@options[:version]}' #{@options[:version]}")
@@ -71,12 +69,10 @@ class Deploy
     exit
   end
 
-  def prompt_and_exit_if_not_yes
-    print "No deploy tag specified. Create new deploy tag #{@options[:version]}? [y/N] "
+  def prompt_user(message)
+    print "#{message} [y/N] "
     answer = STDIN.gets
-    if answer !~ /^(y|yes)$/i
-      exit 1
-    end
+    answer =~ /^(y|yes)$/i
   end
 
   def push_version_upstream
@@ -107,9 +103,12 @@ class Deploy
     end
   end
 
-  def execute_cloudrun
-    command = "script/cloud run '#{@options[:security_groups]}' '/home/ubuntu/passmaster/script/wrapper /home/ubuntu/passmaster/script/server_deploy #{@options[:environment]}' 'ubuntu'"
-    system(command)
+  def execute_server_deploy
+    return unless prompt_user("\nDeploy on server?")
+
+    id_rsa  = File.expand_path('../../.id_rsa', __FILE__)
+    ssh_key = File.exists?(id_rsa) ? "-i #{id_rsa}" : ''
+    puts `ssh #{ssh_key} passmaster@passmaster.io '/home/passmaster/passmaster/script/wrapper /home/passmaster/passmaster/script/server_deploy' 2>&1`, "\n"
   end
 
   def notify_newrelic
