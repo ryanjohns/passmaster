@@ -1,0 +1,61 @@
+#!/usr/bin/env ruby
+
+require 'json'
+require 'openssl'
+require 'tempfile'
+require 'aws-sdk-v1'
+
+class PgBackup
+
+  CONF_DIR        = '/etc/postgresql/9.3/main'
+  AWS_CONFIG_FILE = "#{CONF_DIR}/aws.json"
+  AWS_KEY_FILE    = "#{CONF_DIR}/aws.key"
+
+  def initialize
+    @config = JSON.parse(File.read(AWS_CONFIG_FILE))
+    AWS.config({
+      :access_key_id     => @config['access_key_id'],
+      :secret_access_key => @config['secret_access_key'],
+      :logger            => Logger.new(@config['log_file']),
+      :s3_encryption_key => OpenSSL::PKey::RSA.new(File.read(AWS_KEY_FILE)),
+    })
+
+    bucket     = AWS::S3.new.buckets[@config['bucket']]
+    @object    = bucket.objects["postgresql/pg_basebackup/#{Time.now.utc.strftime('%Y-%m-%d_%H:%M:%S')}.tar.gz"]
+    @temp_file = Tempfile.new('pg_basebackup')
+    @temp_file.close
+  rescue => e
+    report_failure(e)
+    exit 1
+  end
+
+  def backup
+    command  = "PGPASSWORD=#{@config['pg_basebackup_password']} pg_basebackup -w -F tar -z -D -"
+    command << " -p #{@config['pg_basebackup_port']}"
+    command << " -h #{@config['pg_basebackup_host']}"
+    command << " -U #{@config['pg_basebackup_username']}"
+    command << " > #{@temp_file.path} 2> /dev/null"
+
+    `#{command}`
+    raise 'pg_basebackup failed' unless $?.success?
+
+    @object.write(:file => @temp_file.path)
+  rescue => e
+    report_failure(e)
+    exit 1
+  end
+
+  private
+
+  def report_failure(e)
+    AWS::SimpleEmailService.new.send_email({
+      :from      => 'Postgres <noreply@passmaster.io>',
+      :to        => 'noc@passmaster.io',
+      :subject   => 'Postgres Basebackup Failed',
+      :body_text => "Time: #{Time.now.utc}\nHost: #{`hostname`.strip}\n#{e.class}: #{e.message}\n#{e.backtrace.join("\n")}",
+    })
+  end
+
+end
+
+PgBackup.new.backup
