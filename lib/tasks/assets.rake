@@ -4,7 +4,7 @@ namespace :assets do
 
   desc 'Precompiles assets and uploads them to S3'
   task :upload do
-    unless %w(production).include?(Rails.env)
+    if Rails.env != 'production'
       puts "RAILS_ENV must be set to 'production'"
       next
     end
@@ -40,6 +40,46 @@ namespace :assets do
       uploaded << filename
     end
     Rake::Task['assets:clobber'].invoke
+  end
+
+  desc 'Verifies the production assets match the locally compiled assets'
+  task :verify do
+    if Rails.env != 'production'
+      puts "RAILS_ENV must be set to 'production'"
+      next
+    end
+    assets  = []
+    results = {}
+    begin
+      response = Net::HTTP.get_response(URI('https://passmaster.io'))
+      document = Nokogiri::HTML(response.body.encode('UTF-8', 'binary', :invalid => :replace, :undef => :replace, :replace => ''))
+      assets  += document.css('head link').collect   { |node| node['href'] }
+      assets  += document.css('head script').collect { |node| node['src'] }
+    rescue => e
+      puts "Failed looking up production assets - #{e.message}"
+      next
+    end
+    Rake::Task['assets:precompile'].invoke
+    assets.each do |asset|
+      remote_path    = "https://passmaster.io#{asset}"
+      remote_hash    = `curl -s #{remote_path} | gunzip -c | shasum`.split.first
+      local_path     = "#{Rails.root}/public#{asset}"
+      local_hash     = File.exists?(local_path) ? `shasum #{local_path}`.split.first : 'not found'
+      results[asset] = { :local_hash => local_hash, :remote_hash => remote_hash, :match => local_hash == remote_hash }
+    end
+    Rake::Task['assets:clobber'].invoke
+    `git checkout #{Rails.root}/config/manifest.json`
+    results.each do |asset, result|
+      puts "#{asset}:"
+      puts "    local hash:   #{result[:local_hash]}"
+      puts "    remote hash:  #{result[:remote_hash]}"
+      puts "    hashes match: #{result[:match] ? 'YES' : 'NO'}"
+    end
+    if results.all? { |_, result| result[:match] }
+      puts "\nAll assets match!"
+    else
+      puts "\nMismatch detected!"
+    end
   end
 
 end

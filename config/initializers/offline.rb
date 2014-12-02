@@ -7,6 +7,8 @@ data = [
   '/img/combination-32.png',
 ]
 assets = [
+  'libraries.css',
+  'libraries.js',
   'application.css',
   'application.js',
 ]

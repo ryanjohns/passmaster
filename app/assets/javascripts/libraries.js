@@ -1,0 +1,10 @@
+//= require jquery
+//= require jquery_ujs
+//= require jquery.placeholder
+//= require jquery.sortElements
+//= require jquery.qrcode
+//= require jquery.color
+//= require qrcode
+//= require bootstrap
+//= require sjcl
+//= require base64

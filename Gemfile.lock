@@ -125,6 +125,7 @@ DEPENDENCIES
   letter_opener
   lograge
   newrelic_rpm
+  nokogiri
   pg
   rails (= 4.1.8)
   rotp

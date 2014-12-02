@@ -23,19 +23,10 @@ If you would like to verify that the javascript at passmaster.io has not been
 tainted you can do so fairly easily but it does require setting up a development
 environment similar to what you would need to work on the project.
 
-You will also need to view the source of passmaster.io from your browser and get the
-link to the javascript assets. It will be in the document head and look like
-'/assets/application-[digest].js'. You will need this URL (and it's digest) when
-verifying the digests below. You can use whatever hashing command you prefer. This
-example uses `shasum` but `md5` would also work just as well.
-
  * Clone the repository (`git clone git@github.com:ryanjohns/passmaster.git`)
  * Check out the production branch (`git checkout production`)
  * Install required gems (`bundle install`)
- * Compile the assets (`RAILS_ENV=production bundle exec rake assets:precompile`)
- * Compute hash of compiled asset (`shasum public/assets/application-[digest from above].js`)
- * Compute hash of server asset (`curl -s https://passmaster.io/assets/application-[digest from above].js | gunzip -c | shasum`)
- * The two hashes should match
+ * Run the verification task (`RAILS_ENV=production bundle exec rake assets:verify`)
 
 ## Mobile apps
 

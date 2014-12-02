@@ -1,5 +1,9 @@
 /*
- *= require bootstrap
- *= require bootstrap-responsive
- *= require_tree .
+ *= require accounts
+ *= require configure
+ *= require overview
+ *= require settings
+ *= require updates
+ *= require util
+ *= require verify
  */
