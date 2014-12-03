@@ -20,12 +20,16 @@ server {
   try_files $uri @unicorn;
 
   location ^~ /assets/ {
-    proxy_set_header Host passmaster.s3.amazonaws.com;
-    proxy_pass http://s3_assets;
+    try_files $uri @s3bucket;
   }
 
   location @unicorn {
     proxy_pass http://passmaster;
+  }
+
+  location @s3bucket {
+    proxy_set_header Host passmaster.s3.amazonaws.com;
+    proxy_pass http://s3_assets;
   }
 
   location @error503 {
