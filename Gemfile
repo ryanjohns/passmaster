@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.1.8'
+gem 'rails', '4.1.9'
 
 gem 'aws-sdk-v1'
 gem 'haml'
@@ -11,11 +11,11 @@ gem 'newrelic_rpm'
 gem 'nokogiri'
 gem 'pg'
 gem 'rotp'
+gem 'rubyzip', :require => 'zip'
 gem 'sass'
 gem 'sprockets'
 gem 'sprockets-rails', :require => 'sprockets/railtie'
 gem 'unicorn'
-gem 'zipruby'
 
 group :development, :staging do
   gem 'letter_opener'
