@@ -60,6 +60,6 @@ function UserData() {
     return count;
   };
   this.qrCodeUrl = function() {
-    return 'otpauth://totp/Passmaster-' + userData.email + '?secret=' + userData.otpSecret;
+    return 'otpauth://totp/' + userData.email + '?issuer=Passmaster&secret=' + userData.otpSecret;
   };
 };
