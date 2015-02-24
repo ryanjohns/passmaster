@@ -1,9 +1,5 @@
 # Passmaster Nginx configuration
 
-upstream passmaster {
-  server unix:/home/passmaster/passmaster/tmp/sockets/nginx.socket;
-}
-
 server {
   listen 443 ssl;
   server_name passmaster.io;
@@ -20,12 +16,13 @@ server {
   }
 
   location @unicorn {
-    proxy_pass http://passmaster;
+    proxy_pass http://unix:/home/passmaster/passmaster/tmp/sockets/nginx.socket;
   }
 
   location @s3bucket {
     proxy_set_header Host passmaster.s3.amazonaws.com;
-    proxy_pass https://passmaster.s3.amazonaws.com;
+    set $s3upstream "https://passmaster.s3.amazonaws.com";
+    proxy_pass $s3upstream;
   }
 
   location @error503 {
