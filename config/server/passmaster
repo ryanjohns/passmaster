@@ -4,10 +4,6 @@ upstream passmaster {
   server unix:/home/passmaster/passmaster/tmp/sockets/nginx.socket;
 }
 
-upstream s3_assets {
-  server passmaster.s3.amazonaws.com;
-}
-
 server {
   listen 443 ssl;
   server_name passmaster.io;
@@ -29,7 +25,7 @@ server {
 
   location @s3bucket {
     proxy_set_header Host passmaster.s3.amazonaws.com;
-    proxy_pass http://s3_assets;
+    proxy_pass https://passmaster.s3.amazonaws.com;
   }
 
   location @error503 {
