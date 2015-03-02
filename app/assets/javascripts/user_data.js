@@ -27,6 +27,12 @@ function UserData() {
     this.masterPassword = Crypto.sha256(passwd);
     this.apiKey = Crypto.sha256(this.masterPassword + ':' + this.userId);
   };
+  this.setHashedMasterPassword = function(hashedPasswd) {
+    this.oldMasterPassword = this.masterPassword;
+    this.oldApiKey = this.apiKey;
+    this.masterPassword = hashedPasswd;
+    this.apiKey = Crypto.sha256(hashedPasswd + ':' + this.userId);
+  };
   this.revertMasterPassword = function() {
     this.masterPassword = this.oldMasterPassword;
     this.apiKey = this.oldApiKey;

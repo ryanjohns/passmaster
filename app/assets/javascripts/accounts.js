@@ -4,6 +4,7 @@
     bindVerifyEmailLink();
     bindRemoteUpdateNoticeLink();
     bindUnlockAccountsForm();
+    bindUnlockWithTouchIDBtn();
     bindAddAccountBtn();
     bindClickToCopy();
     bindToggleNotes();
@@ -106,6 +107,9 @@
     Accounts.beforeDisplay();
     Accounts.searchTiles($('#accounts_list_search').val());
     $('#accounts_list_search').focus();
+    if (Util.isIOSApp()) {
+      MobileApp.savePasswordForTouchID();
+    }
   };
 
   function handleBadPassword() {
@@ -125,6 +129,9 @@
       $('#total_accounts').attr('data-count', userData.numAccounts());
       $('#total_accounts').html($('#total_accounts').attr('data-count'));
     } else {
+      if (Util.isIOSApp()) {
+        MobileApp.checkForTouchIDAndPassword();
+      }
       $('#lock_btn').hide();
       $('#settings_btn').hide();
       $('#refresh_link').hide();
@@ -291,6 +298,15 @@
       }
     });
   };
+
+  function bindUnlockWithTouchIDBtn() {
+    $('#unlock_touchid_btn').click(function(evt) {
+      evt.preventDefault();
+      if (Util.isIOSApp()) {
+        MobileApp.authenticateWithTouchID();
+      }
+    });
+  }
 
   function bindAddAccountBtn() {
     $('#add_account_btn').click(function(evt) {

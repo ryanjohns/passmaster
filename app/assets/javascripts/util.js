@@ -155,6 +155,9 @@
     Accounts.wipeAccountTiles();
     IdleTimeout.stopTimer();
     Util.chooseSection();
+    if (Util.isIOSApp()) {
+      MobileApp.deletePasswordForTouchID();
+    }
   };
 
   Util.confirmUnsavedChanges = function() {

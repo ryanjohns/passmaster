@@ -205,6 +205,9 @@
         $('#master_password').modal('hide');
       }
       Util.chooseSection();
+      if (Util.isIOSApp()) {
+        MobileApp.savePasswordForTouchID();
+      }
     }).bind('ajax:error', function(evt, xhr) {
       userData.revertMasterPassword();
       Util.handleOtpErrors(xhr, function() {
