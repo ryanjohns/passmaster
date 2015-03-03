@@ -150,14 +150,14 @@
   };
 
   Util.wipeData = function() {
+    if (Util.isIOSApp()) {
+      MobileApp.deletePasswordForTouchID();
+    }
     userData = null;
     localStorage.removeItem('userAttributes');
     Accounts.wipeAccountTiles();
     IdleTimeout.stopTimer();
     Util.chooseSection();
-    if (Util.isIOSApp()) {
-      MobileApp.deletePasswordForTouchID();
-    }
   };
 
   Util.confirmUnsavedChanges = function() {

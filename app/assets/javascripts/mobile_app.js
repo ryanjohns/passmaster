@@ -22,7 +22,7 @@
 
   MobileApp.authenticateWithTouchID = function() {
     var iframe = document.createElement('IFRAME');
-    iframe.setAttribute('src', 'passmasterjs:authenticateWithTouchID');
+    iframe.setAttribute('src', 'passmasterjs:authenticateWithTouchID:' + encodeURIComponent(userData.userId));
     iframe.setAttribute('width', '1px');
     iframe.setAttribute('height', '1px');
     document.documentElement.appendChild(iframe);
@@ -32,7 +32,7 @@
 
   MobileApp.checkForTouchIDAndPassword = function() {
     var iframe = document.createElement('IFRAME');
-    iframe.setAttribute('src', 'passmasterjs:checkForTouchIDAndPassword');
+    iframe.setAttribute('src', 'passmasterjs:checkForTouchIDAndPassword:' + encodeURIComponent(userData.userId));
     iframe.setAttribute('width', '1px');
     iframe.setAttribute('height', '1px');
     document.documentElement.appendChild(iframe);
@@ -52,7 +52,7 @@
 
   MobileApp.deletePasswordForTouchID = function() {
     var iframe = document.createElement('IFRAME');
-    iframe.setAttribute('src', 'passmasterjs:deletePasswordForTouchID');
+    iframe.setAttribute('src', 'passmasterjs:deletePasswordForTouchID:' + encodeURIComponent(userData.userId));
     iframe.setAttribute('width', '1px');
     iframe.setAttribute('height', '1px');
     document.documentElement.appendChild(iframe);
@@ -62,7 +62,7 @@
 
   MobileApp.savePasswordForTouchID = function() {
     var iframe = document.createElement('IFRAME');
-    iframe.setAttribute('src', 'passmasterjs:savePasswordForTouchID:' + encodeURIComponent(userData.masterPassword));
+    iframe.setAttribute('src', 'passmasterjs:savePasswordForTouchID:' + encodeURIComponent(userData.userId) + ':' + encodeURIComponent(userData.masterPassword));
     iframe.setAttribute('width', '1px');
     iframe.setAttribute('height', '1px');
     document.documentElement.appendChild(iframe);

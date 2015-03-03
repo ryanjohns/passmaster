@@ -38,7 +38,7 @@
     if (userData.masterPassword) {
       Accounts.searchTiles($('#accounts_list_search').val());
       $('#accounts_list_search').get(0).setSelectionRange(0, 9999);
-    } else {
+    } else if (!Util.isIOSApp()) {
       $('#unlock_accounts_passwd').focus();
     }
   };
@@ -115,7 +115,9 @@
   function handleBadPassword() {
     Util.notify('Failed to decrypt accounts.', 'error');
     Accounts.lock();
-    $('#unlock_accounts_passwd').get(0).setSelectionRange(0, 9999);
+    if ($('#unlock_accounts_passwd').val().length > 0) {
+      $('#unlock_accounts_passwd').get(0).setSelectionRange(0, 9999);
+    }
   }
 
   function selectView() {
