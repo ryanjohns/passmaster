@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   AS_JSON_OPTIONS = {
     :methods => [ :api_key?, :verified_at? ],
     :only    => [ :id, :email, :encrypted_data, :schema_version, :idle_timeout, :password_length,
-                  :special_chars, :auto_backup, :otp_enabled, :otp_secret, :version_code ]
+                  :special_chars, :auto_backup, :otp_enabled, :otp_secret, :version_code, :touch_id_enabled ]
   }
 
   has_many :otp_sessions, :dependent => :destroy
@@ -77,15 +77,16 @@ class User < ActiveRecord::Base
   end
 
   def update!(params)
-    self.api_key         = params[:new_api_key]     if params[:new_api_key].present?
-    self.encrypted_data  = params[:encrypted_data]  if params[:encrypted_data].present?
-    self.schema_version  = params[:schema_version]  if params[:schema_version].present?
-    self.email           = params[:email]           if params[:email].present?
-    self.idle_timeout    = params[:idle_timeout]    if params[:idle_timeout].present?
-    self.password_length = params[:password_length] if params[:password_length].present?
-    self.special_chars   = params[:special_chars]   if params[:special_chars].present?
-    self.auto_backup     = params[:auto_backup]     if params[:auto_backup].present?
-    self.otp_enabled     = params[:otp_enabled]     if params[:otp_enabled].present?
+    self.api_key          = params[:new_api_key]      if params[:new_api_key].present?
+    self.encrypted_data   = params[:encrypted_data]   if params[:encrypted_data].present?
+    self.schema_version   = params[:schema_version]   if params[:schema_version].present?
+    self.email            = params[:email]            if params[:email].present?
+    self.idle_timeout     = params[:idle_timeout]     if params[:idle_timeout].present?
+    self.password_length  = params[:password_length]  if params[:password_length].present?
+    self.special_chars    = params[:special_chars]    if params[:special_chars].present?
+    self.auto_backup      = params[:auto_backup]      if params[:auto_backup].present?
+    self.otp_enabled      = params[:otp_enabled]      if params[:otp_enabled].present?
+    self.touch_id_enabled = params[:touch_id_enabled] if params[:touch_id_enabled].present?
     save
   end
 

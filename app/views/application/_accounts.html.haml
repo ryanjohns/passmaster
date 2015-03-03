@@ -23,7 +23,7 @@
           %li.divider
           %li
             %a#backup_accounts_link{ :href => '#' } Backup
-          %li#restore_accounts_list_item{ :style => 'display: none;' }
+          %li#restore_accounts_list_item{ :style => 'display:none;' }
             %a#restore_accounts_link{ :href => '#' } Restore
     .clearfix
 
@@ -38,7 +38,7 @@
         %p= password_field_tag(:passwd, '', :placeholder => 'Master Password', :class => 'input-xlarge', :id => 'unlock_accounts_passwd', :required => true)
         %p= submit_tag('Unlock', :class => 'btn btn-primary', :id => 'unlock_accounts_btn')
         %p
-          %button#unlock_touchid_btn.btn.btn-inverse{ :type => 'button', :title => 'Unlock with Touch ID', :style => 'display: none;' } Unlock with Touch ID
+          %button#unlock_touchid_btn.btn.btn-inverse{ :type => 'button', :title => 'Unlock with Touch ID', :style => 'display:none;' } Unlock with Touch ID
 
   #accounts_list{ :style => 'display:none;' }
     #verify_email_notice{ :style => 'display:none;' }

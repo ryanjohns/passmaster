@@ -16,6 +16,8 @@
     $('#preferences_special_chars_enabled').get(0).checked = userData.specialChars;
     $('#preferences_special_chars_disabled').get(0).checked = !userData.specialChars;
     $('#preferences_idle_timeout').val(userData.idleTimeout);
+    $('#preferences_touch_id_enabled').get(0).checked = userData.touchIdEnabled;
+    $('#preferences_touch_id_disabled').get(0).checked = !userData.touchIdEnabled;
     $('#preferences_auto_backup_enabled').get(0).checked = userData.autoBackup;
     $('#preferences_auto_backup_disabled').get(0).checked = !userData.autoBackup;
     $('#preferences_mfa_enabled').get(0).checked = userData.otpEnabled;
@@ -99,6 +101,9 @@
       }
       Util.notify('Preferences saved successfully.')
       $('#preferences').modal('hide');
+      if (Util.isIOSApp()) {
+        MobileApp.savePasswordForTouchID();
+      }
     }).bind('ajax:error', function(evt, xhr) {
       Util.handleOtpErrors(xhr, function() {
         $('#preferences_form').submit();

@@ -30,9 +30,9 @@
     iframe = null;
   };
 
-  MobileApp.checkForTouchIDAndPassword = function() {
+  MobileApp.checkForTouchIDUsability = function() {
     var iframe = document.createElement('IFRAME');
-    iframe.setAttribute('src', 'passmasterjs:checkForTouchIDAndPassword:' + encodeURIComponent(userData.userId));
+    iframe.setAttribute('src', 'passmasterjs:checkForTouchIDUsability:' + encodeURIComponent(userData.userId) + ':' + encodeURIComponent(userData.touchIdEnabled));
     iframe.setAttribute('width', '1px');
     iframe.setAttribute('height', '1px');
     document.documentElement.appendChild(iframe);
@@ -62,7 +62,7 @@
 
   MobileApp.savePasswordForTouchID = function() {
     var iframe = document.createElement('IFRAME');
-    iframe.setAttribute('src', 'passmasterjs:savePasswordForTouchID:' + encodeURIComponent(userData.userId) + ':' + encodeURIComponent(userData.masterPassword));
+    iframe.setAttribute('src', 'passmasterjs:savePasswordForTouchID:' + encodeURIComponent(userData.userId) + ':' + encodeURIComponent(userData.masterPassword) + ':' + encodeURIComponent(userData.touchIdEnabled));
     iframe.setAttribute('width', '1px');
     iframe.setAttribute('height', '1px');
     document.documentElement.appendChild(iframe);
@@ -70,8 +70,13 @@
     iframe = null;
   };
 
-  MobileApp.setUnlockWithTouchIDBtnVisibility = function(visible) {
-    if (visible) {
+  MobileApp.setTouchIDUsability = function(supported, configured) {
+    if (supported) {
+      $('.ios-app-only-pref').show();
+    } else {
+      $('.ios-app-only-pref').hide();
+    }
+    if (configured) {
       $('#unlock_touchid_btn').show();
     } else {
       $('#unlock_touchid_btn').hide();

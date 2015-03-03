@@ -132,7 +132,7 @@
       $('#total_accounts').html($('#total_accounts').attr('data-count'));
     } else {
       if (Util.isIOSApp()) {
-        MobileApp.checkForTouchIDAndPassword();
+        MobileApp.checkForTouchIDUsability();
       }
       $('#lock_btn').hide();
       $('#settings_btn').hide();

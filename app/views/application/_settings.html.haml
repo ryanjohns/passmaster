@@ -30,6 +30,14 @@
             - val = i * 5
             %option{ :value => val }= "#{val} Minutes"
           %option{ :value => 60 } 1 Hour
+      %strong.ios-app-only-pref{ :style => 'display:none;' } Unlock with Touch ID
+      .inline-radios.ios-app-only-pref{ :style => 'display:none;' }
+        = label_tag(nil, :class => 'radio inline') do
+          = radio_button_tag(:touch_id_enabled, '1', false, :id => 'preferences_touch_id_enabled')
+          Enabled
+        = label_tag(nil, :class => 'radio inline') do
+          = radio_button_tag(:touch_id_enabled, '0', false, :id => 'preferences_touch_id_disabled')
+          Disabled
       %strong Auto-backup to Email on Change
       .inline-radios
         = label_tag(nil, :class => 'radio inline') do
@@ -119,13 +127,13 @@
   .modal-body
     %p
       Use the Email button to save a backup of your encrypted accounts as an attachment to your email.
-      %span#file_backup_copy{ :style => 'display: none;' } Alternatively, you can use the File button to download a backup to your computer.
+      %span#file_backup_copy{ :style => 'display:none;' } Alternatively, you can use the File button to download a backup to your computer.
     .alert.alert-info
       %strong Note:
       Backups are locked with your current Master Password and you will need the password in order to restore the backup.
     %p
       = link_to('Email', '/users', :remote => true, :id => 'backup_accounts_email_btn', :class => 'btn btn-primary')
-      %button#backup_accounts_file_btn.btn.btn-inverse{ :type => 'button', :style => 'display: none;' } File
+      %button#backup_accounts_file_btn.btn.btn-inverse{ :type => 'button', :style => 'display:none;' } File
       %button.btn{ :type => 'button', 'data-dismiss' => 'modal', 'aria-hidden' => 'true' } Close
   .modal-footer
 

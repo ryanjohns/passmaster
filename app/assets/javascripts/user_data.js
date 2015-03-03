@@ -17,6 +17,7 @@ function UserData() {
     this.otpEnabled = attrs['otp_enabled'];
     this.otpSecret = attrs['otp_secret'];
     this.versionCode = attrs['version_code'];
+    this.touchIdEnabled = attrs['touch_id_enabled']
     if (this.configured) {
       localStorage.userAttributes = JSON.stringify(attrs);
     }
