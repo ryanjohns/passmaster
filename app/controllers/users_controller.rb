@@ -34,13 +34,13 @@ class UsersController < ApplicationController
       end
       send_data(zip.string, :filename => "#{BACKUP_PREFIX}.zip", :disposition => 'attachment')
     else
-      Mailer.backup(@user.email, filename, data).deliver
+      Mailer.backup(@user.email, filename, data).deliver_now
       render :json => { :success => true }
     end
   end
 
   def resend_verification
-    Mailer.verify_email(@user).deliver if @user.generate_verification_code!
+    Mailer.verify_email(@user).deliver_now if @user.generate_verification_code!
     @user.encrypted_data = nil
     @user.otp_secret = nil
     respond_with_json(@user)

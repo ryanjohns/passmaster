@@ -99,22 +99,22 @@ class User < ActiveRecord::Base
   private
 
   def deliver_new_user
-    Mailer.verify_email(self).deliver
+    Mailer.verify_email(self).deliver_now
   end
 
   def deliver_notifications
     if email_changed?
       filename, data = backup_data(true)
-      Mailer.email_changed(email_was, filename, data, id).deliver
-      Mailer.verify_email(self).deliver
+      Mailer.email_changed(email_was, filename, data, id).deliver_now
+      Mailer.verify_email(self).deliver_now
     end
     if api_key_changed? && api_key_was.present?
       filename, data = backup_data(true)
-      Mailer.master_password_changed(email, filename, data, id).deliver
+      Mailer.master_password_changed(email, filename, data, id).deliver_now
     end
     if auto_backup && encrypted_data_changed? && encrypted_data.present?
       filename, data = backup_data(false)
-      Mailer.auto_backup(email, filename, data).deliver
+      Mailer.auto_backup(email, filename, data).deliver_now
     end
   end
 

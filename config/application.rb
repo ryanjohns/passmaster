@@ -27,6 +27,9 @@ module Passmaster
     # Don't generate authenticity token input fields on remote forms
     config.action_view.embed_authenticity_token_in_remote_forms = false
 
+    # Do not swallow errors in after_commit/after_rollback callbacks.
+    config.active_record.raise_in_transactional_callbacks = true
+
     # Change the log format to single-line and silence specific routes
     ACTIONS_TO_IGNORE = { 'health_checks' => ['show'] }
     config.lograge.enabled = true
