@@ -30,14 +30,10 @@ class ApplicationController < ActionController::Base
   private
 
   def respond_with_json(object)
-    respond_with(object) do |format|
-      format.json do
-        if object.errors.present?
-          render :json => { :errors => object.errors }, :status => :unprocessable_entity
-        else
-          render :json => object
-        end
-      end
+    if object.errors.present?
+      render :json => { :errors => object.errors }, :status => :unprocessable_entity
+    else
+      render :json => object
     end
   end
 

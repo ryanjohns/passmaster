@@ -1,7 +1,5 @@
 class UsersController < ApplicationController
 
-  respond_to :json
-
   before_filter :find_user, :only => [ :show, :update, :backup, :resend_verification, :verify ]
   before_filter :verify_user, :only => [ :update ]
   before_filter :verify_api_key, :only => [ :show, :update, :backup ]
@@ -17,7 +15,7 @@ class UsersController < ApplicationController
     user.save if user.new_record?
     user.encrypted_data = nil
     user.otp_secret = nil
-    respond_with(user)
+    respond_with_json(user)
   end
 
   def update
@@ -45,7 +43,7 @@ class UsersController < ApplicationController
     Mailer.verify_email(@user).deliver if @user.generate_verification_code!
     @user.encrypted_data = nil
     @user.otp_secret = nil
-    respond_with(@user)
+    respond_with_json(@user)
   end
 
   def verify
