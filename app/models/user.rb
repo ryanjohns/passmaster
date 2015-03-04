@@ -9,14 +9,14 @@ class User < ActiveRecord::Base
 
   has_many :otp_sessions, :dependent => :destroy
 
-  validates_presence_of :email
-  validates_presence_of :api_key, :if => :encrypted_data?
-  validates_presence_of :encrypted_data, :if => :api_key?
-  validates_uniqueness_of :email, :if => :email_changed?
-  validates_format_of :email, :with => EMAIL_REGEX, :if => :email_changed?
-  validates_numericality_of :schema_version, :only_integer => true, :greater_than_or_equal_to => 0
-  validates_numericality_of :idle_timeout, :only_integer => true, :greater_than_or_equal_to => 0
-  validates_numericality_of :password_length, :only_integer => true, :greater_than_or_equal_to => 6, :less_than_or_equal_to => 32
+  validates :email, :presence => true
+  validates :api_key, :presence => true, :if => :encrypted_data?
+  validates :encrypted_data, :presence => true, :if => :api_key?
+  validates :email, :uniqueness => true, :if => :email_changed?
+  validates :email, :format => { :with => EMAIL_REGEX }, :if => :email_changed?
+  validates :schema_version, :numericality => { :only_integer => true, :greater_than_or_equal_to => 0 }
+  validates :idle_timeout, :numericality => { :only_integer => true, :greater_than_or_equal_to => 0 }
+  validates :password_length, :numericality => { :only_integer => true, :greater_than_or_equal_to => 6, :less_than_or_equal_to => 32 }
   validate :email_deliverable, :if => :email_changed?
   validate :verification_code_matches, :if => :verified_at_changed?
 

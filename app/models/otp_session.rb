@@ -8,10 +8,10 @@ class OtpSession < ActiveRecord::Base
 
   belongs_to :user
 
-  validates_presence_of :user_id, :client_id
-  validates_uniqueness_of :client_id, :if => :client_id_changed?
-  validates_numericality_of :login_count, :only_integer => true, :greater_than_or_equal_to => 0
-  validates_numericality_of :failed_count, :only_integer => true, :greater_than_or_equal_to => 0, :less_than_or_equal_to => MAX_FAILS
+  validates :user_id, :client_id, :presence => true
+  validates :client_id, :uniqueness => true, :if => :client_id_changed?
+  validates :login_count, :numericality => { :only_integer => true, :greater_than_or_equal_to => 0 }
+  validates :failed_count, :numericality => { :only_integer => true, :greater_than_or_equal_to => 0, :less_than_or_equal_to => MAX_FAILS }
 
   def self.expired
     where(["activated_at < ?", Time.zone.now - ACTIVE_DAYS.days])
