@@ -83,6 +83,10 @@
     }
   };
 
+  MobileApp.userFallbackForTouchID = function() {
+    $('#unlock_accounts_passwd').focus();
+  };
+
   MobileApp.unlockWithPasswordFromTouchID = function(hashedPassword) {
     userData.setHashedMasterPassword(hashedPassword);
     IdleTimeout.startTimer();

@@ -115,7 +115,7 @@
   function handleBadPassword() {
     Util.notify('Failed to decrypt accounts.', 'error');
     Accounts.lock();
-    if ($('#unlock_accounts_passwd').val().length > 0) {
+    if ($('#unlock_accounts_passwd').val().length > 0 && !Util.isMobile()) {
       $('#unlock_accounts_passwd').get(0).setSelectionRange(0, 9999);
     }
   }

@@ -32,6 +32,10 @@
     $('#init_session_link').click();
   };
 
+  Util.isMobile = function() {
+    return (Util.isAndroid() || Util.isIOS());
+  };
+
   Util.isAndroid = function() {
     if (android == null) {
       android = androidRegex.test(navigator.userAgent);
