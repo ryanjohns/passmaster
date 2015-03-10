@@ -125,7 +125,7 @@ GEM
       sexp_processor (~> 4.1)
     rubyzip (1.1.7)
     sass (3.4.13)
-    sexp_processor (4.4.5)
+    sexp_processor (4.5.0)
     sprockets (2.12.3)
       hike (~> 1.2)
       multi_json (~> 1.0)
