@@ -1,3 +1,4 @@
+require 'zlib'
 require File.expand_path('../../../config/initializers/aws_sdk', __FILE__)
 
 namespace :assets do
@@ -30,7 +31,10 @@ namespace :assets do
         content_type = 'image/gif'              if filename =~ /\.gif$/
         content_type = 'application/javascript' if filename =~ /\.js$/
         content_type = 'text/plain'             if filename =~ /\.txt$/
-        if filename =~ /\.(css|js)$/ && File.exists?("#{assets}/#{filename}.gz")
+        if filename =~ /\.(css|js)\z/
+          Zlib::GzipWriter.open("#{assets}/#{filename}.gz") { |gz| gz.write(File.read("#{assets}/#{filename}")) }
+        end
+        if File.exists?("#{assets}/#{filename}.gz")
           object.write(options.merge({ :file => "#{assets}/#{filename}.gz", :content_type => content_type, :content_encoding => 'gzip' }))
         else
           object.write(options.merge({ :file => "#{assets}/#{filename}", :content_type => content_type }))
