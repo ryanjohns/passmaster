@@ -124,7 +124,7 @@ GEM
     rubyzip (1.1.7)
     sass (3.4.13)
     sexp_processor (4.5.0)
-    sprockets (3.0.1)
+    sprockets (3.0.2)
       rack (~> 1.0)
     sprockets-rails (2.2.4)
       actionpack (>= 3.0)
