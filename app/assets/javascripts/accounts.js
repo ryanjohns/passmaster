@@ -82,6 +82,7 @@
       userData.wipeOldMasterPassword();
       userData.accounts = {};
     }
+    $('#accounts_list_search').val('');
     IdleTimeout.stopTimer();
     selectView();
     Util.displaySection('accounts');
