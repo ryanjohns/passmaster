@@ -276,7 +276,7 @@
     $('button[data-logout]').click(function(evt) {
       evt.preventDefault();
       if (Util.confirmUnsavedChanges()) {
-        if (confirm('Are you sure you want to logout? This will make your accounts unavailable without an internet connection.')) {
+        if (confirm('Are you sure you want to logout?')) {
           Util.wipeData();
         }
       }
