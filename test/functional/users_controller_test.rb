@@ -58,6 +58,16 @@ class UsersControllerTest < ActionController::TestCase
     assert_equal u.email, data['email']
   end
 
+  test 'create existing user with mixed cased email' do
+    u = FactoryGirl.create(:user, :api_key => 'foo', :encrypted_data => 'bar', :email => 'Foo@gmail.com')
+    post :create, :format => :json, :email => u.email.downcase
+    assert_response :success
+    data = JSON.parse(@response.body)
+    assert_nil data['encrypted_data']
+    assert_nil data['otp_secret']
+    assert_equal u.email, data['email']
+  end
+
   test 'update' do
     u = FactoryGirl.create(:user)
     u.verify_code!(u.verification_code)

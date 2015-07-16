@@ -11,7 +11,7 @@ class UsersController < ApplicationController
   end
 
   def create
-    user = User.find_or_initialize_by(:email => params[:email])
+    user = User.with_email(params[:email]).first || User.new(:email => params[:email])
     user.save if user.new_record?
     user.encrypted_data = nil
     user.otp_secret = nil

@@ -12,6 +12,8 @@ class UserTest < ActiveSupport::TestCase
     assert !u.valid?
     u.email = user.email
     assert !u.valid?
+    u.email = user.email.upcase
+    assert !u.valid?
     u.email = 'someone@example.com'
     assert !u.valid?
   end

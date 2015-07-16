@@ -12,11 +12,11 @@ class User < ActiveRecord::Base
   validates :email, :presence => true
   validates :api_key, :presence => true, :if => :encrypted_data?
   validates :encrypted_data, :presence => true, :if => :api_key?
-  validates :email, :uniqueness => true, :if => :email_changed?
   validates :email, :format => { :with => EMAIL_REGEX }, :if => :email_changed?
   validates :schema_version, :numericality => { :only_integer => true, :greater_than_or_equal_to => 0 }
   validates :idle_timeout, :numericality => { :only_integer => true, :greater_than_or_equal_to => 0 }
   validates :password_length, :numericality => { :only_integer => true, :greater_than_or_equal_to => 6, :less_than_or_equal_to => 32 }
+  validate :email_uniqueness, :if => :email_changed?
   validate :email_deliverable, :if => :email_changed?
   validate :verification_code_matches, :if => :verified_at_changed?
 
@@ -28,6 +28,8 @@ class User < ActiveRecord::Base
   after_save :deactivate_otp_sessions, :if => :should_generate_otp_secret?
   after_create :deliver_new_user
   after_update :deliver_notifications
+
+  scope :with_email, lambda { |email| where('LOWER(email) = ?', email.downcase) }
 
   def as_json(options = {})
     super(options.merge(AS_JSON_OPTIONS))
@@ -154,6 +156,10 @@ class User < ActiveRecord::Base
 
   def should_generate_verification_code?
     new_record? || email_changed? || verified_at_changed?
+  end
+
+  def email_uniqueness
+    errors.add(:email, 'is already taken') unless User.with_email(email.downcase).first.nil?
   end
 
   def email_deliverable
