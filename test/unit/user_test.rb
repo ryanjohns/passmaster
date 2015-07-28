@@ -3,7 +3,7 @@ require 'test_helper'
 class UserTest < ActiveSupport::TestCase
 
   test 'has a valid email address' do
-    user = FactoryGirl.create(:user)
+    user = FactoryGirl.create(:user, :email => 'foo@gmail.com')
     u = FactoryGirl.build(:user)
     assert u.valid?
     u.email = nil
@@ -16,6 +16,8 @@ class UserTest < ActiveSupport::TestCase
     assert !u.valid?
     u.email = 'someone@example.com'
     assert !u.valid?
+    user.email = 'FOO@gmail.com'
+    assert user.valid?
   end
 
   test 'has an api_key and encrypted_data' do
@@ -115,6 +117,9 @@ class UserTest < ActiveSupport::TestCase
     u.otp_enabled = !u.otp_enabled
     assert u.save
     assert_equal vc, u.verification_code
+    u.email = 'FOO@gmail.com'
+    assert u.save
+    assert_equal vc, u.verification_code
   end
 
   test 'initializes schema_version' do
@@ -125,8 +130,12 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'unsets verified_at' do
-    u = FactoryGirl.create(:user)
+    u = FactoryGirl.create(:user, :email => 'bar@gmail.com')
     assert u.verify_code!(u.verification_code)
+    vat = u.verified_at
+    u.email = 'BAR@gmail.com'
+    assert u.save
+    assert_equal vat.to_s, u.verified_at.to_s
     u.email = 'foo@gmail.com'
     assert u.save
     assert_equal nil, u.verified_at
@@ -149,36 +158,53 @@ class UserTest < ActiveSupport::TestCase
       assert u.save
     end
     assert_equal u.email, ActionMailer::Base.deliveries.last.to.first
+    assert_equal '[Passmaster] Email Verification', ActionMailer::Base.deliveries.last.subject
   end
 
   test 'delivers notification emails' do
-    u = FactoryGirl.create(:user, :email => 'foo@gmail.com', :api_key => 'foo', :encrypted_data => 'bar', :auto_backup => false)
+    u = nil
+    assert_difference('ActionMailer::Base.deliveries.size') do
+      u = FactoryGirl.create(:user, :email => 'foo@gmail.com', :api_key => 'foo', :encrypted_data => 'bar', :auto_backup => false)
+    end
+    assert_equal 'foo@gmail.com', ActionMailer::Base.deliveries.last.to.first
+    assert_equal '[Passmaster] Email Verification', ActionMailer::Base.deliveries.last.subject
+    ActionMailer::Base.deliveries = []
     u.email = 'new_foo@gmail.com'
     assert_difference('ActionMailer::Base.deliveries.size', 2) do
       assert u.save
     end
-    assert_equal 'foo@gmail.com', ActionMailer::Base.deliveries[-2].to.first
-    assert_equal 2, ActionMailer::Base.deliveries[-2].attachments.size
+    assert_equal 'foo@gmail.com', ActionMailer::Base.deliveries.first.to.first
+    assert_equal '[Passmaster] Email Changed', ActionMailer::Base.deliveries.first.subject
+    assert_equal 2, ActionMailer::Base.deliveries.first.attachments.size
     assert_equal 'new_foo@gmail.com', ActionMailer::Base.deliveries.last.to.first
+    assert_equal '[Passmaster] Email Verification', ActionMailer::Base.deliveries.last.subject
+    ActionMailer::Base.deliveries = []
     u.api_key = 'new_foo'
     assert_difference('ActionMailer::Base.deliveries.size') do
       assert u.save
     end
     assert_equal 'new_foo@gmail.com', ActionMailer::Base.deliveries.last.to.first
+    assert_equal '[Passmaster] Master Password Changed', ActionMailer::Base.deliveries.last.subject
     assert_equal 2, ActionMailer::Base.deliveries.last.attachments.size
+    ActionMailer::Base.deliveries = []
     u.encrypted_data = 'new_bar'
     assert_no_difference('ActionMailer::Base.deliveries.size') do
       assert u.save
     end
-    assert_equal 'new_foo@gmail.com', ActionMailer::Base.deliveries.last.to.first
-    assert_equal 2, ActionMailer::Base.deliveries.last.attachments.size
     u.auto_backup = true
     u.encrypted_data = 'new_new_bar'
     assert_difference('ActionMailer::Base.deliveries.size') do
       assert u.save
     end
     assert_equal 'new_foo@gmail.com', ActionMailer::Base.deliveries.last.to.first
+    assert_equal '[Passmaster] Auto-Backup', ActionMailer::Base.deliveries.last.subject
     assert_equal 2, ActionMailer::Base.deliveries.last.attachments.size
+    ActionMailer::Base.deliveries = []
+    u.email = 'NEW_foo@gmail.com'
+    assert_no_difference('ActionMailer::Base.deliveries.size') do
+      assert u.save
+    end
+    assert_equal 'NEW_foo@gmail.com', u.reload.email
   end
 
   test 'as_json' do

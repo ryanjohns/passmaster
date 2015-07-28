@@ -12,18 +12,18 @@ class User < ActiveRecord::Base
   validates :email, :presence => true
   validates :api_key, :presence => true, :if => :encrypted_data?
   validates :encrypted_data, :presence => true, :if => :api_key?
-  validates :email, :format => { :with => EMAIL_REGEX }, :if => :email_changed?
+  validates :email, :format => { :with => EMAIL_REGEX }, :if => :email_changed_without_casing?
   validates :schema_version, :numericality => { :only_integer => true, :greater_than_or_equal_to => 0 }
   validates :idle_timeout, :numericality => { :only_integer => true, :greater_than_or_equal_to => 0 }
   validates :password_length, :numericality => { :only_integer => true, :greater_than_or_equal_to => 6, :less_than_or_equal_to => 32 }
-  validate :email_uniqueness, :if => :email_changed?
-  validate :email_deliverable, :if => :email_changed?
+  validate :email_uniqueness, :if => :email_changed_without_casing?
+  validate :email_deliverable, :if => :email_changed_without_casing?
   validate :verification_code_matches, :if => :verified_at_changed?
 
   before_save :generate_otp_secret, :if => :should_generate_otp_secret?
   before_save :generate_verification_code, :if => :should_generate_verification_code?
   before_save :set_schema_version, :if => :new_record?
-  before_save :unset_verified_at, :if => :email_changed?
+  before_save :unset_verified_at, :if => :email_changed_without_casing?
   before_save :update_version_code
   after_save :deactivate_otp_sessions, :if => :should_generate_otp_secret?
   after_create :deliver_new_user
@@ -98,6 +98,12 @@ class User < ActiveRecord::Base
     save
   end
 
+  protected
+
+  def email_changed_without_casing?
+    email_changed? && email.to_s.downcase != email_was.to_s.downcase
+  end
+
   private
 
   def deliver_new_user
@@ -105,7 +111,7 @@ class User < ActiveRecord::Base
   end
 
   def deliver_notifications
-    if email_changed?
+    if email_changed_without_casing?
       filename, data = backup_data(true)
       Mailer.email_changed(email_was, filename, data, id).deliver_now
       Mailer.verify_email(self).deliver_now
@@ -155,11 +161,11 @@ class User < ActiveRecord::Base
   end
 
   def should_generate_verification_code?
-    new_record? || email_changed? || verified_at_changed?
+    new_record? || email_changed_without_casing? || verified_at_changed?
   end
 
   def email_uniqueness
-    errors.add(:email, 'is already taken') unless User.with_email(email.downcase).first.nil?
+    errors.add(:email, 'is already taken') unless User.with_email(email).first.nil?
   end
 
   def email_deliverable
