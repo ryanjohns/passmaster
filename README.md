@@ -58,7 +58,7 @@ of lines. Just follow the steps below.
 * Live version: <https://passmaster.io>
 * Stanford Javascript Crypto Library: <https://bitwiseshiftleft.github.io/sjcl/>
 
-## Author/Maintainter
+## Author/Maintainer
 
  * [Ryan Johns](https://github.com/ryanjohns)
 
