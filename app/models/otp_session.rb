@@ -9,7 +9,7 @@ class OtpSession < ActiveRecord::Base
   belongs_to :user
 
   validates :user_id, :client_id, :presence => true
-  validates :client_id, :uniqueness => true, :if => :client_id_changed?
+  validates :client_id, :uniqueness => { :scope => :user_id }, :if => :client_id_changed?
   validates :login_count, :numericality => { :only_integer => true, :greater_than_or_equal_to => 0 }
   validates :failed_count, :numericality => { :only_integer => true, :greater_than_or_equal_to => 0, :less_than_or_equal_to => MAX_FAILS }
 

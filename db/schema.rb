@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150716093449) do
+ActiveRecord::Schema.define(version: 20150816203226) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,9 +31,9 @@ ActiveRecord::Schema.define(version: 20150716093449) do
   end
 
   add_index "otp_sessions", ["activated_at"], name: "index_otp_sessions_on_activated_at", using: :btree
-  add_index "otp_sessions", ["client_id"], name: "index_otp_sessions_on_client_id", unique: true, using: :btree
+  add_index "otp_sessions", ["client_id"], name: "index_otp_sessions_on_client_id", using: :btree
   add_index "otp_sessions", ["id"], name: "index_otp_sessions_on_id", unique: true, using: :btree
-  add_index "otp_sessions", ["user_id", "client_id"], name: "index_otp_sessions_on_user_id_and_client_id", using: :btree
+  add_index "otp_sessions", ["user_id", "client_id"], name: "index_otp_sessions_on_user_id_and_client_id", unique: true, using: :btree
 
   create_table "users", id: false, force: :cascade do |t|
     t.string   "id",                limit: 32,                 null: false

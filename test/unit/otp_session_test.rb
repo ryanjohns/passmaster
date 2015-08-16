@@ -14,8 +14,10 @@ class OtpSessionTest < ActiveSupport::TestCase
     c = o.client_id
     o.client_id = nil
     assert !o.valid?
-    o = FactoryGirl.build(:otp_session, :client_id => c)
-    assert !o.valid?
+    o2 = FactoryGirl.build(:otp_session, :client_id => c)
+    assert o2.valid?
+    o2.user = o.user
+    assert !o2.valid?
   end
 
   test 'has a valid login_count' do
