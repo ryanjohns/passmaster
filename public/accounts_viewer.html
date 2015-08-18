@@ -94,7 +94,14 @@
 
           html += '<tr>';
           for (var i = 0; i < columns.length; i++) {
-            html += '<td><pre>' + accounts[accountId][columns[i]] + '</pre></td>';
+            var str = accounts[accountId][columns[i]];
+
+            // html-escape the string
+            var div = document.createElement('div');
+            div.appendChild(document.createTextNode(str));
+            var escaped_str = div.innerHTML;
+
+            html += '<td><pre>' + escaped_str + '</pre></td>';
           }
           html += '</tr>';
         }
