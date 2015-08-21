@@ -157,6 +157,9 @@
     if (Util.isIOSApp()) {
       MobileApp.deletePasswordForTouchID();
     }
+    if ($('#unlock_accounts_passwd').attr('type') == 'password') {
+      $('#unlock_accounts_passwd').val('');
+    }
     userData = null;
     localStorage.removeItem('userAttributes');
     Accounts.wipeAccountTiles();
