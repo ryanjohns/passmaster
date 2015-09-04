@@ -377,7 +377,10 @@
     });
 
     $('.read input.username, .read input.password').keydown(function(evt) {
-      if (!(evt.which >= 37 && evt.which <= 40) && !((evt.metaKey || evt.ctrlKey) && String.fromCharCode(evt.which).toLowerCase() == 'c')) {
+      // only allow arrows, tab, and ctrl + (a | c | l | r)
+      var char = String.fromCharCode(evt.which).toLowerCase();
+      if (!(evt.which >= 37 && evt.which <= 40) && !evt.which == 9 &&
+          !((evt.metaKey || evt.ctrlKey) && (char == 'c' || char == 'r' || char == 'l' || char == 'a'))) {
         evt.preventDefault();
       }
     }).bind('cut paste', function(evt) {
