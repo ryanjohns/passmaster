@@ -3,6 +3,7 @@
 require 'zlib'
 require 'json'
 require 'openssl'
+require 'digest/md5'
 require 'aws-sdk-v1'
 
 class PgArchive
@@ -36,11 +37,20 @@ class PgArchive
     raise 'file does not exist'    unless File.exists?(@file_path)
     raise 'archive already exists' if @object.exists?
 
-    io = StringIO.new
-    gz = Zlib::GzipWriter.new(io)
-    gz.write(open(@file_path).read)
-    gz.close
-    @object.write(io.string)
+    local_md5 = Digest::MD5.hexdigest(open(@file_path).read)
+    local_io  = StringIO.new
+    local_gz  = Zlib::GzipWriter.new(local_io)
+    local_gz.write(open(@file_path).read)
+    local_gz.close
+    @object.write(local_io.string)
+
+    remote_gz  = Zlib::GzipReader.new(StringIO.new(@object.read))
+    remote_md5 = Digest::MD5.hexdigest(remote_gz.read)
+    remote_gz.close
+    if local_md5 != remote_md5
+      @object.delete
+      raise 'checksums do not match'
+    end
   rescue => e
     report_failure(e)
     exit 1
