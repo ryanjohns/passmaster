@@ -5,11 +5,11 @@
   var timer;
   var timerVal = '';
   var notificationTimer;
-  var androidRegex = new RegExp('Android');
+  var androidRegex = new RegExp('Android', 'i');
   var android = null;
   var androidAppRegex = new RegExp('PassmasterAndroid');
   var androidApp = null;
-  var iOSRegex = new RegExp('iPhone');
+  var iOSRegex = new RegExp('(iPhone|iPod|iPad)', 'i');
   var iOS = null;
   var iOSAppRegex = new RegExp('PassmasterIOS');
   var iOSApp = null;
