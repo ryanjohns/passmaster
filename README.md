@@ -13,7 +13,7 @@ You will also need a variant of PostgreSQL 9.4 (9.3, 9.2, and 9.1 should also wo
  * Fork and clone the repository
  * Create and modify env.local.yml (`cp config/env.yml config/env.local.yml`)
  * Install required gems (`bundle install`)
- * Create and migrate the database (`bundle exec rake db:create db:migrate`)
+ * Create and migrate the database (`bundle exec rake db:create db:schema:load`)
  * Start the server (`bundle exec script/unicorn start`)
  * Browse to http://localhost:8000
 
