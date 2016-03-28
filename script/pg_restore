@@ -7,8 +7,8 @@ require 'aws-sdk-v1'
 
 class PgRestore
 
-  DATA_DIR        = '/var/lib/postgresql/9.4/main'
-  CONF_DIR        = '/etc/postgresql/9.4/main'
+  DATA_DIR        = '/var/lib/postgresql/9.5/main'
+  CONF_DIR        = '/etc/postgresql/9.5/main'
   AWS_CONFIG_FILE = "#{CONF_DIR}/aws.json"
   AWS_KEY_FILE    = "#{CONF_DIR}/aws.key"
 
