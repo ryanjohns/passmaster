@@ -22,7 +22,7 @@
       %form#configure_form
         %p= password_field_tag(:passwd, '', :placeholder => 'Password', :class => 'input-xlarge', :id => 'configure_passwd', :required => true)
         %p= password_field_tag(:passwd2, '', :placeholder => 'Confirm Password', :class => 'input-xlarge', :id => 'configure_passwd2', :required => true)
-        %p= submit_tag('Set Master Password', :class => 'btn btn-primary', :id => 'configure_btn')
+        %p= submit_tag('Set Master Password', :class => 'btn btn-primary', :id => 'configure_btn', :data => { :disable_with => false })
       = form_tag(users_path, :method => :put, :remote => true, :id => 'configure_hidden_form', :style => 'display:none;') do
         = hidden_field_tag(:new_api_key, '', :id => 'configure_hidden_new_api_key')
         = hidden_field_tag(:encrypted_data, '', :id => 'configure_hidden_encrypted_data')

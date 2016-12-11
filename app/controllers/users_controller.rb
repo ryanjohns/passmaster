@@ -1,10 +1,10 @@
 class UsersController < ApplicationController
 
-  before_filter :find_user, :only => [ :show, :update, :backup, :resend_verification, :verify ]
-  before_filter :verify_user, :only => [ :update ]
-  before_filter :verify_api_key, :only => [ :show, :update, :backup ]
-  before_filter :verify_otp_session, :only => [ :show, :update, :backup ]
-  before_filter :verify_version_code, :only => [ :update ]
+  before_action :find_user, :only => [ :show, :update, :backup, :resend_verification, :verify ]
+  before_action :verify_user, :only => [ :update ]
+  before_action :verify_api_key, :only => [ :show, :update, :backup ]
+  before_action :verify_otp_session, :only => [ :show, :update, :backup ]
+  before_action :verify_version_code, :only => [ :update ]
 
   def show
     respond_with_json(@user)

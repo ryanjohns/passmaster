@@ -1,4 +1,4 @@
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   include UuidPrimaryKey
 
   AS_JSON_OPTIONS = {

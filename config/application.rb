@@ -1,7 +1,14 @@
-require File.expand_path('../boot', __FILE__)
-require File.expand_path('../initializers/env', __FILE__)
+require_relative 'boot'
 
-require 'rails/all'
+require 'rails'
+# Pick the frameworks you want:
+require 'active_model/railtie'
+require 'active_record/railtie'
+require 'action_controller/railtie'
+require 'action_mailer/railtie'
+require 'action_view/railtie'
+require 'sprockets/railtie'
+require 'rails/test_unit/railtie'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -27,8 +34,8 @@ module Passmaster
     # Don't generate authenticity token input fields on remote forms
     config.action_view.embed_authenticity_token_in_remote_forms = false
 
-    # Do not swallow errors in after_commit/after_rollback callbacks.
-    config.active_record.raise_in_transactional_callbacks = true
+    # Disable per-form CSRF tokens
+    config.action_controller.per_form_csrf_tokens = false
 
     # Change the log format to single-line and silence specific routes
     ACTIONS_TO_IGNORE = { 'health_checks' => ['show'] }
@@ -38,9 +45,9 @@ module Passmaster
     end
     config.lograge.custom_options = lambda do |event|
       params       = event.payload[:params].except('format', 'action', 'controller', '_method', 'authenticity_token', 'utf8')
-      extra_fields = { :ip => event.payload[:ip] }
+      extra_fields = { :time => event.time.utc, :ip => event.payload[:ip] }
       extra_fields.merge!({ :params => params }) if params.any?
-      Rails.env.production? ? extra_fields : { :time => event.time.utc }.merge(extra_fields)
+      extra_fields
     end
 
     # Tweak generators

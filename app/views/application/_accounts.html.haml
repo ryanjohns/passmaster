@@ -36,7 +36,7 @@
       %p Accounts are locked. Enter the Master Password to unlock.
       %form#unlock_accounts_form
         %p= password_field_tag(:passwd, '', :placeholder => 'Master Password', :class => 'input-xlarge', :id => 'unlock_accounts_passwd', :required => true)
-        %p= submit_tag('Unlock', :class => 'btn btn-primary', :id => 'unlock_accounts_btn')
+        %p= submit_tag('Unlock', :class => 'btn btn-primary', :id => 'unlock_accounts_btn', :data => { :disable_with => false })
         %p
           %button#unlock_touchid_btn.btn.btn-inverse{ :type => 'button', :title => 'Unlock with Touch ID', :style => 'display:none;' } Unlock with Touch ID
 

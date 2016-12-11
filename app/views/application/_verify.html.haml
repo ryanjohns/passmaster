@@ -17,5 +17,5 @@
       = form_tag(users_path, :method => :put, :remote => true, :id => 'verify_form') do
         = hidden_field_tag(:api_key, '', :id => 'verify_api_key')
         %p= text_field_tag(:verification_code, '', :placeholder => 'Verification Code', :class => 'input-xlarge', :id => 'verify_verification_code', :required => true, :autocomplete => 'off', :autocorrect => 'off', :autocapitalize => 'off')
-        %p= submit_tag('Verify', :class => 'btn btn-primary', :id => 'verify_btn')
+        %p= submit_tag('Verify', :class => 'btn btn-primary', :id => 'verify_btn', :data => { :disable_with => false })
       %p= link_to('Send New Code', users_path, :class => 'btn', :id => 'verify_send_code_link', :remote => true, :method => :post)

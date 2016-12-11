@@ -70,7 +70,7 @@
           %strong Secret Key:
           %strong#otp_secret
       %p
-        = submit_tag('Save Preferences', :class => 'btn btn-primary', :id => 'preferences_btn')
+        = submit_tag('Save Preferences', :class => 'btn btn-primary', :id => 'preferences_btn', :data => { :disable_with => false })
         %button.btn{ :type => 'button', 'data-dismiss' => 'modal', 'aria-hidden' => 'true' } Cancel
   .modal-footer
 
@@ -89,7 +89,7 @@
       %p{ :style => 'display:none;' }= password_field_tag(:hack_field, '', :id => nil)
       %p= email_field_tag(:email, '', :placeholder => 'Email Address', :class => 'input-xlarge', :id => 'change_email_email', :required => true)
       %p
-        = submit_tag('Change Email', :class => 'btn btn-primary', :id => 'change_email_btn')
+        = submit_tag('Change Email', :class => 'btn btn-primary', :id => 'change_email_btn', :data => { :disable_with => false })
         %button.btn{ :type => 'button', 'data-dismiss' => 'modal', 'aria-hidden' => 'true' } Cancel
   .modal-footer
 
@@ -110,7 +110,7 @@
       %p= password_field_tag(:passwd, '', :placeholder => 'New Password', :class => 'input-xlarge', :id => 'master_password_passwd', :required => true)
       %p= password_field_tag(:passwd2, '', :placeholder => 'Confirm New Password', :class => 'input-xlarge', :id => 'master_password_passwd2', :required => true)
       %p
-        = submit_tag('Set Master Password', :class => 'btn btn-primary', :id => 'master_password_btn')
+        = submit_tag('Set Master Password', :class => 'btn btn-primary', :id => 'master_password_btn', :data => { :disable_with => false })
         %button.btn{ :type => 'button', 'data-dismiss' => 'modal', 'aria-hidden' => 'true' } Cancel
   .modal-footer
     = form_tag(users_path, :method => :put, :remote => true, :id => 'master_password_hidden_form', :style => 'display:none;') do
@@ -151,6 +151,6 @@
       %p= password_field_tag(:passwd, '', :placeholder => 'Backup Password', :class => 'input-xlarge', :id => 'restore_accounts_passwd', :required => true)
       %p{ :style => 'display:none;' }= password_field_tag(:hack_field, '', :id => nil)
       %p
-        = submit_tag('Restore', :class => 'btn btn-danger', :id => 'restore_accounts_btn')
+        = submit_tag('Restore', :class => 'btn btn-danger', :id => 'restore_accounts_btn', :data => { :disable_with => false })
         %button.btn{ :type => 'button', 'data-dismiss' => 'modal', 'aria-hidden' => 'true' } Cancel
   .modal-footer

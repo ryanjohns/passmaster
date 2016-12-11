@@ -2,9 +2,9 @@ class HealthChecksController < ActionController::Base
 
   def show
     if db_connected?
-      render :text => 'ok', :status => :ok, :content_type => 'text/plain'
+      render :plain => 'ok', :status => :ok
     else
-      render :text => 'error', :status => :error, :content_type => 'text/plain'
+      render :plain => 'error', :status => :error
     end
   end
 

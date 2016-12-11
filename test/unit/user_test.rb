@@ -87,7 +87,7 @@ class UserTest < ActiveSupport::TestCase
   test 'generates otp_secret' do
     u = FactoryGirl.build(:user)
     assert u.valid?
-    assert_equal nil, u.otp_secret
+    assert_nil u.otp_secret
     assert u.save
     assert u.otp_secret.present?
     s = u.otp_secret
@@ -103,7 +103,7 @@ class UserTest < ActiveSupport::TestCase
   test 'generates verification_code' do
     u = FactoryGirl.build(:user)
     assert u.valid?
-    assert_equal nil, u.verification_code
+    assert_nil u.verification_code
     assert u.save
     assert u.verification_code.present?
     vc = u.verification_code
@@ -138,7 +138,7 @@ class UserTest < ActiveSupport::TestCase
     assert_equal vat.to_s, u.verified_at.to_s
     u.email = 'foo@gmail.com'
     assert u.save
-    assert_equal nil, u.verified_at
+    assert_nil u.verified_at
   end
 
   test 'deactivates otp sessions' do
@@ -260,7 +260,7 @@ class UserTest < ActiveSupport::TestCase
     data = JSON.parse(d)
     assert data['generated_at'].present?
     assert_equal ENCRYPTED_DATA_SCHEMA_VERSION, data['schema_version']
-    assert_equal nil, data['encrypted_data']
+    assert_nil data['encrypted_data']
     f, d = u.backup_data(false)
     assert f =~ /^Passmaster\ Backup/
     data = JSON.parse(d)

@@ -6,7 +6,7 @@
     %h5 Enter your email address to access your accounts or to get started.
     = form_tag(users_path, :remote => true, :id => 'overview_form') do
       %p= email_field_tag(:email, '', :placeholder => 'Email Address', :class => 'input-xlarge', :id => 'overview_email', :required => true)
-      %p= submit_tag('Access Accounts', :class => 'btn btn-primary', :id => 'overview_btn')
+      %p= submit_tag('Access Accounts', :class => 'btn btn-primary', :id => 'overview_btn', :data => { :disable_with => false })
 
   .well
     %h4 What is Passmaster?

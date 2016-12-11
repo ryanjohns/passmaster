@@ -1,4 +1,4 @@
-class OtpSession < ActiveRecord::Base
+class OtpSession < ApplicationRecord
   include UuidPrimaryKey
 
   MAX_FAILS     = 5
