@@ -7,7 +7,7 @@ require 'aws-sdk-v1'
 
 class PgBackup
 
-  CONF_DIR        = '/etc/postgresql/9.5/main'
+  CONF_DIR        = '/etc/postgresql/9.6/main'
   AWS_CONFIG_FILE = "#{CONF_DIR}/aws.json"
   AWS_KEY_FILE    = "#{CONF_DIR}/aws.key"
 
