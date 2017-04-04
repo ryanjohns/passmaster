@@ -6,7 +6,7 @@ Wants=network-online.target
 [Service]
 Type=oneshot
 Restart=no
-ExecStartPre=su - passmaster -c 'cd /home/passmaster/passmaster && git checkout --quiet master && git pull --quiet'
+ExecStartPre=/bin/su - passmaster -c 'cd /home/passmaster/passmaster && git checkout --quiet master && git pull --quiet'
 ExecStart=/home/passmaster/passmaster/script/wrapper /home/passmaster/passmaster/script/server_start
 
 [Install]
