@@ -1,0 +1,11 @@
+[Unit]
+Description=Passmaster server shutdown
+Before=shutdown.target
+
+[Service]
+Type=oneshot
+Restart=no
+ExecStart=/home/passmaster/passmaster/script/wrapper /home/passmaster/passmaster/script/server_stop
+
+[Install]
+WantedBy=shutdown.target

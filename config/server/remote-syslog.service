@@ -1,0 +1,13 @@
+[Unit]
+Description=PaperTrail log tailing service
+After=network-online.target
+Wants=network-online.target
+AssertPathExists=/etc/remote_syslog.yml
+
+[Service]
+Type=simple
+Restart=on-failure
+ExecStart=/usr/local/bin/remote_syslog -D --tls -c /etc/remote_syslog.yml
+
+[Install]
+WantedBy=multi-user.target
