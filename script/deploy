@@ -80,7 +80,7 @@ class Deploy
       puts "You must be on the master branch!"
       exit 1
     end
-    if git_status !~ /working directory clean/
+    if git_status !~ /working (directory|tree) clean/
       puts "You must have a clean working directory!"
       exit 1
     end
