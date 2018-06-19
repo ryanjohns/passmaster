@@ -12,13 +12,13 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test 'show' do
-    u = FactoryGirl.create(:user, :api_key => 'foo', :encrypted_data => 'bar')
+    u = FactoryBot.create(:user, :api_key => 'foo', :encrypted_data => 'bar')
     get :show, :params => { :format => :json, :id => u.id, :api_key => u.api_key }
     assert_response :success
   end
 
   test 'show with invalid api_key' do
-    u = FactoryGirl.create(:user)
+    u = FactoryBot.create(:user)
     get :show, :params => { :format => :json, :id => u.id, :api_key => 'foo' }
     assert_response :unauthorized
     data = JSON.parse(@response.body)
@@ -26,7 +26,7 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test 'show with invalid otp_session' do
-    u = FactoryGirl.create(:user, :api_key => 'foo', :encrypted_data => 'bar', :otp_enabled => true)
+    u = FactoryBot.create(:user, :api_key => 'foo', :encrypted_data => 'bar', :otp_enabled => true)
     get :show, :params => { :format => :json, :id => u.id, :api_key => u.api_key }
     assert_response :precondition_failed
     data = JSON.parse(@response.body)
@@ -34,7 +34,7 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test 'create new user' do
-    e = FactoryGirl.generate(:email)
+    e = FactoryBot.generate(:email)
     post :create, :params => { :format => :json, :email => e }
     assert_response :success
     data = JSON.parse(@response.body)
@@ -49,7 +49,7 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test 'create existing user' do
-    u = FactoryGirl.create(:user, :api_key => 'foo', :encrypted_data => 'bar')
+    u = FactoryBot.create(:user, :api_key => 'foo', :encrypted_data => 'bar')
     post :create, :params => { :format => :json, :email => u.email }
     assert_response :success
     data = JSON.parse(@response.body)
@@ -59,7 +59,7 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test 'create existing user with mixed cased email' do
-    u = FactoryGirl.create(:user, :api_key => 'foo', :encrypted_data => 'bar', :email => 'Foo@gmail.com')
+    u = FactoryBot.create(:user, :api_key => 'foo', :encrypted_data => 'bar', :email => 'Foo@gmail.com')
     post :create, :params => { :format => :json, :email => u.email.downcase }
     assert_response :success
     data = JSON.parse(@response.body)
@@ -69,7 +69,7 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test 'update' do
-    u = FactoryGirl.create(:user)
+    u = FactoryBot.create(:user)
     u.verify_code!(u.verification_code)
     assert_equal ENCRYPTED_DATA_SCHEMA_VERSION, u.schema_version
     put :update, :params => { :format => :json, :id => u.id, :schema_version => '5', :version_code => u.version_code }
@@ -79,14 +79,14 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test 'update with errors' do
-    u = FactoryGirl.create(:user)
+    u = FactoryBot.create(:user)
     u.verify_code!(u.verification_code)
     put :update, :params => { :format => :json, :id => u.id, :schema_version => '-1' }
     assert_response :unprocessable_entity
   end
 
   test 'update not verified' do
-    u = FactoryGirl.create(:user)
+    u = FactoryBot.create(:user)
     put :update, :params => { :format => :json, :id => u.id }
     assert_response :unprocessable_entity
     data = JSON.parse(@response.body)
@@ -94,7 +94,7 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test 'update out of date' do
-    u = FactoryGirl.create(:user)
+    u = FactoryBot.create(:user)
     u.verify_code!(u.verification_code)
     put :update, :params => { :format => :json, :id => u.id, :version_code => 'foo' }
     assert_response :unprocessable_entity
@@ -103,13 +103,13 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test 'backup via file' do
-    u = FactoryGirl.create(:user)
+    u = FactoryBot.create(:user)
     get :backup, :params => { :format => :json, :id => u.id, :type => 'file' }
     assert_response :success
   end
 
   test 'backup via email' do
-    u = FactoryGirl.create(:user)
+    u = FactoryBot.create(:user)
     assert_difference('ActionMailer::Base.deliveries.size') do
       get :backup, :params => { :format => :json, :id => u.id, :type => 'email' }
     end
@@ -120,7 +120,7 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test 'resend_verification' do
-    u = FactoryGirl.create(:user)
+    u = FactoryBot.create(:user)
     post :resend_verification, :params => { :format => :json, :id => u.id }
     assert_response :success
     assert_equal u.email, ActionMailer::Base.deliveries.last.to.first
@@ -129,7 +129,7 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test 'verify' do
-    u = FactoryGirl.create(:user)
+    u = FactoryBot.create(:user)
     put :verify, :params => { :format => :json, :id => u.id, :verification_code => u.verification_code, :api_key => 'foo' }
     assert_response :success
     assert_not_equal u.verification_code, u.reload.verification_code
@@ -139,7 +139,7 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test 'verify with api_key' do
-    u = FactoryGirl.create(:user, :api_key => 'foo', :encrypted_data => 'bar')
+    u = FactoryBot.create(:user, :api_key => 'foo', :encrypted_data => 'bar')
     put :verify, :params => { :format => :json, :id => u.id, :verification_code => u.verification_code, :api_key => u.api_key }
     assert_response :success
     assert_not_equal u.verification_code, u.reload.verification_code
@@ -149,7 +149,7 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test 'verify with invalid code' do
-    u = FactoryGirl.create(:user)
+    u = FactoryBot.create(:user)
     put :verify, :params => { :format => :json, :id => u.id, :verification_code => 'foo' }
     assert_response :unprocessable_entity
   end

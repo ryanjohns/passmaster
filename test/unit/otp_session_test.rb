@@ -3,25 +3,25 @@ require 'test_helper'
 class OtpSessionTest < ActiveSupport::TestCase
 
   test 'has a valid user_id' do
-    o = FactoryGirl.build(:otp_session)
+    o = FactoryBot.build(:otp_session)
     assert o.valid?
     o.user_id = nil
     assert !o.valid?
   end
 
   test 'has a valid client_id' do
-    o = FactoryGirl.create(:otp_session)
+    o = FactoryBot.create(:otp_session)
     c = o.client_id
     o.client_id = nil
     assert !o.valid?
-    o2 = FactoryGirl.build(:otp_session, :client_id => c)
+    o2 = FactoryBot.build(:otp_session, :client_id => c)
     assert o2.valid?
     o2.user = o.user
     assert !o2.valid?
   end
 
   test 'has a valid login_count' do
-    o = FactoryGirl.build(:otp_session)
+    o = FactoryBot.build(:otp_session)
     o.login_count = 1.1
     assert !o.valid?
     o.login_count = -1
@@ -33,7 +33,7 @@ class OtpSessionTest < ActiveSupport::TestCase
   end
 
   test 'has a valid failed_count' do
-    o = FactoryGirl.build(:otp_session)
+    o = FactoryBot.build(:otp_session)
     o.failed_count = 1.1
     assert !o.valid?
     o.failed_count = -1
@@ -48,22 +48,22 @@ class OtpSessionTest < ActiveSupport::TestCase
 
   test 'expired scope' do
     assert_equal 0, OtpSession.expired.count
-    FactoryGirl.create(:otp_session, :activated_at => Time.zone.now)
-    FactoryGirl.create(:otp_session, :activated_at => Time.zone.now - (OtpSession::ACTIVE_DAYS + 1).days)
+    FactoryBot.create(:otp_session, :activated_at => Time.zone.now)
+    FactoryBot.create(:otp_session, :activated_at => Time.zone.now - (OtpSession::ACTIVE_DAYS + 1).days)
     assert_equal 1, OtpSession.expired.count
     assert_equal 2, OtpSession.count
   end
 
   test 'deactivating expired' do
     assert_equal 0, OtpSession.expired.count
-    FactoryGirl.create(:otp_session, :activated_at => Time.zone.now - (OtpSession::ACTIVE_DAYS + 1).days)
+    FactoryBot.create(:otp_session, :activated_at => Time.zone.now - (OtpSession::ACTIVE_DAYS + 1).days)
     assert_equal 1, OtpSession.expired.count
     OtpSession.deactivate_expired!
     assert_equal 0, OtpSession.expired.count
   end
 
   test 'active?' do
-    o = FactoryGirl.build(:otp_session)
+    o = FactoryBot.build(:otp_session)
     assert_nil o.activated_at
     assert !o.active?
     o.activated_at = Time.zone.now - (OtpSession::ACTIVE_DAYS + 1).days
@@ -73,21 +73,21 @@ class OtpSessionTest < ActiveSupport::TestCase
   end
 
   test 'deactivate!' do
-    o = FactoryGirl.build(:otp_session, :activated_at => Time.zone.now)
+    o = FactoryBot.build(:otp_session, :activated_at => Time.zone.now)
     assert o.activated_at.present?
     assert o.deactivate!
     assert_nil o.activated_at
   end
 
   test 'locked?' do
-    o = FactoryGirl.build(:otp_session, :failed_count => 0)
+    o = FactoryBot.build(:otp_session, :failed_count => 0)
     assert !o.locked?
     o.failed_count = OtpSession::MAX_FAILS
     assert o.locked?
   end
 
   test 'recently_activited?' do
-    o = FactoryGirl.build(:otp_session)
+    o = FactoryBot.build(:otp_session)
     assert_nil o.activated_at
     assert !o.recently_activated?
     o.activated_at = Time.zone.now - (OtpSession::RECENT_CUTOFF + 1).minutes
@@ -97,7 +97,7 @@ class OtpSessionTest < ActiveSupport::TestCase
   end
 
   test 'verify_otp' do
-    o = FactoryGirl.create(:otp_session)
+    o = FactoryBot.create(:otp_session)
     assert_nil o.activated_at
     assert_equal 0, o.login_count
     assert_equal 0, o.failed_count

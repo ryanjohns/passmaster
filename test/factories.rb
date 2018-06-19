@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
 
   sequence(:uuid)  { |i| SecureRandom.hex(16) }
   sequence(:email) { |i| "no-reply+test#{i}@gmail.com" }

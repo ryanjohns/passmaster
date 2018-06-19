@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '5.0.2'
+gem 'rails', '5.0.7'
 
 gem 'aws-sdk-v1'
 gem 'haml'
@@ -22,5 +22,5 @@ group :development, :staging do
 end
 
 group :test do
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
 end

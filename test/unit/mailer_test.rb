@@ -31,7 +31,7 @@ class MailerTest < ActionMailer::TestCase
   end
 
   test 'verify_email' do
-    u = FactoryGirl.create(:user)
+    u = FactoryBot.create(:user)
     mail = Mailer.verify_email(u)
     assert_equal u.email, mail.to.first
     assert_equal '[Passmaster] Email Verification', mail.subject
