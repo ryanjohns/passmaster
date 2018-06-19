@@ -47,7 +47,6 @@ class Deploy
     create_deploy_tag if @tag.nil?
     push_tag_upstream
     execute_server_deploy if @environment == 'production'
-    notify_newrelic if @environment == 'production'
     puts "Done deploying: #{Time.now}"
   end
 
@@ -104,14 +103,6 @@ class Deploy
     command = '/home/passmaster/passmaster/script/wrapper /home/passmaster/passmaster/script/server_deploy'
     command << ' -m' if @migrate
     puts `ssh #{ssh_key} passmaster@passmaster.io '#{command}' 2>&1`, "\n"
-  end
-
-  def notify_newrelic
-    command  = "bundle exec newrelic deployments"
-    command << " -e #{@environment}"
-    command << " -r #{@tag}"
-    command << " -u #{ENV['USER']}" if ENV['USER']
-    system(command)
   end
 
 end

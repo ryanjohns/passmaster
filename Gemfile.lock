@@ -96,7 +96,6 @@ GEM
     mini_mime (1.0.0)
     mini_portile2 (2.3.0)
     minitest (5.11.3)
-    newrelic_rpm (5.2.0.345)
     nio4r (2.3.1)
     nokogiri (1.8.3)
       mini_portile2 (~> 2.3.0)
@@ -176,7 +175,6 @@ DEPENDENCIES
   jquery-rails
   letter_opener
   lograge
-  newrelic_rpm
   nokogiri
   pg
   rails (= 5.0.7)
