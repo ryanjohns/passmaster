@@ -10,6 +10,7 @@ class ServerStart
 
   def exec
     `su - passmaster -c '#{@app_dir}/script/wrapper #{@app_dir}/script/server_deploy'`
+    `sudo /etc/init.d/nginx start`
   end
 
 end
