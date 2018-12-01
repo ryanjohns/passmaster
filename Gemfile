@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '5.0.7'
+gem 'rails', '5.0.7.1'
 
 gem 'aws-sdk-v1'
 gem 'haml'
@@ -9,7 +9,7 @@ gem 'jquery-rails'
 gem 'lograge'
 gem 'nokogiri'
 gem 'pg'
-gem 'rotp'
+gem 'rotp', '~> 3.3'
 gem 'rubyzip', :require => 'zip'
 gem 'sass'
 gem 'sprockets'
