@@ -30,7 +30,7 @@
             - val = i * 5
             %option{ :value => val }= "#{val} Minutes"
           %option{ :value => 60 } 1 Hour
-      %strong.ios-app-only-pref{ :style => 'display:none;' } Unlock with Touch ID
+      %strong#touch_id_pref_label.ios-app-only-pref{ :style => 'display:none;' } Unlock with Touch ID
       .inline-radios.ios-app-only-pref{ :style => 'display:none;' }
         = label_tag(nil, :class => 'radio inline') do
           = radio_button_tag(:touch_id_enabled, '1', false, :id => 'preferences_touch_id_enabled')

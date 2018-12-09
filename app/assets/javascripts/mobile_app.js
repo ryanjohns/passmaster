@@ -70,7 +70,12 @@
     iframe = null;
   };
 
-  MobileApp.setTouchIDUsability = function(supported, configured) {
+  MobileApp.setTouchIDUsability = function(supported, configured, faceId) {
+    if (faceId) {
+      $('#unlock_touchid_btn').html('Unlock with Face ID');
+      $('#unlock_touchid_btn').attr('title', 'Unlock with Face ID');
+      $('#touch_id_pref_label').html('Unlock with Face ID');
+    }
     if (supported) {
       $('.ios-app-only-pref').show();
     } else {
