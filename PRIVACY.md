@@ -16,7 +16,7 @@ logs with anyone or any entity ever.
 
 Passmaster is designed to be host-proof meaning all account data is encrypted
 using a master password in such a way that it is impossible to read by anyone
-expect the master password holder.
+except the master password holder.
 
 #### Questions/Comments
 
