@@ -101,7 +101,7 @@
       }
       Util.notify('Preferences saved successfully.')
       $('#preferences').modal('hide');
-      if (Util.isIOSApp()) {
+      if (Util.isIOSApp() || Util.isAndroidApp()) {
         MobileApp.savePasswordForTouchID();
       }
     }).bind('ajax:error', function(evt, xhr) {
@@ -210,7 +210,7 @@
         $('#master_password').modal('hide');
       }
       Util.chooseSection();
-      if (Util.isIOSApp()) {
+      if (Util.isIOSApp() || util.isAndroidApp()) {
         MobileApp.savePasswordForTouchID();
       }
     }).bind('ajax:error', function(evt, xhr) {
