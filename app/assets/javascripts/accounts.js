@@ -111,7 +111,10 @@
     if (Util.isIOSApp()) {
       MobileApp.savePasswordForTouchID();
     } else if (Util.isAndroidApp()) {
-      AndroidJs.savePasswordForTouchID(userData.userId, userData.masterPassword, userData.touchIdEnabled);
+      try {
+        AndroidJs.savePasswordForTouchID(userData.userId, userData.masterPassword, userData.touchIdEnabled);
+      } catch (err) {
+      }
     }
   };
 
@@ -137,7 +140,10 @@
       if (Util.isIOSApp()) {
         MobileApp.checkForTouchIDUsability();
       } else if (Util.isAndroidApp()) {
-        AndroidJs.checkForTouchIDUsability(userData.userId, userData.touchIdEnabled);
+        try {
+          AndroidJs.checkForTouchIDUsability(userData.userId, userData.touchIdEnabled);
+        } catch (err) {
+        }
       }
       $('#lock_btn').hide();
       $('#settings_btn').hide();
@@ -312,7 +318,10 @@
       if (Util.isIOSApp()) {
         MobileApp.authenticateWithTouchID();
       } else if (Util.isAndroidApp()) {
-        AndroidJs.authenticateWithTouchID(userData.userId);
+        try {
+          AndroidJs.authenticateWithTouchID(userData.userId);
+        } catch (err) {
+        }
       }
     });
   }
