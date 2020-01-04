@@ -104,7 +104,10 @@
       if (Util.isIOSApp()) {
         MobileApp.savePasswordForTouchID();
       } else if (Util.isAndroidApp()) {
-        AndroidJs.savePasswordForTouchID(userData.userId, userData.masterPassword, userData.touchIdEnabled);
+        try {
+          AndroidJs.savePasswordForTouchID(userData.userId, userData.masterPassword, userData.touchIdEnabled);
+        } catch (err) {
+        }
       }
     }).bind('ajax:error', function(evt, xhr) {
       Util.handleOtpErrors(xhr, function() {
@@ -215,7 +218,10 @@
       if (Util.isIOSApp()) {
         MobileApp.savePasswordForTouchID();
       } else if (Util.isAndroidApp()) {
-        AndroidJs.savePasswordForTouchID(userData.userId, userData.masterPassword, userData.touchIdEnabled);
+        try {
+          AndroidJs.savePasswordForTouchID(userData.userId, userData.masterPassword, userData.touchIdEnabled);
+        } catch (err) {
+        }
       }
     }).bind('ajax:error', function(evt, xhr) {
       userData.revertMasterPassword();
