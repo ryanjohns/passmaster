@@ -110,6 +110,11 @@
     $('#accounts_list_search').focus();
     if (Util.isIOSApp()) {
       MobileApp.savePasswordForTouchID();
+    } else if (Util.isAndroidApp()) {
+      try {
+        AndroidJs.savePasswordForTouchID(userData.userId, userData.masterPassword, userData.touchIdEnabled);
+      } catch (err) {
+      }
     }
   };
 
@@ -134,6 +139,11 @@
     } else {
       if (Util.isIOSApp()) {
         MobileApp.checkForTouchIDUsability();
+      } else if (Util.isAndroidApp()) {
+        try {
+          AndroidJs.checkForTouchIDUsability(userData.userId, userData.touchIdEnabled);
+        } catch (err) {
+        }
       }
       $('#lock_btn').hide();
       $('#settings_btn').hide();
@@ -307,6 +317,11 @@
       evt.preventDefault();
       if (Util.isIOSApp()) {
         MobileApp.authenticateWithTouchID();
+      } else if (Util.isAndroidApp()) {
+        try {
+          AndroidJs.authenticateWithTouchID(userData.userId);
+        } catch (err) {
+        }
       }
     });
   }

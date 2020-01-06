@@ -103,6 +103,11 @@
       $('#preferences').modal('hide');
       if (Util.isIOSApp()) {
         MobileApp.savePasswordForTouchID();
+      } else if (Util.isAndroidApp()) {
+        try {
+          AndroidJs.savePasswordForTouchID(userData.userId, userData.masterPassword, userData.touchIdEnabled);
+        } catch (err) {
+        }
       }
     }).bind('ajax:error', function(evt, xhr) {
       Util.handleOtpErrors(xhr, function() {
@@ -212,6 +217,11 @@
       Util.chooseSection();
       if (Util.isIOSApp()) {
         MobileApp.savePasswordForTouchID();
+      } else if (Util.isAndroidApp()) {
+        try {
+          AndroidJs.savePasswordForTouchID(userData.userId, userData.masterPassword, userData.touchIdEnabled);
+        } catch (err) {
+        }
       }
     }).bind('ajax:error', function(evt, xhr) {
       userData.revertMasterPassword();
