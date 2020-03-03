@@ -12,7 +12,7 @@ gem 'pg'
 gem 'rotp', '~> 3.3'
 gem 'rubyzip', :require => 'zip'
 gem 'sass'
-gem 'sprockets'
+gem 'sprockets', '~> 3.7'
 gem 'sprockets-rails', :require => 'sprockets/railtie'
 gem 'unicorn'
 

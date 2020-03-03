@@ -4,7 +4,7 @@ class HealthChecksController < ActionController::Base
     if db_connected?
       render :plain => 'ok', :status => :ok
     else
-      render :plain => 'error', :status => :error
+      render :plain => 'error', :status => :internal_server_error
     end
   end
 

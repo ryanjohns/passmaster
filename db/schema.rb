@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -28,12 +27,11 @@ ActiveRecord::Schema.define(version: 20150816203226) do
     t.datetime "last_seen_at"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
+    t.index ["activated_at"], name: "index_otp_sessions_on_activated_at", using: :btree
+    t.index ["client_id"], name: "index_otp_sessions_on_client_id", using: :btree
+    t.index ["id"], name: "index_otp_sessions_on_id", unique: true, using: :btree
+    t.index ["user_id", "client_id"], name: "index_otp_sessions_on_user_id_and_client_id", unique: true, using: :btree
   end
-
-  add_index "otp_sessions", ["activated_at"], name: "index_otp_sessions_on_activated_at", using: :btree
-  add_index "otp_sessions", ["client_id"], name: "index_otp_sessions_on_client_id", using: :btree
-  add_index "otp_sessions", ["id"], name: "index_otp_sessions_on_id", unique: true, using: :btree
-  add_index "otp_sessions", ["user_id", "client_id"], name: "index_otp_sessions_on_user_id_and_client_id", unique: true, using: :btree
 
   create_table "users", id: false, force: :cascade do |t|
     t.string   "id",                limit: 32,                 null: false
@@ -53,10 +51,10 @@ ActiveRecord::Schema.define(version: 20150816203226) do
     t.boolean  "auto_backup",                  default: false, null: false
     t.string   "version_code"
     t.boolean  "touch_id_enabled",             default: false
+    t.index "lower((email)::text)", name: "index_users_on_lower_email", unique: true, using: :btree
+    t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
+    t.index ["id"], name: "index_users_on_id", unique: true, using: :btree
+    t.index ["verification_code"], name: "index_users_on_verification_code", unique: true, using: :btree
   end
-
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["id"], name: "index_users_on_id", unique: true, using: :btree
-  add_index "users", ["verification_code"], name: "index_users_on_verification_code", unique: true, using: :btree
 
 end

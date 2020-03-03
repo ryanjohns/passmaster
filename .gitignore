@@ -27,3 +27,6 @@
 /.aws_credentials.sh
 /.id_rsa
 /config/env.local.yml
+
+# Direnv
+/.direnv
