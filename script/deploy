@@ -46,7 +46,6 @@ class Deploy
     update_working_copy
     create_deploy_tag if @tag.nil?
     push_tag_upstream
-    execute_server_deploy if @environment == 'production'
     puts "Done deploying: #{Time.now}"
   end
 
@@ -93,16 +92,6 @@ class Deploy
       system("git add config/manifest.json")
       system("git commit -m 'Update assets manifest.'")
     end
-  end
-
-  def execute_server_deploy
-    return unless prompt_user("\nDeploy on server?")
-
-    id_rsa  = File.expand_path('../../.id_rsa', __FILE__)
-    ssh_key = File.exists?(id_rsa) ? "-i #{id_rsa}" : ''
-    command = '/home/passmaster/passmaster/script/wrapper /home/passmaster/passmaster/script/server_deploy'
-    command << ' -m' if @migrate
-    puts `ssh #{ssh_key} passmaster@passmaster.io '#{command}' 2>&1`, "\n"
   end
 
 end
