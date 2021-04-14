@@ -36,7 +36,8 @@ class ServerDeploy
       system "git checkout #{@environment}"
       system "git reset --hard origin/#{@environment}"
       system "bundle config set deployment 'true'"
-      system "bundle install --quiet --without=development test staging"
+      system "bundle config set without 'development test staging'"
+      system "bundle install --quiet"
       system "bundle exec rake db:migrate" if @migrate
       system "bundle exec script/unicorn restart"
     end
