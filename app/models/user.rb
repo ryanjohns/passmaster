@@ -25,11 +25,21 @@ class User < ApplicationRecord
   before_save :set_schema_version, :if => :new_record?
   before_save :unset_verified_at, :if => :email_changed_without_casing?
   before_save :update_version_code
-  after_save :deactivate_otp_sessions, :if => :should_generate_otp_secret?
+  after_save :deactivate_otp_sessions, :if => :did_generate_otp_secret?
   after_create :deliver_new_user
   after_update :deliver_notifications
 
   scope :with_email, lambda { |email| where('LOWER(email) = ?', email.downcase) }
+
+  def self.backup_data(schema_version, encrypted_data)
+    data = {
+      :generated_at   => Time.now.utc.to_s(:file_safe),
+      :schema_version => schema_version,
+      :encrypted_data => encrypted_data,
+    }
+    filename = "#{BACKUP_PREFIX} - #{data[:generated_at]}.txt"
+    [ filename, data.to_json ]
+  end
 
   def as_json(options = {})
     super(options.merge(AS_JSON_OPTIONS))
@@ -45,19 +55,6 @@ class User < ApplicationRecord
     return false if session.nil? || !session.active? || (enable_otp == '0' && !session.recently_activated?)
     session.update_attributes({ :ip_address => ip_address, :user_agent => user_agent, :last_seen_at => Time.zone.now })
     true
-  end
-
-  def backup_data(previous_version = false)
-    data = { :generated_at => Time.now.utc.to_s(:file_safe) }
-    filename = "#{BACKUP_PREFIX} - #{data[:generated_at]}.txt"
-    if previous_version
-      data[:schema_version] = schema_version_was
-      data[:encrypted_data] = encrypted_data_was
-    else
-      data[:schema_version] = schema_version
-      data[:encrypted_data] = encrypted_data
-    end
-    [ filename, data.to_json ]
   end
 
   def generate_verification_code!
@@ -98,30 +95,32 @@ class User < ApplicationRecord
     save
   end
 
-  protected
+  private
 
   def email_changed_without_casing?
     email_changed? && email.to_s.downcase != email_was.to_s.downcase
   end
 
-  private
+  def saved_change_to_email_without_casing?
+    saved_change_to_email? && email.to_s.downcase != email_before_last_save.to_s.downcase
+  end
 
   def deliver_new_user
     Mailer.verify_email(self).deliver_now
   end
 
   def deliver_notifications
-    if email_changed_without_casing?
-      filename, data = backup_data(true)
-      Mailer.email_changed(email_was, filename, data, id).deliver_now
+    if saved_change_to_email_without_casing?
+      filename, data = User.backup_data(schema_version_before_last_save, encrypted_data_before_last_save)
+      Mailer.email_changed(email_before_last_save, filename, data, id).deliver_now
       Mailer.verify_email(self).deliver_now
     end
-    if api_key_changed? && api_key_was.present?
-      filename, data = backup_data(true)
+    if saved_change_to_api_key? && api_key_before_last_save.present?
+      filename, data = User.backup_data(schema_version_before_last_save, encrypted_data_before_last_save)
       Mailer.master_password_changed(email, filename, data, id).deliver_now
     end
-    if auto_backup && encrypted_data_changed? && encrypted_data.present?
-      filename, data = backup_data(false)
+    if auto_backup && saved_change_to_encrypted_data? && encrypted_data.present?
+      filename, data = User.backup_data(schema_version, encrypted_data)
       Mailer.auto_backup(email, filename, data).deliver_now
     end
   end
@@ -158,6 +157,10 @@ class User < ApplicationRecord
 
   def should_generate_otp_secret?
     new_record? || (!otp_enabled && otp_enabled_was)
+  end
+
+  def did_generate_otp_secret?
+    saved_change_to_otp_enabled? && !otp_enabled
   end
 
   def should_generate_verification_code?

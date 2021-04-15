@@ -250,18 +250,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'backup_data' do
-    u = FactoryBot.create(:user)
-    assert_equal ENCRYPTED_DATA_SCHEMA_VERSION, u.schema_version
-    assert_nil u.encrypted_data
-    u.schema_version = -1
-    u.encrypted_data = 'foo'
-    f, d = u.backup_data(true)
-    assert f =~ /^Passmaster\ Backup/
-    data = JSON.parse(d)
-    assert data['generated_at'].present?
-    assert_equal ENCRYPTED_DATA_SCHEMA_VERSION, data['schema_version']
-    assert_nil data['encrypted_data']
-    f, d = u.backup_data(false)
+    f, d = User.backup_data(-1, 'foo')
     assert f =~ /^Passmaster\ Backup/
     data = JSON.parse(d)
     assert data['generated_at'].present?

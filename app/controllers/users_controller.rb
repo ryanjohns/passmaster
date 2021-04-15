@@ -24,7 +24,7 @@ class UsersController < ApplicationController
   end
 
   def backup
-    filename, data = @user.backup_data
+    filename, data = User.backup_data(@user.schema_version, @user.encrypted_data)
     if params[:type] == 'file'
       zip = Zip::OutputStream.write_buffer do |archive|
         archive.put_next_entry(ACCOUNTS_VIEWER_FILENAME)
