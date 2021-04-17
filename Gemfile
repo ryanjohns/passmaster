@@ -2,7 +2,8 @@ source 'https://rubygems.org'
 
 gem 'rails', '5.2.5'
 
-gem 'aws-sdk-v1'
+gem 'aws-sdk-rails'
+gem 'aws-sdk-s3'
 gem 'haml'
 gem 'haml-rails'
 gem 'jquery-rails'

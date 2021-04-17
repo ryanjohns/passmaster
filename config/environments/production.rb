@@ -65,7 +65,7 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = false
 
   # Send email with Amazon Simple Email Service
-  config.action_mailer.delivery_method = :amazon_ses
+  config.action_mailer.delivery_method = :ses
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
