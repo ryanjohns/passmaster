@@ -1,14 +1,17 @@
 require_relative 'boot'
 
-require 'rails'
+require "rails"
 # Pick the frameworks you want:
-require 'active_model/railtie'
-require 'active_record/railtie'
-require 'action_controller/railtie'
-require 'action_mailer/railtie'
-require 'action_view/railtie'
-require 'sprockets/railtie'
-require 'rails/test_unit/railtie'
+require "active_model/railtie"
+# require "active_job/railtie"
+require "active_record/railtie"
+# require "active_storage/engine"
+require "action_controller/railtie"
+require "action_mailer/railtie"
+require "action_view/railtie"
+# require "action_cable/engine"
+require "sprockets/railtie"
+require "rails/test_unit/railtie"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -17,11 +20,12 @@ Bundler.require(*Rails.groups)
 module Passmaster
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 5.1
+    config.load_defaults 5.2
 
     # Settings in config/environments/* take precedence over those specified here.
-    # Application configuration should go into files in config/initializers
-    # -- all .rb files in that directory are automatically loaded.
+    # Application configuration can go into files in config/initializers
+    # -- all .rb files in that directory are automatically loaded after loading
+    # the framework and any gems in your application.
 
     # Custom directories with classes and modules you want to be autoloadable.
     config.eager_load_paths += %W(#{config.root}/lib)
@@ -48,7 +52,7 @@ module Passmaster
     end
     config.lograge.custom_options = lambda do |event|
       params       = event.payload[:params].except('format', 'action', 'controller', '_method', 'authenticity_token', 'utf8')
-      extra_fields = { :time => event.time.utc, :ip => event.payload[:ip] }
+      extra_fields = { :time => Time.now.utc, :ip => event.payload[:ip] }
       extra_fields.merge!({ :params => params }) if params.any?
       extra_fields
     end
