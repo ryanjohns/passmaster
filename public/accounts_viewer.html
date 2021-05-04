@@ -16,13 +16,37 @@
       }
     </style>
     <script>
+      // helper to sort account objects by account name
+      function compareByAccountName(a, b) {
+        var nameA = a['account'].toUpperCase();
+        var nameB = b['account'].toUpperCase();
+
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+
+        return 0;
+      };
+
       // called when the form is submitted
       function formSubmitted() {
         // read the password
         var password = document.getElementById('backup_password').value;
+        if (password.length == 0) {
+          alert('Please enter a Backup Password.');
+          return;
+        }
 
         // use a FileReader object to read the contents of the backup file
         var file = document.getElementById('backup_file').files[0];
+        if (typeof file == 'undefined') {
+          alert('Please select a Backup File.');
+          return;
+        }
+
         var reader = new FileReader();
         reader.onload = (function(evt) {
           // call the decrypt function passing in the supplied password and the contents of the backup file
@@ -78,14 +102,22 @@
 
       // fills the table with accounts
       function showAccounts(accounts) {
+        var accountsAry = [];
+        for (accountId in accounts) {
+          accountsAry.push(accounts[accountId]);
+        }
+        accountsAry.sort(compareByAccountName);
+
         var table = document.getElementById('accounts_table');
         var html = '';
 
         var columns = [];
-        for (accountId in accounts) {
+        for (var j = 0; j < accountsAry.length; j++) {
+          var account = accountsAry[j];
+
           if (columns.length == 0) {
             html += '<tr>';
-            for (column in accounts[accountId]) {
+            for (column in account) {
               columns.push(column);
               html += '<th>' + column + '</th>';
             }
@@ -94,7 +126,7 @@
 
           html += '<tr>';
           for (var i = 0; i < columns.length; i++) {
-            var str = accounts[accountId][columns[i]];
+            var str = account[columns[i]];
 
             // html-escape the string
             var div = document.createElement('div');
@@ -115,7 +147,7 @@
     <p>This tool can be used to decrypt and view the accounts from a backup file.</p>
     <p>It works without internet access and serves as documentation of the host-proof encryption scheme.</p>
     <p>**NOTE** This does not sync with the Passmaster servers and you cannot add, edit, or delete accounts.</p>
-    <form enctype='multipart/form-data' id='backup_form' onsubmit='formSubmitted(); return false;'>
+    <form enctype='multipart/form-data' id='backup_form' method='POST' onsubmit='formSubmitted(); return false;'>
       <div class='field'>
         <label for='backup_file'>Backup File</label>
         <input accept='text/plain' id='backup_file' name='file' type='file'>
