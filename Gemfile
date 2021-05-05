@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '5.2.5'
+gem 'rails', '5.2.6'
 
 gem 'aws-sdk-rails'
 gem 'aws-sdk-s3'
