@@ -1,4 +1,4 @@
-class CreateOtpSessions < ActiveRecord::Migration
+class CreateOtpSessions < ActiveRecord::Migration[4.2]
   def change
     create_table :otp_sessions, :id => false do |t|
       t.string :id, :primary => true, :null => false, :limit => 32

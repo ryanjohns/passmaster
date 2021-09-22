@@ -1,4 +1,4 @@
-class AddOtpEnabledToUsers < ActiveRecord::Migration
+class AddOtpEnabledToUsers < ActiveRecord::Migration[4.2]
   def change
     add_column :users, :otp_enabled, :boolean, :null => false, :default => false
   end

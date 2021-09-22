@@ -1,4 +1,4 @@
-class ScopeClientIdUniqueness < ActiveRecord::Migration
+class ScopeClientIdUniqueness < ActiveRecord::Migration[4.2]
   def up
     remove_index :otp_sessions, :client_id
     remove_index :otp_sessions, [:user_id, :client_id]

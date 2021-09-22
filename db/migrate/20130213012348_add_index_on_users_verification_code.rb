@@ -1,4 +1,4 @@
-class AddIndexOnUsersVerificationCode < ActiveRecord::Migration
+class AddIndexOnUsersVerificationCode < ActiveRecord::Migration[4.2]
   def up
     add_index :users, :verification_code, :unique => true
   end

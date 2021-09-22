@@ -46,7 +46,7 @@ GEM
       public_suffix (>= 2.0.2, < 5.0)
     arel (9.0.0)
     aws-eventstream (1.2.0)
-    aws-partitions (1.501.0)
+    aws-partitions (1.503.0)
     aws-record (2.6.1)
       aws-sdk-dynamodb (~> 1.18)
     aws-sdk-core (3.121.0)
@@ -67,7 +67,7 @@ GEM
       aws-sessionstore-dynamodb (~> 2)
       concurrent-ruby (~> 1)
       railties (>= 5.2.0)
-    aws-sdk-s3 (1.102.0)
+    aws-sdk-s3 (1.103.0)
       aws-sdk-core (~> 3, >= 3.120.0)
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.4)
@@ -131,7 +131,7 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.7.1)
       mini_mime (>= 0.1.1)
-    marcel (1.0.1)
+    marcel (1.0.2)
     method_source (1.0.0)
     mini_mime (1.1.1)
     mini_portile2 (2.6.1)
@@ -223,7 +223,7 @@ DEPENDENCIES
   pg
   rails (= 5.2.6)
   rotp (~> 3.3)
-  rubyzip
+  rubyzip (~> 2.3.0)
   sass
   sprockets (~> 3.7)
   sprockets-rails
