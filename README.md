@@ -5,7 +5,7 @@ it live at <https://passmaster.io>.
 
 ## Running the server
 
-This project is tested to run on ruby 2.5.8 so you should have that version
+This project is tested to run on ruby 2.6.9 so you should have that version
 installed before starting. Using [RVM](https://rvm.io/) or [direnv](https://direnv.net/) is highly recommended and .ruby-version,
 .ruby-gemset, and .envrc files are in the project root for keeping your gems organized.
 You will also need a variant of PostgreSQL 11 (anything 9.1 and newer should also work).
