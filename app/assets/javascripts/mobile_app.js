@@ -8,6 +8,12 @@
     window.applicationCache.update();
   };
 
+  MobileApp.clickUnlockWithTouchID = function() {
+    if ($('#unlock_touchid_btn').is(':visible')) {
+      $('#unlock_touchid_btn').click();
+    }
+  };
+
   MobileApp.getTimeoutMinutes = function() {
     var minutes = 0;
     if (userData) {
