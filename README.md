@@ -31,8 +31,8 @@ environment similar to what you would need to work on the project.
 ## Mobile apps
 
 The mobile apps are simple front-ends for passmaster.io that allow native
-access to the clipboard for one-tap copy functionality. The iOS app also
-enables unlocking with Touch ID/Face ID on supported devices.
+access to the clipboard for one-tap copy functionality. The mobile apps also
+enable unlocking with biometrics on supported devices.
 
  * [Google Play Store](https://play.google.com/store/apps/details?id=io.passmaster.Passmaster) - <https://github.com/ryanjohns/PassmasterAndroid>
  * [Apple App Store](https://itunes.apple.com/us/app/passmaster/id615271561?mt=8) - <https://github.com/ryanjohns/PassmasterIOS>

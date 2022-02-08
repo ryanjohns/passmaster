@@ -5,7 +5,7 @@
   };
 
   MobileApp.updateAppCache = function() {
-    window.applicationCache.update();
+    // app cache was deprecated and removed. function still exists to prevent JS errors on old clients.
   };
 
   MobileApp.clickUnlockWithTouchID = function() {

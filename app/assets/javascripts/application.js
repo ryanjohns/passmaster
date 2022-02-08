@@ -10,9 +10,3 @@
 //= require user_data
 //= require util
 //= require verify
-
-/*
-
-force app cache update: 1621912469
-
-*/

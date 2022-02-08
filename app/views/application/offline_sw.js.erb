@@ -1,0 +1,44 @@
+var CACHE_NAME = "<%= @cache_name %>";
+var pathsToCache = <%= raw(@paths_to_cache.inspect) %>;
+
+self.addEventListener('install', function(event) {
+  skipWaiting();
+
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(function(cache) {
+        return cache.addAll(pathsToCache);
+      })
+  );
+});
+
+self.addEventListener('activate', function(event) {
+  event.waitUntil(
+    caches.keys().then(function(cacheNames) {
+      return Promise.all(
+        cacheNames.map(function(cacheName) {
+          if (cacheName !== CACHE_NAME) {
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    })
+  );
+
+  clients.claim();
+});
+
+self.addEventListener('fetch', function(event) {
+  if (pathsToCache.includes(new URL(event.request.url).pathname)) {
+    event.respondWith(
+      caches.match(event.request, {'ignoreSearch': true})
+        .then(function(response) {
+          if (response) {
+            return response;
+          }
+          return fetch(event.request);
+        }
+      )
+    );
+  }
+});

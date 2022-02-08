@@ -15,8 +15,9 @@
   var iOSApp = null;
 
   Util.init = function() {
+    registerServiceWorker();
+
     bindFormSubmit();
-    bindCacheReady();
     bindLogoutBtn();
     bindReloadLink();
     bindInitSessionLink();
@@ -257,6 +258,28 @@
     return str.charAt(0).toUpperCase() + str.slice(1);
   };
 
+  function registerServiceWorker() {
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('/offline_sw.js').then(function(registration) {
+          console.log('ServiceWorker registration successful with scope: ', registration.scope);
+          if (registration.active) {
+            registration.addEventListener('updatefound', function() {
+              const newWorker = registration.installing;
+              newWorker.addEventListener('statechange', function() {
+                if (newWorker.state === 'activated') {
+                  $('#cache_update_ready').show();
+                }
+              });
+            });
+          }
+        }, function(err) {
+          console.log('ServiceWorker registration failed: ', err);
+        });
+      });
+    }
+  };
+
   // DOM bindings
   function bindFormSubmit() {
     if (Util.isIOS()) {
@@ -266,13 +289,6 @@
         }
       });
     }
-  };
-
-  function bindCacheReady() {
-    $(window.applicationCache).bind('updateready', function() {
-      window.applicationCache.swapCache();
-      $('#cache_update_ready').show();
-    });
   };
 
   function bindLogoutBtn() {

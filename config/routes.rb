@@ -2,9 +2,9 @@ Rails.application.routes.draw do
   resource :health_check, :only => [ :show ]
 
   root :to => 'application#index', :via => :get
-  match 'manifest.appcache' => 'application#cache_manifest', :via => :get, :as => 'cache_manifest'
 
   match 'init_session' => 'application#init_session', :via => :get
+  match 'offline_sw.js' => 'application#offline_sw', :via => :get
 
   match 'verify/:id' => 'verifications#verify', :via => :get, :as => 'verify'
 

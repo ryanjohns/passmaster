@@ -1,6 +1,6 @@
 !!!
 
-%html{ :manifest => cache_manifest_path }
+%html
   %head
     %meta{ 'http-equiv' => 'Content-Type', :content => 'text/html; charset=utf-8' }
     %meta{ :name => 'viewport', :content => 'initial-scale=1.0, maximum-scale=1.0, user-scalable=no' }
@@ -8,7 +8,7 @@
     %meta{ :name => 'csrf-param', :content => request_forgery_protection_token }
     %meta{ :name => 'csrf-token', :content => '' }
     %meta{ :name => 'description', :content => 'A simple tool for storing usernames and passwords securely in the cloud. All of your account details are encrypted with a single master password making it easy to use different passwords for each site you visit.' }
-    %meta{ :name => 'keywords', :content => 'password, password manager, account manager, encryption, host-proof, host-proof encryption, lastpass, 1password, passwordbox, master password, secure passwords, password generator' }
+    %meta{ :name => 'keywords', :content => 'passwords, password manager, host-proof encryption, master password, secure passwords, password generator' }
     %title Passmaster - Encrypted Password Manager for Web and Mobile
     = stylesheet_link_tag 'libraries'
     = stylesheet_link_tag 'application'
