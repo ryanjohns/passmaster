@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-if [ -f /usr/local/rvm/environments/ruby-2.6.9@passmaster ]; then
-  source /usr/local/rvm/environments/ruby-2.6.9@passmaster
+if [ -f /usr/local/rvm/environments/ruby-3.0.3@passmaster ]; then
+  source /usr/local/rvm/environments/ruby-3.0.3@passmaster
 fi
 
 $@

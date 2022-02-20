@@ -53,7 +53,7 @@ class User < ApplicationRecord
     return true if !otp_enabled && enable_otp != '1'
     session = otp_sessions.where(:client_id => client_id).first
     return false if session.nil? || !session.active? || (enable_otp == '0' && !session.recently_activated?)
-    session.update_attributes({ :ip_address => ip_address, :user_agent => user_agent, :last_seen_at => Time.zone.now })
+    session.update({ :ip_address => ip_address, :user_agent => user_agent, :last_seen_at => Time.zone.now })
     true
   end
 
