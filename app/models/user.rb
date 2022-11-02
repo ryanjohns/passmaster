@@ -33,7 +33,7 @@ class User < ApplicationRecord
 
   def self.backup_data(schema_version, encrypted_data)
     data = {
-      :generated_at   => Time.now.utc.to_s(:file_safe),
+      :generated_at   => Time.now.utc.to_fs(:file_safe),
       :schema_version => schema_version,
       :encrypted_data => encrypted_data,
     }

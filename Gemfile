@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '6.1.7'
+gem 'rails', '7.0.4'
 
 gem 'aws-sdk-rails'
 gem 'aws-sdk-s3'
@@ -14,12 +14,8 @@ gem 'rotp', '~> 3.3'
 gem 'rubyzip', '~> 2.3.0', :require => 'zip'
 gem 'sass'
 gem 'sprockets', '~> 3.7'
-gem 'sprockets-rails', :require => 'sprockets/railtie'
+gem 'sprockets-rails'
 gem 'unicorn'
-
-gem 'net-smtp', require: false
-gem 'net-pop', require: false
-gem 'net-imap', require: false
 
 group :development, :staging do
   gem 'letter_opener'
