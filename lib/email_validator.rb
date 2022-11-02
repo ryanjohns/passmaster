@@ -1,6 +1,6 @@
 require 'resolv'
 
-class Resolv
+class EmailValidator
 
   DOMAIN_REGEX           = /^.+\@/
   BLACKLISTED_MX_DOMAINS = %w(
@@ -32,10 +32,9 @@ class Resolv
   )
 
   def self.valid_email?(email)
+    return true if email.nil?
     domain = email.gsub(DOMAIN_REGEX, '')
-    !BLACKLISTED_MX_DOMAINS.include?(domain) && (WHITELISTED_MX_DOMAINS.include?(domain) || DNS.open.getresources(domain, DNS::Resource::IN::MX).any? { |mx| mx.exchange.to_s.strip.present? })
-  rescue
-    true
+    !BLACKLISTED_MX_DOMAINS.include?(domain) && (WHITELISTED_MX_DOMAINS.include?(domain) || Resolv::DNS.open.getresources(domain, Resolv::DNS::Resource::IN::MX).any? { |mx| mx.exchange.to_s.strip.present? })
   end
 
 end

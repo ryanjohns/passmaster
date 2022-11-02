@@ -172,7 +172,7 @@ class User < ApplicationRecord
   end
 
   def email_deliverable
-    errors.add(:email, 'is not deliverable') unless Resolv.valid_email?(email)
+    errors.add(:email, 'is not deliverable') unless EmailValidator.valid_email?(email)
   end
 
   def verification_code_matches

@@ -17,6 +17,10 @@ gem 'sprockets', '~> 3.7'
 gem 'sprockets-rails', :require => 'sprockets/railtie'
 gem 'unicorn'
 
+gem 'net-smtp', require: false
+gem 'net-pop', require: false
+gem 'net-imap', require: false
+
 group :development, :staging do
   gem 'letter_opener'
 end

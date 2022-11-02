@@ -63,19 +63,19 @@ GEM
     addressable (2.8.1)
       public_suffix (>= 2.0.2, < 6.0)
     aws-eventstream (1.2.0)
-    aws-partitions (1.650.0)
+    aws-partitions (1.654.0)
     aws-record (2.8.0)
       aws-sdk-dynamodb (~> 1.18)
-    aws-sdk-core (3.164.0)
+    aws-sdk-core (3.166.0)
       aws-eventstream (~> 1, >= 1.0.2)
-      aws-partitions (~> 1, >= 1.525.0)
-      aws-sigv4 (~> 1.1)
+      aws-partitions (~> 1, >= 1.651.0)
+      aws-sigv4 (~> 1.5)
       jmespath (~> 1, >= 1.6.1)
-    aws-sdk-dynamodb (1.77.0)
-      aws-sdk-core (~> 3, >= 3.127.0)
+    aws-sdk-dynamodb (1.78.0)
+      aws-sdk-core (~> 3, >= 3.165.0)
       aws-sigv4 (~> 1.1)
-    aws-sdk-kms (1.58.0)
-      aws-sdk-core (~> 3, >= 3.127.0)
+    aws-sdk-kms (1.59.0)
+      aws-sdk-core (~> 3, >= 3.165.0)
       aws-sigv4 (~> 1.1)
     aws-sdk-rails (3.6.4)
       aws-record (~> 2)
@@ -84,15 +84,15 @@ GEM
       aws-sessionstore-dynamodb (~> 2)
       concurrent-ruby (~> 1)
       railties (>= 5.2.0)
-    aws-sdk-s3 (1.116.0)
-      aws-sdk-core (~> 3, >= 3.127.0)
+    aws-sdk-s3 (1.117.1)
+      aws-sdk-core (~> 3, >= 3.165.0)
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.4)
-    aws-sdk-ses (1.47.0)
-      aws-sdk-core (~> 3, >= 3.127.0)
+    aws-sdk-ses (1.48.0)
+      aws-sdk-core (~> 3, >= 3.165.0)
       aws-sigv4 (~> 1.1)
-    aws-sdk-sqs (1.51.1)
-      aws-sdk-core (~> 3, >= 3.127.0)
+    aws-sdk-sqs (1.52.0)
+      aws-sdk-core (~> 3, >= 3.165.0)
       aws-sigv4 (~> 1.1)
     aws-sessionstore-dynamodb (2.0.1)
       aws-sdk-dynamodb (~> 1)
@@ -111,7 +111,7 @@ GEM
     ffi (1.15.5)
     globalid (1.0.0)
       activesupport (>= 5.0)
-    haml (6.0.7)
+    haml (6.0.8)
       temple (>= 0.8.2)
       thor
       tilt
@@ -147,6 +147,14 @@ GEM
     mini_mime (1.1.2)
     mini_portile2 (2.8.0)
     minitest (5.16.3)
+    net-imap (0.3.1)
+      net-protocol
+    net-pop (0.1.2)
+      net-protocol
+    net-protocol (0.1.3)
+      timeout
+    net-smtp (0.3.3)
+      net-protocol
     nio4r (2.5.8)
     nokogiri (1.13.9)
       mini_portile2 (~> 2.8.0)
@@ -207,6 +215,7 @@ GEM
     temple (0.9.1)
     thor (1.2.1)
     tilt (2.0.11)
+    timeout (0.3.0)
     tzinfo (2.0.5)
       concurrent-ruby (~> 1.0)
     unicorn (6.1.0)
@@ -215,7 +224,7 @@ GEM
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
-    zeitwerk (2.6.1)
+    zeitwerk (2.6.4)
 
 PLATFORMS
   ruby
@@ -229,6 +238,9 @@ DEPENDENCIES
   jquery-rails
   letter_opener
   lograge
+  net-imap
+  net-pop
+  net-smtp
   nokogiri
   pg
   rails (= 6.1.7)
