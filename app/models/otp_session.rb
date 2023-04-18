@@ -39,7 +39,7 @@ class OtpSession < ApplicationRecord
   end
 
   def verify_otp(api_key, otp)
-    if user && user.api_key_matches?(api_key) && ROTP::TOTP.new(user.otp_secret).verify_with_drift(otp, DRIFT)
+    if user && user.api_key_matches?(api_key) && ROTP::TOTP.new(user.otp_secret).verify(otp, drift_ahead: DRIFT, drift_behind: DRIFT)
       self.activated_at = Time.zone.now
       self.login_count  = login_count + 1
       self.failed_count = 0

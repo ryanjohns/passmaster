@@ -126,7 +126,7 @@ class User < ApplicationRecord
   end
 
   def generate_otp_secret
-    self.otp_secret = ROTP::Base32.random_base32
+    self.otp_secret = ROTP::Base32.random_base32(16)
     true
   end
 
