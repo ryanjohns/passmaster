@@ -13,8 +13,9 @@ gem 'pg'
 gem 'rotp'
 gem 'rubyzip', '~> 2.3.0', :require => 'zip'
 gem 'sass'
-gem 'sprockets', '~> 3.7'
+gem 'sprockets'
 gem 'sprockets-rails'
+gem 'sassc-rails'
 gem 'unicorn'
 
 group :development, :staging do
