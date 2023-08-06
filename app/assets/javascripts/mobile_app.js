@@ -78,9 +78,10 @@
 
   MobileApp.setTouchIDUsability = function(supported, configured, faceId) {
     if (faceId) {
-      $('#unlock_touchid_btn').html('Unlock with Face ID');
-      $('#unlock_touchid_btn').attr('title', 'Unlock with Face ID');
-      $('#touch_id_pref_label').html('Unlock with Face ID');
+      var i18nStr = I18n.translate('general.unlock_face_id');
+      $('#unlock_touchid_btn').html(i18nStr);
+      $('#unlock_touchid_btn').attr('title', i18nStr);
+      $('#touch_id_pref_label').html(i18nStr);
     }
     if (supported) {
       $('.ios-app-only-pref').show();

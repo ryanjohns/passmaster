@@ -1,117 +1,123 @@
 #preferences.modal.hide{ :role => 'dialog', :tabindex => '-1', 'aria-labelledby' => 'preferences_label', :style => 'display:none;' }
   .modal-header
     %button.close{ :type => 'button', 'data-dismiss' => 'modal', 'aria-hidden' => 'true' } &times;
-    %h3#preferences_label Preferences
+    %h3#preferences_label{ 'data-i18n-html' => 'general.preferences' } Preferences
   .modal-body
     = form_tag(users_path, :method => :put, :remote => true, :class => 'modal-form', :id => 'preferences_form') do
       = hidden_field_tag(:api_key, '', :id => 'preferences_api_key')
       = hidden_field_tag(:version_code, '', :id => 'preferences_version_code')
-      %strong Default Password Length
+      %strong{ 'data-i18n-html' => 'settings.language' } Language
+      %p
+        %select#preferences_language.input-medium{ :name => 'language' }
+          %option#preference_language_default.language-default{ :value => '', :style => 'display:none;', 'data-i18n-html' => 'settings.default' } Default
+          - LANGUAGE_NAMES.each do |l, name|
+            %option{ :class => "language-#{l}", :value => l }= name
+      %strong{ 'data-i18n-html' => 'settings.default_password_length' } Default Password Length
       %p
         %select#preferences_password_length.input-medium{ :name => 'password_length' }
           - 6.upto(32).each do |i|
-            %option{ :class => "length-#{i}", :value => i }= "#{i} Characters"
-      %strong Special Characters
+            %option{ :class => "length-#{i}", :value => i }= "#{i}"
+      %strong{ 'data-i18n-html' => 'general.special_characters' } Special Characters
       .inline-radios
         = label_tag(nil, :class => 'radio inline') do
           = radio_button_tag(:special_chars, '1', false, :id => 'preferences_special_chars_enabled')
-          Include
+          %span{ 'data-i18n-html' => 'settings.include' } Include
         = label_tag(nil, :class => 'radio inline') do
           = radio_button_tag(:special_chars, '0', false, :id => 'preferences_special_chars_disabled')
-          Don't Include
-      %strong Auto-lock
+          %span{ 'data-i18n-html' => 'settings.dont_include' } Don't Include
+      %strong{ 'data-i18n-html' => 'settings.auto_lock' } Auto Lock
       %p
         %select#preferences_idle_timeout.input-medium{ :name => 'idle_timeout' }
-          %option{ :value => 0 } Never
-          %option{ :value => 1 } 1 Minute
-          - 2.upto(5).each do |i|
-            %option{ :value => i }= "#{i} Minutes"
-          - 2.upto(11).each do |i|
-            - val = i * 5
-            %option{ :value => val }= "#{val} Minutes"
-          %option{ :value => 60 } 1 Hour
-      %strong#touch_id_pref_label.ios-app-only-pref{ :style => 'display:none;' } Unlock with Touch ID
+          %option{ :value => 0,  'data-i18n-html' => 'settings.idle_00' } Never
+          %option{ :value => 1,  'data-i18n-html' => 'settings.idle_01' } 1 Minute
+          %option{ :value => 3,  'data-i18n-html' => 'settings.idle_03' } 3 Minutes
+          %option{ :value => 5,  'data-i18n-html' => 'settings.idle_05' } 5 Minutes
+          %option{ :value => 10, 'data-i18n-html' => 'settings.idle_10' } 10 Minutes
+          %option{ :value => 15, 'data-i18n-html' => 'settings.idle_15' } 15 Minutes
+          %option{ :value => 30, 'data-i18n-html' => 'settings.idle_30' } 30 Minutes
+          %option{ :value => 60, 'data-i18n-html' => 'settings.idle_60' } 1 Hour
+      %strong#touch_id_pref_label.ios-app-only-pref{ :style => 'display:none;', 'data-i18n-html' => 'general.unlock_touch_id' } Unlock with Touch ID
       .inline-radios.ios-app-only-pref{ :style => 'display:none;' }
         = label_tag(nil, :class => 'radio inline') do
           = radio_button_tag(:touch_id_enabled, '1', false, :id => 'preferences_touch_id_enabled')
-          Enabled
+          %span{ 'data-i18n-html' => 'settings.enabled' } Enabled
         = label_tag(nil, :class => 'radio inline') do
           = radio_button_tag(:touch_id_enabled, '0', false, :id => 'preferences_touch_id_disabled')
-          Disabled
-      %strong Auto-backup to Email on Change
+          %span{ 'data-i18n-html' => 'settings.disabled' } Disabled
+      %strong{ 'data-i18n-html' => 'settings.auto_backup' } Auto-backup to Email on Change
       .inline-radios
         = label_tag(nil, :class => 'radio inline') do
           = radio_button_tag(:auto_backup, '1', false, :id => 'preferences_auto_backup_enabled')
-          Enabled
+          %span{ 'data-i18n-html' => 'settings.enabled' } Enabled
         = label_tag(nil, :class => 'radio inline') do
           = radio_button_tag(:auto_backup, '0', false, :id => 'preferences_auto_backup_disabled')
-          Disabled
-      %strong Multi-factor Authentication
+          %span{ 'data-i18n-html' => 'settings.disabled' } Disabled
+      %strong{ 'data-i18n-html' => 'general.mfa' } Multi-factor Authentication
       .inline-radios
         = label_tag(nil, :class => 'radio inline') do
           = radio_button_tag(:otp_enabled, '1', false, :id => 'preferences_mfa_enabled')
-          Enabled
+          %span{ 'data-i18n-html' => 'settings.enabled' } Enabled
         = label_tag(nil, :class => 'radio inline') do
           = radio_button_tag(:otp_enabled, '0', false, :id => 'preferences_mfa_disabled')
-          Disabled
+          %span{ 'data-i18n-html' => 'settings.disabled' } Disabled
         #mfa_configure{ :style => 'display:none;' }
           %p
-            Multi-factor authentication adds additional security to your encrypted data by requiring you to verify each device you use to access Passmaster once every #{OtpSession::ACTIVE_DAYS} days.
-            In order to verify a device, you will be asked to enter a 6-digit code that can be obtained from the Google Authenticator app for
+            %span{ 'data-i18n-html' => 'settings.mfa_details1' } Multi-factor authentication adds additional security to your encrypted data by requiring you to verify each device you use to access Passmaster once every 30 days.
+            %span{ 'data-i18n-html' => 'settings.mfa_details2' } In order to verify a device, you will be asked to enter a 6-digit code that can be obtained from the Google Authenticator app for
             = link_to('Android', 'https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2', :target => '_blank')
-            and
+            %span{ 'data-i18n-html' => 'general.and' } and
             = succeed '.' do
               = link_to('iOS', 'https://itunes.apple.com/us/app/google-authenticator/id388497605?mt=8', :target => '_blank')
-            Use the following QR code or secret key to add Passmaster to Google Authenticator.
+            %span{ 'data-i18n-html' => 'settings.mfa_details3' } Use the following QR code or secret key to add Passmaster to Google Authenticator.
           .alert.alert-info
-            %strong Note:
-            It is a good idea to save the secret key in a safe location in case you lose your device with Google Authenticator or accidentally remove the Passmaster account.
+            %strong{ 'data-i18n-html' => 'settings.note' } Note:
+            %span{ 'data-i18n-html' => 'settings.mfa_details4' } It is a good idea to save the secret key in a safe location in case you lose your device with Google Authenticator or accidentally remove the Passmaster account.
           #qr_code
-          %strong Secret Key:
+          %strong{ 'data-i18n-html' => 'settings.secret_key' } Secret Key:
           %strong#otp_secret
       %p
-        = submit_tag('Save Preferences', :class => 'btn btn-primary', :id => 'preferences_btn', :data => { :disable_with => false })
-        %button.btn{ :type => 'button', 'data-dismiss' => 'modal', 'aria-hidden' => 'true' } Cancel
+        = submit_tag('Save Preferences', :class => 'btn btn-primary', :id => 'preferences_btn', 'data-i18n-value' => 'settings.save_preferences', :data => { :disable_with => false })
+        %button.btn{ :type => 'button', 'data-dismiss' => 'modal', 'aria-hidden' => 'true', 'data-i18n-html' => 'general.cancel' } Cancel
   .modal-footer
 
 #change_email.modal.hide{ :role => 'dialog', :tabindex => '-1', 'aria-labelledby' => 'email_label', :style => 'display:none;' }
   .modal-header
     %button.close{ :type => 'button', 'data-dismiss' => 'modal', 'aria-hidden' => 'true' } &times;
-    %h3#email_label Email Address
+    %h3#email_label{ 'data-i18n-html' => 'general.email_address' } Email Address
   .modal-body
-    %p Change the email address you use to access your accounts.
+    %p{ 'data-i18n-html' => 'settings.change_email_details' } Change the email address you use to access your accounts.
     .alert.alert-warning
-      %strong Warning:
-      You will not be able to modify your accounts until you verify your new email address.
+      %strong{ 'data-i18n-html' => 'general.warning' } Warning:
+      %strong{ 'data-i18n-html' => 'settings.warning_verify_email' } You will not be able to modify your accounts until you verify your new email address.
     = form_tag(users_path, :method => :put, :remote => true, :class => 'modal-form', :id => 'change_email_form') do
       = hidden_field_tag(:api_key, '', :id => 'change_email_api_key')
       = hidden_field_tag(:version_code, '', :id => 'change_email_version_code')
       %p{ :style => 'display:none;' }= password_field_tag(:hack_field, '', :id => nil)
-      %p= email_field_tag(:email, '', :placeholder => 'Email Address', :class => 'input-xlarge', :id => 'change_email_email', :required => true)
+      %p= email_field_tag(:email, '', :placeholder => 'Email Address', 'data-i18n-placeholder' => 'general.email_address', :class => 'input-xlarge', :id => 'change_email_email', :required => true)
       %p
-        = submit_tag('Change Email', :class => 'btn btn-primary', :id => 'change_email_btn', :data => { :disable_with => false })
-        %button.btn{ :type => 'button', 'data-dismiss' => 'modal', 'aria-hidden' => 'true' } Cancel
+        = submit_tag('Change Email', :class => 'btn btn-primary', :id => 'change_email_btn', 'data-i18n-value' => 'settings.change_email', :data => { :disable_with => false })
+        %button.btn{ :type => 'button', 'data-dismiss' => 'modal', 'aria-hidden' => 'true', 'data-i18n-html' => 'general.cancel' } Cancel
   .modal-footer
 
 #master_password.modal.hide{ :role => 'dialog', :tabindex => '-1', 'aria-labelledby' => 'master_password_label', :style => 'display:none;' }
   .modal-header
     %button.close{ :type => 'button', 'data-dismiss' => 'modal', 'aria-hidden' => 'true' } &times;
-    %h3#master_password_label Master Password
+    %h3#master_password_label{ 'data-i18n-html' => 'general.master_password' } Master Password
   .modal-body
-    %p
-      The Master Password is the only password you will need to remember.
-      It is used to unlock the rest of your individual account passwords so it is important that this password is hard to guess.
-      It should be at least 8 characters long and contain a mixture and upper and lower-case letters as well as numbers and special characters.
+    %ul{ :style => 'list-style-position:inside;' }
+      %li{ 'data-i18n-html' => 'general.master_password_instructions1' } The Master Password is the only password you will need to remember.
+      %li{ 'data-i18n-html' => 'general.master_password_instructions2' } It is used to unlock the rest of your individual account passwords so it is important that this password is hard to guess.
+      %li{ 'data-i18n-html' => 'general.master_password_instructions3' } It should be at least 8 characters long and contain a mixture and upper and lower-case letters as well as numbers and special characters.
     .alert.alert-warning
-      %strong Warning:
-      It is extremely important that you remember this password as it CANNOT be recovered!
+      %strong{ 'data-i18n-html' => 'general.warning' } Warning:
+      %span{ 'data-i18n-html' => 'general.warning_master_password' } It is extremely important that you remember this password as it CANNOT be recovered!
     %form#master_password_form.modal-form
-      %p= password_field_tag(:old_passwd, '', :placeholder => 'Current Password', :class => 'input-xlarge', :id => 'master_password_old_passwd', :required => true)
-      %p= password_field_tag(:passwd, '', :placeholder => 'New Password', :class => 'input-xlarge', :id => 'master_password_passwd', :required => true)
-      %p= password_field_tag(:passwd2, '', :placeholder => 'Confirm New Password', :class => 'input-xlarge', :id => 'master_password_passwd2', :required => true)
+      %p= password_field_tag(:old_passwd, '', :placeholder => 'Current Password', 'data-i18n-placeholder' => 'settings.current_password', :class => 'input-xlarge', :id => 'master_password_old_passwd', :required => true)
+      %p= password_field_tag(:passwd, '', :placeholder => 'New Password', 'data-i18n-placeholder' => 'settings.new_password', :class => 'input-xlarge', :id => 'master_password_passwd', :required => true)
+      %p= password_field_tag(:passwd2, '', :placeholder => 'Confirm New Password', 'data-i18n-placeholder' => 'settings.confirm_new_password', :class => 'input-xlarge', :id => 'master_password_passwd2', :required => true)
       %p
-        = submit_tag('Set Master Password', :class => 'btn btn-primary', :id => 'master_password_btn', :data => { :disable_with => false })
-        %button.btn{ :type => 'button', 'data-dismiss' => 'modal', 'aria-hidden' => 'true' } Cancel
+        = submit_tag('Set Master Password', :class => 'btn btn-primary', :id => 'master_password_btn', 'data-i18n-value' => 'general.set_master_password', :data => { :disable_with => false })
+        %button.btn{ :type => 'button', 'data-dismiss' => 'modal', 'aria-hidden' => 'true', 'data-i18n-html' => 'general.cancel' } Cancel
   .modal-footer
     = form_tag(users_path, :method => :put, :remote => true, :id => 'master_password_hidden_form', :style => 'display:none;') do
       = hidden_field_tag(:api_key, '', :id => 'master_password_hidden_api_key')
@@ -123,51 +129,50 @@
 #backup_accounts.modal.hide{ :role => 'dialog', :tabindex => '-1', 'aria-labelledby' => 'backup_accounts_label', :style => 'display:none;' }
   .modal-header
     %button.close{ :type => 'button', 'data-dismiss' => 'modal', 'aria-hidden' => 'true' } &times;
-    %h3#backup_accounts_label Backup Accounts
+    %h3#backup_accounts_label{ 'data-i18n-html' => 'settings.backup_accounts' } Backup Accounts
   .modal-body
     %p
-      Use the Email button to save a backup of your encrypted accounts as an attachment to your email.
-      %span#file_backup_copy{ :style => 'display:none;' } Alternatively, you can use the File button to download a backup to your computer.
+      %span{ 'data-i18n-html' => 'settings.backup_accounts_detail1' } Use the Email button to save a backup of your encrypted accounts as an attachment to your email.
+      %span#file_backup_copy{ 'data-i18n-html' => 'settings.backup_accounts_detail2', :style => 'display:none;' } Alternatively, you can use the File button to download a backup to your computer.
     .alert.alert-info
-      %strong Note:
-      Backups are locked with your current Master Password and you will need the password in order to view or restore the backup.
+      %strong{ 'data-i18n-html' => 'settings.note' } Note:
+      %span{ 'data-i18n-html' => 'settings.backup_accounts_detail3' } Backups are locked with your current Master Password and you will need the password in order to view or restore the backup.
     %p
-      = link_to('Email', '/users', :remote => true, :id => 'backup_accounts_email_btn', :class => 'btn btn-primary')
-      %button#backup_accounts_file_btn.btn.btn-inverse{ :type => 'button', :style => 'display:none;' } File
-      %button.btn{ :type => 'button', 'data-dismiss' => 'modal', 'aria-hidden' => 'true' } Close
+      = link_to('Email', '/users', :remote => true, :id => 'backup_accounts_email_btn', :class => 'btn btn-primary', 'data-i18n-html' => 'settings.email')
+      %button#backup_accounts_file_btn.btn.btn-inverse{ :type => 'button', 'data-i18n-html' => 'settings.file', :style => 'display:none;' } File
+      %button.btn{ :type => 'button', 'data-dismiss' => 'modal', 'aria-hidden' => 'true', 'data-i18n-html' => 'settings.close' } Close
   .modal-footer
 
 #restore_accounts.modal.hide{ :role => 'dialog', :tabindex => '-1', 'aria-labelledby' => 'restore_accounts_label', :style => 'display:none;' }
   .modal-header
     %button.close{ :type => 'button', 'data-dismiss' => 'modal', 'aria-hidden' => 'true' } &times;
-    %h3#restore_accounts_label Restore Accounts
+    %h3#restore_accounts_label{ 'data-i18n-html' => 'settings.restore_accounts' } Restore Accounts
   .modal-body
-    %p Select your backup file and enter the Master Password from when the backup was created.
+    %p{ 'data-i18n-html' => 'settings.restore_accounts_detail1' } Select your backup file and enter the Master Password from when the backup was created.
     .alert.alert-danger
-      %strong Danger:
-      This will replace ALL of your current accounts and reset your Master Password to where they were when the backup was created. You might want to make a backup of your current accounts before restoring.
+      %strong{ 'data-i18n-html' => 'settings.danger' } Danger:
+      %span{ 'data-i18n-html' => 'settings.restore_accounts_detail2' } This will replace ALL of your current accounts and reset your Master Password to where they were when the backup was created. You might want to make a backup of your current accounts before restoring.
     %form#restore_accounts_form{ :enctype => 'multipart/form-data' }
       %p= file_field_tag(:backup_file, :accept => 'text/plain', :id => 'restore_accounts_backup_file')
-      %p= password_field_tag(:passwd, '', :placeholder => 'Backup Password', :class => 'input-xlarge', :id => 'restore_accounts_passwd', :required => true)
+      %p= password_field_tag(:passwd, '', :placeholder => 'Backup Password', 'data-i18n-placeholder' => 'settings.backup_password', :class => 'input-xlarge', :id => 'restore_accounts_passwd', :required => true)
       %p{ :style => 'display:none;' }= password_field_tag(:hack_field, '', :id => nil)
       %p
-        = submit_tag('Restore', :class => 'btn btn-danger', :id => 'restore_accounts_btn', :data => { :disable_with => false })
-        %button.btn{ :type => 'button', 'data-dismiss' => 'modal', 'aria-hidden' => 'true' } Cancel
+        = submit_tag('Restore', :class => 'btn btn-danger', :id => 'restore_accounts_btn', 'data-i18n-value' => 'general.restore', :data => { :disable_with => false })
+        %button.btn{ :type => 'button', 'data-dismiss' => 'modal', 'aria-hidden' => 'true', 'data-i18n-html' => 'general.cancel' } Cancel
   .modal-footer
 
 #delete_account.modal.hide{ :role => 'dialog', :tabindex => '-1', 'aria-labelledby' => 'delete_account_label', :style => 'display:none;' }
   .modal-header
     %button.close{ :type => 'button', 'data-dismiss' => 'modal', 'aria-hidden' => 'true' } &times;
-    %h3#delete_account_label Delete Account
+    %h3#delete_account_label{ 'data-i18n-html' => 'general.delete_account' } Delete Account
   .modal-body
     = form_tag(users_path, :method => :delete, :remote => true, :class => 'modal-form', :id => 'delete_account_form') do
       = hidden_field_tag(:api_key, '', :id => 'delete_account_api_key')
-      %p
-        Permenantly delete your Passmaster account. You will receive an email with a final backup of your encrypted accounts.
+      %p{ 'data-i18n-html' => 'settings.delete_account_detail1' } Permenantly delete your Passmaster account. You will receive an email with a final backup of your encrypted accounts.
       .alert.alert-info
-        %strong Note:
-        Backups are locked with your current Master Password and you will need the password in order to view or restore the backup.
+        %strong{ 'data-i18n-html' => 'settings.note' } Note:
+        %span{ 'data-i18n-html' => 'settings.delete_account_detail2' } Backups are locked with your current Master Password and you will need the password in order to view or restore the backup.
       %p
-        = submit_tag('Delete Account', :class => 'btn btn-danger', :id => 'delete_account_btn', :data => { :disable_with => false })
-        %button.btn{ :type => 'button', 'data-dismiss' => 'modal', 'aria-hidden' => 'true' } Cancel
+        = submit_tag('Delete Account', :class => 'btn btn-danger', :id => 'delete_account_btn', 'data-i18n-value' => 'general.delete_account', :data => { :disable_with => false })
+        %button.btn{ :type => 'button', 'data-dismiss' => 'modal', 'aria-hidden' => 'true', 'data-i18n-html' => 'general.cancel' } Cancel
   .modal-footer

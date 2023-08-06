@@ -1,6 +1,7 @@
 //= require accounts
 //= require configure
 //= require crypto
+//= require i18n
 //= require idle_timeout
 //= require mobile_app
 //= require overview

@@ -1,32 +1,211 @@
-# Files in the config/locales directory are used for internationalization
-# and are automatically loaded by Rails. If you want to use locales other
-# than English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t 'hello'
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t('hello') %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# The following keys must be escaped otherwise they will not be retrieved by
-# the default I18n backend:
-#
-# true, false, on, off, yes, no
-#
-# Instead, surround them with single quotes.
-#
-# en:
-#   'true': 'foo'
-#
-# To learn more, please read the Rails Internationalization guide
-# available at https://guides.rubyonrails.org/i18n.html.
-
 en:
+  mailers:
+    accounts_viewer: 'Accounts Viewer'
+    accounts_viewer_instructions: 'Backups can be restored to any Passmaster account or viewed offline using the'
+    hi: 'Hi,'
+    thanks_passmaster: 'Thanks for using Passmaster!'
+    unexpected_change: 'If you did not make any changes and this is a surprise to you, please contact support by replying to this email.'
+    account_deleted:
+      subject: 'Account Deleted'
+      body: "Your Passmaster account has been deleted. Here's a final backup of your accounts."
+    auto_backup:
+      subject: 'Auto-Backup'
+      body: "Your accounts have been changed. Here's a backup of the most recent version."
+    backup:
+      subject: 'Backup'
+      body: "Here's the backup of your accounts that you requested."
+    email_changed:
+      subject: 'Email Changed'
+      body1: "This is to confirm that you changed your email address. You'll need to use your new address to access your accounts from now on."
+      body2: 'A backup of your accounts at the time of change is attached to this message.'
+    master_password_changed:
+      subject: 'Master Password Changed'
+      body1: "This is to confirm that you changed your Master Password. You'll need to use your new password to access your accounts from now on."
+      body2: 'A backup of your accounts as they existed with the previous Master Password is attached to this message.'
+    verify_email:
+      subject: 'Email Verification'
+      body1: "You'll need to verify your email address to use your account."
+      body2: 'Just click the link below or enter the verification code when you'
+      access_account: 'access your account'
+      verification_code: 'Verification Code:'
+  updates:
+    title: 'Updates'
+  webapp:
+    accounts:
+      account_name: 'Account Name'
+      account_name_blank: 'Account Name cannot be blank.'
+      account_name_exists: 'An account with that name already exists.'
+      accounts: 'Accounts'
+      add_account: 'Add Account'
+      all: 'All'
+      backup: 'Backup'
+      bad_password: 'Bad password.'
+      click_to_show: 'click to show'
+      confirm_delete_account: 'Are you sure you want to delete this account?'
+      delete: 'Delete'
+      failed_to_decrypt: 'Failed to decrypt accounts.'
+      failed_to_encrypt: 'Failed to encrypt accounts.'
+      generate: 'Generate'
+      hide_notes: 'Hide Notes'
+      length: 'Length'
+      lock: 'Lock'
+      locked_enter_password: 'Accounts are locked. Enter the Master Password to unlock.'
+      no_notes: 'No Notes'
+      none: 'None'
+      notes: 'Notes'
+      of: 'of'
+      password_copied: 'Password Copied'
+      prevent_data_loss: 'before making any updates to prevent potential data loss.'
+      refresh: 'Refresh'
+      remote_update: 'Your accounts have been updated from another browser and have not been synced to this device.'
+      save: 'Save'
+      settings: 'Settings'
+      show_notes: 'Show Notes'
+      showing: 'Showing'
+      tap_to_copy: 'tap to copy'
+      to_make_changes: 'to make changes to your accounts.'
+      type_to_search: 'Type to Search'
+      unlock: 'Unlock'
+      username: 'Username'
+      username_copied: 'Username Copied'
+      verify_email: 'Verify Your Email Address'
+      website_url: 'Website URL'
+      you_need_to: 'You need to'
+    configure:
+      configure: 'Configure'
+      confirm_password: 'Confirm Password'
+      passwords_dont_match: 'Passwords do not match. Please try again.'
+      password_set_success: 'Master Password set successfully. You are now ready to use Passmaster.'
+    footer:
+      contact: 'contact'
+      updates: 'updates'
+    general:
+      and: 'and'
+      cancel: 'Cancel'
+      connection_failed: 'Connection Failed!'
+      delete_account: 'Delete Account'
+      email_address: 'Email Address'
+      failed_to_set_password: 'Failed to set Master Password. Please try again.'
+      idle_alert: 'Idle Alert!'
+      idle_alert_detail: 'Accounts will automatically lock in one minute due to inactivity.'
+      logout: 'Logout'
+      master_password: 'Master Password'
+      master_password_instructions1: 'The Master Password is the only password you will need to remember.'
+      master_password_instructions2: 'It is used to unlock the rest of your individual account passwords so it is important that this password is hard to guess.'
+      master_password_instructions3: 'It should be at least 8 characters long and contain a mixture and upper and lower-case letters as well as numbers and special characters.'
+      mfa: 'Multi-factor Authentication'
+      offline_mode: 'Offline-mode enabled.'
+      password: 'Password'
+      password_blank: 'Password cannot be blank.'
+      please_wait: 'Please Wait...'
+      preferences: 'Preferences'
+      restore: 'Restore'
+      schema_outdated: 'Your accounts database was last saved by a version of the website that is newer than the version you are currently running. The page will reload in order to update to the latest version.'
+      set_master_password: 'Set Master Password'
+      special_characters: 'Special Characters'
+      title: 'Passmaster - Encrypted Password Manager for Web and Mobile'
+      try_reconnect: 'Try reconnecting...'
+      unlock_face_id: 'Unlock with Face ID'
+      unlock_touch_id: 'Unlock with Touch ID'
+      updates_available: 'New Updates Available!'
+      updates_available_detail: 'Click here for the latest version.'
+      warning: 'Warning:'
+      warning_master_password: 'It is extremely important that you remember this password as it CANNOT be recovered!'
+    overview:
+      access_accounts: 'Access Accounts'
+      automatic_backups: 'Automatic Backups'
+      automatic_backups_body: 'Enable automatic backups to receive an email with your encrypted account details each time you make a change. This is a great way to ensure you always have a backup of your data. You can also download a backup file to your computer at any time from your account settings.'
+      enter_email: 'Enter your email address to access your accounts or to get started.'
+      host_proof_encryption: 'Host-Proof Encryption'
+      host_proof_encryption_body: 'Your account details are for your eyes only so everything is encrypted with javascript directly on your computer or mobile device before being saved to the cloud. Only you know the master password so no one, not even the server admins, can see anything about your account details.'
+      mfa_body: 'Increase the security of your account by enabling multi-factor authentication with Google Authenticator. Accessing your accounts from a new device will require a randomly generated password that you can get from the Google Authenticator app for'
+      offline_access: 'Offline Access'
+      offline_access_body: 'Passmaster uses service workers and local storage to make your account details accessible even while you are offline. Your data is automatically synced each time you use Passmaster ensuring it is available whenever you need it.'
+      open_source: 'Open Source'
+      open_source_body: 'are all open source. Because everything is public, you can be certain that there is no tainted or malicious code. If you want to make an improvement, please feel free. Contributions are always welcome!'
+      or: 'or'
+      portable_durable: 'Portable and Durable'
+      portable_durable_body: "Passmaster isn't going anywhere but in the event of an extended outage you will always be able to access your accounts details from a backup. Each Passmaster backup contains an \"Account Viewer\" HTML file which contains everything needed to view your account data. Just open the account viewer and use it to decrypt the backup."
+      secure_password_generator: 'Secure Password Generator'
+      secure_password_generator_body: "Use the built-in generator to create cryptographically secure random passwords for all your accounts. If any one of your passwords is compromised you can easily generate a new one while the rest of your accounts remain safe. The length and character set is configurable to match each site's requirements."
+      store_everything: 'Store Everything'
+      store_everything_body: "Passmaster is designed to store usernames and passwords for all the websites you use but can store other related information as well. There's space for account numbers, security questions, website URLs, or anything else you might need."
+      whats_passmaster: 'What is Passmaster?'
+      whats_passmaster_body: 'Passmaster is a simple tool for storing usernames and passwords securely in the cloud. All of your account details are encrypted with a single master password making it easy to use different passwords for each site you visit. Check out some of the features.'
+      works_everywhere: 'Works Everywhere'
+      works_everywhere_body1: 'Passmaster works on any modern browser on all operating systems. No browser extensions or special software is required. Just browse to https://passmaster.io or use one of the free mobile apps available for Android on the'
+      works_everywhere_body2: 'and iOS on the'
+      works_everywhere_body3: 'The mobile apps provide single-tap copy to clipboard of usernames/passwords and unlocking via biometrics.'
+    settings:
+      account_deleted: 'Account deleted successfully.'
+      account_delete_failed: 'Account could not be deleted. Please try again.'
+      auto_backup: 'Auto-backup to Email on Change'
+      auto_lock: 'Auto Lock'
+      backup_accounts: 'Backup Accounts'
+      backup_accounts_detail1: 'Use the Email button to save a backup of your encrypted accounts as an attachment to your email.'
+      backup_accounts_detail2: 'Alternatively, you can use the File button to download a backup to your computer.'
+      backup_accounts_detail3: 'Backups are locked with your current Master Password and you will need the password in order to view or restore the backup.'
+      backup_emailed: 'Backup emailed successfully.'
+      backup_password: 'Backup Password'
+      backup_restored: 'Backup restored successfully.'
+      change_email: 'Change Email'
+      change_email_details: 'Change the email address you use to access your accounts.'
+      close: 'Close'
+      confirm_new_password: 'Confirm New Password'
+      current_password: 'Current Password'
+      current_password_blank: 'Current Password cannot be blank.'
+      current_password_incorrect: 'Current Password is incorrect.'
+      danger: 'Danger:'
+      default: 'Default'
+      default_password_length: 'Default Password Length'
+      delete_account_detail1: 'Permenantly delete your Passmaster account. You will receive an email with a final backup of your encrypted accounts.'
+      delete_account_detail2: 'Backups are locked with your current Master Password and you will need the password in order to view or restore the backup.'
+      disabled: 'Disabled'
+      dont_include: "Don't Include"
+      email: 'Email'
+      email_updated: 'Email address updated successfully.'
+      enabled: 'Enabled'
+      failed_to_decrypt_backup: 'Failed to unlock backup. Please try again.'
+      failed_to_restore: 'Failed to load backup file.'
+      file: 'File'
+      idle_00: 'Never'
+      idle_01: '1 Minute'
+      idle_03: '3 Minutes'
+      idle_05: '5 Minutes'
+      idle_10: '10 Minutes'
+      idle_15: '15 Minutes'
+      idle_30: '30 Minutes'
+      idle_60: '1 Hour'
+      include: 'Include'
+      language: 'Language'
+      mfa_details1: 'Multi-factor authentication adds additional security to your encrypted data by requiring you to verify each device you use to access Passmaster once every 30 days.'
+      mfa_details2: 'In order to verify a device, you will be asked to enter a 6-digit code that can be obtained from the Google Authenticator app for'
+      mfa_details3: 'Use the following QR code or secret key to add Passmaster to Google Authenticator.'
+      mfa_details4: 'It is a good idea to save the secret key in a safe location in case you lose your device with Google Authenticator or accidentally remove the Passmaster account.'
+      new_password: 'New Password'
+      new_password_blank: 'New Password cannot be blank.'
+      new_password_mismatch: 'New Passwords do not match. Please try again.'
+      note: 'Note:'
+      password_change_success: 'Master Password set successfully.'
+      preferences_saved: 'Preferences saved successfully.'
+      restore_accounts: 'Restore Accounts'
+      restore_accounts_detail1: 'Select your backup file and enter the Master Password from when the backup was created.'
+      restore_accounts_detail2: 'This will replace ALL of your current accounts and reset your Master Password to where they were when the backup was created. You might want to make a backup of your current accounts before restoring.'
+      save_preferences: 'Save Preferences'
+      secret_key: 'Secret Key:'
+      warning_verify_email: 'You will not be able to modify your accounts until you verify your new email address.'
+    util:
+      confirm_logout: 'Are you sure you want to logout?'
+      confirm_unsaved_changes: 'Are you sure? All unsaved changes will be lost.'
+      errors_reported: 'The following errors were reported.'
+      locked_out: 'This device has been locked out. Try another device or a different browser.'
+      must_auth: 'You must authenticate to continue. Please enter the current code from Google Authenticator.'
+      remote_update_detected: 'Remote update detected. Please refresh your accounts to prevent data-loss.'
+      unexpected_error: 'An unexpected error has occurred.'
+    verify:
+      send_new_code: 'Send New Code'
+      verification_code: 'Verification Code'
+      verify: 'Verify'
+      verify_detail: 'You need to verify your email address to continue. This is only to prevent other people from claiming your address.'
+      verify_email_sent: 'Verification email sent, please check your inbox.'
+      verify_enter_code: 'Enter the verification code that was emailed to you below or click the button to request a new one.'

@@ -1,6 +1,6 @@
 %p
-  = link_to('updates', updates_path)
+  = link_to('updates', updates_path, 'data-i18n-html' => 'footer.updates')
   |
-  = mail_to('support@passmaster.io', 'contact', :target => '_blank')
+  = mail_to('support@passmaster.io', 'contact', :target => '_blank', 'data-i18n-html' => 'footer.contact')
   |
   = link_to('passmaster.io', root_path)

@@ -6,6 +6,8 @@ class UsersController < ApplicationController
   before_action :verify_otp_session, :only => [ :show, :update, :destroy, :backup ]
   before_action :verify_version_code, :only => [ :update ]
 
+  around_action :switch_language
+
   def show
     respond_with_json(@user)
   end
@@ -91,6 +93,11 @@ class UsersController < ApplicationController
     unless @user.version_code == params[:version_code]
       render :json => { :errors => { :version_code => ['does not match expected value'] } }, :status => :unprocessable_entity
     end
+  end
+
+  def switch_language(&action)
+    language = @user && @user.language.to_s.present? ? @user.language : http_language
+    I18n.with_locale(language, &action)
   end
 
 end

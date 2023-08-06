@@ -6,7 +6,7 @@ ACCOUNTS_VIEWER_FILENAME = 'accounts_viewer.html'
 ACCOUNTS_VIEWER = File.read("#{Rails.root}/public/#{ACCOUNTS_VIEWER_FILENAME}")
 BACKUP_PREFIX = 'Passmaster Backup'
 
-CACHE_VERSION = 1621912469
+CACHE_VERSION = 1682283453
 CACHED_ASSETS = [
   'glyphicons-halflings.png',
   'glyphicons-halflings-white.png',
@@ -17,3 +17,14 @@ CACHED_ASSETS = [
   'application.css',
   'application.js',
 ]
+
+# To add support for a new language:
+#   1. Add the 2-character code and translated name to LANGUAGE_NAMES below
+#   2. Copy config/locales/en.yml to config/locales/<language_code>.yml
+#   3. Add translations for all strings in in <language_code>.yml
+LANGUAGE_NAMES = {
+  'en' => 'English',
+  'vi' => 'Tiếng Việt',
+}
+LANGUAGES = LANGUAGE_NAMES.keys
+DEFAULT_LANGUAGE = 'en'

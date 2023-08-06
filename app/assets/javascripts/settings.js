@@ -13,6 +13,13 @@
   };
 
   Settings.initPreferences = function() {
+    if (userData.language && userData.language != '') {
+      $('#preference_language_default').hide();
+      $('#preferences_language').val(userData.language);
+    } else {
+      $('#preference_language_default').show();
+      $('#preferences_language').val('');
+    }
     $('#preferences_password_length').val(userData.passwordLength);
     $('#preferences_special_chars_enabled').get(0).checked = userData.specialChars;
     $('#preferences_special_chars_disabled').get(0).checked = !userData.specialChars;
@@ -62,7 +69,7 @@
       userData.setEncryptedData(userData.accounts);
     } catch(err) {
       userData.revertMasterPassword();
-      Util.notify('Failed to set Master Password. Please try again.', 'error');
+      Util.notify(I18n.translate('general.failed_to_set_password'), 'error');
       return;
     }
     $('#master_password_hidden_form').data('submitted-by', 'changeMasterPassword');
@@ -74,7 +81,7 @@
     try {
       backup = JSON.parse(backupStr);
     } catch(err) {
-      Util.notify('Failed to load backup file.', 'error')
+      Util.notify(I18n.translate('settings.failed_to_restore'), 'error');
       return;
     }
     userData.setMasterPassword(passwd);
@@ -83,7 +90,7 @@
       userData.setEncryptedData(userData.restoredAccounts);
     } catch(err) {
       userData.revertMasterPassword();
-      Util.notify('Failed to unlock backup. Please try again.', 'error');
+      Util.notify(I18n.translate('settings.failed_to_decrypt_backup'), 'error');
       return;
     }
     $('#master_password_hidden_form').data('submitted-by', 'restoreBackup');
@@ -94,13 +101,14 @@
   function bindPreferencesForm() {
     $('#preferences_form').bind('ajax:success', function(evt, data) {
       userData.updateAttributes(data);
+      I18n.setLanguage(userData.language);
       if (IdleTimeout.isIntervalActive() && userData.idleTimeout == 0) {
         IdleTimeout.stopTimer();
       }
       if (!IdleTimeout.isIntervalActive() && userData.idleTimeout != 0) {
         IdleTimeout.startTimer();
       }
-      Util.notify('Preferences saved successfully.')
+      Util.notify(I18n.translate('settings.preferences_saved'));
       $('#preferences').modal('hide');
       if (Util.isIOSApp()) {
         MobileApp.savePasswordForTouchID();
@@ -122,12 +130,11 @@
     }).bind('ajax:beforeSend', function(evt, xhr, settings) {
       settings.url = settings.url + '/' + userData.userId;
       var btn = $('#preferences_btn');
-      btn.data('origText', btn.val());
       btn.attr('disabled', 'disabled');
-      btn.val('Please Wait...');
+      btn.val(I18n.translate('general.please_wait'));
     }).bind('ajax:complete', function() {
       var btn = $('#preferences_btn');
-      btn.val(btn.data('origText'));
+      btn.val(I18n.translate('settings.save_preferences'));
       btn.removeAttr('disabled');
     });
   };
@@ -154,7 +161,7 @@
   function bindChangeEmailForm() {
     $('#change_email_form').bind('ajax:success', function(evt, data) {
       userData.updateAttributes(data);
-      Util.notify('Email address updated successfully.')
+      Util.notify(I18n.translate('settings.email_updated'));
       $('#change_email').modal('hide');
       Settings.initChangeEmail();
       Util.chooseSection();
@@ -170,12 +177,11 @@
     }).bind('ajax:beforeSend', function(evt, xhr, settings) {
       settings.url = settings.url + '/' + userData.userId;
       var btn = $('#change_email_btn');
-      btn.data('origText', btn.val());
       btn.attr('disabled', 'disabled');
-      btn.val('Please Wait...');
+      btn.val(I18n.translate('general.please_wait'));
     }).bind('ajax:complete', function() {
       var btn = $('#change_email_btn');
-      btn.val(btn.data('origText'));
+      btn.val(I18n.translate('settings.change_email'));
       btn.removeAttr('disabled');
     });
   };
@@ -187,13 +193,13 @@
       var passwd = $('#master_password_passwd').val();
       var passwd2 = $('#master_password_passwd2').val();
       if (oldPasswd.length == 0) {
-        Util.notify('Current Password cannot be blank.', 'error');
+        Util.notify(I18n.translate('settings.current_password_blank'), 'error');
       } else if (!userData.passwordMatches(oldPasswd)) {
-        Util.notify('Current Password is incorrect.', 'error');
+        Util.notify(I18n.translate('settings.current_password_incorrect'), 'error');
       } else if (passwd.length == 0) {
-        Util.notify('New Password cannot be blank.', 'error');
+        Util.notify(I18n.translate('settings.new_password_blank'), 'error');
       } else if (passwd != passwd2) {
-        Util.notify('New Passwords do not match. Please try again.', 'error');
+        Util.notify(I18n.translate('settings.new_password_mismatch'), 'error');
       } else {
         changeMasterPassword(passwd);
       }
@@ -207,11 +213,11 @@
       if ($(this).data('submitted-by') == 'restoreBackup') {
         userData.accounts = userData.restoredAccounts;
         delete userData.restoredAccounts;
-        Util.notify('Backup restored successfully.');
+        Util.notify(I18n.translate('settings.backup_restored'));
         Settings.initRestoreAccounts();
         $('#restore_accounts').modal('hide');
       } else {
-        Util.notify('Master Password set successfully.')
+        Util.notify(I18n.translate('settings.password_change_success'));
         Settings.initMasterPassword();
         $('#master_password').modal('hide');
       }
@@ -249,17 +255,17 @@
       } else {
         btn = $('#master_password_btn');
       }
-      btn.data('origText', btn.val());
       btn.attr('disabled', 'disabled');
-      btn.val('Please Wait...');
+      btn.val(I18n.translate('general.please_wait'));
     }).bind('ajax:complete', function() {
       var btn;
       if ($(this).data('submitted-by') == 'restoreBackup') {
         btn = $('#restore_accounts_btn');
+        btn.val(I18n.translate('general.restore'));
       } else {
         btn = $('#master_password_btn');
+        btn.val(I18n.translate('general.set_master_password'));
       }
-      btn.val(btn.data('origText'));
       btn.removeAttr('disabled');
     });
   };
@@ -273,7 +279,7 @@
 
   function bindBackupAccountsEmailBtn() {
     $('#backup_accounts_email_btn').bind('ajax:success', function() {
-      Util.notify('Backup emailed successfully.');
+      Util.notify(I18n.translate('settings.backup_emailed'));
     }).bind('ajax:error', function(evt, xhr) {
       Util.handleOtpErrors(xhr, function() {
         $('#backup_accounts_email_btn').click();
@@ -302,24 +308,24 @@
     $('#delete_account_form').bind('ajax:success', function(evt, data) {
       $('#delete_account').modal('hide');
       Util.wipeData();
-      Util.notify('Account deleted successfully.')
+      Util.notify(I18n.translate('settings.account_deleted'));
+      I18n.restoreBrowserLanguage();
     }).bind('ajax:error', function(evt, xhr) {
       Util.handleOtpErrors(xhr, function() {
         $('#delete_account_form').submit();
       }, function() {
-        Util.notify('Account could not be deleted, please try again.', 'error');
+        Util.notify(I18n.translate('settings.account_delete_failed'), 'error');
       });
     }).bind('ajax:before', function() {
       $('#delete_account_api_key').val(userData.apiKey);
     }).bind('ajax:beforeSend', function(evt, xhr, settings) {
       settings.url = settings.url + '/' + userData.userId;
       var btn = $('#delete_account_btn');
-      btn.data('origText', btn.val());
       btn.attr('disabled', 'disabled');
-      btn.val('Please Wait...');
+      btn.val(I18n.translate('general.please_wait'));
     }).bind('ajax:complete', function() {
       var btn = $('#delete_account_btn');
-      btn.val(btn.data('origText'));
+      btn.val(I18n.translate('general.delete_account'));
       btn.removeAttr('disabled');
     });
   };

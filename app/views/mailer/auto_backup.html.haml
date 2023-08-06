@@ -1,10 +1,10 @@
-%p Hi,
+%p= I18n.t('mailers.hi')
 
-%p Your accounts have been changed. Here's a backup of the most recent version.
+%p= I18n.t('mailers.auto_backup.body')
 
 %p
-  Backups can be restored to any Passmaster account or viewed offline using the
+  = I18n.t('mailers.accounts_viewer_instructions')
   = succeed '.' do
-    %a{ :href => "#{root_url}#{ACCOUNTS_VIEWER_FILENAME}" } Accounts Viewer
+    %a{ :href => "#{root_url}#{ACCOUNTS_VIEWER_FILENAME}" }= I18n.t('mailers.accounts_viewer')
 
-%p Thanks for using Passmaster!
+%p= I18n.t('mailers.thanks_passmaster')

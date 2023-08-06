@@ -1,16 +1,16 @@
 #alert_messages.container
   #offline_mode.alert.alert-error{ :style => 'display:none;' }
-    %strong Connection Failed!
-    Offline-mode enabled.
-    %a.reload-link{ :href => '#' } Try reconnecting...
+    %strong{ 'data-i18n-html' => 'general.connection_failed' } Connection Failed!
+    %span{ 'data-i18n-html' => 'general.offline_mode' } Offline-mode enabled.
+    %a.reload-link{ :href => '#', 'data-i18n-html' => 'general.try_reconnect' } Try reconnecting...
 
   #idle_timeout.alert.alert-info{ :style => 'display:none;' }
-    %strong Idle Alert!
-    Accounts will automatically lock in one minute due to inactivity.
+    %strong{ 'data-i18n-html' => 'general.idle_alert' } Idle Alert!
+    %span{ 'data-i18n-html' => 'general.idle_alert_detail' } Accounts will automatically lock in one minute due to inactivity.
 
   #cache_update_ready.alert.alert-warn{ :style => 'display:none;' }
-    %strong New Updates Available!
-    %a.reload-link{ :href => '#' } Click here for the latest version.
+    %strong{ 'data-i18n-html' => 'general.updates_available' } New Updates Available!
+    %a.reload-link{ :href => '#', 'data-i18n-html' => 'general.updates_available_detail' } Click here for the latest version.
 
 #notification_container.container
   #notification.alert.alert-info{ :style => 'display:none;' }

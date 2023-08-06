@@ -1,16 +1,16 @@
-%p Hi,
+%p= I18n.t('mailers.hi')
 
-%p You'll need to verify your email address to use your account.
+%p= I18n.t('mailers.verify_email.body1')
 
 %p
-  Just click the link below or enter the verification code when you
+  = I18n.t('mailers.verify_email.body2')
   = succeed '.' do
-    = link_to('access your account', @website_url)
+    = link_to(I18n.t('mailers.verify_email.access_account'), @website_url)
 
 %p
-  Verification Code:
+  = I18n.t('mailers.verify_email.verification_code')
   %strong= @code
 
 %p= link_to(@verification_url, @verification_url)
 
-%p Thanks for using Passmaster!
+%p= I18n.t('mailers.thanks_passmaster')

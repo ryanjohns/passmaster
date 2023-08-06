@@ -53,7 +53,7 @@
     var count = 0;
     if (term == '') {
       $('.account-data[data-account-id]').hide();
-      $('#show_all_tiles_btn').html('All');
+      $('#show_all_tiles_btn').html(I18n.translate('accounts.all'));
     } else {
       var tile;
       for (accountId in userData.accounts) {
@@ -70,7 +70,7 @@
         }
       }
       sortTiles();
-      $('#show_all_tiles_btn').html('None');
+      $('#show_all_tiles_btn').html(I18n.translate('accounts.none'));
     }
     $('#num_accounts').data('count', count);
     $('#num_accounts').html(count);
@@ -96,6 +96,7 @@
 
   function refresh(data) {
     userData.updateAttributes(data);
+    I18n.setLanguage(userData.language);
     try {
       userData.decryptAccounts();
     } catch(err) {
@@ -119,7 +120,7 @@
   };
 
   function handleBadPassword() {
-    Util.notify('Failed to decrypt accounts.', 'error');
+    Util.notify(I18n.translate('accounts.failed_to_decrypt'), 'error');
     Accounts.lock();
     if ($('#unlock_accounts_passwd').val().length > 0 && !Util.isMobile()) {
       $('#unlock_accounts_passwd').get(0).setSelectionRange(0, 9999);
@@ -167,7 +168,8 @@
     var passwordInput = tile.find('.read input.password');
     passwordInput.attr('data-password', data.password);
     if (data.password.length > 0) {
-      passwordInput.val(passwordInput.attr('data-default-value'));
+      var i18nKey = (Util.isIOSApp() || Util.isAndroidApp()) ? 'accounts.tap_to_copy' : 'accounts.click_to_show';
+      passwordInput.val(I18n.translate(i18nKey));
     }
     tile.find('.read p.notes').html(data.notes.replace(/\n/g, '<br>'));
     if (data.notes.length > 0) {
@@ -239,7 +241,8 @@
     if (data.password.length == 0) {
       passwordInput.val('');
     } else {
-      passwordInput.val(passwordInput.attr('data-default-value'));
+      var i18nKey = (Util.isIOSApp() || Util.isAndroidApp()) ? 'accounts.tap_to_copy' : 'accounts.click_to_show';
+      passwordInput.val(I18n.translate(i18nKey));
     }
     tile.find('.read p.notes').html(data.notes.replace(/\n/g, '<br>'));
     if (data.notes.length == 0) {
@@ -305,7 +308,7 @@
       evt.preventDefault();
       var passwd = $('#unlock_accounts_passwd').val();
       if (passwd.length == 0) {
-        Util.notify('Bad password.', 'error');
+        Util.notify(I18n.translate('accounts.bad_password'), 'error');
       } else {
         unlock(passwd);
       }
@@ -342,14 +345,14 @@
           try {
             AndroidJs.copyToClipboard(input.val());
             Util.highlightElement(input, '#9cf');
-            Util.notify('Username Copied');
+            Util.notify(I18n.translate('accounts.username_copied'));
           } catch(err) {
             // do nothing
           }
         } else if (Util.isIOSApp()) {
           MobileApp.copyToIOSClipboard(input.val());
           Util.highlightElement(input, '#9cf');
-          Util.notify('Username Copied');
+          Util.notify(I18n.translate('accounts.username_copied'));
         } else if (!Util.isAndroid()) {
           input.get(0).setSelectionRange(0, 9999);
         }
@@ -369,14 +372,14 @@
           try {
             AndroidJs.copyToClipboard(input.attr('data-password'));
             Util.highlightElement(input, '#9cf');
-            Util.notify('Password Copied');
+            Util.notify(I18n.translate('accounts.password_copied'));
           } catch(err) {
             // do nothing
           }
         } else if (Util.isIOSApp()) {
           MobileApp.copyToIOSClipboard(input.attr('data-password'));
           Util.highlightElement(input, '#9cf');
-          Util.notify('Password Copied');
+          Util.notify(I18n.translate('accounts.password_copied'));
         } else if (!Util.isAndroid()) {
           input.get(0).setSelectionRange(0, 9999);
         }
@@ -405,7 +408,6 @@
     if (Util.isIOSApp() || Util.isAndroidApp()) {
       $('.read .click-to-copy-username').find('input.username').attr('readonly', true);
       $('.read .click-to-copy-password').find('input.password').attr('readonly', true);
-      $('.read .click-to-copy-password').find('input.password').attr('data-default-value', 'tap to copy');
     }
   };
 
@@ -415,9 +417,9 @@
       var notes = $(this).parent().find('div.notes');
       notes.toggle();
       if (notes.is(':visible')) {
-        $(this).html('Hide Notes');
+        $(this).html(I18n.translate('accounts.hide_notes'));
       } else {
-        $(this).html('Show Notes');
+        $(this).html(I18n.translate('accounts.show_notes'));
       }
     });
   };
@@ -455,7 +457,7 @@
   function bindDeleteAccountBtn() {
     $('button[data-account-delete]').click(function(evt) {
       evt.preventDefault();
-      if (!confirm('Are you sure you want to delete this account?')) {
+      if (!confirm(I18n.translate('accounts.confirm_delete_account'))) {
         return;
       }
       var tile = $(this).closest('.account-tile');
@@ -464,7 +466,7 @@
       try {
         userData.setEncryptedData(accounts);
       } catch(err) {
-        Util.notify('Failed to encrypt accounts.', 'error');
+        Util.notify(I18n.translate('accounts.failed_to_encrypt'), 'error');
         return;
       }
       var form = tile.find('.update form');
@@ -502,10 +504,10 @@
       var oldAccountId = tile.attr('data-account-id');
       var accountId = Crypto.sha256(data.account);
       if (data.account.length == 0) {
-        Util.notify('Account Name cannot be blank.', 'error');
+        Util.notify(I18n.translate('accounts.account_name_blank'), 'error');
         return;
       } else if (oldAccountId != accountId && userData.accounts[accountId]) {
-        Util.notify('An account with that name already exists.', 'error');
+        Util.notify(I18n.translate('accounts.account_name_exists'), 'error');
         return;
       }
       var accounts = $.extend(true, {}, userData.accounts);
@@ -516,7 +518,7 @@
       try {
         userData.setEncryptedData(accounts);
       } catch(err) {
-        Util.notify('Failed to encrypt accounts.', 'error');
+        Util.notify(I18n.translate('accounts.failed_to_encrypt'), 'error');
         return;
       }
       var form = tile.find('.update form');

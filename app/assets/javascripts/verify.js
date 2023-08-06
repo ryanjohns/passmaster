@@ -39,30 +39,28 @@
     }).bind('ajax:beforeSend', function(evt, xhr, settings) {
       settings.url = settings.url + '/' + userData.userId + '/verify';
       var btn = $('#verify_btn');
-      btn.data('origText', btn.val());
       btn.attr('disabled', 'disabled');
-      btn.val('Please Wait...');
+      btn.val(I18n.translate('general.please_wait'));
     }).bind('ajax:complete', function() {
       var btn = $('#verify_btn');
-      btn.val(btn.data('origText'));
+      btn.val(I18n.translate('verify.verify'));
       btn.removeAttr('disabled');
     });
   };
 
   function bindResendLink() {
     $('#verify_send_code_link').bind('ajax:success', function(evt, data) {
-      Util.notify('Verification email sent, please check your inbox.');
+      Util.notify(I18n.translate('verify.verify_email_sent'));
     }).bind('ajax:error', function(evt, xhr) {
       Util.notify(Util.extractErrors(xhr), 'error');
     }).bind('ajax:beforeSend', function(evt, xhr, settings) {
       settings.url = settings.url + '/' + userData.userId + '/resend_verification';
       var link = $('#verify_send_code_link');
-      link.data('origText', link.html());
       link.attr('disabled', 'disabled');
-      link.html('Please Wait...');
+      link.html(I18n.translate('general.please_wait'));
     }).bind('ajax:complete', function() {
       var link = $('#verify_send_code_link');
-      link.html(link.data('origText'));
+      link.html(I18n.translate('verify.send_new_code'));
       link.removeAttr('disabled');
     });
   };

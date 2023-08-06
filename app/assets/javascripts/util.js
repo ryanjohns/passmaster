@@ -27,6 +27,7 @@
     if (localStorage.userAttributes) {
       userData = new UserData();
       userData.updateAttributes(JSON.parse(localStorage.userAttributes));
+      I18n.setLanguage(userData.language);
     }
 
     Util.chooseSection();
@@ -70,13 +71,13 @@
     try {
       errors = JSON.parse(xhr.responseText).errors;
     } catch(err) {
-      return 'An unexpected error has occurred.';
+      return I18n.translate('util.unexpected_error');
     }
     if (errors['version_code']) {
-      msg = 'Remote update detected. Please refresh your accounts to prevent data-loss.';
+      msg = I18n.translate('util.remote_update_detected');
       $('#remote_update_notice').show();
     } else {
-      msg = 'The following errors were reported.\n';
+      msg = I18n.translate('util.errors_reported') + '\n';
       for (attr in errors) {
         msg += attr + ': ';
         for (var i = 0; i < errors[attr].length; i++) {
@@ -170,7 +171,7 @@
   };
 
   Util.confirmUnsavedChanges = function() {
-    return $('.account-tile .write:visible').length == 0 || confirm('Are you sure? All unsaved changes will be lost.');
+    return $('.account-tile .write:visible').length == 0 || confirm(I18n.translate('util.confirm_unsaved_changes'));
   };
 
   Util.getParameterByName = function(name) {
@@ -196,7 +197,7 @@
 
   Util.handleOtpErrors = function(xhr, successCallback, errorCallback) {
     if (xhr.status == 412) {
-      var otp = prompt('You must authenticate to continue. Please enter the current code from Google Authenticator.');
+      var otp = prompt(I18n.translate('util.must_auth'));
       if (otp) {
         $('#otp_session_user_id').val(userData.userId);
         $('#otp_session_api_key').val(userData.apiKey);
@@ -212,7 +213,7 @@
         errorCallback();
       }
     } else if (xhr.status == 423) {
-      Util.notify('This device has been locked out. Try another device or a different browser.', 'error');
+      Util.notify(I18n.translate('util.locked_out'), 'error');
       Util.wipeData();
     } else {
       errorCallback();
@@ -296,8 +297,9 @@
     $('button[data-logout]').click(function(evt) {
       evt.preventDefault();
       if (Util.confirmUnsavedChanges()) {
-        if (confirm('Are you sure you want to logout?')) {
+        if (confirm(I18n.translate('util.confirm_logout'))) {
           Util.wipeData();
+          I18n.restoreBrowserLanguage();
         }
       }
     });
@@ -313,6 +315,12 @@
   function bindInitSessionLink() {
     $('#init_session_link').bind('ajax:success', function(evt, data) {
       $('meta[name="csrf-token"]').attr('content', data.token);
+      I18n.setBrowserLanguage(data.language);
+      if (userData && userData.language && userData.language != '') {
+        I18n.setLanguage(userData.language);
+      } else {
+        I18n.setLanguage(data.language);
+      }
       if (currentSection == 'overview' && $('#overview_email').val()) {
         $('#overview_form').submit();
       }

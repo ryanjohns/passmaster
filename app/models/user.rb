@@ -4,7 +4,7 @@ class User < ApplicationRecord
   AS_JSON_OPTIONS = {
     :methods => [ :api_key?, :verified_at? ],
     :only    => [ :id, :email, :encrypted_data, :schema_version, :idle_timeout, :password_length,
-                  :special_chars, :auto_backup, :otp_enabled, :otp_secret, :version_code, :touch_id_enabled ]
+                  :special_chars, :auto_backup, :otp_enabled, :otp_secret, :version_code, :touch_id_enabled, :language ]
   }
 
   has_many :otp_sessions, :dependent => :destroy
@@ -16,6 +16,7 @@ class User < ApplicationRecord
   validates :schema_version, :numericality => { :only_integer => true, :greater_than_or_equal_to => 0 }
   validates :idle_timeout, :numericality => { :only_integer => true, :greater_than_or_equal_to => 0 }
   validates :password_length, :numericality => { :only_integer => true, :greater_than_or_equal_to => 6, :less_than_or_equal_to => 32 }
+  validates :language, :inclusion => { :in => LANGUAGES }, :allow_blank => true
   validate :email_uniqueness, :if => :email_changed_without_casing?
   validate :email_deliverable, :if => :email_changed_without_casing?
   validate :verification_code_matches, :if => :verified_at_changed?
@@ -87,6 +88,7 @@ class User < ApplicationRecord
     self.auto_backup      = params[:auto_backup]      if params[:auto_backup].present?
     self.otp_enabled      = params[:otp_enabled]      if params[:otp_enabled].present?
     self.touch_id_enabled = params[:touch_id_enabled] if params[:touch_id_enabled].present?
+    self.language         = params[:language]         if params[:language].present?
     save
   end
 

@@ -1,21 +1,21 @@
 #verify.container{ :style => 'display:none;' }
   .top-links
     .pull-left
-      %button.btn.btn-warning{ :type => 'button', 'data-logout' => 'true', :title => 'Logout' }
+      %button.btn.btn-warning{ :type => 'button', 'data-logout' => 'true', :title => 'Logout', 'data-i18n-title' => 'general.logout' }
         %i.icon-off.icon-white
     .pull-right
-      %button#verify_cancel_btn.btn{ :type => 'button' } Cancel
+      %button#verify_cancel_btn.btn{ :type => 'button', 'data-i18n-html' => 'general.cancel' } Cancel
     .clearfix
 
   .well
     %h2
-      Verify
+      %span{ 'data-i18n-html' => 'verify.verify' } Verify
       %small#verify_email_placeholder
-    %p You need to verify your email address to continue. This is only to prevent other people from claiming your address.
+    %p{ 'data-i18n-html' => 'verify.verify_detail' } You need to verify your email address to continue. This is only to prevent other people from claiming your address.
     .pushed-down
-      %p Enter the verification code that was emailed to you below or click the button to request a new one.
+      %p{ 'data-i18n-html' => 'verify.verify_enter_code' } Enter the verification code that was emailed to you below or click the button to request a new one.
       = form_tag(users_path, :method => :put, :remote => true, :id => 'verify_form') do
         = hidden_field_tag(:api_key, '', :id => 'verify_api_key')
-        %p= text_field_tag(:verification_code, '', :placeholder => 'Verification Code', :class => 'input-xlarge', :id => 'verify_verification_code', :required => true, :autocomplete => 'off', :autocorrect => 'off', :autocapitalize => 'off')
-        %p= submit_tag('Verify', :class => 'btn btn-primary', :id => 'verify_btn', :data => { :disable_with => false })
-      %p= link_to('Send New Code', users_path, :class => 'btn', :id => 'verify_send_code_link', :remote => true, :method => :post)
+        %p= text_field_tag(:verification_code, '', :placeholder => 'Verification Code', 'data-i18n-placeholder' => 'verify.verification_code', :class => 'input-xlarge', :id => 'verify_verification_code', :required => true, :autocomplete => 'off', :autocorrect => 'off', :autocapitalize => 'off')
+        %p= submit_tag('Verify', :class => 'btn btn-primary', :id => 'verify_btn', 'data-i18n-value' => 'verify.verify', :data => { :disable_with => false })
+      %p= link_to('Send New Code', users_path, :class => 'btn', :id => 'verify_send_code_link', :remote => true, :method => :post, 'data-i18n-html' => 'verify.send_new_code')

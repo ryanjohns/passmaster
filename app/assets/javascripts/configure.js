@@ -23,7 +23,7 @@
       userData.setEncryptedData(userData.accounts);
     } catch(err) {
       userData.revertMasterPassword();
-      Util.notify('Failed to set Master Password. Please try again.', 'error');
+      Util.notify(I18n.translate('general.failed_to_set_password'), 'error');
       return;
     }
     $('#configure_hidden_form').submit();
@@ -36,9 +36,9 @@
       var passwd = $('#configure_passwd').val();
       var passwd2 = $('#configure_passwd2').val();
       if (passwd.length == 0) {
-        Util.notify('Password cannot be blank.', 'error');
+        Util.notify(I18n.translate('general.password_blank'), 'error');
       } else if (passwd != passwd2) {
-        Util.notify('Passwords do not match. Please try again.', 'error');
+        Util.notify(I18n.translate('configure.passwords_dont_match'), 'error');
       } else {
         setMasterPassword(passwd);
       }
@@ -49,7 +49,7 @@
     $('#configure_hidden_form').bind('ajax:success', function(evt, data) {
       userData.updateAttributes(data);
       userData.wipeOldMasterPassword();
-      Util.notify('Master Password set successfully. You are now ready to use Passmaster.')
+      Util.notify(I18n.translate('configure.password_set_success'));
       Configure.beforeDisplay();
       Util.chooseSection();
     }).bind('ajax:error', function(evt, xhr) {
@@ -63,12 +63,11 @@
     }).bind('ajax:beforeSend', function(evt, xhr, settings) {
       settings.url = settings.url + '/' + userData.userId;
       var btn = $('#configure_btn');
-      btn.data('origText', btn.val());
       btn.attr('disabled', 'disabled');
-      btn.val('Please Wait...');
+      btn.val(I18n.translate('general.please_wait'));
     }).bind('ajax:complete', function() {
       var btn = $('#configure_btn');
-      btn.val(btn.data('origText'));
+      btn.val(I18n.translate('general.set_master_password'));
       btn.removeAttr('disabled');
     });
   }

@@ -1,0 +1,45 @@
+(function(I18n, $, undefined) {
+
+  var currentLanguage = 'en';
+  var browserLanguage = 'en';
+  var languages = {};
+
+  I18n.translate = function(key, language) {
+    language ||= currentLanguage;
+    return key.split('.').reduce((acc, curr) => acc[curr], languages[language]);
+  };
+
+  I18n.setBrowserLanguage = function(language) {
+    browserLanguage = language;
+  };
+
+  I18n.restoreBrowserLanguage = function() {
+    I18n.setLanguage(browserLanguage);
+  };
+
+  I18n.setLanguage = function(language) {
+    if (language && language != '' && language != currentLanguage) {
+      $('[data-i18n-title]').each(function(idx) {
+        this.title = I18n.translate(this.dataset.i18nTitle, language);
+      });
+      $('[data-i18n-html]').each(function(idx) {
+        this.innerHTML = I18n.translate(this.dataset.i18nHtml, language);
+      });
+      $('[data-i18n-placeholder]').each(function(idx) {
+        this.placeholder = I18n.translate(this.dataset.i18nPlaceholder, language);
+      });
+      $('[data-i18n-value]').each(function(idx) {
+        this.value = I18n.translate(this.dataset.i18nValue, language);
+      });
+
+      currentLanguage = language;
+    }
+  };
+
+  <% Dir.glob("#{Rails.root}/config/locales/*.yml").each do |file| %>
+    <% language = File.basename(file, '.yml') %>
+    <% strings = YAML.load_file(file)[language]['webapp'] %>
+    <%= "languages['#{language}'] = #{strings.to_json};" %>
+  <% end %>
+
+}(window.I18n = window.I18n || {}, jQuery));

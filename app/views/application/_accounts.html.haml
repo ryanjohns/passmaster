@@ -1,77 +1,77 @@
 #accounts.container{ :style => 'display:none;' }
   .top-links
     .pull-left
-      %button.btn.btn-warning{ :type => 'button', 'data-logout' => 'true', :title => 'Logout' }
+      %button.btn.btn-warning{ :type => 'button', 'data-logout' => 'true', :title => 'Logout', 'data-i18n-title' => 'general.logout' }
         %i.icon-off.icon-white
-      %button#lock_btn.btn.btn-inverse{ :type => 'button', :title => 'Lock', :style => 'display:none;' }
+      %button#lock_btn.btn.btn-inverse{ :type => 'button', :title => 'Lock', 'data-i18n-title' => 'accounts.lock', :style => 'display:none;' }
         %i.icon-lock.icon-white
     .pull-right
       %img#refresh_spinner{ :src => image_path('spinner.gif'), :alt => 'spinner', :style => 'display:none;' }
-      = link_to(users_path, :remote => true, :id => 'refresh_link', :class => 'btn', :title => 'Refresh') do
+      = link_to(users_path, :remote => true, :id => 'refresh_link', :class => 'btn', :title => 'Refresh', 'data-i18n-title' => 'accounts.refresh') do
         %i.icon-refresh
       #settings_btn.btn-group{ :style => 'display:none;' }
-        %button.btn.dropdown-toggle{ :type => 'button', :title => 'Settings', 'data-toggle' => 'dropdown' }
+        %button.btn.dropdown-toggle{ :type => 'button', :title => 'Settings', 'data-i18n-title' => 'accounts.settings', 'data-toggle' => 'dropdown' }
           %i.icon-cog
           %span.caret
         %ul.dropdown-menu
           %li
-            %a#preferences_link{ :href => '#' } Preferences
+            %a#preferences_link{ :href => '#', 'data-i18n-html' => 'general.preferences' } Preferences
           %li
-            %a#change_email_link{ :href => '#' } Email Address
+            %a#change_email_link{ :href => '#', 'data-i18n-html' => 'general.email_address' } Email Address
           %li
-            %a#master_password_link{ :href => '#' } Master Password
+            %a#master_password_link{ :href => '#', 'data-i18n-html' => 'general.master_password' } Master Password
           %li.divider
           %li
-            %a#backup_accounts_link{ :href => '#' } Backup
+            %a#backup_accounts_link{ :href => '#', 'data-i18n-html' => 'accounts.backup' } Backup
           %li#restore_accounts_list_item{ :style => 'display:none;' }
-            %a#restore_accounts_link{ :href => '#' } Restore
+            %a#restore_accounts_link{ :href => '#', 'data-i18n-html' => 'general.restore' } Restore
           %li.divider
           %li
-            %a#delete_account_link{ :href => '#' } Delete Account
+            %a#delete_account_link{ :href => '#', 'data-i18n-html' => 'general.delete_account' } Delete Account
     .clearfix
 
   .well
     %h2
-      Accounts
+      %span{ 'data-i18n-html' => 'accounts.accounts' } Accounts
       %small#accounts_email_placeholder
 
     #unlock_accounts.pushed-down{ :style => 'display:none;' }
-      %p Accounts are locked. Enter the Master Password to unlock.
+      %p{ 'data-i18n-html' => 'accounts.locked_enter_password' } Accounts are locked. Enter the Master Password to unlock.
       %form#unlock_accounts_form
-        %p= password_field_tag(:passwd, '', :placeholder => 'Master Password', :class => 'input-xlarge', :id => 'unlock_accounts_passwd', :required => true)
-        %p= submit_tag('Unlock', :class => 'btn btn-primary', :id => 'unlock_accounts_btn', :data => { :disable_with => false })
+        %p= password_field_tag(:passwd, '', :placeholder => 'Master Password', 'data-i18n-placeholder' => 'general.master_password', :class => 'input-xlarge', :id => 'unlock_accounts_passwd', :required => true)
+        %p= submit_tag('Unlock', :class => 'btn btn-primary', :id => 'unlock_accounts_btn', 'data-i18n-value' => 'accounts.unlock', :data => { :disable_with => false })
         %p
-          %button#unlock_touchid_btn.btn.btn-inverse{ :type => 'button', :title => 'Unlock with Touch ID', :style => 'display:none;' } Unlock with Touch ID
+          %button#unlock_touchid_btn.btn.btn-inverse{ :type => 'button', :title => 'Unlock with Touch ID', :style => 'display:none;', 'data-i18n-title' => 'general.unlock_touch_id', 'data-i18n-html' => 'general.unlock_touch_id' } Unlock with Touch ID
 
   #accounts_list{ :style => 'display:none;' }
     #verify_email_notice{ :style => 'display:none;' }
       .alert.alert-info
-        You need to
+        %span{ 'data-i18n-html' => 'accounts.you_need_to' } You need to
         %strong
-          %a{ :href => '#' } Verify Your Email Address
-        to make changes to your accounts.
+          %a{ :href => '#', 'data-i18n-html' => 'accounts.verify_email' } Verify Your Email Address
+        %span{ 'data-i18n-html' => 'accounts.to_make_changes' } to make changes to your accounts.
     #remote_update_notice{ :style => 'display:none;' }
       .alert.alert-error
-        Your accounts have been updated from another browser and have not been synced to this device.
-        You need to
+        %span{ 'data-i18n-html' => 'accounts.remote_update' } Your accounts have been updated from another browser and have not been synced to this device.
+        %span{ 'data-i18n-html' => 'accounts.you_need_to' } You need to
         %strong
-          %a{ :href => '#' } Refresh Your Accounts
-        before making any updates to prevent potential data loss.
+          %a{ :href => '#', 'data-i18n-html' => 'accounts.refresh' } Refresh
+        %span{ 'data-i18n-html' => 'accounts.prevent_data_loss' } before making any updates to prevent potential data loss.
 
     %p
-      %button#add_account_btn.btn.btn-success{ :type => 'button' } Add Account
+      %button#add_account_btn.btn.btn-success{ :type => 'button', 'data-i18n-html' => 'accounts.add_account' } Add Account
     .input-prepend.input-append
       %span.add-on
         %i.icon-search
-      = text_field_tag(:search, '', :placeholder => 'Type to Search', :autocomplete => 'off', :autocorrect => 'off', :autocapitalize => 'off', :class => 'input-medium', :id => 'accounts_list_search')
-      %button#show_all_tiles_btn.btn{ :type => 'button' } All
+      = text_field_tag(:search, '', :placeholder => 'Type to Search', :autocomplete => 'off', :autocorrect => 'off', :autocapitalize => 'off', :class => 'input-medium', :id => 'accounts_list_search', 'data-i18n-placeholder' => 'accounts.type_to_search')
+      %button#show_all_tiles_btn.btn{ :type => 'button', 'data-i18n-html' => 'accounts.all' } All
     %p
       %span.num-accounts
-        Showing
+        %span{ 'data-i18n-html' => 'accounts.showing' } Showing
         %span#num_accounts{ 'data-count' => 0 }
-        of
+        %span{ 'data-i18n-html' => 'accounts.of' } of
         %span#total_accounts{ 'data-count' => 0 }
-        Accounts
+        %span{ 'data-i18n-html' => 'accounts.accounts' } Accounts
     #account_tiles
       .account-tile.template.pull-left{ :style => 'display:none;' }
         .account-tile-inner
@@ -93,12 +93,12 @@
                   %td.field-label P:
                   %td{ :colspan => '2' }
                     .click-to-copy-password
-                      %input.password.input-block-level{ :type => 'text', :name => 'password', 'data-password-visible' => 'false', 'data-default-value' => 'click to show' }
+                      %input.password.input-block-level{ :type => 'text', :name => 'password', 'data-password-visible' => 'false' }
                 %tr.no-notes
-                  %td{ :colspan => '3' } No Notes
+                  %td{ :colspan => '3', 'data-i18n-html' => 'accounts.no_notes' } No Notes
                 %tr.notes{ :style => 'display:none;' }
                   %td{ :colspan => '3' }
-                    %a{ :href => '#', 'data-show-notes' => 'true' } Show Notes
+                    %a{ :href => '#', 'data-show-notes' => 'true', 'data-i18n-html' => 'accounts.show_notes' } Show Notes
                     .notes{ :style => 'display:none;' }
                       %p.notes
           .write
@@ -108,40 +108,40 @@
                   %tr
                     %td.field-label A:
                     %td
-                      %input.account.input-block-level{ :type => 'text', :name => 'account', :placeholder => 'Account Name', :required => true }
+                      %input.account.input-block-level{ :type => 'text', :name => 'account', :placeholder => 'Account Name', 'data-i18n-placeholder' => 'accounts.account_name', :required => true }
                   %tr
                     %td.field-label W:
                     %td
-                      %input.url.input-block-level{ :type => 'url', :name => 'url', :placeholder => 'Website URL', :autocomplete => 'off', :autocorrect => 'off', :autocapitalize => 'off' }
+                      %input.url.input-block-level{ :type => 'url', :name => 'url', :placeholder => 'Website URL', 'data-i18n-placeholder' => 'accounts.website_url', :autocomplete => 'off', :autocorrect => 'off', :autocapitalize => 'off' }
                   %tr
                     %td.field-label U:
                     %td
-                      %input.username.input-block-level{ :type => 'email', :name => 'username', :placeholder => 'Username', :autocomplete => 'off', :autocorrect => 'off', :autocapitalize => 'off' }
+                      %input.username.input-block-level{ :type => 'email', :name => 'username', :placeholder => 'Username', 'data-i18n-placeholder' => 'accounts.username', :autocomplete => 'off', :autocorrect => 'off', :autocapitalize => 'off' }
                   %tr
                     %td.field-label P:
                     %td
-                      %input.password.input-block-level{ :type => 'text', :name => 'password', :placeholder => 'Password', :autocomplete => 'off', :autocorrect => 'off', :autocapitalize => 'off' }
+                      %input.password.input-block-level{ :type => 'text', :name => 'password', :placeholder => 'Password', 'data-i18n-placeholder' => 'general.password', :autocomplete => 'off', :autocorrect => 'off', :autocapitalize => 'off' }
                   %tr
                     %td{ :colspan => '2' }
                       .form-inline
-                        %button.btn.btn-inverse{ :type => 'button', 'data-password-generator' => 'true' } Generate
-                        %label Length
+                        %button.btn.btn-inverse{ :type => 'button', 'data-password-generator' => 'true', 'data-i18n-html' => 'accounts.generate' } Generate
+                        %label{ 'data-i18n-html' => 'accounts.length' } Length
                         %select.password-length.input-mini
                           - 6.upto(32).each do |i|
                             %option{ :value => i }= i
                       .form-inline
                         %label.checkbox
                           %input.special-characters{ :type => 'checkbox', :checked => 'checked' }
-                          %span Special Characters
+                          %span{ 'data-i18n-html' => 'general.special_characters' } Special Characters
                   %tr
                     %td{ :colspan => '2' }
-                      %textarea.notes.input-block-level{ :name => 'notes', :placeholder => 'Notes', :rows => '10' }
+                      %textarea.notes.input-block-level{ :name => 'notes', :placeholder => 'Notes', 'data-i18n-placeholder' => 'accounts.notes', :rows => '10' }
                   %tr
                     %td{ :colspan => '2' }
                       .actions
-                        %input.btn.btn-primary{ :type => 'submit', :name => 'commit', :value => 'Save' }
-                        %button.btn{ :type => 'button', 'data-cancel' => 'true' } Cancel
-                        %button.btn.btn-danger.pull-right{ :type => 'submit', 'data-account-delete' => 'true', :style => 'display:none;' } Delete
+                        %input.btn.btn-primary{ :type => 'submit', :name => 'commit', :value => 'Save', 'data-i18n-value' => 'accounts.save' }
+                        %button.btn{ :type => 'button', 'data-cancel' => 'true', 'data-i18n-html' => 'general.cancel' } Cancel
+                        %button.btn.btn-danger.pull-right{ :type => 'submit', 'data-account-delete' => 'true', :style => 'display:none;', 'data-i18n-html' => 'accounts.delete' } Delete
                         .clearfix
           .update{ :style => 'display:none;' }
             = form_tag(users_path, :method => :put, :remote => true, :id => nil) do

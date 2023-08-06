@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
         :secure   => Rails.configuration.force_ssl,
       }
     end
-    render :json => { :token => form_authenticity_token }
+    render :json => { :token => form_authenticity_token, :language => http_language }
   end
 
   def offline_sw
@@ -33,6 +33,14 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def http_language
+    return @language if @language
+    languages = request.headers['Accept-Language'].to_s.downcase.split(',').map do |val|
+      val.split(';').first.split('-').first.strip
+    end
+    @language = languages.find { |l| LANGUAGES.include?(l) } || DEFAULT_LANGUAGE
+  end
 
   def respond_with_json(object)
     if object.errors.present?

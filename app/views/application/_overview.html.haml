@@ -3,14 +3,14 @@
     %h2
       %i.icon.icon-passmaster
       Passmaster
-    %h5 Enter your email address to access your accounts or to get started.
+    %h5{ 'data-i18n-html' => 'overview.enter_email' } Enter your email address to access your accounts or to get started.
     = form_tag(users_path, :remote => true, :id => 'overview_form') do
-      %p= email_field_tag(:email, '', :placeholder => 'Email Address', :class => 'input-xlarge', :id => 'overview_email', :required => true)
-      %p= submit_tag('Access Accounts', :class => 'btn btn-primary', :id => 'overview_btn', :data => { :disable_with => false })
+      %p= email_field_tag(:email, '', :placeholder => 'Email Address', 'data-i18n-placeholder' => 'general.email_address', :class => 'input-xlarge', :id => 'overview_email', :required => true)
+      %p= submit_tag('Access Accounts', :class => 'btn btn-primary', :id => 'overview_btn', 'data-i18n-value' => 'overview.access_accounts', :data => { :disable_with => false })
 
   .well
-    %h4 What is Passmaster?
-    %p
+    %h4{ 'data-i18n-html' => 'overview.whats_passmaster' } What is Passmaster?
+    %p{ 'data-i18n-html' => 'overview.whats_passmaster_body' }
       Passmaster is a simple tool for storing usernames and passwords securely in the cloud.
       All of your account details are encrypted with a single master password making it easy
       to use different passwords for each site you visit. Check out some of the features.
@@ -21,21 +21,22 @@
           .feature-inner
             %h5
               %i.icon.icon-globe
-              Works Everywhere
+              %span{ 'data-i18n-html' => 'overview.works_everywhere' } Works Everywhere
             %p
-              Passmaster works on any modern browser on all operating systems. No browser extensions or special software is
-              required. Just browse to https://passmaster.io or use one of the free mobile apps available for Android on the
+              %span{ 'data-i18n-html' => 'overview.works_everywhere_body1' }
+                Passmaster works on any modern browser on all operating systems. No browser extensions or special software is
+                required. Just browse to https://passmaster.io or use one of the free mobile apps available for Android on the
               %a{ :target => '_blank', :href => 'https://play.google.com/store/apps/details?id=io.passmaster.Passmaster' } Play Store
-              and iOS on the
+              %span{ 'data-i18n-html' => 'overview.works_everywhere_body2' } and iOS on the
               = succeed '.' do
                 %a{ :target => '_blank', :href => 'https://itunes.apple.com/us/app/passmaster/id615271561?mt=8' } App Store
-              The mobile apps provide single-tap copy to clipboard of usernames/passwords and unlocking
-              via biometrics.
+              %span{ 'data-i18n-html' => 'overview.works_everywhere_body3' }
+                The mobile apps provide single-tap copy to clipboard of usernames/passwords and unlocking via biometrics.
         .feature-inner
           %h5
             %i.icon.icon-briefcase
-            Store Everything
-          %p
+            %span{ 'data-i18n-html' => 'overview.store_everything' } Store Everything
+          %p{ 'data-i18n-html' => 'overview.store_everything_body' }
             Passmaster is designed to store usernames and passwords for all the websites you use but can store
             other related information as well. There's space for account numbers, security questions, website
             URLs, or anything else you might need.
@@ -43,8 +44,8 @@
         .feature-inner
           %h5
             %i.icon.icon-random
-            Secure Password Generator
-          %p
+            %span{ 'data-i18n-html' => 'overview.secure_password_generator' } Secure Password Generator
+          %p{ 'data-i18n-html' => 'overview.secure_password_generator_body' }
             Use the built-in generator to create cryptographically secure random passwords for all your accounts.
             If any one of your passwords is compromised you can easily generate a new one while the rest of your
             accounts remain safe. The length and character set is configurable to match each site's requirements.
@@ -52,8 +53,8 @@
         .feature-inner
           %h5
             %i.icon.icon-lock
-            Host-Proof Encryption
-          %p
+            %span{ 'data-i18n-html' => 'overview.host_proof_encryption' } Host-Proof Encryption
+          %p{ 'data-i18n-html' => 'overview.host_proof_encryption_body' }
             Your account details are for your eyes only so everything is encrypted with javascript directly on your
             computer or mobile device before being saved to the cloud. Only you know the master
             password so no one, not even the server admins, can see anything about your account details.
@@ -61,8 +62,8 @@
         .feature-inner
           %h5
             %i.icon.icon-hdd
-            Automatic Backups
-          %p
+            %span{ 'data-i18n-html' => 'overview.automatic_backups' } Automatic Backups
+          %p{ 'data-i18n-html' => 'overview.automatic_backups_body' }
             Enable automatic backups to receive an email with your encrypted account details each time you make a change.
             This is a great way to ensure you always have a backup of your data. You can also download a backup file
             to your computer at any time from your account settings.
@@ -70,8 +71,8 @@
         .feature-inner
           %h5
             %i.icon.icon-plane
-            Offline Access
-          %p
+            %span{ 'data-i18n-html' => 'overview.offline_access' } Offline Access
+          %p{ 'data-i18n-html' => 'overview.offline_access_body' }
             Passmaster uses service workers and local storage to make your account details accessible
             even while you are offline. Your data is automatically synced each time you use Passmaster ensuring it is
             available whenever you need it.
@@ -79,8 +80,8 @@
         .feature-inner
           %h5
             %i.icon.icon-briefcase
-            Portable and Durable
-          %p
+            %span{ 'data-i18n-html' => 'overview.portable_durable' } Portable and Durable
+          %p{ 'data-i18n-html' => 'overview.portable_durable_body' }
             Passmaster isn't going anywhere but in the event of an extended outage you will always be able to access your
             accounts details from a backup. Each Passmaster backup contains an "Account Viewer" HTML file which contains
             everything needed to view your account data. Just open the account viewer and use it to decrypt the backup.
@@ -88,27 +89,29 @@
         .feature-inner
           %h5
             %i.icon.icon-ok
-            Multi-factor Authentication
+            %span{ 'data-i18n-html' => 'general.mfa' } Multi-factor Authentication
           %p
-            Increase the security of your account by enabling multi-factor authentication with Google Authenticator.
-            Accessing your accounts from a new device will require a randomly generated password that you can get from
-            the Google Authenticator app for
+            %span{ 'data-i18n-html' => 'overview.mfa_body' }
+              Increase the security of your account by enabling multi-factor authentication with Google Authenticator.
+              Accessing your accounts from a new device will require a randomly generated password that you can get from
+              the Google Authenticator app for
             %a{ :target => '_blank', :href => 'https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2' } Android
-            or
+            %span{ 'data-i18n-html' => 'overview.or' } or
             = succeed '.' do
               %a{ :target => '_blank', :href => 'https://itunes.apple.com/us/app/google-authenticator/id388497605?mt=8' } iOS
       .feature.pull-left
         .feature-inner
           %h5
             %i.icon.icon-eye-open
-            Open Source
+            %span{ 'data-i18n-html' => 'overview.open_source' } Open Source
           %p
             = succeed ',' do
               %a{ :target => '_blank', :href => 'https://github.com/ryanjohns/passmaster' } Passmaster server
             = succeed ',' do
               %a{ :target => '_blank', :href => 'https://github.com/ryanjohns/PassmasterAndroid' } Passmaster Android
-            and
+            %span{ 'data-i18n-html' => 'general.and' } and
             %a{ :target => '_blank', :href => 'https://github.com/ryanjohns/PassmasterIOS' } Passmaster iOS
-            are all open source. Because everything is public, you can be certain that there is no tainted or malicious code.
-            If you want to make an improvement, please feel free. Contributions are always welcome!
+            %span{ 'data-i18n-html' => 'overview.open_source_body' }
+              are all open source. Because everything is public, you can be certain that there is no tainted or malicious code.
+              If you want to make an improvement, please feel free. Contributions are always welcome!
     .clearfix

@@ -1,10 +1,10 @@
-%p Hi,
+%p= I18n.t('mailers.hi')
 
-%p Your Passmaster account has been deleted. Here's a final backup of your accounts.
+%p= I18n.t('mailers.account_deleted.body')
 
 %p
-  Backups can be restored to any Passmaster account or viewed offline using the
+  = I18n.t('mailers.accounts_viewer_instructions')
   = succeed '.' do
-    %a{ :href => "#{root_url}#{ACCOUNTS_VIEWER_FILENAME}" } Accounts Viewer
+    %a{ :href => "#{root_url}#{ACCOUNTS_VIEWER_FILENAME}" }= I18n.t('mailers.accounts_viewer')
 
-%p Have a great day!
+%p= I18n.t('mailers.thanks_passmaster')
