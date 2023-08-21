@@ -640,6 +640,10 @@
         $('#restore_accounts').modal('show');
       }
     });
+    $('#delete_account_link').click(function(evt) {
+      evt.preventDefault();
+      $('#delete_account').modal('show');
+    });
   };
 
 }(window.Accounts = window.Accounts || {}, jQuery));

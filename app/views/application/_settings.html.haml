@@ -130,7 +130,7 @@
       %span#file_backup_copy{ :style => 'display:none;' } Alternatively, you can use the File button to download a backup to your computer.
     .alert.alert-info
       %strong Note:
-      Backups are locked with your current Master Password and you will need the password in order to restore the backup.
+      Backups are locked with your current Master Password and you will need the password in order to view or restore the backup.
     %p
       = link_to('Email', '/users', :remote => true, :id => 'backup_accounts_email_btn', :class => 'btn btn-primary')
       %button#backup_accounts_file_btn.btn.btn-inverse{ :type => 'button', :style => 'display:none;' } File
@@ -152,5 +152,22 @@
       %p{ :style => 'display:none;' }= password_field_tag(:hack_field, '', :id => nil)
       %p
         = submit_tag('Restore', :class => 'btn btn-danger', :id => 'restore_accounts_btn', :data => { :disable_with => false })
+        %button.btn{ :type => 'button', 'data-dismiss' => 'modal', 'aria-hidden' => 'true' } Cancel
+  .modal-footer
+
+#delete_account.modal.hide{ :role => 'dialog', :tabindex => '-1', 'aria-labelledby' => 'delete_account_label', :style => 'display:none;' }
+  .modal-header
+    %button.close{ :type => 'button', 'data-dismiss' => 'modal', 'aria-hidden' => 'true' } &times;
+    %h3#delete_account_label Delete Account
+  .modal-body
+    = form_tag(users_path, :method => :delete, :remote => true, :class => 'modal-form', :id => 'delete_account_form') do
+      = hidden_field_tag(:api_key, '', :id => 'delete_account_api_key')
+      %p
+        Permenantly delete your Passmaster account. You will receive an email with a final backup of your encrypted accounts.
+      .alert.alert-info
+        %strong Note:
+        Backups are locked with your current Master Password and you will need the password in order to view or restore the backup.
+      %p
+        = submit_tag('Delete Account', :class => 'btn btn-danger', :id => 'delete_account_btn', :data => { :disable_with => false })
         %button.btn{ :type => 'button', 'data-dismiss' => 'modal', 'aria-hidden' => 'true' } Cancel
   .modal-footer

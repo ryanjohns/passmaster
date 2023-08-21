@@ -102,6 +102,19 @@ class UsersControllerTest < ActionController::TestCase
     assert_equal ['does not match expected value'], data['errors']['version_code']
   end
 
+  test 'destroy' do
+    u = FactoryBot.create(:user)
+    u.verify_code!(u.verification_code)
+    assert_difference('ActionMailer::Base.deliveries.size') do
+      delete :destroy, :params => { :format => :json, :id => u.id }
+    end
+    assert_response :success
+    assert_equal u.email, ActionMailer::Base.deliveries.last.to.first
+    assert_equal '[Passmaster] Account Deleted', ActionMailer::Base.deliveries.last.subject
+    assert_equal 2, ActionMailer::Base.deliveries.last.attachments.size
+    assert_nil User.find_by_id(u.id)
+  end
+
   test 'backup via file' do
     u = FactoryBot.create(:user)
     get :backup, :params => { :format => :json, :id => u.id, :type => 'file' }

@@ -207,6 +207,20 @@ class UserTest < ActiveSupport::TestCase
     assert_equal 'NEW_foo@gmail.com', u.reload.email
   end
 
+  test 'delivers account deleted email' do
+    u = nil
+    assert_difference('ActionMailer::Base.deliveries.size') do
+      u = FactoryBot.create(:user, :email => 'foo@gmail.com', :api_key => 'foo', :encrypted_data => 'bar', :auto_backup => false)
+    end
+    assert_difference('ActionMailer::Base.deliveries.size') do
+      assert u.destroy
+    end
+    assert_equal u.email, ActionMailer::Base.deliveries.last.to.first
+    assert_equal '[Passmaster] Account Deleted', ActionMailer::Base.deliveries.last.subject
+    assert_equal 2, ActionMailer::Base.deliveries.last.attachments.size
+    assert_nil User.find_by_id(u.id)
+  end
+
   test 'as_json' do
     u = FactoryBot.build(:user)
     attributes = []

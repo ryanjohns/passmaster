@@ -1,6 +1,12 @@
 class Mailer < ActionMailer::Base
   default :from => 'Passmaster <no-reply@passmaster.io>'
 
+  def account_deleted(email, filename, data)
+    attachments[ACCOUNTS_VIEWER_FILENAME] = ACCOUNTS_VIEWER
+    attachments[filename] = data
+    mail(:to => email, :subject => '[Passmaster] Account Deleted')
+  end
+
   def auto_backup(email, filename, data)
     attachments[ACCOUNTS_VIEWER_FILENAME] = ACCOUNTS_VIEWER
     attachments[filename] = data

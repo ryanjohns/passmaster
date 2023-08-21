@@ -118,6 +118,7 @@
     $('#backup_accounts_file_btn').attr('disabled', 'disabled');
     $('#backup_accounts_email_btn').attr('disabled', 'disabled');
     $('#restore_accounts_btn').attr('disabled', 'disabled');
+    $('#delete_account_btn').attr('disabled', 'disabled');
 
     // account
     $('button[data-account-delete]').attr('disabled', 'disabled');

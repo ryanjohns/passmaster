@@ -2,6 +2,13 @@ require 'test_helper'
 
 class MailerTest < ActionMailer::TestCase
 
+  test 'account_deleted' do
+    mail = Mailer.account_deleted('foo@gmail.com', 'file', 'data')
+    assert_equal 'foo@gmail.com', mail.to.first
+    assert_equal '[Passmaster] Account Deleted', mail.subject
+    assert_not_nil mail.attachments['file']
+  end
+
   test 'auto_backup' do
     mail = Mailer.auto_backup('foo@gmail.com', 'file', 'data')
     assert_equal 'foo@gmail.com', mail.to.first

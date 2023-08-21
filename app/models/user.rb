@@ -28,6 +28,7 @@ class User < ApplicationRecord
   after_save :deactivate_otp_sessions, :if => :did_generate_otp_secret?
   after_create :deliver_new_user
   after_update :deliver_notifications
+  before_destroy :deliver_account_deleted
 
   scope :with_email, lambda { |email| where('LOWER(email) = ?', email.downcase) }
 
@@ -123,6 +124,11 @@ class User < ApplicationRecord
       filename, data = User.backup_data(schema_version, encrypted_data)
       Mailer.auto_backup(email, filename, data).deliver_now
     end
+  end
+
+  def deliver_account_deleted
+    filename, data = User.backup_data(schema_version, encrypted_data)
+    Mailer.account_deleted(email, filename, data).deliver_now
   end
 
   def generate_otp_secret

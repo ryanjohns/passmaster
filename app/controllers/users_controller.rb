@@ -1,9 +1,9 @@
 class UsersController < ApplicationController
 
-  before_action :find_user, :only => [ :show, :update, :backup, :resend_verification, :verify ]
+  before_action :find_user, :only => [ :show, :update, :destroy, :backup, :resend_verification, :verify ]
   before_action :verify_user, :only => [ :update ]
-  before_action :verify_api_key, :only => [ :show, :update, :backup ]
-  before_action :verify_otp_session, :only => [ :show, :update, :backup ]
+  before_action :verify_api_key, :only => [ :show, :update, :destroy, :backup ]
+  before_action :verify_otp_session, :only => [ :show, :update, :destroy, :backup ]
   before_action :verify_version_code, :only => [ :update ]
 
   def show
@@ -21,6 +21,14 @@ class UsersController < ApplicationController
   def update
     @user.update!(params)
     respond_with_json(@user)
+  end
+
+  def destroy
+    if @user.destroy
+      render :json => { :success => true }
+    else
+      render :json => { :success => false }, :status => :internal_server_error
+    end
   end
 
   def backup

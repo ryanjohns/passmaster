@@ -9,6 +9,7 @@
     bindBackupAccountsFileBtn();
     bindBackupAccountsEmailBtn();
     bindRestoreAccountsForm();
+    bindDeleteAccountForm();
   };
 
   Settings.initPreferences = function() {
@@ -294,6 +295,32 @@
         restoreBackup(passwd, evt.target.result);
       });
       reader.readAsText(file);
+    });
+  };
+
+  function bindDeleteAccountForm() {
+    $('#delete_account_form').bind('ajax:success', function(evt, data) {
+      $('#delete_account').modal('hide');
+      Util.wipeData();
+      Util.notify('Account deleted successfully.')
+    }).bind('ajax:error', function(evt, xhr) {
+      Util.handleOtpErrors(xhr, function() {
+        $('#delete_account_form').submit();
+      }, function() {
+        Util.notify('Account could not be deleted, please try again.', 'error');
+      });
+    }).bind('ajax:before', function() {
+      $('#delete_account_api_key').val(userData.apiKey);
+    }).bind('ajax:beforeSend', function(evt, xhr, settings) {
+      settings.url = settings.url + '/' + userData.userId;
+      var btn = $('#delete_account_btn');
+      btn.data('origText', btn.val());
+      btn.attr('disabled', 'disabled');
+      btn.val('Please Wait...');
+    }).bind('ajax:complete', function() {
+      var btn = $('#delete_account_btn');
+      btn.val(btn.data('origText'));
+      btn.removeAttr('disabled');
     });
   };
 
