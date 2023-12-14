@@ -5,6 +5,7 @@ defaults: &defaults
   adapter: postgresql
   encoding: utf8
   pool: 5
+  gssencmode: disable
 
 development:
   <<: *defaults
