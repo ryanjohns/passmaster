@@ -175,7 +175,7 @@ class UserTest < ActiveSupport::TestCase
     end
     assert_equal 'foo@gmail.com', ActionMailer::Base.deliveries.first.to.first
     assert_equal '[Passmaster] Email Changed', ActionMailer::Base.deliveries.first.subject
-    assert_equal 2, ActionMailer::Base.deliveries.first.attachments.size
+    assert_equal 1, ActionMailer::Base.deliveries.first.attachments.size
     assert_equal 'new_foo@gmail.com', ActionMailer::Base.deliveries.last.to.first
     assert_equal '[Passmaster] Email Verification', ActionMailer::Base.deliveries.last.subject
     ActionMailer::Base.deliveries = []
@@ -185,7 +185,7 @@ class UserTest < ActiveSupport::TestCase
     end
     assert_equal 'new_foo@gmail.com', ActionMailer::Base.deliveries.last.to.first
     assert_equal '[Passmaster] Master Password Changed', ActionMailer::Base.deliveries.last.subject
-    assert_equal 2, ActionMailer::Base.deliveries.last.attachments.size
+    assert_equal 1, ActionMailer::Base.deliveries.last.attachments.size
     ActionMailer::Base.deliveries = []
     u.encrypted_data = 'new_bar'
     assert_no_difference('ActionMailer::Base.deliveries.size') do
@@ -198,7 +198,7 @@ class UserTest < ActiveSupport::TestCase
     end
     assert_equal 'new_foo@gmail.com', ActionMailer::Base.deliveries.last.to.first
     assert_equal '[Passmaster] Auto-Backup', ActionMailer::Base.deliveries.last.subject
-    assert_equal 2, ActionMailer::Base.deliveries.last.attachments.size
+    assert_equal 1, ActionMailer::Base.deliveries.last.attachments.size
     ActionMailer::Base.deliveries = []
     u.email = 'NEW_foo@gmail.com'
     assert_no_difference('ActionMailer::Base.deliveries.size') do
@@ -217,7 +217,7 @@ class UserTest < ActiveSupport::TestCase
     end
     assert_equal u.email, ActionMailer::Base.deliveries.last.to.first
     assert_equal '[Passmaster] Account Deleted', ActionMailer::Base.deliveries.last.subject
-    assert_equal 2, ActionMailer::Base.deliveries.last.attachments.size
+    assert_equal 1, ActionMailer::Base.deliveries.last.attachments.size
     assert_nil User.find_by_id(u.id)
   end
 

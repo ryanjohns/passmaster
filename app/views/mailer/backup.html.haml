@@ -2,4 +2,9 @@
 
 %p Here's the backup of your accounts that you requested.
 
+%p
+  Backups can be restored to any Passmaster account or viewed offline using the
+  = succeed '.' do
+    %a{ :href => "#{root_url}#{ACCOUNTS_VIEWER_FILENAME}", :download => true } Accounts Viewer
+
 %p Thanks for using Passmaster!

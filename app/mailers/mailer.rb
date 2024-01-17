@@ -2,33 +2,28 @@ class Mailer < ActionMailer::Base
   default :from => 'Passmaster <no-reply@passmaster.io>'
 
   def account_deleted(email, filename, data)
-    attachments[ACCOUNTS_VIEWER_FILENAME] = ACCOUNTS_VIEWER
     attachments[filename] = data
     mail(:to => email, :subject => '[Passmaster] Account Deleted')
   end
 
   def auto_backup(email, filename, data)
-    attachments[ACCOUNTS_VIEWER_FILENAME] = ACCOUNTS_VIEWER
     attachments[filename] = data
     mail(:to => email, :subject => '[Passmaster] Auto-Backup')
   end
 
   def backup(email, filename, data)
-    attachments[ACCOUNTS_VIEWER_FILENAME] = ACCOUNTS_VIEWER
     attachments[filename] = data
     mail(:to => email, :subject => '[Passmaster] Backup')
   end
 
   def email_changed(email, filename, data, user_id)
     @user_id = user_id
-    attachments[ACCOUNTS_VIEWER_FILENAME] = ACCOUNTS_VIEWER
     attachments[filename] = data
     mail(:from => 'Passmaster <support@passmaster.io>', :to => email, :subject => '[Passmaster] Email Changed')
   end
 
   def master_password_changed(email, filename, data, user_id)
     @user_id = user_id
-    attachments[ACCOUNTS_VIEWER_FILENAME] = ACCOUNTS_VIEWER
     attachments[filename] = data
     mail(:from => 'Passmaster <support@passmaster.io>', :to => email, :subject => '[Passmaster] Master Password Changed')
   end
