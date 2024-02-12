@@ -51,7 +51,7 @@ module Passmaster
     end
     config.lograge.custom_options = lambda do |event|
       params       = event.payload[:params].except('format', 'action', 'controller', '_method', 'authenticity_token', 'utf8')
-      extra_fields = { :time => Time.now.utc, :ip => event.payload[:ip] }
+      extra_fields = { :time => Time.now.utc, :ip => event.payload[:ip], :accept_language => event.payload[:accept_language] }
       extra_fields.merge!({ :params => params }) if params.any?
       extra_fields
     end
