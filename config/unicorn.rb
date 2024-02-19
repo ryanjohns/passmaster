@@ -45,7 +45,7 @@ before_fork do |server, worker|
   # Using this method we get 0 downtime deploys.
 
   Dir.glob("#{app_dir}/tmp/pids/*.oldbin").each do |old_pid|
-    if File.exists?(old_pid) && server.pid != old_pid
+    if File.exist?(old_pid) && server.pid != old_pid
       begin
         sig = (worker.nr + 1) >= server.worker_processes ? :QUIT : :TTOU
         Process.kill(sig, File.read(old_pid).to_i)

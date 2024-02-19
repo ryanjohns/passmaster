@@ -17,7 +17,7 @@ namespace :assets do
       :cache_control => 'public, no-transform, max-age=31557600',
     }
     manifest['files'].each do |filename, _|
-      next if uploaded.include?(filename) || !File.exists?("#{assets}/#{filename}")
+      next if uploaded.include?(filename) || !File.exist?("#{assets}/#{filename}")
       object = bucket.object("assets/#{filename}")
       if object.exists?
         puts "Exists: #{filename}"
@@ -29,7 +29,7 @@ namespace :assets do
         content_type = 'image/gif'              if filename =~ /\.gif$/
         content_type = 'application/javascript' if filename =~ /\.js$/
         content_type = 'text/plain'             if filename =~ /\.txt$/
-        if File.exists?("#{assets}/#{filename}.gz")
+        if File.exist?("#{assets}/#{filename}.gz")
           object.client.put_object(options.merge({ :key => object.key, :body => File.new("#{assets}/#{filename}.gz"), :content_type => content_type, :content_encoding => 'gzip' }))
         else
           object.client.put_object(options.merge({ :key => object.key, :body => File.new("#{assets}/#{filename}"), :content_type => content_type }))
@@ -63,7 +63,7 @@ namespace :assets do
       remote_path    = "https://passmaster.io#{asset}"
       remote_hash    = `curl -s #{remote_path} | gunzip -c | shasum`.split.first
       local_path     = "#{Rails.root}/public#{asset}"
-      local_hash     = File.exists?(local_path) ? `shasum #{local_path}`.split.first : 'not found'
+      local_hash     = File.exist?(local_path) ? `shasum #{local_path}`.split.first : 'not found'
       results[asset] = { :local_hash => local_hash, :remote_hash => remote_hash, :match => local_hash == remote_hash }
     end
     Rake::Task['assets:clobber'].invoke
