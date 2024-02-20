@@ -6,7 +6,7 @@ After=network-online.target
 Type=oneshot
 Restart=no
 ExecStartPre=/bin/su - passmaster -c 'cd /home/passmaster/passmaster && git checkout --quiet master && git pull --quiet'
-ExecStart=/bin/su - passmaster -c 'cd /home/passmaster/passmaster && /home/passmaster/passmaster/script/wrapper /home/passmaster/passmaster/script/server_deploy'
+ExecStart=/bin/su - passmaster -c 'cd /home/passmaster/passmaster && /usr/local/rvm/wrappers/ruby-3.2.3@passmaster/ruby script/server_deploy'
 
 [Install]
 WantedBy=multi-user.target

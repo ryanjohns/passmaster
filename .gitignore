@@ -7,7 +7,6 @@
 # Bundler
 /.bundle
 /vendor/bundle
-/sbin
 
 # Default SQLite database.
 /db/*.sqlite3
