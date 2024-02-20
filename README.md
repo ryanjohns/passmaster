@@ -14,7 +14,7 @@ You will also need a variant of PostgreSQL 14 (anything 9.1 and newer should als
  * Create and modify env.local.yml (`cp config/env.yml config/env.local.yml`)
  * Install required gems (`bundle install`)
  * Create and migrate the database (`bundle exec rake db:create db:schema:load`)
- * Start the server (`bundle exec script/unicorn start`)
+ * Start the server (`bundle exec puma`)
  * Browse to http://localhost:8000
 
 ## Verifying javascript

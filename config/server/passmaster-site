@@ -1,4 +1,4 @@
-# Passmaster Nginx configuration
+# Passmaster Nginx site
 
 server {
   listen 80;
@@ -10,13 +10,13 @@ server {
     return 503;
   }
 
-  try_files $uri @unicorn;
+  try_files $uri @puma;
 
   location ^~ /assets/ {
     try_files $uri @s3bucket;
   }
 
-  location @unicorn {
+  location @puma {
     proxy_pass http://unix:/home/passmaster/passmaster/tmp/sockets/nginx.socket;
   }
 

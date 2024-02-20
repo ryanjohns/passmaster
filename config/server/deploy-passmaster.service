@@ -1,13 +1,12 @@
 [Unit]
-Description=Passmaster server startup
+Description=Deploy Passmaster
 After=network-online.target
-Wants=network-online.target
 
 [Service]
 Type=oneshot
 Restart=no
 ExecStartPre=/bin/su - passmaster -c 'cd /home/passmaster/passmaster && git checkout --quiet master && git pull --quiet'
-ExecStart=/home/passmaster/passmaster/script/wrapper /home/passmaster/passmaster/script/server_start
+ExecStart=/bin/su - passmaster -c 'cd /home/passmaster/passmaster && /home/passmaster/passmaster/script/wrapper /home/passmaster/passmaster/script/server_deploy'
 
 [Install]
 WantedBy=multi-user.target

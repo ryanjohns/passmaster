@@ -31,15 +31,15 @@ class ServerDeploy
   def deploy
     ENV['RAILS_ENV'] = @environment
     Dir.chdir(@app_dir) do
-      system "git checkout --quiet master"
-      system "git pull --quiet"
+      system "git checkout master"
+      system "git pull"
       system "git checkout #{@environment}"
       system "git reset --hard origin/#{@environment}"
       system "bundle config set deployment 'true'"
       system "bundle config set without 'development test staging'"
-      system "bundle install --quiet"
+      system "bundle install"
       system "bundle exec rake db:migrate" if @migrate
-      system "bundle exec script/unicorn restart"
+      system "bundle exec pumactl restart" if system "bundle exec pumactl status"
     end
   end
 

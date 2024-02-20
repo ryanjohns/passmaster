@@ -1,0 +1,18 @@
+[Unit]
+Description=Puma HTTP Server
+After=network-online.target deploy-passmaster.service
+Requires=puma.socket
+
+[Service]
+Type=notify
+WatchdogSec=10
+User=passmaster
+WorkingDirectory=/home/passmaster/passmaster
+# Environment=PUMA_DEBUG=1
+Environment=RAILS_ENV=production
+ExecStart=bundle exec puma
+
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
