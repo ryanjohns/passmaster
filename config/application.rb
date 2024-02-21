@@ -48,10 +48,10 @@ module Passmaster
     config.action_controller.per_form_csrf_tokens = false
 
     # Change the log format to single-line and silence specific routes
-    ACTIONS_TO_IGNORE = { 'health_checks' => ['show'] }
+    ACTIONS_TO_IGNORE = { 'health_checks' => ['show'], 'application' => ['not_found'] }
     config.lograge.enabled = true
     config.lograge.ignore_custom = lambda do |event|
-      (ACTIONS_TO_IGNORE[event.payload[:params]['controller']] || []).include?(event.payload[:params]['action']) && event.payload[:status] < 400
+      (ACTIONS_TO_IGNORE[event.payload[:params]['controller']] || []).include?(event.payload[:params]['action']) && event.payload[:status] < 500
     end
     config.lograge.custom_options = lambda do |event|
       params       = event.payload[:params].except('format', 'action', 'controller', '_method', 'authenticity_token', 'utf8')
