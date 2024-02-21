@@ -26,6 +26,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def not_found
+    render file: Rails.public_path.join('404.html'), :status => :not_found, :layout => false
+  end
+
   protected
 
   def handle_unverified_request

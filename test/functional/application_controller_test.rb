@@ -22,4 +22,9 @@ class ApplicationControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test 'not_found' do
+    get :not_found
+    assert_response :not_found
+  end
+
 end

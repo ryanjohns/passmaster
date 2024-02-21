@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 
   match 'init_session' => 'application#init_session', :via => :get
   match 'offline_sw.js' => 'application#offline_sw', :via => :get
+  match 'not_found' => 'application#not_found', :via => :get
 
   match 'verify/:id' => 'verifications#verify', :via => :get, :as => 'verify'
 
@@ -17,4 +18,6 @@ Rails.application.routes.draw do
   resources :otp_sessions, :only => [ :create ]
 
   resource :updates, :only => :show
+
+  match '*unmatched', :to => 'application#not_found', :via => :all
 end
