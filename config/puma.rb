@@ -4,7 +4,7 @@ rails_env = ENV['RAILS_ENV'] || 'development'
 
 # puma settings
 bind 'tcp://127.0.0.1:8000'
-if rails_env == 'production' || rails_env == 'staging'
+if rails_env == 'production'
   bind_to_activated_sockets 'only'
 end
 directory app_dir

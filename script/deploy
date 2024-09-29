@@ -5,20 +5,18 @@ require 'optparse'
 class Deploy
 
   def initialize(args)
-    @environment = 'staging'
+    @environment = 'production'
     @migrate     = false
     @tag         = nil
 
     option_parser = OptionParser.new do |opts|
-      opts.on('-e', '--environment [ENVIRONMENT]', "The environment to deploy to. Can be 'staging' or 'production'. Default: #{@environment}") do |environment|
-        if environment == 'production'
-          @environment = 'production'
-        elsif environment != 'staging'
+      opts.on('-e', '--environment [ENVIRONMENT]', "The environment to deploy to. Can only be 'production'. Default: #{@environment}") do |environment|
+        if environment != 'production'
           puts opts
           exit 1
         end
       end
-      opts.on('-t', '--tag [TAG]', 'The tag to deploy. When not given, uses the master branch for staging and creates a new tag for production.') do |tag|
+      opts.on('-t', '--tag [TAG]', 'The tag to deploy. When not given, creates a new tag.') do |tag|
         if tag =~ /^[0-9]{14}$/
           @tag = tag
         else
@@ -36,8 +34,6 @@ class Deploy
     end
 
     option_parser.parse!(args)
-
-    @tag = 'master' if @tag.nil? && @environment == 'staging'
   end
 
   def deploy

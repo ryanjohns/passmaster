@@ -18,7 +18,7 @@ gem 'sprockets'
 gem 'sprockets-rails'
 gem 'sassc-rails'
 
-group :development, :staging do
+group :development do
   gem 'letter_opener'
 end
 

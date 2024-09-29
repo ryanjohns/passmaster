@@ -23,18 +23,10 @@ test:
   host: <%= ENV['TEST_DB_HOST'] %>
   port: <%= ENV['TEST_DB_PORT'] %>
 
-staging:
-  <<: *defaults
-  username: <%= ENV['STAGING_DB_USERNAME'] %>
-  password: <%= ENV['STAGING_DB_PASSWORD'] %>
-  database: <%= ENV['STAGING_DB_DATABASE'] %>
-  host: <%= ENV['STAGING_DB_HOST'] %>
-  port: <%= ENV['STAGING_DB_PORT'] %>
-
 production:
   <<: *defaults
-  username: <%= ENV['PRODUCTION_DB_USERNAME'] %>
-  password: <%= ENV['PRODUCTION_DB_PASSWORD'] %>
-  database: <%= ENV['PRODUCTION_DB_DATABASE'] %>
-  host: <%= ENV['PRODUCTION_DB_HOST'] %>
-  port: <%= ENV['PRODUCTION_DB_PORT'] %>
+  username: <%= Rails.application.credentials.production_db.username! %>
+  password: <%= Rails.application.credentials.production_db.password! %>
+  database: <%= Rails.application.credentials.production_db.database! %>
+  host: <%= Rails.application.credentials.production_db.host! %>
+  port: <%= Rails.application.credentials.production_db.port! %>

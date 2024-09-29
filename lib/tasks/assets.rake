@@ -7,18 +7,21 @@ namespace :assets do
       next
     end
     Rake::Task['assets:precompile'].invoke
-    bucket   = Aws::S3::Resource.new.bucket(ENV['AWS_ASSETS_BUCKET'])
     assets   = "#{Rails.root}/public/assets"
     uploaded = Set.new
     manifest = JSON.parse(File.read("#{Rails.root}/config/manifest.json"))
     options  = {
-      :bucket        => ENV['AWS_ASSETS_BUCKET'],
+      :bucket        => Rails.application.credentials.assets.aws_bucket!,
       :acl           => 'public-read',
       :cache_control => 'public, no-transform, max-age=31557600',
     }
+    client   = Aws::S3::Client.new({
+      :region      => ENV['AWS_REGION'],
+      :credentials => Aws::Credentials.new(Rails.application.credentials.assets.aws_access_key_id!, Rails.application.credentials.assets.aws_secret_access_key!),
+    })
     manifest['files'].each do |filename, _|
       next if uploaded.include?(filename) || !File.exist?("#{assets}/#{filename}")
-      object = bucket.object("assets/#{filename}")
+      object = Aws::S3::Object.new(:bucket_name => options[:bucket], :key => "assets/#{filename}", :client => client)
       if object.exists?
         puts "Exists: #{filename}"
       else
@@ -30,9 +33,9 @@ namespace :assets do
         content_type = 'application/javascript' if filename =~ /\.js$/
         content_type = 'text/plain'             if filename =~ /\.txt$/
         if File.exist?("#{assets}/#{filename}.gz")
-          object.client.put_object(options.merge({ :key => object.key, :body => File.new("#{assets}/#{filename}.gz"), :content_type => content_type, :content_encoding => 'gzip' }))
+          client.put_object(options.merge({ :key => object.key, :body => File.new("#{assets}/#{filename}.gz"), :content_type => content_type, :content_encoding => 'gzip' }))
         else
-          object.client.put_object(options.merge({ :key => object.key, :body => File.new("#{assets}/#{filename}"), :content_type => content_type }))
+          client.put_object(options.merge({ :key => object.key, :body => File.new("#{assets}/#{filename}"), :content_type => content_type }))
         end
         puts "Uploaded: #{filename}"
       end
