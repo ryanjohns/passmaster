@@ -11,7 +11,7 @@ class HealthChecksController < ActionController::Base
   private
 
   def db_connected?
-    ActiveRecord::Base.connection.active?
+    ActiveRecord::Base.connection.verify!
   rescue
     false
   end
