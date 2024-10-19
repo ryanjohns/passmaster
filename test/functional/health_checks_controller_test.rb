@@ -11,13 +11,13 @@ class HealthChecksControllerTest < ActionController::TestCase
   end
 
   test 'show when database is down' do
-    ActiveRecord::Base.connection.disconnect!
-    get :show
-    assert_response :error
-    assert_equal 'error', @response.body
-    assert_equal 'text/plain', @response.media_type
-    assert_equal 500, @response.status
-    ActiveRecord::Base.establish_connection
+    ActiveRecord::Base.stub(:connection, nil) do
+      get :show
+      assert_response :error
+      assert_equal 'error', @response.body
+      assert_equal 'text/plain', @response.media_type
+      assert_equal 500, @response.status
+    end
   end
 
 end
