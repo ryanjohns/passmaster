@@ -18,6 +18,7 @@
     bindLockBtn();
     bindAccountSearch();
     bindSettings();
+    bindKeyboardShortcuts();
   };
 
   Accounts.beforeDisplay = function() {
@@ -37,9 +38,9 @@
   Accounts.afterDisplay = function() {
     if (userData.masterPassword) {
       Accounts.searchTiles($('#accounts_list_search').val());
-      $('#accounts_list_search').get(0).setSelectionRange(0, 9999);
+      Util.selectAndFocusInput($('#accounts_list_search'));
     } else if (!Util.isIOSApp()) {
-      $('#unlock_accounts_passwd').focus();
+      Util.selectAndFocusInput($('#unlock_accounts_passwd'));
     }
   };
 
@@ -108,7 +109,7 @@
     }
     Accounts.beforeDisplay();
     Accounts.searchTiles($('#accounts_list_search').val());
-    $('#accounts_list_search').focus();
+    Util.selectAndFocusInput($('#accounts_list_search'));
     if (Util.isIOSApp()) {
       MobileApp.savePasswordForTouchID();
     } else if (Util.isAndroidApp()) {
@@ -123,9 +124,9 @@
     Util.notify(I18n.translate('accounts.failed_to_decrypt'), 'error');
     Accounts.lock();
     if ($('#unlock_accounts_passwd').val().length > 0 && !Util.isMobile()) {
-      $('#unlock_accounts_passwd').get(0).setSelectionRange(0, 9999);
+      Util.selectAndFocusInput($('#unlock_accounts_passwd'));
     }
-  }
+  };
 
   function selectView() {
     Accounts.wipeAccountTiles();
@@ -327,7 +328,7 @@
         }
       }
     });
-  }
+  };
 
   function bindAddAccountBtn() {
     $('#add_account_btn').click(function(evt) {
@@ -353,8 +354,8 @@
           MobileApp.copyToIOSClipboard(input.val());
           Util.highlightElement(input, '#9cf');
           Util.notify(I18n.translate('accounts.username_copied'));
-        } else if (!Util.isAndroid()) {
-          input.get(0).setSelectionRange(0, 9999);
+        } else {
+          Util.selectAndFocusInput(input);
         }
       }
     });
@@ -380,8 +381,8 @@
           MobileApp.copyToIOSClipboard(input.attr('data-password'));
           Util.highlightElement(input, '#9cf');
           Util.notify(I18n.translate('accounts.password_copied'));
-        } else if (!Util.isAndroid()) {
-          input.get(0).setSelectionRange(0, 9999);
+        } else {
+          Util.selectAndFocusInput(input);
         }
       }
     });
@@ -645,6 +646,18 @@
     $('#delete_account_link').click(function(evt) {
       evt.preventDefault();
       $('#delete_account').modal('show');
+    });
+  };
+
+  function bindKeyboardShortcuts() {
+    $(document).bind('keydown', function(evt) {
+      if (evt.key == '/' && userData && userData.masterPassword) {
+        var activeNode = document.activeElement.nodeName;
+        if (activeNode != 'INPUT' && activeNode != 'TEXTAREA') {
+          evt.preventDefault();
+          Util.selectAndFocusInput($('#accounts_list_search'));
+        }
+      }
     });
   };
 

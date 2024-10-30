@@ -243,6 +243,11 @@
     }
   };
 
+  Util.selectAndFocusInput = function(input) {
+    input.get(0).setSelectionRange(0, 9999);
+    input.focus();
+  };
+
   function showNotification(message, status) {
     if (status !== undefined && status == 'error') {
       $('#notification').attr('class', 'alert alert-error');
