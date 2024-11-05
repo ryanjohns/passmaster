@@ -2,14 +2,17 @@
 
 %html
   %head
+    %title{ 'data-i18n-html' => 'general.title' } Passmaster - Encrypted Password Manager for Web and Mobile
     %meta{ 'http-equiv' => 'Content-Type', :content => 'text/html; charset=utf-8' }
-    %meta{ :name => 'viewport', :content => 'initial-scale=1.0, maximum-scale=1.0, user-scalable=no' }
-    %meta{ :name => 'apple-mobile-web-app-capable', :content => 'yes' }
+    %meta{ :name => 'viewport', :content => 'width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' }
     %meta{ :name => 'csrf-param', :content => request_forgery_protection_token }
     %meta{ :name => 'csrf-token', :content => '' }
     %meta{ :name => 'description', :content => 'A simple tool for storing usernames and passwords securely in the cloud. All of your account details are encrypted with a single master password making it easy to use different passwords for each site you visit.' }
     %meta{ :name => 'keywords', :content => 'passwords, password manager, host-proof encryption, master password, secure passwords, password generator' }
-    %title{ 'data-i18n-html' => 'general.title' } Passmaster - Encrypted Password Manager for Web and Mobile
+    %meta{ :name => 'apple-mobile-web-app-capable', :content => 'yes' }
+    %meta{ :name => 'mobile-web-app-capable', :content => 'yes' }
+    %link{ :rel => 'icon', :href => '/favicon.png' }
+    %link{ :rel => 'apple-touch-icon', :href => '/apple-touch-icon.png' }
     = stylesheet_link_tag 'libraries'
     = stylesheet_link_tag 'application'
     = javascript_include_tag 'libraries'

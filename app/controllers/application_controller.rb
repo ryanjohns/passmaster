@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
 
   def offline_sw
     @paths_to_cache = Rails.cache.fetch('service_worker.paths_to_cache') do
-      ['/'] + CACHED_ASSETS.map { |asset| ActionController::Base.helpers.asset_path(asset) }
+      ['/', '/favicon.png', '/apple-touch-icon.png'] + CACHED_ASSETS.map { |asset| ActionController::Base.helpers.asset_path(asset) }
     end
     @cache_name = Rails.cache.fetch('service_worker.cache_name') do
       cache_version = Rails.env.development? ? (Time.now.to_i - Time.now.to_i % 10) : CACHE_VERSION
