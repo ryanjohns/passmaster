@@ -2,8 +2,9 @@ source 'https://rubygems.org'
 
 gem 'rails', '7.2.2'
 
-gem 'aws-sdk-rails', '~> 4'
+gem 'aws-sdk-rails'
 gem 'aws-sdk-s3'
+gem 'aws-actionmailer-ses'
 gem 'haml'
 gem 'haml-rails'
 gem 'jquery-rails'

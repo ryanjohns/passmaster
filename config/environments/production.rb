@@ -83,7 +83,8 @@ Rails.application.configure do
   # config.action_mailer.raise_delivery_errors = false
 
   # Send email with Amazon Simple Email Service
-  config.action_mailer.delivery_method = :ses
+  config.action_mailer.delivery_method = :ses_v2
+  config.action_mailer.ses_v2_settings = { region: 'us-west-2' }
 
   # Unlike controllers, the mailer instance doesn't have any context about the
   # incoming request so you'll need to provide the :host parameter yourself.
