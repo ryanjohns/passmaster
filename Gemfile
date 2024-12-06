@@ -19,7 +19,6 @@ gem 'sassc'
 gem 'sassc-rails'
 gem 'sprockets'
 gem 'sprockets-rails'
-gem 'stringio', '3.1.1'
 
 group :development do
   gem 'letter_opener'
