@@ -55,8 +55,9 @@ namespace :assets do
     begin
       response = Net::HTTP.get_response(URI('https://passmaster.io'))
       document = Nokogiri::HTML(response.body.encode('UTF-8', 'binary', :invalid => :replace, :undef => :replace, :replace => ''))
-      assets  += document.css('head link').collect   { |node| node['href'] }
-      assets  += document.css('head script').collect { |node| node['src'] }
+      assets  += document.css('head link').collect   { |node| node['href'].match?('/assets/') ? node['href'] : nil }
+      assets  += document.css('head script').collect { |node| node['src'].match?('/assets/') ? node['src'] : nil }
+      assets.compact!
     rescue => e
       puts "Failed looking up production assets - #{e.message}"
       next
