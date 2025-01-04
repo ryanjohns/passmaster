@@ -79,8 +79,8 @@ GEM
       aws-sdk-ses (~> 1, >= 1.50.0)
       aws-sdk-sesv2 (~> 1, >= 1.34.0)
     aws-eventstream (1.3.0)
-    aws-partitions (1.1029.0)
-    aws-sdk-core (3.214.0)
+    aws-partitions (1.1031.0)
+    aws-sdk-core (3.214.1)
       aws-eventstream (~> 1, >= 1.3.0)
       aws-partitions (~> 1, >= 1.992.0)
       aws-sigv4 (~> 1.9)
@@ -91,7 +91,7 @@ GEM
     aws-sdk-rails (5.1.0)
       aws-sdk-core (~> 3)
       railties (>= 7.1.0)
-    aws-sdk-s3 (1.176.1)
+    aws-sdk-s3 (1.177.0)
       aws-sdk-core (~> 3, >= 3.210.0)
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.5)
@@ -120,7 +120,7 @@ GEM
     factory_bot_rails (6.4.4)
       factory_bot (~> 6.5)
       railties (>= 5.0.0)
-    ffi (1.17.0)
+    ffi (1.17.1)
     globalid (1.2.1)
       activesupport (>= 6.1)
     haml (6.3.0)
@@ -154,7 +154,7 @@ GEM
       activesupport (>= 4)
       railties (>= 4)
       request_store (~> 1.0)
-    loofah (2.23.1)
+    loofah (2.24.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
     mail (2.8.1)
@@ -166,7 +166,7 @@ GEM
     mini_mime (1.1.5)
     mini_portile2 (2.8.8)
     minitest (5.25.4)
-    net-imap (0.5.4)
+    net-imap (0.5.5)
       date
       net-protocol
     net-pop (0.1.2)
@@ -176,7 +176,7 @@ GEM
     net-smtp (0.5.0)
       net-protocol
     nio4r (2.7.4)
-    nokogiri (1.18.0)
+    nokogiri (1.18.1)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     ostruct (0.6.1)
@@ -189,7 +189,8 @@ GEM
       nio4r (~> 2.0)
     racc (1.8.1)
     rack (3.1.8)
-    rack-session (2.0.0)
+    rack-session (2.1.0)
+      base64 (>= 0.1.0)
       rack (>= 3.0.0)
     rack-test (2.2.0)
       rack (>= 1.3)
@@ -257,7 +258,8 @@ GEM
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     useragent (0.16.11)
-    websocket-driver (0.7.6)
+    websocket-driver (0.7.7)
+      base64
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
     zeitwerk (2.7.1)
@@ -288,4 +290,4 @@ DEPENDENCIES
   sprockets-rails
 
 BUNDLED WITH
-   2.5.23
+   2.6.2
