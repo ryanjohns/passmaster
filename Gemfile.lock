@@ -79,29 +79,29 @@ GEM
       aws-sdk-ses (~> 1, >= 1.50.0)
       aws-sdk-sesv2 (~> 1, >= 1.34.0)
     aws-eventstream (1.3.0)
-    aws-partitions (1.1033.0)
-    aws-sdk-core (3.214.1)
+    aws-partitions (1.1038.0)
+    aws-sdk-core (3.216.0)
       aws-eventstream (~> 1, >= 1.3.0)
       aws-partitions (~> 1, >= 1.992.0)
       aws-sigv4 (~> 1.9)
       jmespath (~> 1, >= 1.6.1)
-    aws-sdk-kms (1.96.0)
-      aws-sdk-core (~> 3, >= 3.210.0)
+    aws-sdk-kms (1.97.0)
+      aws-sdk-core (~> 3, >= 3.216.0)
       aws-sigv4 (~> 1.5)
     aws-sdk-rails (5.1.0)
       aws-sdk-core (~> 3)
       railties (>= 7.1.0)
-    aws-sdk-s3 (1.177.0)
-      aws-sdk-core (~> 3, >= 3.210.0)
+    aws-sdk-s3 (1.178.0)
+      aws-sdk-core (~> 3, >= 3.216.0)
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.5)
-    aws-sdk-ses (1.78.0)
-      aws-sdk-core (~> 3, >= 3.210.0)
+    aws-sdk-ses (1.79.0)
+      aws-sdk-core (~> 3, >= 3.216.0)
       aws-sigv4 (~> 1.5)
-    aws-sdk-sesv2 (1.68.0)
-      aws-sdk-core (~> 3, >= 3.210.0)
+    aws-sdk-sesv2 (1.69.0)
+      aws-sdk-core (~> 3, >= 3.216.0)
       aws-sigv4 (~> 1.5)
-    aws-sigv4 (1.10.1)
+    aws-sigv4 (1.11.0)
       aws-eventstream (~> 1, >= 1.0.2)
     base64 (0.2.0)
     benchmark (0.4.0)
@@ -109,7 +109,7 @@ GEM
     builder (3.3.0)
     childprocess (5.1.0)
       logger (~> 1.5)
-    concurrent-ruby (1.3.4)
+    concurrent-ruby (1.3.5)
     connection_pool (2.5.0)
     crass (1.0.6)
     date (3.4.1)
@@ -158,7 +158,7 @@ GEM
       childprocess (~> 5.0)
     letter_opener (1.10.0)
       launchy (>= 2.2, < 4)
-    logger (1.6.4)
+    logger (1.6.5)
     lograge (0.14.0)
       actionpack (>= 4)
       activesupport (>= 4)
@@ -279,7 +279,7 @@ GEM
     stringio (3.1.2)
     temple (0.10.3)
     thor (1.3.2)
-    tilt (2.5.0)
+    tilt (2.6.0)
     timeout (0.4.3)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
@@ -340,20 +340,20 @@ CHECKSUMS
   addressable (2.8.7) sha256=462986537cf3735ab5f3c0f557f14155d778f4b43ea4f485a9deb9c8f7c58232
   aws-actionmailer-ses (1.0.0) sha256=0a16f1413dba0bf96a6bb065ebf353c7c8a107534af5146a31b8243b9e4d4c18
   aws-eventstream (1.3.0) sha256=f1434cc03ab2248756eb02cfa45e900e59a061d7fbdc4a9fd82a5dd23d796d3f
-  aws-partitions (1.1033.0) sha256=21982148f963237622dde07ef31c26389f313536cdf6bbe9c7b574e8efac6d2c
-  aws-sdk-core (3.214.1) sha256=419b317407d736a19f8b7c422ec134630dc283766a0f9171ceaa2704e82d49fd
-  aws-sdk-kms (1.96.0) sha256=b1818e140b4d1b3cbe154e6b2df1d157f8c65aa297d488f69b5745995a6ba375
+  aws-partitions (1.1038.0) sha256=1e352e4404ce6533329576fa2328c780ab79f8a8a5ada0f8e1cffdd7391b7db7
+  aws-sdk-core (3.216.0) sha256=0f87730b5216dbad36084426465515ae399f57b467c7b51c5cb8039f34971222
+  aws-sdk-kms (1.97.0) sha256=5e1c1f5a4b2d5398b821b7733e889faebfe98984ca667c806e36442220e1c269
   aws-sdk-rails (5.1.0) sha256=8cffd3b60142e12a6747c91a7a609f668276b1082fc0c10810d5da3d14b13189
-  aws-sdk-s3 (1.177.0) sha256=bf2fd9210c3e534f2bd4d90cf855429859bdbfc1911f4d61045a3aaa3ff2f183
-  aws-sdk-ses (1.78.0) sha256=833d054e45b368bb8a6a03c0da72a34f3a4e588ee269eecead52a7216eaf4241
-  aws-sdk-sesv2 (1.68.0) sha256=ea52e685a22d2bac25445497958270c27b38fabd1a6d1e5cf13b08d382835d9b
-  aws-sigv4 (1.10.1) sha256=8a140753f34de18125686b11e7adaed4ca3db06dfb50a478993bd437f7a203bb
+  aws-sdk-s3 (1.178.0) sha256=ab56c04be61293eb72fe46a675a1f06c27dcdafcb5f0292e60cdf7a9c634844f
+  aws-sdk-ses (1.79.0) sha256=67adc6a311d2997de3bb9c559d5b27ec4a6a5fe034f361896b88a0975b7f9ae8
+  aws-sdk-sesv2 (1.69.0) sha256=fd9eb3f67f1da16aa0b76bbb1a8a55047aa0092cbbb6e895cdd7544b34ec3908
+  aws-sigv4 (1.11.0) sha256=50a8796991a862324442036ad7a395920572b84bb6cd29b945e5e1800e8da1db
   base64 (0.2.0) sha256=0f25e9b21a02a0cc0cea8ef92b2041035d39350946e8789c562b2d1a3da01507
   benchmark (0.4.0) sha256=0f12f8c495545e3710c3e4f0480f63f06b4c842cc94cec7f33a956f5180e874a
   bigdecimal (3.1.9) sha256=2ffc742031521ad69c2dfc815a98e426a230a3d22aeac1995826a75dabfad8cc
   builder (3.3.0) sha256=497918d2f9dca528fdca4b88d84e4ef4387256d984b8154e9d5d3fe5a9c8835f
   childprocess (5.1.0) sha256=9a8d484be2fd4096a0e90a0cd3e449a05bc3aa33f8ac9e4d6dcef6ac1455b6ec
-  concurrent-ruby (1.3.4) sha256=d4aa926339b0a86b5b5054a0a8c580163e6f5dcbdfd0f4bb916b1a2570731c32
+  concurrent-ruby (1.3.5) sha256=813b3e37aca6df2a21a3b9f1d497f8cbab24a2b94cab325bffe65ee0f6cbebc6
   connection_pool (2.5.0) sha256=233b92f8d38e038c1349ccea65dd3772727d669d6d2e71f9897c8bf5cd53ebfc
   crass (1.0.6) sha256=dc516022a56e7b3b156099abc81b6d2b08ea1ed12676ac7a5657617f012bd45d
   date (3.4.1) sha256=bf268e14ef7158009bfeaec40b5fa3c7271906e88b196d958a89d4b408abe64f
@@ -382,7 +382,7 @@ CHECKSUMS
   jquery-rails (4.6.0) sha256=3c4e6bf47274340b44d836b8aa1b5472c6d451e2739af5ec094421f39025a7e2
   launchy (3.0.1) sha256=b7fa60bda0197cf57614e271a250a8ca1f6a34ab889a3c73f67ec5d57c8a7f2c
   letter_opener (1.10.0) sha256=2ff33f2e3b5c3c26d1959be54b395c086ca6d44826e8bf41a14ff96fdf1bdbb2
-  logger (1.6.4) sha256=b627b91c922231050932e7bf8ee886fe54790ba2238a468ead52ba21911f2ee7
+  logger (1.6.5) sha256=c3cfe56d01656490ddd103d38b8993d73d86296adebc5f58cefc9ec03741e56b
   lograge (0.14.0) sha256=42371a75823775f166f727639f5ddce73dd149452a55fc94b90c303213dc9ae1
   loofah (2.24.0) sha256=61e6a710883abb8210887f3dc868cf3ed66594c509d9ff6987621efa6651ee1e
   mail (2.8.1) sha256=ec3b9fadcf2b3755c78785cb17bc9a0ca9ee9857108a64b6f5cfc9c0b5bfc9ad
@@ -432,7 +432,7 @@ CHECKSUMS
   stringio (3.1.2) sha256=204f1828f85cdb39d57cac4abc6dc44b04505a223f131587f2e20ae3729ba131
   temple (0.10.3) sha256=df3145fe6577af1e25387eb7f7122d32ed51bdb6f2e7bb0f4fbf07b66151913b
   thor (1.3.2) sha256=eef0293b9e24158ccad7ab383ae83534b7ad4ed99c09f96f1a6b036550abbeda
-  tilt (2.5.0) sha256=3c871a9ffb0fd8191944d8bbd776a371ba1eeb683483cecf1b2572b292293b15
+  tilt (2.6.0) sha256=263d748466e0d83e510aa1a2e2281eff547937f0ef06be33d3632721e255f76b
   timeout (0.4.3) sha256=9509f079b2b55fe4236d79633bd75e34c1c1e7e3fb4b56cb5fda61f80a0fe30e
   tzinfo (2.0.6) sha256=8daf828cc77bcf7d63b0e3bdb6caa47e2272dcfaf4fbfe46f8c3a9df087a829b
   useragent (0.16.11) sha256=700e6413ad4bb954bb63547fa098dddf7b0ebe75b40cc6f93b8d54255b173844
