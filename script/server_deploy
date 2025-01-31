@@ -35,7 +35,7 @@ class ServerDeploy
       system "git pull"
       system "git checkout #{@environment}"
       system "git reset --hard origin/#{@environment}"
-      system "bundle install --quiet"
+      system "bundle install"
       system "bundle exec rake db:migrate" if @migrate
       system "bundle exec pumactl restart" if system "bundle exec pumactl status"
     end
