@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '7.2.2.1'
+gem 'rails', '8.0.1'
 
 gem 'aws-sdk-rails'
 gem 'aws-sdk-s3'
@@ -14,7 +14,7 @@ gem 'ostruct'
 gem 'pg'
 gem 'puma'
 gem 'rotp'
-gem 'rubyzip', '~> 2.3.0', :require => 'zip'
+gem 'rubyzip', :require => 'zip'
 gem 'sassc'
 gem 'sassc-rails'
 gem 'sprockets'

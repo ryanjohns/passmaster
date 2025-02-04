@@ -9,7 +9,7 @@ User=passmaster
 WorkingDirectory=/home/passmaster/passmaster
 ExecStartPre=/usr/bin/git checkout master
 ExecStartPre=/usr/bin/git pull
-ExecStart=/usr/local/rvm/wrappers/ruby-3.3.6@passmaster/ruby script/server_deploy
+ExecStart=/usr/local/rvm/wrappers/ruby-3.3.7@passmaster/ruby script/server_deploy
 
 [Install]
 WantedBy=multi-user.target
