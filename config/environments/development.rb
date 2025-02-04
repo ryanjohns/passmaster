@@ -15,15 +15,11 @@ Rails.application.configure do
   # Enable server timing.
   config.server_timing = true
 
-  # Enable/disable Action Controller caching. By default Action Controller caching is disabled.
-  # Run rails dev:cache to toggle Action Controller caching.
-  if Rails.root.join("tmp/caching-dev.txt").exist?
-    config.action_controller.perform_caching = true
-    config.action_controller.enable_fragment_cache_logging = true
-    config.public_file_server.headers = { "cache-control" => "public, max-age=#{2.days.to_i}" }
-  else
-    config.action_controller.perform_caching = false
-  end
+  # Turn off fragment caching in view templates.
+  config.action_controller.perform_caching = false
+
+  # Make template changes take effect immediately.
+  config.action_mailer.perform_caching = false
 
   # Change to :null_store to avoid any caching.
   config.cache_store = :null_store
@@ -33,9 +29,6 @@ Rails.application.configure do
 
   # Use letter_opener to read emails in the browser
   config.action_mailer.delivery_method = :letter_opener
-
-  # Make template changes take effect immediately.
-  config.action_mailer.perform_caching = false
 
   # Set localhost to be used by links generated in mailer templates.
   config.action_mailer.default_url_options = { host: "localhost", port: 8000 }
@@ -55,11 +48,22 @@ Rails.application.configure do
   # Highlight code that enqueued background job in logs.
   config.active_job.verbose_enqueue_logs = true
 
-  # Raises error for missing translations.
-  # config.i18n.raise_on_missing_translations = true
+  # Debug mode disables concatenation and preprocessing of assets.
+  # This option may cause significant delays in view rendering with a large
+  # number of complex assets.
+  config.assets.debug = false
 
-  # Annotate rendered view with file names.
-  config.action_view.annotate_rendered_view_with_filenames = true
+  # Asset digests allow you to set far-future HTTP expiration dates on all assets,
+  # yet still be able to expire them through the digest params.
+  config.assets.digest = false
+
+  # Adds additional error checking when serving assets at runtime.
+  # Checks for improperly declared sprockets dependencies.
+  # Raises helpful error messages.
+  config.assets.raise_runtime_errors = true
+
+  # Suppress logger output for asset requests.
+  config.assets.quiet = true
 
   # Raise error when a before_action's only/except options reference missing actions.
   config.action_controller.raise_on_missing_callback_actions = true
