@@ -10,7 +10,7 @@ User=passmaster
 WorkingDirectory=/home/passmaster/passmaster
 # Environment=PUMA_DEBUG=1
 Environment=RAILS_ENV=production
-ExecStart=/usr/local/rvm/wrappers/passmaster/bundle exec puma
+ExecStart=/usr/local/bin/chruby-exec ruby-3.3.9 -- bundle exec puma
 
 Restart=always
 
