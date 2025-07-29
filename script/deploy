@@ -6,7 +6,6 @@ class Deploy
 
   def initialize(args)
     @environment = 'production'
-    @migrate     = false
     @tag         = nil
 
     option_parser = OptionParser.new do |opts|
@@ -23,9 +22,6 @@ class Deploy
           puts "Tag must be a timestamp in the format yyyymmddhhmmss."
           exit 1
         end
-      end
-      opts.on('-m', '--migrate', 'Perform database migrations.') do
-        @migrate = true
       end
       opts.on_tail('-h', '--help', 'Show this message.') do
         puts opts
