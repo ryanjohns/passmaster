@@ -79,7 +79,7 @@ GEM
       aws-sdk-ses (~> 1, >= 1.50.0)
       aws-sdk-sesv2 (~> 1, >= 1.34.0)
     aws-eventstream (1.4.0)
-    aws-partitions (1.1135.0)
+    aws-partitions (1.1136.0)
     aws-sdk-core (3.227.0)
       aws-eventstream (~> 1, >= 1.3.0)
       aws-partitions (~> 1, >= 1.992.0)
@@ -87,7 +87,7 @@ GEM
       base64
       jmespath (~> 1, >= 1.6.1)
       logger
-    aws-sdk-kms (1.107.0)
+    aws-sdk-kms (1.108.0)
       aws-sdk-core (~> 3, >= 3.227.0)
       aws-sigv4 (~> 1.5)
     aws-sdk-rails (5.1.0)
@@ -211,7 +211,11 @@ GEM
     nokogiri (1.18.9-x86_64-linux-musl)
       racc (~> 1.4)
     ostruct (0.6.3)
-    pg (1.5.9)
+    pg (1.6.0)
+    pg (1.6.0-aarch64-linux)
+    pg (1.6.0-arm64-darwin)
+    pg (1.6.0-x86_64-darwin)
+    pg (1.6.0-x86_64-linux)
     pp (0.6.2)
       prettyprint
     prettyprint (0.2.0)
@@ -268,7 +272,7 @@ GEM
     request_store (1.7.0)
       rack (>= 1.4)
     rotp (6.3.0)
-    rubyzip (2.4.1)
+    rubyzip (3.0.0)
     sassc (2.4.0)
       ffi (~> 1.9)
     sassc-rails (2.1.2)
@@ -351,9 +355,9 @@ CHECKSUMS
   addressable (2.8.7) sha256=462986537cf3735ab5f3c0f557f14155d778f4b43ea4f485a9deb9c8f7c58232
   aws-actionmailer-ses (1.0.0) sha256=0a16f1413dba0bf96a6bb065ebf353c7c8a107534af5146a31b8243b9e4d4c18
   aws-eventstream (1.4.0) sha256=116bf85c436200d1060811e6f5d2d40c88f65448f2125bc77ffce5121e6e183b
-  aws-partitions (1.1135.0) sha256=cfb69f16f35dadb444be8b49071aa98b6699ea5b1a832be48709daee673063a4
+  aws-partitions (1.1136.0) sha256=230a5bf8be8f236fce1a723f990027e4b798989bf9adeee6992f08bdc2138498
   aws-sdk-core (3.227.0) sha256=99071fc5e3ca9347873fd114574319740c3041745df3c74e27875bd912dfc79e
-  aws-sdk-kms (1.107.0) sha256=1ca8e16a29459349c88f17108573fa577287a43d6f113fab0aafae79168ffe1d
+  aws-sdk-kms (1.108.0) sha256=38b2ac95cf34a0a482753b588143f3a3cc87128f539ddda57ee7fee1f19fddc5
   aws-sdk-rails (5.1.0) sha256=8cffd3b60142e12a6747c91a7a609f668276b1082fc0c10810d5da3d14b13189
   aws-sdk-s3 (1.194.0) sha256=44cf5e32ec7af4df68da2eab01eeb206514fc1e2991b08e87940fbf9cb9e006b
   aws-sdk-ses (1.86.0) sha256=bd157ef8b561345976ff532ad91cac0fe9f16f5dbd0e3710790aec73e07bf493
@@ -417,7 +421,11 @@ CHECKSUMS
   nokogiri (1.18.9-x86_64-linux-gnu) sha256=b52f5defedc53d14f71eeaaf990da66b077e1918a2e13088b6a96d0230f44360
   nokogiri (1.18.9-x86_64-linux-musl) sha256=e69359d6240c17e64cc9f43970d54f13bfc7b8cc516b819228f687e953425e69
   ostruct (0.6.3) sha256=95a2ed4a4bd1d190784e666b47b2d3f078e4a9efda2fccf18f84ddc6538ed912
-  pg (1.5.9) sha256=761efbdf73b66516f0c26fcbe6515dc7500c3f0aa1a1b853feae245433c64fdc
+  pg (1.6.0) sha256=26ea1694e4ed2e387a8292373acbb62ff9696d691d3a1b8b76cf56eb1d9bd40b
+  pg (1.6.0-aarch64-linux) sha256=23690afbe8d4374a399a6ff683e2aee713002e27767b3e40be0c112d90a9a648
+  pg (1.6.0-arm64-darwin) sha256=1ee9bf9858a532020e69483a0939b51eff52b369ee6cb2ce267c4d06e211f3e6
+  pg (1.6.0-x86_64-darwin) sha256=b0f631bd96f914a4a54267d2fb33a25caa7e6004670734f517b04e82b6a74f06
+  pg (1.6.0-x86_64-linux) sha256=5e0054765ab94f80152cbfbf986da54348b145e436663579df3d1e1d667d5e39
   pp (0.6.2) sha256=947ec3120c6f92195f8ee8aa25a7b2c5297bb106d83b41baa02983686577b6ff
   prettyprint (0.2.0) sha256=2bc9e15581a94742064a3cc8b0fb9d45aae3d03a1baa6ef80922627a0766f193
   psych (5.2.6) sha256=814328aa5dcb6d604d32126a20bc1cbcf05521a5b49dbb1a8b30a07e580f316e
@@ -437,7 +445,7 @@ CHECKSUMS
   reline (0.6.2) sha256=1dad26a6008872d59c8e05244b119347c9f2ddaf4a53dce97856cd5f30a02846
   request_store (1.7.0) sha256=e1b75d5346a315f452242a68c937ef8e48b215b9453a77a6c0acdca2934c88cb
   rotp (6.3.0) sha256=75d40087e65ed0d8022c33055a6306c1c400d1c12261932533b5d6cbcd868854
-  rubyzip (2.4.1) sha256=8577c88edc1fde8935eb91064c5cb1aef9ad5494b940cf19c775ee833e075615
+  rubyzip (3.0.0) sha256=dd71a1024812210e08c327231e796387dd00c775314872750e75b9bd092c5cc2
   sassc (2.4.0) sha256=4c60a2b0a3b36685c83b80d5789401c2f678c1652e3288315a1551d811d9f83e
   sassc-rails (2.1.2) sha256=5f4fdf3881fc9bdc8e856ffbd9850d70a2878866feae8114aa45996179952db5
   securerandom (0.4.1) sha256=cc5193d414a4341b6e225f0cb4446aceca8e50d5e1888743fac16987638ea0b1
