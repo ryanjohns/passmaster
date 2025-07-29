@@ -6,7 +6,6 @@
 
 # Bundler
 /.bundle
-/vendor/bundle
 
 # Default SQLite database.
 /db/*.sqlite3
@@ -26,6 +25,3 @@
 # Credentials
 /config/env.local.yml
 /config/master.key
-
-# Direnv
-/.direnv
