@@ -5,16 +5,9 @@ require 'optparse'
 class Deploy
 
   def initialize(args)
-    @environment = 'production'
-    @tag         = nil
+    @tag = nil
 
     option_parser = OptionParser.new do |opts|
-      opts.on('-e', '--environment [ENVIRONMENT]', "The environment to deploy to. Can only be 'production'. Default: #{@environment}") do |environment|
-        if environment != 'production'
-          puts opts
-          exit 1
-        end
-      end
       opts.on('-t', '--tag [TAG]', 'The tag to deploy. When not given, creates a new tag.') do |tag|
         if tag =~ /^[0-9]{14}$/
           @tag = tag
@@ -33,11 +26,9 @@ class Deploy
   end
 
   def deploy
-    puts "#{@environment.upcase} deploy"
     update_working_copy
     create_deploy_tag if @tag.nil?
     push_tag_upstream
-    puts "Done deploying: #{Time.now}"
   end
 
   private
@@ -58,8 +49,8 @@ class Deploy
   end
 
   def push_tag_upstream
-    puts "Force pushing #{@tag} to upstream:#{@environment}."
-    system("git push --force upstream #{@tag}~0:#{@environment}")
+    puts "Force pushing #{@tag} to upstream:production."
+    system("git push --force upstream #{@tag}~0:production")
   end
 
   def update_working_copy
@@ -78,7 +69,7 @@ class Deploy
 
   def upload_assets
     puts "Compiling and uploading assets to S3."
-    system("RAILS_ENV=#{@environment} bundle exec rake assets:upload")
+    system("RAILS_ENV=production bundle exec rake assets:upload")
     if `git status` =~ /manifest.json/
       system("git add config/manifest.json")
       system("git commit -m 'Update assets manifest.'")
