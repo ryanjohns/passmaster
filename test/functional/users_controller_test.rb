@@ -5,7 +5,7 @@ class UsersControllerTest < ActionController::TestCase
   test 'handle_unverified_request' do
     ActionController::Base.allow_forgery_protection = true
     post :create, :params => { :authenticity_token => 'foo' }
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
     b = JSON.parse(@response.body)
     assert_equal ['is invalid', 'try reloading'], b['errors']['token']
     ActionController::Base.allow_forgery_protection = false
@@ -45,7 +45,7 @@ class UsersControllerTest < ActionController::TestCase
 
   test 'create new user with errors' do
     post :create, :params => { :format => :json, :email => 'not_an_email' }
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
   end
 
   test 'create existing user' do
@@ -82,13 +82,13 @@ class UsersControllerTest < ActionController::TestCase
     u = FactoryBot.create(:user)
     u.verify_code!(u.verification_code)
     put :update, :params => { :format => :json, :id => u.id, :schema_version => '-1' }
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
   end
 
   test 'update not verified' do
     u = FactoryBot.create(:user)
     put :update, :params => { :format => :json, :id => u.id }
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
     data = JSON.parse(@response.body)
     assert_equal ['is not verified'], data['errors']['email']
   end
@@ -97,7 +97,7 @@ class UsersControllerTest < ActionController::TestCase
     u = FactoryBot.create(:user)
     u.verify_code!(u.verification_code)
     put :update, :params => { :format => :json, :id => u.id, :version_code => 'foo' }
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
     data = JSON.parse(@response.body)
     assert_equal ['does not match expected value'], data['errors']['version_code']
   end
@@ -164,7 +164,7 @@ class UsersControllerTest < ActionController::TestCase
   test 'verify with invalid code' do
     u = FactoryBot.create(:user)
     put :verify, :params => { :format => :json, :id => u.id, :verification_code => 'foo' }
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
   end
 
 end

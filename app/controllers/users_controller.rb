@@ -73,7 +73,7 @@ class UsersController < ApplicationController
 
   def verify_user
     unless @user.verified_at?
-      render :json => { :errors => { :email => ['is not verified'] } }, :status => :unprocessable_entity
+      render :json => { :errors => { :email => ['is not verified'] } }, :status => :unprocessable_content
     end
   end
 
@@ -91,7 +91,7 @@ class UsersController < ApplicationController
 
   def verify_version_code
     unless @user.version_code == params[:version_code]
-      render :json => { :errors => { :version_code => ['does not match expected value'] } }, :status => :unprocessable_entity
+      render :json => { :errors => { :version_code => ['does not match expected value'] } }, :status => :unprocessable_content
     end
   end
 

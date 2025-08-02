@@ -33,7 +33,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def handle_unverified_request
-    render :json => { :errors => { :token => ['is invalid', 'try reloading'] } }, :status => :unprocessable_entity
+    render :json => { :errors => { :token => ['is invalid', 'try reloading'] } }, :status => :unprocessable_content
   end
 
   private
@@ -48,7 +48,7 @@ class ApplicationController < ActionController::Base
 
   def respond_with_json(object)
     if object.errors.present?
-      render :json => { :errors => object.errors }, :status => :unprocessable_entity
+      render :json => { :errors => object.errors }, :status => :unprocessable_content
     else
       render :json => object
     end
