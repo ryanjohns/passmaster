@@ -10,9 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_23_051148) do
+ActiveRecord::Schema[8.0].define(version: 2023_04_23_051148) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+  enable_extension "pg_catalog.plpgsql"
 
   create_table "otp_sessions", id: false, force: :cascade do |t|
     t.string "id", limit: 32, null: false
@@ -56,5 +56,4 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_23_051148) do
     t.index ["id"], name: "index_users_on_id", unique: true
     t.index ["verification_code"], name: "index_users_on_verification_code", unique: true
   end
-
 end
