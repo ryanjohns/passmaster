@@ -7,16 +7,21 @@
 # Bundler
 /.bundle
 
-# Default SQLite database.
-/db/*.sqlite3
+# Ignore all logfiles and tempfiles.
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
 
-# Logfiles and tempfiles.
-/log
-/tmp
+# Ignore pidfiles, but keep the directory.
+/tmp/pids/*
+!/tmp/pids/
+!/tmp/pids/.keep
 
-# Coverage files
-/coverage
-/coverage.data
+# Ignore sockets, but keep the directory.
+/tmp/sockets/*
+!/tmp/sockets/
+!/tmp/sockets/.keep
 
 # Assets
 /public/assets
