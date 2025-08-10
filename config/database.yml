@@ -14,8 +14,8 @@ test:
 
 production:
   <<: *defaults
-  username: <%= Rails.application.credentials.production_db.username! %>
-  password: <%= Rails.application.credentials.production_db.password! %>
-  database: <%= Rails.application.credentials.production_db.database! %>
-  host: <%= Rails.application.credentials.production_db.host! %>
-  port: <%= Rails.application.credentials.production_db.port! %>
+  username: <%= Rails.application.credentials.production_db_username! %>
+  password: <%= Rails.application.credentials.production_db_password! %>
+  database: <%= Rails.application.credentials.production_db_database! %>
+  host: <%= Rails.application.credentials.production_db_host! %>
+  port: <%= Rails.application.credentials.production_db_port! %>

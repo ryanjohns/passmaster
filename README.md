@@ -23,7 +23,7 @@ environment similar to what you would need to work on the project.
  * Clone the repository (`git clone git@github.com:ryanjohns/passmaster.git`)
  * Check out the production branch (`git checkout --track origin/production`)
  * Install required gems (`bundle install`)
- * Run the verification task (`RAILS_ENV=production bundle exec rake assets:verify`)
+ * Run the verification task (`RAILS_ENV=production bin/rake assets:verify`)
 
 ## Mobile apps
 

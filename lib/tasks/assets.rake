@@ -11,13 +11,13 @@ namespace :assets do
     uploaded = Set.new
     manifest = JSON.parse(File.read("#{Rails.root}/config/manifest.json"))
     options  = {
-      :bucket        => Rails.application.credentials.assets.aws_bucket!,
+      :bucket        => 'passmaster',
       :acl           => 'public-read',
       :cache_control => 'public, no-transform, max-age=31557600',
     }
     client   = Aws::S3::Client.new({
       :region      => 'us-west-2',
-      :credentials => Aws::Credentials.new(Rails.application.credentials.assets.aws_access_key_id!, Rails.application.credentials.assets.aws_secret_access_key!),
+      :credentials => Aws::Credentials.new(Rails.application.credentials.aws_access_key_id!, Rails.application.credentials.aws_secret_access_key!),
     })
     manifest['files'].each do |filename, _|
       next if uploaded.include?(filename) || !File.exist?("#{assets}/#{filename}")
