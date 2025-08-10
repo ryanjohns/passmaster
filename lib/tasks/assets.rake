@@ -46,6 +46,7 @@ namespace :assets do
 
   desc 'Verifies the production assets match the locally compiled assets'
   task :verify do
+    ENV["SECRET_KEY_BASE_DUMMY"] = 'dummy_secret'
     if Rails.env != 'production'
       puts "RAILS_ENV must be set to 'production'"
       next
