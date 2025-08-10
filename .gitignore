@@ -22,6 +22,5 @@
 /public/assets
 /.sass-cache
 
-# Credentials
-/config/env.local.yml
+# Ignore master key for decrypting credentials and more.
 /config/master.key

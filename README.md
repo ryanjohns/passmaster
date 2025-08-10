@@ -9,10 +9,9 @@ This project is tested to run on ruby 3.3.9 so you should have that version inst
 You will also need PostgreSQL (anything 9.1 and newer should work).
 
  * Fork and clone the repository
- * Create and modify env.local.yml (`cp config/env.yml config/env.local.yml`)
  * Install required gems (`bundle install`)
- * Create and migrate the database (`bundle exec rake db:create db:schema:load`)
- * Start the server (`bundle exec puma`)
+ * Create the development and test databases (`bin/rake db:prepare`)
+ * Start the server (`bin/dev`)
  * Browse to http://localhost:8000
 
 ## Verifying javascript

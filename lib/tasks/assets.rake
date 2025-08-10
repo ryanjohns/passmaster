@@ -16,7 +16,7 @@ namespace :assets do
       :cache_control => 'public, no-transform, max-age=31557600',
     }
     client   = Aws::S3::Client.new({
-      :region      => ENV['AWS_REGION'],
+      :region      => 'us-west-2',
       :credentials => Aws::Credentials.new(Rails.application.credentials.assets.aws_access_key_id!, Rails.application.credentials.assets.aws_secret_access_key!),
     })
     manifest['files'].each do |filename, _|

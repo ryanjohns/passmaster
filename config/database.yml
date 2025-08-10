@@ -1,6 +1,3 @@
-# The connection options are set via environment variables as defined
-# in #{Rails.root}config/env.yml. See that file for more details.
-
 defaults: &defaults
   adapter: postgresql
   encoding: utf8
@@ -9,19 +6,11 @@ defaults: &defaults
 
 development:
   <<: *defaults
-  username: <%= ENV['DEVELOPMENT_DB_USERNAME'] %>
-  password: <%= ENV['DEVELOPMENT_DB_PASSWORD'] %>
-  database: <%= ENV['DEVELOPMENT_DB_DATABASE'] %>
-  host: <%= ENV['DEVELOPMENT_DB_HOST'] %>
-  port: <%= ENV['DEVELOPMENT_DB_PORT'] %>
+  database: passmaster_development
 
 test:
   <<: *defaults
-  username: <%= ENV['TEST_DB_USERNAME'] %>
-  password: <%= ENV['TEST_DB_PASSWORD'] %>
-  database: <%= ENV['TEST_DB_DATABASE'] %>
-  host: <%= ENV['TEST_DB_HOST'] %>
-  port: <%= ENV['TEST_DB_PORT'] %>
+  database: passmaster_test
 
 production:
   <<: *defaults
