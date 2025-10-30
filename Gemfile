@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '8.0.3'
+gem 'rails', '8.0.4'
 
 gem 'aws-sdk-rails'
 gem 'aws-sdk-s3'
@@ -10,7 +10,6 @@ gem 'haml-rails'
 gem 'jquery-rails'
 gem 'lograge'
 gem 'nokogiri'
-gem 'openssl'
 gem 'pg'
 gem 'puma'
 gem 'rotp'

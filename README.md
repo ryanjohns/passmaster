@@ -5,7 +5,7 @@ it live at <https://passmaster.io>.
 
 ## Running the server
 
-This project is tested to run on ruby 3.3.9 so you should have that version installed before starting.
+This project is tested to run on ruby 3.3.10 so you should have that version installed before starting.
 You will also need PostgreSQL (anything 9.1 and newer should work).
 
  * Fork and clone the repository
