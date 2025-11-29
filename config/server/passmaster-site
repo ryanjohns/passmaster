@@ -1,7 +1,7 @@
 # Passmaster Nginx site
 
 server {
-  listen 80;
+  listen [::]:80;
   server_name passmaster.io;
   root /home/passmaster/passmaster/public;
   access_log /var/log/nginx/passmaster.log concise;
@@ -36,7 +36,7 @@ server {
 }
 
 server {
-  listen 80;
+  listen [::]:80;
   server_name www.passmaster.io;
   access_log /var/log/nginx/passmaster.log concise;
   rewrite ^ https://passmaster.io$request_uri? permanent;
