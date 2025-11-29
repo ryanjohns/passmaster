@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2023_04_23_051148) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_29_123728) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -20,7 +20,6 @@ ActiveRecord::Schema[8.0].define(version: 2023_04_23_051148) do
     t.string "client_id", limit: 32, null: false
     t.integer "login_count", default: 0, null: false
     t.integer "failed_count", default: 0, null: false
-    t.string "ip_address"
     t.text "user_agent"
     t.datetime "activated_at", precision: nil
     t.datetime "last_seen_at", precision: nil
