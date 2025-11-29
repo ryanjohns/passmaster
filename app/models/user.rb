@@ -51,11 +51,11 @@ class User < ApplicationRecord
     (key.present? ? key : nil) == api_key
   end
 
-  def valid_otp_session?(client_id, enable_otp, ip_address, user_agent)
+  def valid_otp_session?(client_id, enable_otp, user_agent)
     return true if !otp_enabled && enable_otp != '1'
     session = otp_sessions.where(:client_id => client_id).first
     return false if session.nil? || !session.active? || (enable_otp == '0' && !session.recently_activated?)
-    session.update({ :ip_address => ip_address, :user_agent => user_agent, :last_seen_at => Time.zone.now })
+    session.update({ :user_agent => user_agent, :last_seen_at => Time.zone.now })
     true
   end
 

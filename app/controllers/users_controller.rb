@@ -58,7 +58,7 @@ class UsersController < ApplicationController
 
   def verify
     @user.verify_code!(params[:verification_code])
-    unless @user.api_key_matches?(params[:api_key]) && @user.valid_otp_session?(cookies.encrypted[:_client_id], params[:otp_enabled], request.remote_ip, request.user_agent)
+    unless @user.api_key_matches?(params[:api_key]) && @user.valid_otp_session?(cookies.encrypted[:_client_id], params[:otp_enabled], request.user_agent)
       @user.encrypted_data = nil
       @user.otp_secret = nil
     end
@@ -84,7 +84,7 @@ class UsersController < ApplicationController
   end
 
   def verify_otp_session
-    unless @user.valid_otp_session?(cookies.encrypted[:_client_id], params[:otp_enabled], request.remote_ip, request.user_agent)
+    unless @user.valid_otp_session?(cookies.encrypted[:_client_id], params[:otp_enabled], request.user_agent)
       render :json => { :errors => { :otp_session => ['has not been established'] } }, :status => :precondition_failed
     end
   end

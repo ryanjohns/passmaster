@@ -246,21 +246,21 @@ class UserTest < ActiveSupport::TestCase
   test 'valid_otp_session?' do
     u = FactoryBot.create(:user)
     assert !u.otp_enabled?
-    assert u.valid_otp_session?(nil, nil, nil, nil)
-    assert !u.valid_otp_session?(nil, '1', nil, nil)
+    assert u.valid_otp_session?(nil, nil, nil)
+    assert !u.valid_otp_session?(nil, '1', nil)
     u.otp_enabled = true
     assert u.save
-    assert !u.valid_otp_session?(nil, nil, nil, nil)
+    assert !u.valid_otp_session?(nil, nil, nil)
     s = FactoryBot.create(:otp_session, :user => u)
     assert_nil s.activated_at
-    assert !u.valid_otp_session?(s.client_id, nil, '1.2.3.4', 'User-Agent')
+    assert !u.valid_otp_session?(s.client_id, nil, 'User-Agent')
     s.activated_at = Time.zone.now
     assert s.save
-    assert u.valid_otp_session?(s.client_id, nil, '1.2.3.4', 'User-Agent')
-    assert u.valid_otp_session?(s.client_id, '0', '1.2.3.4', 'User-Agent')
+    assert u.valid_otp_session?(s.client_id, nil, 'User-Agent')
+    assert u.valid_otp_session?(s.client_id, '0', 'User-Agent')
     s.activated_at = Time.zone.now - (OtpSession::RECENT_CUTOFF + 1).minutes
     assert s.save
-    assert !u.valid_otp_session?(s.client_id, '0', '1.2.3.4', 'User-Agent')
+    assert !u.valid_otp_session?(s.client_id, '0', 'User-Agent')
   end
 
   test 'backup_data' do

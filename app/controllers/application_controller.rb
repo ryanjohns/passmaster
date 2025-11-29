@@ -56,7 +56,6 @@ class ApplicationController < ActionController::Base
 
   def append_info_to_payload(payload)
     super
-    payload[:ip] = request.remote_ip
     payload[:accept_language] = request.headers['Accept-Language']
   end
 
